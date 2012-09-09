@@ -23,17 +23,17 @@ window.Router = Backbone.Router.extend({
     },
 
     events: function () {
-        if (!this.eventsView) {
-            this.eventsView = new EventsView();
-            this.eventsView.render();
-        }
-        $('#content').html(this.eventsView.el);
+        this.eventCollection = new EventCollection();
+        this.eventCollectionView = new EventCollectionView({model:this.eventCollection});
+        this.eventCollection.fetch();
+        
+        $('#content').html(this.eventCollectionView.render().el);
         this.headerView.select('events-menu');
     }
 
 });
 
-templateLoader.load(["HeaderView", "HomeView", "EventsView"],
+templateLoader.load(["HeaderView", "HomeView", "EventView"],
     function () {
         app = new Router();
         Backbone.history.start();
