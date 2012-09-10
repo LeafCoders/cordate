@@ -1,18 +1,34 @@
 window.EventCollectionView = Backbone.View.extend({
-
-    tagName: 'table',
+	template: 'EventCollectionView',
 	
-	className : 'table',
-
-    initialize:function () {
-        this.model.bind("reset", this.render, this);
-    },
+	initialize:function() {
+		console.log('Initializing EventCollectionView');
+		this.render();
+	},
     
-    render:function (eventName) {
-        _.each(this.model.models, function (event) {
-            $(this.el).append(new EventView({model:event}).render().el);
-        }, this);
+    render:function() {		
+		var that = this;
+	    window.templateManager.get(this.template, function(templateSource) {
+			var template = Handlebars.compile(templateSource);
+			
+			var collection = [];
+			_.each(that.model.models, function (event) {
+				collection.push(event.toJSON());
+			}, that);
+			
+			var html = template({models:collection});
+			
+			that.$el.html(html);
+	    });
+		
         return this;
-    }
-
+    },
+	
+    events: {
+		"click .create"				: "create"
+    },
+	
+	create: function() {
+		app.navigate("events/new", {trigger: true, replace: true});
+	}
 });

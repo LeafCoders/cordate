@@ -1,10 +1,23 @@
 window.EventView = Backbone.View.extend({
  
-    tagName: "tr", 
- 
-    render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
+	template: 'EventView',
+	
+	initialize:function() {
+		console.log('Initializing EditView');
+		this.render();
+	},
+    
+    render:function(eventName) {		
+		var that = this;
+	    window.templateManager.get(this.template, function(templateSource) {
+			var template = Handlebars.compile(templateSource);
+			
+			var model = that.model.toJSON();			
+			var html = template(model);
+			
+			that.$el.html(html);
+	    });
+		
         return this;
     }
- 
 });

@@ -2,7 +2,10 @@ window.Router = Backbone.Router.extend({
 
     routes: {
         "": "home",
-        "events": "events"
+        "events": "events",
+        "events/new": "eventNew",
+        "events/:id": "event",
+        "events/:id/edit": "eventEdit"
     },
 
     initialize: function () {
@@ -23,18 +26,50 @@ window.Router = Backbone.Router.extend({
     },
 
     events: function () {
-        this.eventCollection = new EventCollection();
-        this.eventCollectionView = new EventCollectionView({model:this.eventCollection});
-        this.eventCollection.fetch();
-        
-        $('#content').html(this.eventCollectionView.render().el);
-        this.headerView.select('events-menu');
-    }
+        var eventCollection = new EventCollection();
 
+		var that = this;
+		eventCollection.fetch({success: function() {
+			$("#content").html(new EventCollectionView({model:eventCollection}).el);
+			
+			that.headerView.select('events-menu');
+		}});
+    },
+	
+    event: function (id) {
+        var event = new Event({id: id});
+		
+		var that = this;
+		event.fetch({success: function() {
+			$("#content").html(new EventView({model:event}).el);
+			that.headerView.select('events-menu');	
+		}});
+    },
+	
+    eventEdit: function (id) {
+        var event = new Event({id: id});
+		
+		var that = this;
+		event.fetch({success: function() {
+			$("#content").html(new EventEditView({model:event}).el);
+			that.headerView.select('events-menu');
+		}});
+    },
+	
+    eventNew: function (id) {
+        var event = new Event();
+		
+		var that = this;
+		event.fetch({success: function() {
+			$("#content").html(new EventEditView({model:event}).el);
+			that.headerView.select('events-menu');
+		}});
+    }
+	
 });
 
-templateLoader.load(["HeaderView", "HomeView", "EventView"],
-    function () {
-        app = new Router();
-        Backbone.history.start();
-    });
+$(function () {
+    app = new Router();
+	$.ajaxSetup({ cache: false });
+    Backbone.history.start();
+});

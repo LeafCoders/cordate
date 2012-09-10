@@ -1,10 +1,18 @@
 window.HeaderView = Backbone.View.extend({
+	template: 'HeaderView',
 
-    initialize: function () {
+    initialize: function() {
+    	console.log('Initializing HeaderView');
     },
 
-    render: function () {
-        $(this.el).html(this.template());
+    render: function() {
+		var that = this;
+	    window.templateManager.get(this.template, function(templateSource) {
+			var template = Handlebars.compile(templateSource);
+			var html = template();
+			that.$el.html(html);
+	    });
+		
         return this;
     },
 
@@ -12,5 +20,4 @@ window.HeaderView = Backbone.View.extend({
         $('.nav li').removeClass('active');
         $('.' + menuItem).addClass('active');
     }
-
 });
