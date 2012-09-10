@@ -56,11 +56,17 @@ window.EventEditView = Backbone.View.extend({
 	},
 	
 	cancel: function() {
-		app.navigate("events/" + this.model.id, {trigger: true, replace: true});
+		if (this.model.id) {
+			app.navigate("events/" + this.model.id, {trigger: true, replace: true});			
+		} else {
+			app.navigate("events", {trigger: true, replace: true});	
+		}
 	},
 	
 	beforeDelete: function () {
-		this.delete();
+		if (this.model.id) {
+			this.delete();	
+		}
         return false;
     },
 	
