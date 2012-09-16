@@ -3,6 +3,7 @@ window.HeaderView = Backbone.View.extend({
 
     initialize: function() {
     	console.log('Initializing HeaderView');
+    	this.render();
     },
 
     render: function() {
@@ -19,5 +20,18 @@ window.HeaderView = Backbone.View.extend({
     select: function(menuItem) {
         $('.nav li').removeClass('active');
         $('.' + menuItem).addClass('active');
+    },
+    
+    showAlert: function(alert) {
+        var that = this;
+        window.templateManager.get("AlertView", function(templateSource) {
+            var template = Handlebars.compile(templateSource);
+			var html = template(alert);
+			this.$("#alert").html(html);
+        });
+    },
+    
+    removeAlert: function() {
+        this.$("#alert").html("");
     }
 });

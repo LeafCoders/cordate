@@ -1,7 +1,5 @@
 window.EventEditView = Backbone.View.extend({
  
- 	id: "editor",
-	
 	template: 'EventEditView',
 	
 	initialize:function() {
@@ -18,7 +16,13 @@ window.EventEditView = Backbone.View.extend({
 			var html = template(model);
 			
 			that.$el.html(html);
-	    });
+			
+			that.$("[name='startDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true});
+			that.$("[name='startTime']").timePicker();
+			
+			that.$("[name='endDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true});
+			that.$("[name='endTime']").timePicker();
+	    });		
 		
         return this;
     },
@@ -27,14 +31,26 @@ window.EventEditView = Backbone.View.extend({
         "change input[type='text']"	: "change",
 		"click .save"				: "beforeSave",
 		"click .cancel"				: "cancel",
-		"click .delete"				: "beforeDelete"
+		"click .delete"				: "delete"
     },
 	
 	change: function (event) {
         // Apply the change to the model
         var target = event.target;
         var change = {};
-        change[target.name] = target.value;
+		
+		if (target.name == "startDate") {
+			change["startTime"] = $.trim(target.value) + " " + $("[name='startTime']").val() + " Europe/Stockholm";
+		} else if (target.name == "startTime") {
+			change["startTime"] = $("[name='startDate']").val() + " " + $.trim(target.value) + " Europe/Stockholm";
+		} else if (target.name == "endDate") {
+			change["endTime"] = $.trim(target.value) + " " + $("[name='endTime']").val() + " Europe/Stockholm";
+		} else if (target.name == "endTime") {
+			change["endTime"] = $("[name='endDate']").val() + " " + $.trim(target.value) + " Europe/Stockholm";
+		} else {
+			change[target.name] = $.trim(target.value);
+		}
+
         this.model.set(change);
     },
 	
@@ -46,39 +62,44 @@ window.EventEditView = Backbone.View.extend({
 	save: function() {
 		var self = this;
 		this.model.save(null, {
-            success: function (model) {
+            success: function (model, response) {
+                window.headerView.removeAlert();
 				app.navigate("events/" + model.id, {trigger: true, replace: true});
             },
-            error: function () {
-                alert(0);
+            error: function (model, response) {
+                window.headerView.showAlert({type:"alert-error", message:"Couldn't save event", errors:$.parseJSON(response.responseText)});
             }
         });
+		return false;
 	},
 	
 	cancel: function() {
+	    window.headerView.removeAlert();
 		if (this.model.id) {
 			app.navigate("events/" + this.model.id, {trigger: true, replace: true});			
 		} else {
 			app.navigate("events", {trigger: true, replace: true});	
 		}
+		return false;
 	},
-	
-	beforeDelete: function () {
-		if (this.model.id) {
-			this.delete();	
-		}
-        return false;
-    },
 	
 	delete: function() {
 		var self = this;
-		this.model.destroy({
-            success: function (model) {
-				app.navigate("events", {trigger: true, replace: true});
-            },
-            error: function () {
-                alert(0);
-            }
-        });
+		
+		if (this.model.id) {
+    		this.model.destroy({
+                success: function (model, response) {
+                    window.headerView.removeAlert();
+    				app.navigate("events", {trigger: true, replace: true});
+                },
+                error: function (model, response) {
+                    window.headerView.showAlert({type:"alert-error", message:"Couldn't save event", errors:$.parseJSON(response.responseText)});
+                }
+            });   
+		} else {
+		    window.headerView.removeAlert();
+			app.navigate("events", {trigger: true, replace: true});
+		}
+		return false;
 	}
 });

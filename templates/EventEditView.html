@@ -1,13 +1,17 @@
 <form>
-  <legend>Edit event</legend>
   <label for="title">Title</label>
   <input name="title" type="text" placeholder="Title" value="{{title}}"/>
+
+  <label for="startTime">Start Time</label>  
+  <input name="startDate" class="input-small" type="text" value="{{date startTime}}">
+  <input name="startTime" class="input-small" type="text" value="{{time startTime}}">
   
-  <label for="startTime">StartTime</label>
-  <input name="startTime" type="text" placeholder="StartTime" value="{{startTime}}"/>
+  <label for="endTime">End Time</label>  
+  <input name="endDate" class="input-small" type="text" value="{{date endTime}}">
+  <input name="endTime" class="input-small" type="text" value="{{time endTime}}">
 
   <div class="form-actions">
-    <a href="#" class="btn btn-primary save">Save changes</a>
+    <a href="#" class="btn btn-primary save">Save</a>
     <a href="#" class="btn cancel">Cancel</a>
     <a href="#" class="btn btn-danger pull-right delete">Delete</a>
   </div>

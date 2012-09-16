@@ -9,8 +9,7 @@ window.Router = Backbone.Router.extend({
     },
 
     initialize: function () {
-        this.headerView = new HeaderView();
-        $('.header').html(this.headerView.render().el);
+        window.headerView = new HeaderView({el:$("#header")});
     },
 
     home: function () {
@@ -22,7 +21,7 @@ window.Router = Backbone.Router.extend({
             this.homeView.delegateEvents(); // delegate events when the view is recycled
         }
         $("#content").html(this.homeView.el);
-        this.headerView.select('home-menu');
+        window.headerView.select('home-menu');
     },
 
     events: function () {
@@ -30,9 +29,11 @@ window.Router = Backbone.Router.extend({
 
 		var that = this;
 		eventCollection.fetch({success: function() {
-			$("#content").html(new EventCollectionView({model:eventCollection}).el);
-			
-			that.headerView.select('events-menu');
+			if (window.eventCollectionView) {
+				window.eventCollectionView.undelegateEvents();
+			}
+			window.eventCollectionView = new EventCollectionView({model:eventCollection, el:$("#content")});
+			window.headerView.select('events-menu');
 		}});
     },
 	
@@ -41,8 +42,11 @@ window.Router = Backbone.Router.extend({
 		
 		var that = this;
 		event.fetch({success: function() {
-			$("#content").html(new EventView({model:event}).el);
-			that.headerView.select('events-menu');	
+			if (window.eventView) {
+				window.eventView.undelegateEvents();
+			}
+			window.eventView = new EventView({model:event, el:$("#content")});
+			window.headerView.select('events-menu');	
 		}});
     },
 	
@@ -51,19 +55,27 @@ window.Router = Backbone.Router.extend({
 		
 		var that = this;
 		event.fetch({success: function() {
-			$("#content").html(new EventEditView({model:event}).el);
-			that.headerView.select('events-menu');
+			if (window.eventEditView) {
+				window.eventEditView.undelegateEvents();
+			}
+			window.eventEditView = new EventEditView({model:event, el:$("#content")});
+			window.headerView.select('events-menu');
 		}});
     },
 	
     eventNew: function (id) {
-        var event = new Event();
+        var now = new Date();
+        var date = now.getFullYear() + "-" + ('0' + (now.getMonth() + 1)).slice(-2) + "-" + ('0' + now.getDate()).slice(-2);
+        var defaultStartTime = date + " 11:00 Europe/Stockholm";
+        
+        var event = new Event({startTime:defaultStartTime});
 		
-		var that = this;
-		event.fetch({success: function() {
-			$("#content").html(new EventEditView({model:event}).el);
-			that.headerView.select('events-menu');
-		}});
+		if (window.eventEditView) {
+			window.eventEditView.undelegateEvents();
+		}
+		window.eventEditView = new EventEditView({model:event, el:$("#content")});
+			
+		window.headerView.select('events-menu');
     }
 	
 });
@@ -71,5 +83,18 @@ window.Router = Backbone.Router.extend({
 $(function () {
     app = new Router();
 	$.ajaxSetup({ cache: false });
+	
+	Handlebars.registerHelper('date', function(dateTime) {
+		var date = '';
+		if (dateTime && dateTime.length >= 10)
+			date = dateTime.substring(0, 10);
+		return date;
+	});
+	Handlebars.registerHelper('time', function(dateTime) {
+		var time = '';
+		if (dateTime && dateTime.length >= 16)
+			time = dateTime.substring(11, 16);
+		return time;
+	});
     Backbone.history.start();
 });

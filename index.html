@@ -8,9 +8,62 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="stylesheets/bootstrap.css" rel="stylesheet">
-    <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
-    <link href="stylesheets/docs.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- <link href="css/docs.css" rel="stylesheet"> -->
+    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <style type="text/css" media="screen">
+      .navbar {margin-top: 20px};
+      
+      /* Jumbotrons
+      -------------------------------------------------- */
+      .jumbotron {
+        position: relative;
+      }
+      .jumbotron h1 {
+        margin-bottom: 9px;
+        font-size: 81px;
+        font-weight: bold;
+        letter-spacing: -1px;
+        line-height: 1;
+      }
+      .jumbotron p {
+        margin-bottom: 18px;
+        font-weight: 300;
+      }
+      .jumbotron .btn-large {
+        font-size: 20px;
+        font-weight: normal;
+        padding: 14px 24px;
+        margin-right: 10px;
+        -webkit-border-radius: 6px;
+           -moz-border-radius: 6px;
+                border-radius: 6px;
+      }
+      .jumbotron .btn-large small {
+        font-size: 14px;
+      }
+
+      /* Masthead (docs home) */
+      .masthead {
+        padding-top: 36px;
+        margin-bottom: 72px;
+      }
+      .masthead h1,
+      .masthead p {
+        text-align: center;
+      }
+      .masthead h1 {
+        margin-bottom: 18px;
+      }
+      .masthead p {
+        margin-left: 5%;
+        margin-right: 5%;
+        font-size: 30px;
+        line-height: 36px;
+      }
+    </style>
     
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -25,9 +78,8 @@
     <link rel="apple-touch-icon-precomposed" href="icons/apple-touch-icon-57-precomposed.png">
   </head>
 
-  <div class="header"></div>
-
   <div class="container">
+    <div id="header"></div>
     <div id="content"></div>
   </div>
 
@@ -37,24 +89,12 @@
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore-min.js"></script>
     <script src="lib/backbone-min.js"></script>
-    <script src="lib/bootstrap-transition.js"></script>
-    <script src="lib/bootstrap-alert.js"></script>
-    <script src="lib/bootstrap-modal.js"></script>
-    <script src="lib/bootstrap-dropdown.js"></script>
-    <script src="lib/bootstrap-scrollspy.js"></script>
-    <script src="lib/bootstrap-tab.js"></script>
-    <script src="lib/bootstrap-tooltip.js"></script>
-    <script src="lib/bootstrap-popover.js"></script>
-    <script src="lib/bootstrap-button.js"></script>
-    <script src="lib/bootstrap-collapse.js"></script>
-    <script src="lib/bootstrap-carousel.js"></script>
-    <script src="lib/bootstrap-typeahead.js"></script>
-	<script src="lib/handlebars-1.0.0.beta.6.js"></script>
-    <script src="lib/moment.min.js"></script>
-    <script src="lib/sv.min.js"></script>
+	  <script src="lib/bootstrap.min.js"></script>
+	  <script src="lib/bootstrap-datepicker.js"></script>
+	  <script src="lib/jquery.timePicker.min.js"></script>
+	  <script src="lib/handlebars-1.0.0.beta.6.js"></script>
     
-	<script src="javascripts/templateManager.js"></script>
-    <script src="javascripts/utils.js"></script>
+	  <script src="javascripts/templateManager.js"></script>
     <script src="javascripts/models/eventModel.js"></script>
     <script src="javascripts/models/eventCollectionModel.js"></script>
     <script src="javascripts/views/headerView.js"></script>
