@@ -1,0 +1,120 @@
+<h1>
+	Week {{week}}
+</h1>
+<p>
+	{{#each months}}
+		{{month this}}
+	{{/each}}
+</p>
+<div>
+	<h2>
+		Monday
+	</h2>
+	{{date days.1.date}}
+
+	{{#if days.1.events}}
+	<ul>
+		{{#each days.1.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>
+<div>
+	<h2>
+		Tuesday
+	</h2>
+	{{date days.2.date}}
+
+	{{#if days.2.events}}
+	<ul>
+		{{#each days.2.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>
+<div>
+	<h2>
+		Wednesday
+	</h2>
+	{{date days.3.date}}
+
+	{{#if days.3.events}}
+	<ul>
+		{{#each days.3.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>
+<div>
+	<h2>
+		Thursday
+	</h2>
+	{{date days.4.date}}
+
+	{{#if days.4.events}}
+	<ul>
+		{{#each days.4.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>
+<div>
+	<h2>
+		Friday
+	</h2>
+	{{date days.5.date}}
+
+	{{#if days.5.events}}
+	<ul>
+		{{#each days.5.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>
+<div>
+	<h2>
+		Saturday
+	</h2>
+	{{date days.6.date}}
+
+	{{#if days.6.events}}
+	<ul>
+		{{#each days.6.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>
+<div>
+	<h2>
+		Sunday
+	</h2>
+	{{date days.7.date}}
+
+	{{#if days.7.events}}
+	<ul>
+		{{#each days.7.events}}
+		<li>
+			{{time startTime}} {{title}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</div>

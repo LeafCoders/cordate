@@ -25,16 +25,17 @@ window.Router = Backbone.Router.extend({
     },
 
     events: function () {
-        var eventCollection = new EventCollection();
-
+        var eventweek = new Eventweek();
+		
 		var that = this;
-		eventCollection.fetch({success: function() {
-			if (window.eventCollectionView) {
-				window.eventCollectionView.undelegateEvents();
+		eventweek.fetch({success: function() {
+			if (window.eventweekView) {
+				window.eventweekView.undelegateEvents();
 			}
-			window.eventCollectionView = new EventCollectionView({model:eventCollection, el:$("#content")});
-			window.headerView.select('events-menu');
+			window.eventweekView = new EventweekView({model:eventweek, el:$("#content")});
+			window.headerView.select('events-menu');	
 		}});
+
     },
 	
     event: function (id) {
@@ -95,6 +96,11 @@ $(function () {
 		if (dateTime && dateTime.length >= 16)
 			time = dateTime.substring(11, 16);
 		return time;
+	});
+	Handlebars.registerHelper('month', function(monthNumber) {
+		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		
+		return months[monthNumber - 1];
 	});
     Backbone.history.start();
 });

@@ -1,9 +1,9 @@
-window.EventView = Backbone.View.extend({
+window.EventweekView = Backbone.View.extend({
  
-	template: 'EventView',
+	template: 'EventweekView',
 	
 	initialize:function() {
-		console.log('Initializing EventView');
+		console.log('Initializing EventweekView');
 		this.render();
 	},
     
