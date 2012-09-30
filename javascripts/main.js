@@ -2,7 +2,8 @@ window.Router = Backbone.Router.extend({
 
     routes: {
         "": "home",
-        "events": "events",
+        "eventweek": "eventweekcurrent",
+        "eventweek/:id": "eventweek",
         "events/new": "eventNew",
         "events/:id": "event",
         "events/:id/edit": "eventEdit"
@@ -24,8 +25,22 @@ window.Router = Backbone.Router.extend({
         window.headerView.select('home-menu');
     },
 
-    events: function () {
+    eventweekcurrent: function () {
         var eventweek = new Eventweek();
+		
+		var that = this;
+		eventweek.fetch({success: function() {
+			if (window.eventweekView) {
+				window.eventweekView.undelegateEvents();
+			}
+			window.eventweekView = new EventweekView({model:eventweek, el:$("#content")});
+			window.headerView.select('events-menu');	
+		}});
+
+    },
+	
+    eventweek: function (id) {
+        var eventweek = new Eventweek({id: id});
 		
 		var that = this;
 		eventweek.fetch({success: function() {
@@ -101,6 +116,26 @@ $(function () {
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 		
 		return months[monthNumber - 1];
+	});
+	Handlebars.registerHelper('weekday', function(dayNumber) {
+		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+		
+		return weekdays[dayNumber - 1];
+	});
+	Handlebars.registerHelper('dayFromDate', function(date) {
+		var text = date.substring(8, 10);
+		return text;
+		
+	});
+	Handlebars.registerHelper('monthFromDate', function(date) {
+		var month = parseInt(date.substring(5, 7), 10); 
+		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		return months[month - 1].toLowerCase();
+	});
+	Handlebars.registerHelper('yearFromDate', function(date) {
+		var text = date.substring(0, 4);
+		return text;
+		
 	});
     Backbone.history.start();
 });
