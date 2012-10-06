@@ -17,10 +17,10 @@ window.EventEditView = Backbone.View.extend({
 			
 			that.$el.html(html);
 			
-			that.$("[name='startDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true});
+			that.$("[name='startDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true, todayHighlight:true});
 			that.$("[name='startTime']").timePicker();
 			
-			that.$("[name='endDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true});
+			that.$("[name='endDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true, todayHighlight:true});
 			that.$("[name='endTime']").timePicker();
 	    });		
 		

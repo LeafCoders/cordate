@@ -29,10 +29,15 @@ window.Router = Backbone.Router.extend({
         var eventweek = new Eventweek();
 		
 		var that = this;
-		eventweek.fetch({success: function() {
+		var request = eventweek.fetch({success: function() {
 			if (window.eventweekView) {
 				window.eventweekView.undelegateEvents();
 			}
+			
+			var link_headers = parse_link_header(request.getResponseHeader('Link'));
+			eventweek.set('previous_page', link_headers['previous']);
+			eventweek.set('next_page', link_headers['next']);
+			
 			window.eventweekView = new EventweekView({model:eventweek, el:$("#content")});
 			window.headerView.select('events-menu');	
 		}});
@@ -43,10 +48,15 @@ window.Router = Backbone.Router.extend({
         var eventweek = new Eventweek({id: id});
 		
 		var that = this;
-		eventweek.fetch({success: function() {
+		var request = eventweek.fetch({success: function() {
 			if (window.eventweekView) {
 				window.eventweekView.undelegateEvents();
 			}
+			
+			var link_headers = parse_link_header(request.getResponseHeader('Link'));
+			eventweek.set('previous_page', link_headers['previous']);
+			eventweek.set('next_page', link_headers['next']);
+			
 			window.eventweekView = new EventweekView({model:eventweek, el:$("#content")});
 			window.headerView.select('events-menu');	
 		}});
