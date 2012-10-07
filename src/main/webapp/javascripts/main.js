@@ -112,23 +112,23 @@ $(function () {
     app = new Router();
 	$.ajaxSetup({ cache: false });
 	
-	Handlebars.registerHelper('date', function(dateTime) {
+	Handlebars.registerHelper('dateFromDateTime', function(dateTime) {
 		var date = '';
 		if (dateTime && dateTime.length >= 10)
 			date = dateTime.substring(0, 10);
 		return date;
 	});
-	Handlebars.registerHelper('time', function(dateTime) {
+	Handlebars.registerHelper('timeFromDateTime', function(dateTime) {
 		var time = '';
 		if (dateTime && dateTime.length >= 16)
 			time = dateTime.substring(11, 16);
 		return time;
 	});
-	Handlebars.registerHelper('month', function(monthNumber) {
+	Handlebars.registerHelper('monthFromMonthNumber', function(monthNumber) {
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 		return months[monthNumber - 1];
 	});
-	Handlebars.registerHelper('weekday', function(dayNumber) {
+	Handlebars.registerHelper('weekdayFromDayNumber', function(dayNumber) {
 		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		return weekdays[dayNumber - 1];
 	});
