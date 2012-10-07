@@ -22,20 +22,34 @@
 	{{/each}}
 </p>
 
+<p>
+	<a href="#events/new" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Create new event</a>
+</p>
+
 {{#each days}}
-<div>
-	<h2>
-		{{dayFromDate this.date}} {{weekday dayNumber}}
-	</h2>
+<div class="calendarDay">
+	<div class="calendarDate">
+		<div class="calendarDayNr">
+			<h2>{{dayFromDate this.date}}</h2>
+		</div>
+		<div class="calendarDayName">
+			 {{weekday dayNumber}}	
+		</div>
+	</div>
 	
-	{{#if events}}
-	<ul>
-		{{#each events}}
-		<li>
-			<a href="#events/{{id}}">{{time startTime}} {{title}}</a>
-		</li>
-		{{/each}}
-	</ul>
-	{{/if}}
+	<div class="calendarInfo">
+		{{#if events}}
+		<div>
+			{{#each events}}
+			<div>
+				<a href="#events/{{id}}">{{time startTime}} {{title}}</a>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+	</div>
+	
+	<div class="clearfix"></div>
+	
 </div>
 {{/each}}

@@ -29,6 +29,6 @@ window.EventCollectionView = Backbone.View.extend({
     },
 	
 	create: function() {
-		app.navigate("events/new", {trigger: true, replace: true});
+		app.navigate("events/new", {trigger: true});
 	}
 });

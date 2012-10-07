@@ -15,13 +15,13 @@ window.Router = Backbone.Router.extend({
 
     home: function () {
         // Since the home view never changes, we instantiate it and render it only once
-        if (!this.homeView) {
-            this.homeView = new HomeView();
-            this.homeView.render();
+        if (!window.homeView) {
+            window.homeView = new HomeView();
+            window.homeView.render();
         } else {
-            this.homeView.delegateEvents(); // delegate events when the view is recycled
+            window.homeView.delegateEvents(); // delegate events when the view is recycled
         }
-        $("#content").html(this.homeView.el);
+        $("#content").html(window.homeView.el);
         window.headerView.select('home-menu');
     },
 
@@ -64,16 +64,18 @@ window.Router = Backbone.Router.extend({
     },
 	
     event: function (id) {
-        var event = new Event({id: id});
+		if (id) {
+	        var event = new Event({id: id});
 		
-		var that = this;
-		event.fetch({success: function() {
-			if (window.eventView) {
-				window.eventView.undelegateEvents();
-			}
-			window.eventView = new EventView({model:event, el:$("#content")});
-			window.headerView.select('events-menu');	
-		}});
+			var that = this;
+			event.fetch({success: function() {
+				if (window.eventView) {
+					window.eventView.undelegateEvents();
+				}
+				window.eventView = new EventView({model:event, el:$("#content")});
+				window.headerView.select('events-menu');
+			}});
+		}
     },
 	
     eventEdit: function (id) {
@@ -124,27 +126,34 @@ $(function () {
 	});
 	Handlebars.registerHelper('month', function(monthNumber) {
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		
 		return months[monthNumber - 1];
 	});
 	Handlebars.registerHelper('weekday', function(dayNumber) {
 		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-		
 		return weekdays[dayNumber - 1];
 	});
 	Handlebars.registerHelper('dayFromDate', function(date) {
-		var text = date.substring(8, 10);
-		return text;
-		
+		var day = '';
+		if (date && date.length >= 10) {
+			day = parseInt(date.substring(8, 10), 10);
+		}
+		return day;
 	});
 	Handlebars.registerHelper('monthFromDate', function(date) {
-		var month = parseInt(date.substring(5, 7), 10); 
-		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		return months[month - 1].toLowerCase();
+		var monthText = '';
+		if (date && date.length >= 10) {
+			var month = parseInt(date.substring(5, 7), 10); 
+			var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+			monthText = months[month - 1].toLowerCase();
+		}
+		return monthText;
 	});
 	Handlebars.registerHelper('yearFromDate', function(date) {
-		var text = date.substring(0, 4);
-		return text;
+		var year = '';
+		if (date && date.length >= 4) {
+			year = date.substring(0, 4);
+		}
+		return year;
 		
 	});
     Backbone.history.start();

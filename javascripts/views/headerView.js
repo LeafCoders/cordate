@@ -20,18 +20,30 @@ window.HeaderView = Backbone.View.extend({
     select: function(menuItem) {
         $('.nav li').removeClass('active');
         $('.' + menuItem).addClass('active');
+		
+		if (!this.keepAlert) {
+			this.removeAlert();	
+		} else {
+			this.keepAlert = false;
+		}
     },
     
-    showAlert: function(alert) {
-        var that = this;
-        window.templateManager.get("AlertView", function(templateSource) {
-            var template = Handlebars.compile(templateSource);
-			var html = template(alert);
-			this.$("#alert").html(html);
-        });
+    showAlert: function(alert, options) {
+		if (alert) {
+	        var that = this;
+	        window.templateManager.get("AlertView", function(templateSource) {
+	            var template = Handlebars.compile(templateSource);
+				var html = template(alert);
+				this.$("#alert").html(html);
+	        });
+			
+			if (options && options['keepAlert']) {
+				this.keepAlert = true;
+			}
+		}
     },
     
     removeAlert: function() {
-        this.$("#alert").html("");
+    	this.$("#alert").html("");
     }
 });

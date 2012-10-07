@@ -29,9 +29,9 @@ window.EventEditView = Backbone.View.extend({
 	
     events: {
         "change input[type='text']"	: "change",
-		"click .save"				: "beforeSave",
+		"click .save"				: "save",
 		"click .cancel"				: "cancel",
-		"click .delete"				: "delete"
+		"click #deleteButton"		: "beforeDelete",
     },
 	
 	change: function (event) {
@@ -42,7 +42,12 @@ window.EventEditView = Backbone.View.extend({
 		if (target.name == "startDate") {
 			change["startTime"] = $.trim(target.value) + " " + $("[name='startTime']").val() + " Europe/Stockholm";
 		} else if (target.name == "startTime") {
-			change["startTime"] = $("[name='startDate']").val() + " " + $.trim(target.value) + " Europe/Stockholm";
+			if ($.trim(target.value) == "") {
+				$("[name='startTime']").val("00:00");
+				change["startTime"] = $("[name='startDate']").val() + " 00:00 Europe/Stockholm";
+			} else {
+				change["startTime"] = $("[name='startDate']").val() + " " + $.trim(target.value) + " Europe/Stockholm";
+			}
 		} else if (target.name == "endDate") {
 			change["endTime"] = $.trim(target.value) + " " + $("[name='endTime']").val() + " Europe/Stockholm";
 		} else if (target.name == "endTime") {
@@ -54,20 +59,26 @@ window.EventEditView = Backbone.View.extend({
         this.model.set(change);
     },
 	
-	beforeSave: function () {
-		this.save();
-        return false;
-    },
-	
 	save: function() {
+		if ($.trim($("[name='startTime']").val()) == "") {
+			this.model.set("startTime", $("[name='startDate']").val() + " 00:00 Europe/Stockholm");
+		}
+		
 		var self = this;
 		this.model.save(null, {
             success: function (model, response) {
-                window.headerView.removeAlert();
-				app.navigate("events/" + model.id, {trigger: true, replace: true});
+				window.headerView.showAlert({type:"alert-success", message:"The event was saved"}, {keepAlert:true});
+				app.navigate("events/" + model.id, {trigger: true});
             },
             error: function (model, response) {
-                window.headerView.showAlert({type:"alert-error", message:"Couldn't save event", errors:$.parseJSON(response.responseText)});
+				var errors = null;
+				try {
+					errors = $.parseJSON(response.responseText);						
+				} catch (error) {
+					errors = [{property:"", message:response.responseText}];
+				}
+					
+                window.headerView.showAlert({type:"alert-error", message:"Couldn't save event", errors:errors});
             }
         });
 		return false;
@@ -76,9 +87,17 @@ window.EventEditView = Backbone.View.extend({
 	cancel: function() {
 	    window.headerView.removeAlert();
 		if (this.model.id) {
-			app.navigate("events/" + this.model.id, {trigger: true, replace: true});			
+			app.navigate("events/" + this.model.id, {trigger: true});			
 		} else {
-			app.navigate("events", {trigger: true, replace: true});	
+			app.navigate("eventweek", {trigger: true});	
+		}
+		return false;
+	},
+
+	beforeDelete: function() {
+		var confirmed = confirm('Are you sure you want to delete this event?');
+		if (confirmed) {
+			this.delete();
 		}
 		return false;
 	},
@@ -89,16 +108,16 @@ window.EventEditView = Backbone.View.extend({
 		if (this.model.id) {
     		this.model.destroy({
                 success: function (model, response) {
-                    window.headerView.removeAlert();
-    				app.navigate("events", {trigger: true, replace: true});
+					window.headerView.showAlert({type:"alert-success", message:"The event was deleted"}, {keepAlert:true});
+    				app.navigate("eventweek", {trigger: true});
                 },
                 error: function (model, response) {
-                    window.headerView.showAlert({type:"alert-error", message:"Couldn't save event", errors:$.parseJSON(response.responseText)});
+                    window.headerView.showAlert({type:"alert-error", message:"Couldn't delete event"});
                 }
             });   
 		} else {
 		    window.headerView.removeAlert();
-			app.navigate("events", {trigger: true, replace: true});
+			app.navigate("eventweek", {trigger: true});
 		}
 		return false;
 	}

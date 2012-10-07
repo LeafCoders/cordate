@@ -1,0 +1,20 @@
+.calendarDay {
+	margin-bottom: 10px;
+}
+
+.calendarDate {
+	float: left;
+	width: 80px;
+	text-align: center;
+	background: #eee;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+.calendarDayNr h2 {
+	margin: 2px;
+}
+
+.calendarInfo {
+	float: left;
+}
