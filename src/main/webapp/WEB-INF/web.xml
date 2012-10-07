@@ -10,7 +10,7 @@
 
 		<init-param>
 			<param-name>ProxyTo</param-name>
-			<param-value>http://localhost:9000/rosette</param-value>
+			<param-value>http://localhost:9000</param-value>
 		</init-param>
 		<init-param>
 			<param-name>Prefix</param-name>

@@ -24,7 +24,7 @@
 	<!-- <beans:property name="suffix" value=".jsp" /> -->
 	<!-- </beans:bean> -->
 	
-	<beans:import resource="security.xml" />
+	<!-- <beans:import resource="security.xml" /> -->
 
 	<context:component-scan base-package="se.ryttargardskyrkan.rosette" />
 

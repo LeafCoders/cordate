@@ -97,12 +97,12 @@ window.EventEditView = Backbone.View.extend({
 	beforeDelete: function() {
 		var confirmed = confirm('Are you sure you want to delete this event?');
 		if (confirmed) {
-			this.delete();
+			this.doDelete();
 		}
 		return false;
 	},
 	
-	delete: function() {
+	doDelete: function() {
 		var self = this;
 		
 		if (this.model.id) {
