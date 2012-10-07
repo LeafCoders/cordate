@@ -70,7 +70,7 @@ window.EventEditView = Backbone.View.extend({
 				window.headerView.showAlert({type:"alert-success", message:"The event was saved"}, {keepAlert:true});
 				app.navigate("events/" + model.id, {trigger: true});
             },
-            error: function (model, response) {
+            error: function (model, response, three) {
 				var errors = null;
 				try {
 					errors = $.parseJSON(response.responseText);						

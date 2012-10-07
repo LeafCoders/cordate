@@ -1,10 +1,10 @@
 window.templateManager = {
-	templates: {},
-	get: function(id, callback) {
+	templates : {},
+	get : function(id, callback) {
 		var template = this.templates["'" + id + "'"];
-		
+
 		if (template) {
-			callback(template);	
+			callback(template);
 		} else {
 			var that = this;
 			$.get("templates/" + id + ".html", function(template) {

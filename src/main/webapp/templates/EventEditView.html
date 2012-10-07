@@ -3,16 +3,16 @@
 <p>
 	<form>
 	  <label for="title">Title</label>
-	  <input name="title" type="text" placeholder="Title" value="{{title}}"/>
+	  <input id="title" name="title" type="text" placeholder="Title" value="{{title}}"/>
 
-	  <label for="startTime">Start Time</label>  
-	  <input name="startDate" class="input-small" type="text" value="{{date startTime}}">
+	  <label for="startDate">Start Time</label>  
+	  <input id="startDate" name="startDate" class="input-small" type="text" value="{{date startTime}}">
 	  <input name="startTime" class="input-small" type="text" value="{{time startTime}}">
   
-	  <label for="endTime">End Time</label>  
-	  <input name="endDate" class="input-small" type="text" value="{{date endTime}}">
+	  <label for="endDate">End Time</label>  
+	  <input id="endDate" name="endDate" class="input-small" type="text" value="{{date endTime}}">
 	  <input name="endTime" class="input-small" type="text" value="{{time endTime}}">
-
+	  
 	  <div class="form-actions">
 	    <a href="#" class="btn btn-primary save">Save</a>
 	    <a href="#" class="btn cancel">Cancel</a>
