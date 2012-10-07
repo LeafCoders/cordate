@@ -109,7 +109,6 @@ window.Router = Backbone.Router.extend({
 });
 
 $(function () {
-    app = new Router();
 	$.ajaxSetup({ cache: false });
 	
 	Handlebars.registerHelper('dateFromDateTime', function(dateTime) {
@@ -156,5 +155,8 @@ $(function () {
 		return year;
 		
 	});
+	
+	app = new Router();
+	
     Backbone.history.start();
 });
