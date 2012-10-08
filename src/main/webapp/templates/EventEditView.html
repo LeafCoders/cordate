@@ -15,8 +15,16 @@
 	  
 	  <label>Description</label>  
 	  <textarea name="description" rows="3">{{description}}</textarea>
-	  
-	  <div class="form-actions">
+
+	<label>Theme</label>
+	<select id="themeId" name="themeId">
+		<option value="">Chose theme...</option>
+	{{#each themes}}
+		<option value="{{id}}" {{selected id ../themeId}}>{{title}}</option>
+	{{/each}}
+	</select>
+
+	<div class="form-actions">
 	    <a href="#" class="btn btn-primary save">Save</a>
 	    <a href="#" class="btn cancel">Cancel</a>
 		{{#if id}}

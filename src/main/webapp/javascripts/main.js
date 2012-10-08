@@ -90,8 +90,17 @@ window.Router = Backbone.Router.extend({
 			if (window.eventEditView) {
 				window.eventEditView.undelegateEvents();
 			}
-			window.eventEditView = new EventEditView({model:event, el:$("#content")});
-			window.headerView.select('events-menu');
+			var themeCollection = new ThemeCollection();
+			themeCollection.fetch({success: function(model) {
+				var collection = [];
+				_.each(model.models, function(theme) {
+					collection.push(theme.toJSON());
+				}, that);
+				event.set("themes", collection);
+				
+				window.eventEditView = new EventEditView({model:event, el:$("#content")});
+				window.headerView.select('events-menu');
+			}});
 		}});
     },
 	
@@ -209,8 +218,14 @@ $(function () {
 			year = date.substring(0, 4);
 		}
 		return year;
-		
 	});
+	Handlebars.registerHelper('selected', function(option, value) {
+        if (option == value) {
+            return new Handlebars.SafeString(' selected');
+        } else {
+            return '';
+        }
+    });
 	
 	app = new Router();
 	

@@ -30,6 +30,7 @@ window.EventEditView = Backbone.View.extend({
     events: {
         "change input[type='text']"	: "change",
         "change textarea"			: "change",
+        "change #themeId"			: "change",
 		"click .save"				: "save",
 		"click .cancel"				: "cancel",
 		"click #deleteButton"		: "beforeDelete",
@@ -53,6 +54,12 @@ window.EventEditView = Backbone.View.extend({
 			change["endTime"] = $.trim(target.value) + " " + $("[name='endTime']").val() + " Europe/Stockholm";
 		} else if (target.name == "endTime") {
 			change["endTime"] = $("[name='endDate']").val() + " " + $.trim(target.value) + " Europe/Stockholm";
+		} else if (target.name == "themeId") {
+			if (target.value == "") {
+				change[target.name] = null;
+			} else {
+				change[target.name] = $.trim(target.value);
+			}
 		} else {
 			change[target.name] = $.trim(target.value);
 		}
@@ -61,6 +68,8 @@ window.EventEditView = Backbone.View.extend({
     },
 	
 	save: function() {
+		this.model.unset("themes");
+		
 		if ($.trim($("[name='startTime']").val()) == "") {
 			this.model.set("startTime", $("[name='startDate']").val() + " 00:00 Europe/Stockholm");
 		}
