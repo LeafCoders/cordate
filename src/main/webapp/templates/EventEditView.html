@@ -2,16 +2,19 @@
 
 <p>
 	<form>
-	  <label for="title">Title</label>
+	  <label>Title</label>
 	  <input name="title" type="text" placeholder="Title" value="{{title}}"/>
 
-	  <label for="startDate">Start Time</label>  
+	  <label>Start Time</label>  
 	  <input name="startDate" class="input-small" type="text" value="{{dateFromDateTime startTime}}">
 	  <input name="startTime" class="input-small" type="text" value="{{timeFromDateTime startTime}}">
   
-	  <label for="endDate">End Time</label>  
+	  <label>End Time</label>  
 	  <input name="endDate" class="input-small" type="text" value="{{dateFromDateTime endTime}}">
 	  <input name="endTime" class="input-small" type="text" value="{{timeFromDateTime endTime}}">
+	  
+	  <label>Description</label>  
+	  <textarea name="description" rows="3">{{description}}</textarea>
 	  
 	  <div class="form-actions">
 	    <a href="#" class="btn btn-primary save">Save</a>

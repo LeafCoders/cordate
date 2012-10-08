@@ -29,6 +29,7 @@ window.EventEditView = Backbone.View.extend({
 	
     events: {
         "change input[type='text']"	: "change",
+        "change textarea"			: "change",
 		"click .save"				: "save",
 		"click .cancel"				: "cancel",
 		"click #deleteButton"		: "beforeDelete",
