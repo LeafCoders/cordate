@@ -1,0 +1,16 @@
+<a href="#users">« Back to users</a>
+
+<p>
+	<form>
+	  <label>Username</label>
+	  <input name="username" type="text" value="{{username}}"/>
+	  
+	  <div class="form-actions">
+	    <a href="#" class="btn btn-primary save">Save</a>
+	    <a href="#" class="btn cancel">Cancel</a>
+		{{#if id}}
+	    <a href="#" class="btn btn-danger pull-right delete" id="deleteButton">Delete</a>
+		{{/if}}
+	  </div>
+	</form>
+</p>

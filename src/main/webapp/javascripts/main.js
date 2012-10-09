@@ -7,169 +7,39 @@ window.Router = Backbone.Router.extend({
         "events/new": "eventNew",
         "events/:id": "event",
         "events/:id/edit": "eventEdit",
+        
         "themes": "themes",
         "themes/new": "themeNew",
         "themes/:id": "theme",
-        "themes/:id/edit": "themeEdit"
+        "themes/:id/edit": "themeEdit",
+        
+        "users": "users",
+        "users/new": "userNew",
+        "users/:id": "user",
+        "users/:id/edit": "userEdit"
     },
 
     initialize: function () {
         window.headerView = new HeaderView({el:$("#header")});
     },
 
-    home: function () {
-        // Since the home view never changes, we instantiate it and render it only once
-        if (!window.homeView) {
-            window.homeView = new HomeView();
-            window.homeView.render();
-        } else {
-            window.homeView.delegateEvents(); // delegate events when the view is recycled
-        }
-        $("#content").html(window.homeView.el);
-        window.headerView.select('home-menu');
-    },
+    home: window.HomeController.home,
 
-    eventweekcurrent: function () {
-        var eventweek = new Eventweek();
-		
-		var that = this;
-		var request = eventweek.fetch({success: function() {
-			if (window.eventweekView) {
-				window.eventweekView.undelegateEvents();
-			}
-			
-			var link_headers = parse_link_header(request.getResponseHeader('Link'));
-			eventweek.set('previous_page', link_headers['previous']);
-			eventweek.set('next_page', link_headers['next']);
-			
-			window.eventweekView = new EventweekView({model:eventweek, el:$("#content")});
-			window.headerView.select('events-menu');	
-		}});
+    eventweekcurrent: window.EventController.eventweekcurrent,
+    eventweek: window.EventController.eventweek,
+    event: window.EventController.event,
+    eventEdit: window.EventController.eventEdit,
+    eventNew: window.EventController.eventNew,
 
-    },
-	
-    eventweek: function (id) {
-        var eventweek = new Eventweek({id: id});
-		
-		var that = this;
-		var request = eventweek.fetch({success: function() {
-			if (window.eventweekView) {
-				window.eventweekView.undelegateEvents();
-			}
-			
-			var link_headers = parse_link_header(request.getResponseHeader('Link'));
-			eventweek.set('previous_page', link_headers['previous']);
-			eventweek.set('next_page', link_headers['next']);
-			
-			window.eventweekView = new EventweekView({model:eventweek, el:$("#content")});
-			window.headerView.select('events-menu');	
-		}});
-
-    },
-	
-    event: function (id) {
-		if (id) {
-	        var event = new Event({id: id});
-		
-			var that = this;
-			event.fetch({success: function() {
-				if (window.eventView) {
-					window.eventView.undelegateEvents();
-				}
-				window.eventView = new EventView({model:event, el:$("#content")});
-				window.headerView.select('events-menu');
-			}});
-		}
-    },
-	
-    eventEdit: function (id) {
-        var event = new Event({id: id});
-		
-		var that = this;
-		event.fetch({success: function() {
-			if (window.eventEditView) {
-				window.eventEditView.undelegateEvents();
-			}
-			var themeCollection = new ThemeCollection();
-			themeCollection.fetch({success: function(model) {
-				var collection = [];
-				_.each(model.models, function(theme) {
-					collection.push(theme.toJSON());
-				}, that);
-				event.set("themes", collection);
-				
-				window.eventEditView = new EventEditView({model:event, el:$("#content")});
-				window.headerView.select('events-menu');
-			}});
-		}});
-    },
-	
-    eventNew: function (id) {
-        var now = new Date();
-        var date = now.getFullYear() + "-" + ('0' + (now.getMonth() + 1)).slice(-2) + "-" + ('0' + now.getDate()).slice(-2);
-        var defaultStartTime = date + " 11:00 Europe/Stockholm";
-        
-        var event = new Event({startTime:defaultStartTime});
-		
-		if (window.eventEditView) {
-			window.eventEditView.undelegateEvents();
-		}
-		window.eventEditView = new EventEditView({model:event, el:$("#content")});
-			
-		window.headerView.select('events-menu');
-    },
-
-    themes: function () {
-        var themeCollection = new ThemeCollection();
-	
-		var that = this;
-		themeCollection.fetch({success: function() {
-			if (window.themeCollectionView) {
-				window.themeCollectionView.undelegateEvents();
-			}
-			window.themeCollectionView = new ThemeCollectionView({model:themeCollection, el:$("#content")});
-			window.headerView.select('themes-menu');
-		}});
-    },
-	
-    theme: function (id) {
-		if (id) {
-	        var theme = new Theme({id: id});
-		
-			var that = this;
-			theme.fetch({success: function() {
-				if (window.themeView) {
-					window.themeView.undelegateEvents();
-				}
-				window.themeView = new ThemeView({model:theme, el:$("#content")});
-				window.headerView.select('themes-menu');
-			}});
-		}
-    },
-	
-    themeEdit: function (id) {
-        var theme = new Theme({id: id});
-		
-		var that = this;
-		theme.fetch({success: function() {
-			if (window.themeEditView) {
-				window.themeEditView.undelegateEvents();
-			}
-			window.themeEditView = new ThemeEditView({model:theme, el:$("#content")});
-			window.headerView.select('themes-menu');
-		}});
-    },
-	
-    themeNew: function (id) {
-        var theme = new Theme();
-		
-		if (window.themeEditView) {
-			window.themeEditView.undelegateEvents();
-		}
-		window.themeEditView = new ThemeEditView({model:theme, el:$("#content")});
-			
-		window.headerView.select('themes-menu');
-    }
+    themes: window.ThemeController.themes,
+    theme: window.ThemeController.theme,
+    themeEdit: window.ThemeController.themeEdit,
+    themeNew: window.ThemeController.themeNew,
+    
+    users: window.UserController.users,
+    user: window.UserController.user,
+    userEdit: window.UserController.userEdit,
+    userNew: window.UserController.userNew
 	
 });
 
