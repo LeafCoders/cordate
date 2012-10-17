@@ -7,7 +7,9 @@ window.UserEditView = Backbone.View.extend({
 		this.render();
 	},
 	
-    render:function(eventName) {		
+    render:function(eventName) {
+    	window.headerView.updateSelectedSection();
+    	
 		var that = this;
 	    window.templateManager.get(this.template, function(templateSource) {
 			var template = Handlebars.compile(templateSource);
@@ -22,11 +24,11 @@ window.UserEditView = Backbone.View.extend({
     },
 	
     events: {
-        "change input[type='text']"	: "change",
-        "change textarea"			: "change",
-		"click .save"				: "save",
-		"click .cancel"				: "cancel",
-		"click #deleteButton"		: "beforeDelete",
+        "change input[type='text']"		: "change",
+        "change input[type='password']"	: "change",
+		"click .save"					: "save",
+		"click .cancel"					: "cancel",
+		"click #deleteButton"			: "beforeDelete",
     },
 	
 	change: function (event) {

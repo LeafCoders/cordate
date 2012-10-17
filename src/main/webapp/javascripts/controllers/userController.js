@@ -1,53 +1,56 @@
 window.UserController = {
 	users: function () {
+		window.currentView = "users";
+		
         var userCollection = new UserCollection();
 	
 		var that = this;
 		userCollection.fetch({success: function() {
-			if (window.userCollectionView) {
-				window.userCollectionView.undelegateEvents();
+			if (window.currentContentView) {
+				window.currentContentView.undelegateEvents();
 			}
-			window.userCollectionView = new UserCollectionView({model:userCollection, el:$("#content")});
-			window.headerView.select('users-menu');
+			window.currentContentView = new UserCollectionView({model:userCollection, el:$("#content")});
 		}});
     },
 	
     user: function (id) {
+    	window.currentView = "users";
+    	
 		if (id) {
 	        var user = new User({id: id});
 		
 			var that = this;
 			user.fetch({success: function() {
-				if (window.userView) {
-					window.userView.undelegateEvents();
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
 				}
-				window.userView = new UserView({model:user, el:$("#content")});
-				window.headerView.select('users-menu');
+				window.currentContentView = new UserView({model:user, el:$("#content")});
 			}});
 		}
     },
 	
     userEdit: function (id) {
+    	window.currentView = "users";
+    	
         var user = new User({id: id});
 		
 		var that = this;
 		user.fetch({success: function() {
-			if (window.userEditView) {
-				window.userEditView.undelegateEvents();
+			if (window.currentContentView) {
+				window.currentContentView.undelegateEvents();
 			}
-			window.userEditView = new UserEditView({model:user, el:$("#content")});
-			window.headerView.select('users-menu');
+			window.currentContentView = new UserEditView({model:user, el:$("#content")});
 		}});
     },
 	
     userNew: function (id) {
+    	window.currentView = "users";
+    	
         var user = new User();
 		
-		if (window.userEditView) {
-			window.userEditView.undelegateEvents();
+		if (window.currentContentView) {
+			window.currentContentView.undelegateEvents();
 		}
-		window.userEditView = new UserEditView({model:user, el:$("#content")});
-			
-		window.headerView.select('users-menu');
+		window.currentContentView = new UserEditView({model:user, el:$("#content")});		
     }
 };

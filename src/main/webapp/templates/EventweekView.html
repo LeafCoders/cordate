@@ -1,5 +1,20 @@
+<style>
+.weekHeader {
+	margin-bottom: 0;
+	color: #333;
+}
+
+.dateRange {
+	margin-top: 0;
+	margin-bottom: 25px;
+	color: #888;
+}
+</style>
+
+<h1>Events</h1>
+
 <div class="pull-left">
-	<h1>Week {{week}}</h1>
+	<h2 class="weekHeader">Week {{week}}</h2>
 </div>
 
 <div class="btn-toolbar pull-right">
@@ -12,15 +27,7 @@
 
 <div class="clearfix"></div>
 
-<h4>{{dayFromDate since}} {{monthFromDate since}} {{yearFromDate
-	since}} - {{dayFromDate until}} {{monthFromDate until}} {{yearFromDate
-	until}}</h4>
-<p>{{#each months}} {{monthFromMonthNumber this}} {{/each}}</p>
-
-<p>
-	<a href="#events/new" class="btn btn-primary"><i
-		class="icon-plus-sign icon-white"></i> Create new event</a>
-</p>
+<h4 class="dateRange">{{range}}</h4>
 
 {{#each days}}
 <div class="calendarDay">
@@ -33,16 +40,13 @@
 
 	<div class="calendarInfo">
 		{{#if events}}
-		<div>
+		<table class="table table-bordered table-hover">
 			{{#each events}}
-			<div>
-				<a href="#events/{{id}}">{{timeFromDateTime startTime}} {{title}}</a>
-			</div>
-			<div>
-				{{description}}
-			</div>
+			<tr id="{{id}}">
+				<td>{{timeFromDateTime startTime}} {{title}}</td>
+			</tr>
 			{{/each}}
-		</div>
+		</table>
 		{{/if}}
 	</div>
 
@@ -50,3 +54,8 @@
 
 </div>
 {{/each}}
+
+<p>
+	<a href="#events/new" class="btn btn-primary"><i
+		class="icon-plus icon-white"></i> New event</a>
+</p>

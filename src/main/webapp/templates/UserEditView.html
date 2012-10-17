@@ -1,9 +1,24 @@
 <a href="#users">« Back to users</a>
 
+{{#if id}}
+<h1>Edit user</h1>
+{{else}}
+<h1>New user</h1>
+{{/if}}
+
 <p>
 	<form>
 	  <label>Username</label>
 	  <input name="username" type="text" value="{{username}}"/>
+	  
+	  <label>First Name</label>
+	  <input name="firstName" type="text" value="{{firstName}}"/>
+	  
+	  <label>Last Name</label>
+	  <input name="lastName" type="text" value="{{lastName}}"/>
+	  
+	  <label>Password</label>
+	  <input name="password" type="password" value="{{password}}"/>
 	  
 	  <div class="form-actions">
 	    <a href="#" class="btn btn-primary save">Save</a>

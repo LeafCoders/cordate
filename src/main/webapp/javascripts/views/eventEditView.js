@@ -7,7 +7,9 @@ window.EventEditView = Backbone.View.extend({
 		this.render();
 	},
 	
-    render:function(eventName) {		
+    render:function(eventName) {
+    	window.headerView.updateSelectedSection();
+    	
 		var that = this;
 	    window.templateManager.get(this.template, function(templateSource) {
 			var template = Handlebars.compile(templateSource);
@@ -21,7 +23,7 @@ window.EventEditView = Backbone.View.extend({
 			that.$("[name='startTime']").timePicker();
 			
 			that.$("[name='endDate']").datepicker({format:'yyyy-mm-dd', weekStart:1, autoclose:true, todayHighlight:true});
-			that.$("[name='endTime']").timePicker();
+			that.$("[name='endTime']").timePicker();			
 	    });		
 		
         return this;

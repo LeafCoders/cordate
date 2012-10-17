@@ -12,14 +12,20 @@ window.HeaderView = Backbone.View.extend({
 			var template = Handlebars.compile(templateSource);
 			var html = template();
 			that.$el.html(html);
+			
+			that.updateSelectedSection();
 	    });
 		
         return this;
     },
+    
+    updateSelectedSection: function() {
+    	this.select(window.currentView + "-menu");
+    },
 
     select: function(menuItem) {
-        $('.nav li').removeClass('active');
-        $('.' + menuItem).addClass('active');
+    	this.$('.nav li').removeClass('active');
+    	this.$('.' + menuItem).addClass('active');
 		
 		if (!this.keepAlert) {
 			this.removeAlert();	

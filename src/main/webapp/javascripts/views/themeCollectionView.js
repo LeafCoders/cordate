@@ -7,6 +7,8 @@ window.ThemeCollectionView = Backbone.View.extend({
 	},
 
 	render : function() {
+		window.headerView.updateSelectedSection();
+		
 		var that = this;
 		window.templateManager.get(this.template, function(templateSource) {
 			var template = Handlebars.compile(templateSource);
@@ -27,11 +29,19 @@ window.ThemeCollectionView = Backbone.View.extend({
 	},
 
 	events : {
-		"click .create" : "create"
+		"click #create" : "create",
+		"click tr" 		: "showItem"
 	},
 
 	create : function() {
 		app.navigate("themes/new", {
+			trigger : true
+		});
+	},
+	
+	showItem : function(event) {
+		var id = event.currentTarget.getAttribute('id');
+		app.navigate("themes/" + id, {
 			trigger : true
 		});
 	}

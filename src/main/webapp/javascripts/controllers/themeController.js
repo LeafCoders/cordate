@@ -1,53 +1,56 @@
 window.ThemeController = {
 	themes: function () {
+		window.currentView = "themes";
+		
         var themeCollection = new ThemeCollection();
 	
 		var that = this;
 		themeCollection.fetch({success: function() {
-			if (window.themeCollectionView) {
-				window.themeCollectionView.undelegateEvents();
+			if (window.currentContentView) {
+				window.currentContentView.undelegateEvents();
 			}
-			window.themeCollectionView = new ThemeCollectionView({model:themeCollection, el:$("#content")});
-			window.headerView.select('themes-menu');
+			window.currentContentView = new ThemeCollectionView({model:themeCollection, el:$("#content")});
 		}});
     },
 	
     theme: function (id) {
+    	window.currentView = "themes";
+    	
 		if (id) {
 	        var theme = new Theme({id: id});
 		
 			var that = this;
 			theme.fetch({success: function() {
-				if (window.themeView) {
-					window.themeView.undelegateEvents();
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
 				}
-				window.themeView = new ThemeView({model:theme, el:$("#content")});
-				window.headerView.select('themes-menu');
+				window.currentContentView = new ThemeView({model:theme, el:$("#content")});
 			}});
 		}
     },
 	
     themeEdit: function (id) {
+    	window.currentView = "themes";
+    	
         var theme = new Theme({id: id});
 		
 		var that = this;
 		theme.fetch({success: function() {
-			if (window.themeEditView) {
-				window.themeEditView.undelegateEvents();
+			if (window.currentContentView) {
+				window.currentContentView.undelegateEvents();
 			}
-			window.themeEditView = new ThemeEditView({model:theme, el:$("#content")});
-			window.headerView.select('themes-menu');
+			window.currentContentView = new ThemeEditView({model:theme, el:$("#content")});
 		}});
     },
 	
-    themeNew: function (id) {
+    themeNew: function () {
+    	window.currentView = "themes";
+    	
         var theme = new Theme();
 		
-		if (window.themeEditView) {
-			window.themeEditView.undelegateEvents();
+		if (window.currentContentView) {
+			window.currentContentView.undelegateEvents();
 		}
-		window.themeEditView = new ThemeEditView({model:theme, el:$("#content")});
-			
-		window.headerView.select('themes-menu');
+		window.currentContentView = new ThemeEditView({model:theme, el:$("#content")});
     }
 };

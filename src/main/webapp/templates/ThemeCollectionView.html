@@ -1,11 +1,16 @@
-<button class="btn btn-primary create">Create new theme</button>
+<h1>Themes</h1>
 
 <p>
-<table class="table">
+<table class="table table-bordered table-hover">
 	{{#each models}}
-	<tr>
-		<td><a href="#themes/{{id}}">{{title}}</a></td>
+	<tr id="{{id}}">
+		<td>{{title}}</td>
 	</tr>
 	{{/each}}
 </table>
 </p>
+
+<button class="btn btn-primary create" id="create">
+<i class="icon-plus icon-white"></i>
+New theme
+</button>

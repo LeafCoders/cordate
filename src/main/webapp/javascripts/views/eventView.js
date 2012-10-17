@@ -7,7 +7,9 @@ window.EventView = Backbone.View.extend({
 		this.render();
 	},
     
-    render:function(eventName) {		
+    render:function(eventName) {
+    	window.headerView.updateSelectedSection();
+    	
 		var that = this;
 	    window.templateManager.get(this.template, function(templateSource) {
 			var template = Handlebars.compile(templateSource);
