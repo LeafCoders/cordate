@@ -1,8 +1,8 @@
-window.UserCollectionView = Backbone.View.extend({
-	template : 'UserCollectionView',
+window.GroupCollectionView = Backbone.View.extend({
+	template : 'GroupCollectionView',
 
 	initialize : function() {
-		console.log('Initializing UserCollectionView');
+		console.log('Initializing GroupCollectionView');
 		this.render();
 	},
 
@@ -14,8 +14,8 @@ window.UserCollectionView = Backbone.View.extend({
 			var template = Handlebars.compile(templateSource);
 
 			var collection = [];
-			_.each(that.model.models, function(user) {
-				collection.push(user.toJSON());
+			_.each(that.model.models, function(group) {
+				collection.push(group.toJSON());
 			}, that);
 
 			var html = template({
@@ -34,14 +34,14 @@ window.UserCollectionView = Backbone.View.extend({
 	},
 
 	create : function() {
-		app.navigate("users/new", {
+		app.navigate("groups/new", {
 			trigger : true
 		});
 	},
 	
 	showItem : function(event) {
 		var id = event.currentTarget.getAttribute('id');
-		app.navigate("users/" + id, {
+		app.navigate("groups/" + id, {
 			trigger : true
 		});
 	}

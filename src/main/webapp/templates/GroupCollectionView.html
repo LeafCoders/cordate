@@ -1,18 +1,20 @@
-<h1>Themes</h1>
+<h1>Groups</h1>
 
 <p>
 {{#if models}}
 <table class="table table-bordered table-hover">
-	{{#each models}}
-	<tr id="{{id}}">
-		<td>{{title}}</td>
-	</tr>
-	{{/each}}
+	<tbody>
+		{{#each models}}
+		<tr id="{{id}}">
+			<td>{{name}}</td>
+		</tr>
+		{{/each}}
+	</tbody>
 </table>
 {{/if}}
 </p>
 
 <button class="btn btn-primary create" id="create">
 <i class="icon-plus icon-white"></i>
-New theme
+New user
 </button>

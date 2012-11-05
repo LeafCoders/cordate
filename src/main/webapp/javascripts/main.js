@@ -16,7 +16,12 @@ window.Router = Backbone.Router.extend({
         "users": "users",
         "users/new": "userNew",
         "users/:id": "user",
-        "users/:id/edit": "userEdit"
+        "users/:id/edit": "userEdit",
+        
+        "groups": "groups",
+        "groups/new": "groupNew",
+        "groups/:id": "group",
+        "groups/:id/edit": "groupEdit"
     },
 
     initialize: function () {
@@ -39,7 +44,12 @@ window.Router = Backbone.Router.extend({
     users: window.UserController.users,
     user: window.UserController.user,
     userEdit: window.UserController.userEdit,
-    userNew: window.UserController.userNew
+    userNew: window.UserController.userNew,
+    
+    groups: window.GroupController.groups,
+    group: window.GroupController.group,
+    groupEdit: window.GroupController.groupEdit,
+    groupNew: window.GroupController.groupNew
 	
 });
 

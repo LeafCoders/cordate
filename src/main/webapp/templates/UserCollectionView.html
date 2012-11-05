@@ -1,6 +1,7 @@
 <h1>Users</h1>
 
 <p>
+{{#if models}}
 <table class="table table-bordered table-hover">
 	<tbody>
 		{{#each models}}
@@ -10,6 +11,7 @@
 		{{/each}}
 	</tbody>
 </table>
+{{/if}}
 </p>
 
 <button class="btn btn-primary create" id="create">

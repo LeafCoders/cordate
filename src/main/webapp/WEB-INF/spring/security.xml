@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.html"/>
+		<property name="filterChainDefinitions">
+			<value>
+				/login.html = anon
+				/login2.html = anon
+				/sessions = anon
+				/logout = anon
+				/css/** = anon
+				/icons/** = anon
+				/img/** = anon
+				/javascripts/** = authc
+				/lib/** = authc
+				/templates/** = authc
+ 				/index.html = authc
+  			</value>
+		</property>
+	</bean>
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="cordateRealm" />
+		<property name="cacheManager" ref="ehCacheManager"/>
+	</bean>
+	
+	<bean id="ehCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"/>
+	
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	
+	<context:component-scan base-package="se.ryttargardskyrkan.cordate.security" />
+
+</beans>
