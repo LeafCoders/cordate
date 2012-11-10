@@ -57,17 +57,7 @@
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/sessions</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/logout</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/api/*</url-pattern>
-	</servlet-mapping>
-
+		
 </web-app>

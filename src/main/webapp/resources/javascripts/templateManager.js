@@ -7,7 +7,7 @@ window.templateManager = {
 			callback(template);
 		} else {
 			var that = this;		
-			$.get("templates/" + id + ".html", function(template) {
+			$.get("resources/templates/" + id + ".html", function(template) {
 				that.templates[id] = template;
 				callback(template);
 			}, 'text');

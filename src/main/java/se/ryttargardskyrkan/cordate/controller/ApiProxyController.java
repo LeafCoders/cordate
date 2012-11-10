@@ -19,25 +19,34 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import se.ryttargardskyrkan.cordate.model.UserSession;
+
 @Controller
-public class ProxyController {
+public class ApiProxyController {
+	
+	@Autowired
+	private UserSession userSession;
 	
 	private HttpClient httpClient;
 	private String baseUrl;
 	
-	public ProxyController() {
+	public ApiProxyController() {
 		this.httpClient = new DefaultHttpClient();
 		this.baseUrl = "http://localhost:9000";
 	}
 
-	@RequestMapping(produces = "application/json;charset=utf-8")
+	@RequestMapping(value="/api/**", produces = "application/json;charset=utf-8")
 	public void proxyPost(HttpServletRequest request, @RequestBody String requestBody, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
 		String requestURI = request.getRequestURI().replaceAll("/cordate", "");
-		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("lars.arvidsson@gmail.com", "password");
+		
+		String username = userSession.getUsername();
+		String password = userSession.getPassword();
+		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
 		
 		HttpResponse remoteResponse = null;
 		if ("GET".equals(request.getMethod())) {

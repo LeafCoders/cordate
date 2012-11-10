@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,11 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
     <style>body {padding-top:50px}</style>
-    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="css/datepicker.css" rel="stylesheet">
-    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="resources/css/datepicker.css" rel="stylesheet">
+    <link href="resources/css/timePicker.css" rel="stylesheet">
     <style type="text/css" media="screen">
       
       /* Jumbotrons
@@ -79,22 +81,24 @@
   </head>
 
   <div class="container">
-	  <div id="header"></div>
+	  <div id="header">
+	  	<c:if test="${loginFailed}">
+		  <div class="alert alert-error">
+				<strong>Authentication failed</strong>
+				<br/>
+				The username or password you entered is incorrect.
+			</div>
+		</div>
+		</c:if>
 	  <div id="content">
 	  
-	  Username or password wrong
-	  
+	  	<h1>Login</h1>
 		<form method="post" action="sessions">
 			<label>Username</label>
-			<input name="username" type="text"/>
+			<input id="username" name="username" type="text" value="${username}"/>
 	
 			<label>Password</label>  
-			<input name="password" type="password"/>
-		  
-		  	<label>
-		  		<input type="checkbox" name="rememberMe" value="true"/>
-		  		Remember Me
-			</label> 
+			<input id="password" name="password" type="password"/>
 	
 			<div class="form-actions">
 		    	<button type="submit" class="btn btn-primary save">Login</button>
@@ -103,4 +107,13 @@
 	  </div>
   </div>
   </body>
+  
+  <script type="text/javascript">
+	<c:if test="${loginFailed == false}">
+		document.getElementById("username").focus();
+	</c:if>
+	<c:if test="${loginFailed == true}">
+		document.getElementById("password").focus();
+	</c:if>
+</script>
 </html>
