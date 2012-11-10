@@ -65,7 +65,7 @@
       }
     </style>
 	
-	<link href="css/rosette.css" rel="stylesheet">
+	<link href="resources/css/rosette.css" rel="stylesheet">
     
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -73,13 +73,23 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="icons/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="icons/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="icons/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="icons/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="icons/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="resources/icons/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="resources/icons/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="resources/icons/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="resources/icons/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="resources/icons/apple-touch-icon-57-precomposed.png">
   </head>
+  
+    <script type="text/javascript">
+    function focus() {
+    	document.getElementById("username").focus();
+		<c:if test="${loginFailed == true}">
+			document.getElementById("password").focus();
+		</c:if>	
+    }
+</script>
 
+<body onLoad="focus();">
   <div class="container">
 	  <div id="header">
 	  	<c:if test="${loginFailed}">
@@ -106,14 +116,7 @@
 		</form>
 	  </div>
   </div>
-  </body>
+</body>
   
-  <script type="text/javascript">
-	<c:if test="${loginFailed == false}">
-		document.getElementById("username").focus();
-	</c:if>
-	<c:if test="${loginFailed == true}">
-		document.getElementById("password").focus();
-	</c:if>
-</script>
+
 </html>
