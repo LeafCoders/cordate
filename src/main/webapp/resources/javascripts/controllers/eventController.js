@@ -91,6 +91,17 @@ window.EventController = {
 		if (window.currentContentView) {
 			window.currentContentView.undelegateEvents();
 		}
-		window.currentContentView = new EventEditView({model:event, el:$("#content")});
+		
+		var that = this;
+		var themeCollection = new ThemeCollection();
+		themeCollection.fetch({success: function(model) {
+			var collection = [];
+			_.each(model.models, function(theme) {
+				collection.push(theme.toJSON());
+			}, that);
+			event.set("themes", collection);
+			
+			window.currentContentView = new EventEditView({model:event, el:$("#content")});	
+		}});
     }
 };
