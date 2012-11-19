@@ -8,5 +8,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<import resource="security.xml" />
+	
+	<context:property-placeholder location="classpath*:*.properties" />
 		
 </beans>

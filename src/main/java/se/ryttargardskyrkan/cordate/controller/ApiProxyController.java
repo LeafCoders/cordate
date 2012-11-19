@@ -20,6 +20,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +33,8 @@ public class ApiProxyController {
 	@Autowired
 	private UserSession userSession;
 	
+	@Value("${rosette.baseUrl}")
 	private String baseUrl;
-	
-	public ApiProxyController() {
-		this.baseUrl = "http://localhost:9000";
-	}
 
 	@RequestMapping(value="/api/**", produces = "application/json;charset=utf-8")
 	public void proxyPost(HttpServletRequest request, @RequestBody String requestBody, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {

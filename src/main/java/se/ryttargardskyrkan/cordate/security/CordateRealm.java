@@ -21,16 +21,19 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service("cordateRealm")
 public class CordateRealm extends AuthorizingRealm {
+	
+	@Value("${rosette.baseUrlWithVersion}")
+	private String baseUrlWithVersion;
 
 	@PostConstruct
 	public void initialize() {
 		setAuthenticationCachingEnabled(true);
 	}
-
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -48,7 +51,7 @@ public class CordateRealm extends AuthorizingRealm {
 				String providedPassword = new String(token.getPassword());
 
 				HttpClient httpClient = new DefaultHttpClient();
-				HttpGet httpGet = new HttpGet("http://localhost:9000/api/v1-snapshot/authentication");
+				HttpGet httpGet = new HttpGet(baseUrlWithVersion + "/authentication");
 				httpGet.addHeader(new BasicScheme().authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), httpGet));
 
 				HttpResponse response = httpClient.execute(httpGet);
