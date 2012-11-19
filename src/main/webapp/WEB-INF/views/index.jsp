@@ -106,6 +106,8 @@
     <script src="resources/javascripts/models/userCollectionModel.js"></script>
     <script src="resources/javascripts/models/groupModel.js"></script>
     <script src="resources/javascripts/models/groupCollectionModel.js"></script>
+    <script src="resources/javascripts/models/permissionModel.js"></script>
+    <script src="resources/javascripts/models/permissionCollectionModel.js"></script>
     
     <script src="resources/javascripts/views/headerView.js"></script>
     <script src="resources/javascripts/views/homeView.js"></script>
@@ -122,12 +124,16 @@
     <script src="resources/javascripts/views/groupView.js"></script>
     <script src="resources/javascripts/views/groupCollectionView.js"></script>
     <script src="resources/javascripts/views/groupEditView.js"></script>
+    <script src="resources/javascripts/views/permissionView.js"></script>
+    <script src="resources/javascripts/views/permissionCollectionView.js"></script>
+    <script src="resources/javascripts/views/permissionEditView.js"></script>
     
     <script src="resources/javascripts/controllers/homeController.js"></script>
     <script src="resources/javascripts/controllers/eventController.js"></script>
     <script src="resources/javascripts/controllers/themeController.js"></script>
     <script src="resources/javascripts/controllers/userController.js"></script>
     <script src="resources/javascripts/controllers/groupController.js"></script>
+    <script src="resources/javascripts/controllers/permissionController.js"></script>
     
     <script src="resources/javascripts/main.js"></script>
 

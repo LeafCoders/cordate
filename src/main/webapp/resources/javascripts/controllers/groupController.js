@@ -5,12 +5,15 @@ window.GroupController = {
         var groupCollection = new GroupCollection();
 	
 		var that = this;
-		groupCollection.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			window.currentContentView = new GroupCollectionView({model:groupCollection, el:$("#content")});
-		}});
+		groupCollection.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				window.currentContentView = new GroupCollectionView({model:groupCollection, el:$("#content")});
+			},
+			error: app.errorHandler
+		});
     },
 	
     group: function (id) {
@@ -20,12 +23,15 @@ window.GroupController = {
 	        var group = new Group({id: id});
 		
 			var that = this;
-			group.fetch({success: function() {
-				if (window.currentContentView) {
-					window.currentContentView.undelegateEvents();
-				}
-				window.currentContentView = new GroupView({model:group, el:$("#content")});
-			}});
+			group.fetch({
+				success: function() {
+					if (window.currentContentView) {
+						window.currentContentView.undelegateEvents();
+					}
+					window.currentContentView = new GroupView({model:group, el:$("#content")});
+				},
+				error: app.errorHandler
+			});
 		}
     },
 	
@@ -35,12 +41,15 @@ window.GroupController = {
         var group = new Group({id: id});
 		
 		var that = this;
-		group.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			window.currentContentView = new GroupEditView({model:group, el:$("#content")});
-		}});
+		group.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				window.currentContentView = new GroupEditView({model:group, el:$("#content")});
+			},
+			error: app.errorHandler
+		});
     },
 	
     groupNew: function (id) {

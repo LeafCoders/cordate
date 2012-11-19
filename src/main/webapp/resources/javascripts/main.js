@@ -21,7 +21,12 @@ window.Router = Backbone.Router.extend({
         "groups": "groups",
         "groups/new": "groupNew",
         "groups/:id": "group",
-        "groups/:id/edit": "groupEdit"
+        "groups/:id/edit": "groupEdit",
+        
+        "permissions": "permissions",
+        "permissions/new": "permissionNew",
+        "permissions/:id": "permission",
+        "permissions/:id/edit": "permissionEdit",
     },
 
     initialize: function () {
@@ -49,8 +54,16 @@ window.Router = Backbone.Router.extend({
     groups: window.GroupController.groups,
     group: window.GroupController.group,
     groupEdit: window.GroupController.groupEdit,
-    groupNew: window.GroupController.groupNew
-	
+    groupNew: window.GroupController.groupNew,
+    
+    permissions: window.PermissionController.permissions,
+    permission: window.PermissionController.permission,
+    permissionEdit: window.PermissionController.permissionEdit,
+    permissionNew: window.PermissionController.permissionNew,
+    
+    errorHandler: function(model, xhr, options) {
+    	window.headerView.showAlert({type:"alert-error", message:"Error " + xhr.status + ". " + xhr.statusText, keepAlert:true});
+    }
 });
 
 $(function () {

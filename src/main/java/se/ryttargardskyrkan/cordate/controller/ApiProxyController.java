@@ -32,16 +32,15 @@ public class ApiProxyController {
 	@Autowired
 	private UserSession userSession;
 	
-	private HttpClient httpClient;
 	private String baseUrl;
 	
 	public ApiProxyController() {
-		this.httpClient = new DefaultHttpClient();
 		this.baseUrl = "http://localhost:9000";
 	}
 
 	@RequestMapping(value="/api/**", produces = "application/json;charset=utf-8")
 	public void proxyPost(HttpServletRequest request, @RequestBody String requestBody, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
+		HttpClient httpClient = new DefaultHttpClient();
 		String requestURI = request.getRequestURI().replaceAll("/cordate", "");
 		
 		String username = userSession.getUsername();

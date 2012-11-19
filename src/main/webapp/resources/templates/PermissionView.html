@@ -1,0 +1,25 @@
+<a href="#permissions">« Back to permissions</a>
+
+<h1>Permission</h1>
+
+{{#if everyone}}
+<p>Permission for everyone</p>
+{{/if}}
+
+{{#if groupId}}
+<p>Permission for group: {{groupId}}</p>
+{{/if}}
+
+{{#if userId}}
+<p>Permission for user: {{userId}}</p>
+{{/if}}
+
+{{#if patterns}}
+<p>
+	{{#each patterns}}
+		<div>{{.}}</div>
+  	{{/each}}
+</p>
+{{/if}}
+
+<a href="#permissions/{{id}}/edit" class="btn">Edit</a>

@@ -6,18 +6,20 @@ window.EventController = {
         var eventweek = new Eventweek();
 		
 		var that = this;
-		var request = eventweek.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			
-			var link_headers = parse_link_header(request.getResponseHeader('Link'));
-			eventweek.set('previous_page', link_headers['previous']);
-			eventweek.set('next_page', link_headers['next']);
-			
-			window.currentContentView = new EventweekView({model:eventweek, el:$("#content")});	
-		}});
-
+		var request = eventweek.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				
+				var link_headers = parse_link_header(request.getResponseHeader('Link'));
+				eventweek.set('previous_page', link_headers['previous']);
+				eventweek.set('next_page', link_headers['next']);
+				
+				window.currentContentView = new EventweekView({model:eventweek, el:$("#content")});	
+			},
+			error: app.errorHandler
+		});
     },
 	    
 	eventweek: function (id) {
@@ -26,17 +28,20 @@ window.EventController = {
         var eventweek = new Eventweek({id: id});
 		
 		var that = this;
-		var request = eventweek.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			
-			var link_headers = parse_link_header(request.getResponseHeader('Link'));
-			eventweek.set('previous_page', link_headers['previous']);
-			eventweek.set('next_page', link_headers['next']);
-			
-			window.currentContentView = new EventweekView({model:eventweek, el:$("#content")});
-		}});
+		var request = eventweek.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				
+				var link_headers = parse_link_header(request.getResponseHeader('Link'));
+				eventweek.set('previous_page', link_headers['previous']);
+				eventweek.set('next_page', link_headers['next']);
+				
+				window.currentContentView = new EventweekView({model:eventweek, el:$("#content")});
+			},
+			error: app.errorHandler
+		});
 
     },
     
@@ -47,12 +52,15 @@ window.EventController = {
 	        var event = new Event({id: id});
 		
 			var that = this;
-			event.fetch({success: function() {
-				if (window.currentContentView) {
-					window.currentContentView.undelegateEvents();
-				}
-				window.currentContentView = new EventView({model:event, el:$("#content")});
-			}});
+			event.fetch({
+				success: function() {
+					if (window.currentContentView) {
+						window.currentContentView.undelegateEvents();
+					}
+					window.currentContentView = new EventView({model:event, el:$("#content")});
+				},
+				error: app.errorHandler
+			});
 		}
     },
     
@@ -62,21 +70,27 @@ window.EventController = {
         var event = new Event({id: id});
 		
 		var that = this;
-		event.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			var themeCollection = new ThemeCollection();
-			themeCollection.fetch({success: function(model) {
-				var collection = [];
-				_.each(model.models, function(theme) {
-					collection.push(theme.toJSON());
-				}, that);
-				event.set("themes", collection);
-				
-				window.currentContentView = new EventEditView({model:event, el:$("#content")});
-			}});
-		}});
+		event.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				var themeCollection = new ThemeCollection();
+				themeCollection.fetch({
+					success: function(model) {
+						var collection = [];
+						_.each(model.models, function(theme) {
+							collection.push(theme.toJSON());
+						}, that);
+						event.set("themes", collection);
+							
+						window.currentContentView = new EventEditView({model:event, el:$("#content")});
+					},
+					error: app.errorHandler
+				});
+			},
+			error: app.errorHandler
+		});
     },
     
     eventNew: function (id) {
@@ -94,14 +108,17 @@ window.EventController = {
 		
 		var that = this;
 		var themeCollection = new ThemeCollection();
-		themeCollection.fetch({success: function(model) {
-			var collection = [];
-			_.each(model.models, function(theme) {
-				collection.push(theme.toJSON());
-			}, that);
-			event.set("themes", collection);
-			
-			window.currentContentView = new EventEditView({model:event, el:$("#content")});	
-		}});
+		themeCollection.fetch({
+			success: function(model) {
+				var collection = [];
+				_.each(model.models, function(theme) {
+					collection.push(theme.toJSON());
+				}, that);
+				event.set("themes", collection);
+				
+				window.currentContentView = new EventEditView({model:event, el:$("#content")});	
+			},
+			error: window.headerView.errorHandler
+		});
     }
 };

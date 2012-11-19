@@ -5,12 +5,15 @@ window.UserController = {
         var userCollection = new UserCollection();
 	
 		var that = this;
-		userCollection.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			window.currentContentView = new UserCollectionView({model:userCollection, el:$("#content")});
-		}});
+		userCollection.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				window.currentContentView = new UserCollectionView({model:userCollection, el:$("#content")});
+			},
+			error: app.errorHandler
+		});
     },
 	
     user: function (id) {
@@ -20,12 +23,15 @@ window.UserController = {
 	        var user = new User({id: id});
 		
 			var that = this;
-			user.fetch({success: function() {
-				if (window.currentContentView) {
-					window.currentContentView.undelegateEvents();
-				}
-				window.currentContentView = new UserView({model:user, el:$("#content")});
-			}});
+			user.fetch({
+				success: function() {
+					if (window.currentContentView) {
+						window.currentContentView.undelegateEvents();
+					}
+					window.currentContentView = new UserView({model:user, el:$("#content")});
+				},
+				error: app.errorHandler
+			});
 		}
     },
 	
@@ -35,12 +41,15 @@ window.UserController = {
         var user = new User({id: id});
 		
 		var that = this;
-		user.fetch({success: function() {
-			if (window.currentContentView) {
-				window.currentContentView.undelegateEvents();
-			}
-			window.currentContentView = new UserEditView({model:user, el:$("#content")});
-		}});
+		user.fetch({
+			success: function() {
+				if (window.currentContentView) {
+					window.currentContentView.undelegateEvents();
+				}
+				window.currentContentView = new UserEditView({model:user, el:$("#content")});
+			},
+			error: app.errorHandler
+		});
     },
 	
     userNew: function (id) {
