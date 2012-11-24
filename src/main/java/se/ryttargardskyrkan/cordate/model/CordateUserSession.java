@@ -1,6 +1,6 @@
 package se.ryttargardskyrkan.cordate.model;
 
-import javax.annotation.PreDestroy;
+import java.io.Serializable;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Component
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class CordateUserSession implements UserSession {
+public class CordateUserSession implements UserSession, Serializable {
 	private String username;
 	private String password;
 	

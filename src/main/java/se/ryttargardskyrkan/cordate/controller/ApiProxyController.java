@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import se.ryttargardskyrkan.cordate.model.UserSession;
 
 @Controller
-public class ApiProxyController {
+public class ApiProxyController {	
 	
 	@Autowired
 	private UserSession userSession;
@@ -65,7 +65,7 @@ public class ApiProxyController {
 			httpDelete.addHeader(new BasicScheme().authenticate(credentials, httpDelete));
 			remoteResponse = httpClient.execute(httpDelete);
 		}
-				
+						
 		// Copying status
 		response.setStatus(remoteResponse.getStatusLine().getStatusCode());
 		
@@ -73,13 +73,17 @@ public class ApiProxyController {
 		Header[] remoteHeaders = remoteResponse.getAllHeaders();
 		if (remoteHeaders != null) {
 			for (Header remoteHeader : remoteHeaders) {
-				response.addHeader(remoteHeader.getName(), remoteHeader.getValue());
+				if (!remoteHeader.getName().equalsIgnoreCase("Transfer-Encoding")) {
+					response.addHeader(remoteHeader.getName(), remoteHeader.getValue());
+				}
 			}
 		}
 		
 		// Copying response body
-		IOUtils.copy(remoteResponse.getEntity().getContent(), response.getOutputStream());
+		byte[] bytes = IOUtils.toByteArray(remoteResponse.getEntity().getContent());
+		if (bytes != null) {
+			IOUtils.write(bytes, response.getOutputStream());
+		}
 		response.getOutputStream().flush();
-		response.getOutputStream().close();
 	}
 }
