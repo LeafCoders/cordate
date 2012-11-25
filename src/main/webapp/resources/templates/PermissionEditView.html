@@ -10,9 +10,9 @@
 	<form>
 
 	{{#if id}}
-		{{#if everyone}}Permission for everyone.{{/if}}
-		{{#if groupId}}Permission for group {{groupId}}.{{/if}}
-		{{#if userId}}Permission for user {{userId}}.{{/if}}
+		{{#if everyone}}Permission for everyone{{/if}}
+		{{#if groupId}}Permission for group {{groupName}}{{/if}}
+		{{#if userId}}Permission for user {{userFullName}}{{/if}}
 	{{else}}
 	
 	<label>Permission for</label>

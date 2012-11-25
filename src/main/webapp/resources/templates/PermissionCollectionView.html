@@ -22,7 +22,7 @@
 	
 	{{#if groupId}}
 	<tr id="{{id}}">
-		<td width="40%">{{groupId}}</td>
+		<td width="40%">{{groupName}}</td>
 		<td>{{#each patterns}} {{.}} {{/each}}</td>
 	</tr>
 	{{/if}}
@@ -35,7 +35,7 @@
 	
 	{{#if userId}}
 	<tr id="{{id}}">
-		<td width="40%">{{userId}}</td>
+		<td width="40%">{{userFullName}}</td>
 		<td>{{#each patterns}} {{.}} {{/each}}</td>
 	</tr>
 	{{/if}}
