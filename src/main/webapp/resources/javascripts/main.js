@@ -62,7 +62,11 @@ window.Router = Backbone.Router.extend({
     permissionNew: window.PermissionController.permissionNew,
     
     errorHandler: function(model, xhr, options) {
-    	window.headerView.showAlert({type:"alert-error", message:"Error " + xhr.status + ". " + xhr.statusText, keepAlert:true});
+    	if (xhr.getResponseHeader("X-cordate-login") == "true") {
+    		window.location.reload();
+    	} else {
+    		window.headerView.showAlert({type:"alert-error", message:"Error " + xhr.status + ". " + xhr.statusText, keepAlert:true});
+    	}
     }
 });
 

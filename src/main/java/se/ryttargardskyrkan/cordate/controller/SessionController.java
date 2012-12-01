@@ -63,8 +63,10 @@ public class SessionController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView getLogin(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView("login");
+		
+		response.addHeader("X-cordate-login", "true");
 		
 		Map<String, ?> map = RequestContextUtils.getInputFlashMap(request); 
         if (map != null) {
