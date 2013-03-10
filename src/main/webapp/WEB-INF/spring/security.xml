@@ -17,10 +17,11 @@
 				/login = anon
 				/sessions = anon
 				/logout = authc
-				/resources/css/** = anon
-				/resources/icons/** = anon
-				/resources/img/** = anon
-				/resources/** = authc
+				/css/** = anon
+				/img/** = anon
+				/js/** = authc
+                /lib/** = authc
+                /partials/** = authc
 				/api/** = authc
  				/ = authc
   			</value>

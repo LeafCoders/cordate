@@ -1,0 +1,17 @@
+<itemeditor>
+    <label>Title</label>
+    <input type="text" ng-model="item.title" autofocus/>
+
+    <label>Start Time</label>
+    <input class="input-small" type="text" ng-model="item.startTimePartDate"
+           data-date-format="yyyy-mm-dd" bs-datepicker>
+    <select class="input-small" ng-model="item.startTimePartTime" ng-options="time.value as time.text for time in times"/>
+
+    <label>End Time</label>
+    <input class="input-small" type="text" ng-model="item.endTimePartDate"
+           data-date-format="yyyy-mm-dd"bs-datepicker>
+    <select class="input-small" ng-model="item.endTimePartTime" ng-options="time.value as time.text for time in times"/>
+
+    <label>Description</label>
+    <textarea rows="3" ng-model="item.description"></textarea>
+</itemeditor>

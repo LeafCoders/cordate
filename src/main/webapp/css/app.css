@@ -1,0 +1,43 @@
+html {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+input[type='date'] {
+    height: 28px;
+}
+
+.calendarDay {
+	margin-bottom: 10px;
+}
+
+.calendarDate {
+	float: left;
+	width: 80px;
+	text-align: center;
+	background: #eee;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+.calendarDayNr h2 {
+	margin: 2px;
+}
+
+.calendarInfo {
+	margin-left: 90px;
+}
+
+.table-hover {
+	cursor: hand;
+	cursor: pointer;
+}
+
+.navbar {
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+#content {
+    padding-bottom: 50px;
+}

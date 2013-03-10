@@ -1,0 +1,34 @@
+<collection>
+	<b>Permissions for everyone</b>
+	<table class="table table-bordered table-hover">
+		<tbody>
+			<tr id="{{item.id}}" ng-repeat="item in items | commonPermissions"
+				ng-click="showDetails(item.id)">
+				<td width="40%">Everyone</td>
+				<td>{{item.patterns}}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<b>Group permissions</b>
+	<table class="table table-bordered table-hover">
+		<tbody>
+			<tr id="{{item.id}}" ng-repeat="item in items | groupPermissions"
+				ng-click="showDetails(item.id)">
+				<td width="40%">{{item.groupName}}</td>
+				<td>{{item.patterns}}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<b>User permissions</b>
+	<table class="table table-bordered table-hover">
+		<tbody>
+			<tr id="{{item.id}}" ng-repeat="item in items | userPermissions"
+				ng-click="showDetails(item.id)">
+				<td width="40%">{{item.userFullName}}</td>
+				<td>{{item.patterns}}</td>
+			</tr>
+		</tbody>
+	</table>
+</collection>

@@ -1,0 +1,16 @@
+<h1>{{type | capitalize}}s</h1>
+
+<p>
+	<table class="table table-bordered table-hover">
+		<tbody>
+			<tr id="{{item.id}}" ng-repeat="item in items"
+				ng-click="showDetails(item.id)">
+				<td ng-transclude></td>
+			</tr>
+		</tbody>
+	</table>
+</p>
+
+<button class="btn btn-primary create" ng-click="createNew()">
+	<i class="icon-plus icon-white"></i> New {{type}}
+</button>

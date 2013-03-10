@@ -1,0 +1,11 @@
+<item>
+	<p ng-show="item.everyone">Permission for everyone</p>
+	<p ng-show="item.groupId">Permission for everyone</p>
+	<p ng-show="item.userId">Permission for {{item.userFullName}}</p>
+	
+	<p>
+		<div ng-repeat="pattern in item.patterns">
+			{{pattern}}
+		</div>
+	</p>
+</item>

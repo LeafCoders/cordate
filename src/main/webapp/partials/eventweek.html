@@ -1,0 +1,55 @@
+<collection>
+	<style>
+		.weekHeader {
+			margin-bottom: 0;
+			color: #333;
+		}
+		
+		.dateRange {
+			margin-top: 0;
+			margin-bottom: 25px;
+			color: #888;
+		}
+	</style>
+	
+	<div class="pull-left">
+		<h2 class="weekHeader">Week {{item.week}}</h2>
+	</div>
+	
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<a class="btn" href="#{{item.previous_page}}">
+				<i class="icon-arrow-left"></i>
+			</a>
+			<a class="btn" href="#eventweek">Today</a>
+			<a class="btn" href="#{{item.next_page}}">
+				<i class="icon-arrow-right"></i>
+			</a>
+		</div>
+	</div>
+	
+	<div class="clearfix"></div>
+	
+	<h4 class="dateRange">{{item.since + '-' + item.until | dateRange}}</h4>
+	
+	<div class="calendarDay" ng-repeat="day in item.days">
+		<div class="calendarDate">
+			<div class="calendarDayNr">
+				<h2>{{day.date | dayNumber}}</h2>
+			</div>
+			<div class="calendarDayName">{{day.dayNumber | dayName}}</div>
+		</div>
+	
+		<div class="calendarInfo" ng-show="day.events">
+			<table class="table table-bordered table-hover">
+				<tr id="{{event.id}}" ng-repeat="event in day.events" ng-click="showDetails(event.id)">
+					<td>{{event.startTime | time}} {{event.title}}</td>
+				</tr>
+			</table>
+		</div>
+	
+		<div class="clearfix"></div>
+	
+	</div>
+	
+</collection>
