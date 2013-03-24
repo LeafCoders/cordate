@@ -18,6 +18,16 @@ angular.module('myApp.services', []).
     factory('currentResource', [ '$resource', 'currentType', function (resource, currentType) {
     return resource('/cordate/api/v1-snapshot/:collection/:id', {collection:currentType(), id:'@id'}, {update:{method:'PUT'}});
 } ]).
+    factory('rosetteResource', [ '$resource', function (resource) {
+    return function(collection) {
+        return resource('/cordate/api/v1-snapshot/:collection/:id', {collection:collection, id:'@id'}, {update:{method:'PUT'}});
+    }
+    }]).
+    factory('rosetteResource2', [ '$resource', function (resource) {
+    return function(path) {
+        return resource('/cordate/api/v1-snapshot/' + path, {}, {update:{method:'PUT'}});
+    }
+}]).
     factory("flash", function ($rootScope) {
         var alert;
 

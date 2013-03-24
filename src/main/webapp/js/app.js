@@ -6,13 +6,20 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
     config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {templateUrl:'partials/home.html', controller:HomeController});
 
-    var items = ['user', 'group', 'permission'];
-    angular.forEach(items, function (item) {
-        $routeProvider.when('/' + item + 's', {templateUrl:'partials/' + item + 's.html', controller:CollectionController, resolve:CollectionController.resolveCollection});
-        $routeProvider.when('/' + item + 's/new', {templateUrl:'partials/' + item + 'Editor.html', controller:ItemController, resolve:ItemController.resolveItem});
-        $routeProvider.when('/' + item + 's/:id', {templateUrl:'partials/' + item + '.html', controller:ItemController, resolve:ItemController.resolveItem});
-        $routeProvider.when('/' + item + 's/:id/edit', {templateUrl:'partials/' + item + 'Editor.html', controller:ItemController, resolve:ItemController.resolveItem});
-    });
+    $routeProvider.when('/users', {templateUrl:'partials/users.html', controller:UsersController, resolve:UsersController.data});
+    $routeProvider.when('/users/new', {templateUrl:'partials/userEditor.html', controller:UserController, resolve:UserController.data});
+    $routeProvider.when('/users/:id', {templateUrl:'partials/user.html', controller:UserController, resolve:UserController.data});
+    $routeProvider.when('/users/:id/edit', {templateUrl:'partials/userEditor.html', controller:UserController, resolve:UserController.data});
+
+    $routeProvider.when('/groups', {templateUrl:'partials/groups.html', controller:GroupsController, resolve:GroupsController.data});
+    $routeProvider.when('/groups/new', {templateUrl:'partials/groupEditor.html', controller:GroupController, resolve:GroupController.data});
+    $routeProvider.when('/groups/:id', {templateUrl:'partials/group.html', controller:GroupController, resolve:GroupController.data});
+    $routeProvider.when('/groups/:id/edit', {templateUrl:'partials/groupEditor.html', controller:GroupController, resolve:GroupController.data});
+
+    $routeProvider.when('/permissions', {templateUrl:'partials/permissions.html', controller:PermissionsController, resolve:PermissionsController.data});
+    $routeProvider.when('/permissions/new', {templateUrl:'partials/permissionEditor.html', controller:PermissionController, resolve:PermissionController.data});
+    $routeProvider.when('/permissions/:id', {templateUrl:'partials/permission.html', controller:PermissionController, resolve:PermissionController.data});
+    $routeProvider.when('/permissions/:id/edit', {templateUrl:'partials/permissionEditor.html', controller:PermissionController, resolve:PermissionController.data});
 
     $routeProvider.when('/eventweek', {templateUrl:'partials/eventweek.html', controller:EventWeekController, resolve:EventWeekController.resolveEventweek});
     $routeProvider.when('/eventweek/:id', {templateUrl:'partials/eventweek.html', controller:EventWeekController, resolve:EventWeekController.resolveEventweek});

@@ -13,34 +13,46 @@ function HomeController($location) {
 }
 
 function CollectionController($scope, $rootScope, $location, currentType, items, flash) {
-    var type = currentType();
-
-	$rootScope.currentPage = type + 's';
-	$scope.type = type;
 	$scope.items = items;
-    $scope.backPage = $rootScope.currentPage;
 
-        $scope.showDetails = function(id) {
-		$location.path('/' + type + 's/' + id);
+    $scope.showDetails = function(id) {
+		$location.path('/' + $scope.type + 's/' + id);
 	};
 	
 	$scope.createNew = function() {
-		$location.path('/' + type + 's/new');
+		$location.path('/' + $scope.type + 's/new');
 	};
 }
 
-function ItemController($scope, $rootScope, $location, currentType, item, itemService, flash) {
-    var type = currentType();
+function UsersController($scope, $rootScope, $location, currentType, items) {
+    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    $rootScope.currentPage = 'users';
+    $scope.type = 'user';
+}
 
-	$rootScope.currentPage = type + 's';
-	$scope.type = type;
-	$scope.item = item;
+function GroupsController($scope, $rootScope, $location, currentType, items) {
+    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    $rootScope.currentPage = 'groups';
+    $scope.type = 'group';
+}
+
+function PermissionsController($scope, $rootScope, $location, currentType, items) {
+    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    $rootScope.currentPage = 'permissions';
+    $scope.type = 'permission';
+}
+
+function ItemController($scope, $rootScope, $location, item, itemService, flash) {
+	$rootScope.currentPage = $scope.type + 's';
     $scope.backPage = $rootScope.currentPage;
 
+    $scope.item = item;
+
     $scope.save = function() {
-		if (item.id == undefined) {
+		if ($scope.item.id == undefined) {
             itemService.save(item, function (data, headers) {
-                $location.path('/' + type + 's/' + data.id);
+                flash.showAlertAfterRedirect({ type: 'info', text: 'Success'});
+                $location.path('/' + $scope.type + 's/' + data.id);
             }, function (response) {
                 var property = response.data[0].property;
                 var text = response.data[0].message;
@@ -49,7 +61,7 @@ function ItemController($scope, $rootScope, $location, currentType, item, itemSe
             });
         } else {
 			$scope.item.$update(function(data, headers) {
-				$location.path('/' + type + 's/' + data.id);
+				$location.path('/' + $scope.type + 's/' + data.id);
 			});
 		}
 		
@@ -63,6 +75,92 @@ function ItemController($scope, $rootScope, $location, currentType, item, itemSe
 			});
 		}
 	};
+}
+
+function UserController($scope, $rootScope, $location, item, groups, groupMemberships, itemService, flash, rosetteResource2) {
+    $scope.type = 'user';
+    angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
+
+    var availableGroups = function (groups, groupMemberships) {
+        var availableGroups = [];
+
+        for (var i = 0; i < groups.length; i++) {
+            var group = groups[i];
+
+            var found = false;
+            for (var j = 0; j < groupMemberships.length; j++) {
+                var groupMembership = groupMemberships[j];
+                if (group.id == groupMembership.groupId) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                availableGroups.push(group);
+            }
+        }
+        return availableGroups;
+    };
+
+    $scope.form = {};
+
+    $scope.groups = availableGroups(groups, groupMemberships);
+    $scope.groupMemberships = groupMemberships;
+
+    $scope.addGroup = function (groupId) {
+        var index = -1;
+        for (var i = 0; i < $scope.groups.length; i++) {
+            if ($scope.groups[i].id == groupId) {
+                index = i;
+            }
+        }
+        $scope.groupMemberships.push({"userId" : item.id, "groupId" : groupId, "groupName" : $scope.groups[index].name});
+
+        $scope.groups = availableGroups(groups, groupMemberships);
+        $scope.form.groupId = '';
+    };
+
+    $scope.removeGroupMembership = function (groupId) {
+        var index = -1;
+        for (var i = 0; i < $scope.groupMemberships.length; i++) {
+            if ($scope.groupMemberships[i].groupId == groupId) {
+                index = i;
+            }
+        }
+        $scope.groupMemberships.splice(index, 1);
+
+        $scope.groups = availableGroups(groups, groupMemberships);
+        $scope.form.groupId = '';
+    }
+
+    $scope.save = function() {
+        if ($scope.item.id == undefined) {
+            itemService.save(item, function (data, headers) {
+                flash.showAlertAfterRedirect({ type: 'info', text: 'Success'});
+                $location.path('/' + $scope.type + 's/' + data.id);
+            }, function (response) {
+                var property = response.data[0].property;
+                var text = response.data[0].message;
+
+                flash.showAlert({ type: 'error', text: property + ' ' + text});
+            });
+        } else {
+            $scope.item.$update(function(data, headers) {
+                $location.path('/' + $scope.type + 's/' + data.id);
+            });
+        }
+
+    };
+}
+
+function GroupController($scope, $rootScope, $location, item, itemService, flash) {
+    $scope.type = 'group';
+    angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
+}
+
+function PermissionController($scope, $rootScope, $location, item, itemService, flash) {
+    $scope.type = 'permission';
+    angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
 }
 
 function EventWeekController($scope, $rootScope, $location, item, flash) {
@@ -185,6 +283,112 @@ function EventItemController($scope, $rootScope, $location, currentType, item, i
         }
     };
 }
+
+UsersController.data = {
+    items : function($q, rosetteResource) {
+        var deferred = $q.defer();
+        var resource = rosetteResource('users');
+        var items = resource.query(function() {
+            deferred.resolve(items);
+        });
+        return deferred.promise;
+    }
+};
+
+UserController.data = {
+    item : function($q, $route, rosetteResource) {
+        var deferred = $q.defer();
+        if ($route.current.pathParams.id == undefined) {
+            var item = {};
+            deferred.resolve({});
+        } else {
+            var resource = rosetteResource('users');
+            var item = resource.get({id: $route.current.pathParams.id}, function() {
+                deferred.resolve(item);
+            });
+        }
+        return deferred.promise;
+    },
+    groups : function($q, $route, rosetteResource) {
+        var deferred = $q.defer();
+        var resource = rosetteResource('groups');
+        var items = resource.query(function() {
+            deferred.resolve(items);
+        });
+        return deferred.promise;
+    },
+    groupMemberships : function($q, $route, rosetteResource2) {
+        var deferred = $q.defer();
+        var resource = rosetteResource2('users/' + $route.current.pathParams.id + '/groupMemberships');
+        var items = resource.query(function() {
+            deferred.resolve(items);
+        });
+        return deferred.promise;
+    },
+    itemService : function(rosetteResource) {
+        return rosetteResource('users');
+    }
+};
+
+GroupsController.data = {
+    items : function($q, rosetteResource) {
+        var deferred = $q.defer();
+        var resource = rosetteResource('groups');
+        var items = resource.query(function() {
+            deferred.resolve(items);
+        });
+        return deferred.promise;
+    }
+};
+
+GroupController.data = {
+    item : function($q, $route, rosetteResource) {
+        var deferred = $q.defer();
+        if ($route.current.pathParams.id == undefined) {
+            var item = {};
+            deferred.resolve(item);
+        } else {
+            var resource = rosetteResource('groups');
+            var item = resource.get({id: $route.current.pathParams.id}, function() {
+                deferred.resolve(item);
+            });
+        }
+        return deferred.promise;
+    },
+    itemService : function(rosetteResource) {
+        return rosetteResource('groups');
+    }
+};
+
+PermissionsController.data = {
+    items : function($q, rosetteResource) {
+        var deferred = $q.defer();
+        var resource = rosetteResource('permissions');
+        var items = resource.query(function() {
+            deferred.resolve(items);
+        });
+        return deferred.promise;
+    }
+};
+
+PermissionController.data = {
+    item : function($q, $route, rosetteResource) {
+        var deferred = $q.defer();
+        if ($route.current.pathParams.id == undefined) {
+            var item = {};
+            deferred.resolve(item);
+        } else {
+            var resource = rosetteResource('permissions');
+            var item = resource.get({id: $route.current.pathParams.id}, function() {
+                deferred.resolve(item);
+            });
+        }
+        return deferred.promise;
+    },
+    itemService : function(rosetteResource) {
+        return rosetteResource('permissions');
+    }
+};
 
 // Dynamic Collection resolver
 CollectionController.resolveCollection = {

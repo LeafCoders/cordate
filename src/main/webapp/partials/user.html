@@ -1,4 +1,13 @@
 <item>
 	<h1>{{item.firstName}} {{item.lastName}}</h1>
 	<p>{{item.username}}</p>
+
+    <label>Group Memberships</label>
+    <ul>
+        <li ng-repeat="groupMembership in groupMemberships">
+            {{groupMembership.groupName}}
+        </li>
+    </ul>
 </item>
+
+
