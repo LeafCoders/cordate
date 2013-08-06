@@ -77,80 +77,9 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
 	};
 }
 
-function UserController($scope, $rootScope, $location, item, groups, groupMemberships, itemService, flash, rosetteResource2) {
+function UserController($scope, $rootScope, $location, item, itemService, flash) {
     $scope.type = 'user';
     angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
-
-    var availableGroups = function (groups, groupMemberships) {
-        var availableGroups = [];
-
-        for (var i = 0; i < groups.length; i++) {
-            var group = groups[i];
-
-            var found = false;
-            for (var j = 0; j < groupMemberships.length; j++) {
-                var groupMembership = groupMemberships[j];
-                if (group.id == groupMembership.groupId) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                availableGroups.push(group);
-            }
-        }
-        return availableGroups;
-    };
-
-    $scope.form = {};
-
-    $scope.groups = availableGroups(groups, groupMemberships);
-    $scope.groupMemberships = groupMemberships;
-
-    $scope.addGroup = function (groupId) {
-        var index = -1;
-        for (var i = 0; i < $scope.groups.length; i++) {
-            if ($scope.groups[i].id == groupId) {
-                index = i;
-            }
-        }
-        $scope.groupMemberships.push({"userId" : item.id, "groupId" : groupId, "groupName" : $scope.groups[index].name});
-
-        $scope.groups = availableGroups(groups, groupMemberships);
-        $scope.form.groupId = '';
-    };
-
-    $scope.removeGroupMembership = function (groupId) {
-        var index = -1;
-        for (var i = 0; i < $scope.groupMemberships.length; i++) {
-            if ($scope.groupMemberships[i].groupId == groupId) {
-                index = i;
-            }
-        }
-        $scope.groupMemberships.splice(index, 1);
-
-        $scope.groups = availableGroups(groups, groupMemberships);
-        $scope.form.groupId = '';
-    }
-
-    $scope.save = function() {
-        if ($scope.item.id == undefined) {
-            itemService.save(item, function (data, headers) {
-                flash.showAlertAfterRedirect({ type: 'info', text: 'Success'});
-                $location.path('/' + $scope.type + 's/' + data.id);
-            }, function (response) {
-                var property = response.data[0].property;
-                var text = response.data[0].message;
-
-                flash.showAlert({ type: 'error', text: property + ' ' + text});
-            });
-        } else {
-            $scope.item.$update(function(data, headers) {
-                $location.path('/' + $scope.type + 's/' + data.id);
-            });
-        }
-
-    };
 }
 
 function GroupController($scope, $rootScope, $location, item, itemService, flash) {
@@ -300,29 +229,13 @@ UserController.data = {
         var deferred = $q.defer();
         if ($route.current.pathParams.id == undefined) {
             var item = {};
-            deferred.resolve({});
+            deferred.resolve(item);
         } else {
             var resource = rosetteResource('users');
             var item = resource.get({id: $route.current.pathParams.id}, function() {
                 deferred.resolve(item);
             });
         }
-        return deferred.promise;
-    },
-    groups : function($q, $route, rosetteResource) {
-        var deferred = $q.defer();
-        var resource = rosetteResource('groups');
-        var items = resource.query(function() {
-            deferred.resolve(items);
-        });
-        return deferred.promise;
-    },
-    groupMemberships : function($q, $route, rosetteResource2) {
-        var deferred = $q.defer();
-        var resource = rosetteResource2('users/' + $route.current.pathParams.id + '/groupMemberships');
-        var items = resource.query(function() {
-            deferred.resolve(items);
-        });
         return deferred.promise;
     },
     itemService : function(rosetteResource) {

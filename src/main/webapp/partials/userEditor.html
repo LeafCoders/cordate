@@ -12,13 +12,5 @@
 	<input type="password" ng-model="item.password"/>
 
 
-    <label>Group Memberships</label>
-    <ul>
-        <li ng-repeat="groupMembership in groupMemberships">
-            {{groupMembership.groupName}} <a href ng-click="removeGroupMembership(groupMembership.id)">Remove</a>
-        </li>
-    </ul>
-    <select class="input-large" ng-change="addGroup(form.groupId)" ng-model="form.groupId" ng-options="group.id as group.name for group in groups">
-        <option value="">+ Add group membership...</option>
-    </select>
+
 </itemeditor>
