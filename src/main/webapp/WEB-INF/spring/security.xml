@@ -19,6 +19,7 @@
 				/logout = authc
 				/css/** = anon
 				/img/** = anon
+                /fonts/** = anon
 				/js/** = authc
                 /lib/** = authc
                 /partials/** = authc

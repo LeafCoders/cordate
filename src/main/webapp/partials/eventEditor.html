@@ -1,17 +1,30 @@
 <itemeditor>
-    <label>Title</label>
-    <input type="text" ng-model="item.title" autofocus/>
 
-    <label>Start Time</label>
-    <input class="input-small" type="text" ng-model="item.startTimePartDate"
-           data-date-format="yyyy-mm-dd" bs-datepicker>
-    <select class="input-small" ng-model="item.startTimePartTime" ng-options="time.value as time.text for time in times"/>
+    <div class="form-group">
+        <label for="form-title">Title</label>
+        <input type="text" class="form-control" id="form-title" ng-model="item.title" autofocus/>
+    </div>
 
-    <label>End Time</label>
-    <input class="input-small" type="text" ng-model="item.endTimePartDate"
-           data-date-format="yyyy-mm-dd"bs-datepicker>
-    <select class="input-small" ng-model="item.endTimePartTime" ng-options="time.value as time.text for time in times"/>
+    <div class="form-group">
+        <label for="form-starttime">Start time</label>
+        <div>
+            <div class="pull-left spacer"><input class="form-control" type="date" id="form-starttime" ng-model="item.startTimePartDate" data-date-format="yyyy-mm-dd"></div>
+            <div class="pull-left"><select class="form-control" ng-model="item.startTimePartTime" ng-options="time.value as time.text for time in times"/></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
 
-    <label>Description</label>
-    <textarea rows="3" ng-model="item.description"></textarea>
+    <div class="form-group">
+        <label for="form-endtime">End time</label>
+        <div>
+            <div class="pull-left spacer"><input class="form-control" type="date" id="form-endtime" ng-model="item.endTimePartDate" data-date-format="yyyy-mm-dd"></div>
+            <div class="pull-left"><select class="form-control" ng-model="item.endTimePartTime" ng-options="time.value as time.text for time in times"/></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="form-description">Description</label>
+        <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
+    </div>
 </itemeditor>

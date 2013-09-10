@@ -6,8 +6,6 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('myApp.services', [])
-    .value('basePath', '/cordate/api/v1-snapshot')
-    .value('version', '0.1')
     .factory('currentType', [ '$location', function (location) {
         return function () {
             var pattern = /\/\w+/;
@@ -16,11 +14,7 @@ angular.module('myApp.services', [])
             return currentType;
         };
     }])
-    .factory('rosetteResource', [ '$resource', function (resource) {
-        return function(collection) {
-            return resource('/cordate/api/v1-snapshot/:collection/:id', {collection:collection, id:'@id'}, {update:{method:'PUT'}});
-        }
-    }])
+    .value('basePath', '/cordate/api/v1-snapshot')
     .factory('EventResource', function ($resource, basePath) {
         return $resource(basePath + '/events/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
@@ -30,8 +24,11 @@ angular.module('myApp.services', [])
     .factory('GroupResource', function ($resource, basePath) {
         return $resource(basePath + '/groups/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
+    .factory('GroupMembershipResource', function ($resource, basePath) {
+        return $resource(basePath + '/groupMemberships/:id', {id:'@id'}, {update:{method:'PUT'}});
+    })
     .factory('PermissionResource', function ($resource, basePath) {
-        return $resource(basePath + '/permission/:id', {id:'@id'}, {update:{method:'PUT'}});
+        return $resource(basePath + '/permissions/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
     .factory("flash", function ($rootScope) {
         var alert;

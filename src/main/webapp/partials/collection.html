@@ -1,9 +1,5 @@
 <h1>{{type | capitalize}}s</h1>
 
-<p>
-	<div ng-transclude></div>
-</p>
+<div ng-transclude></div>
 
-<button class="btn btn-primary create" ng-click="createNew()">
-	<i class="icon-plus icon-white"></i> New {{type}}
-</button>
+<button class="btn btn-primary" ng-click="createNew()">New {{type}}</button>

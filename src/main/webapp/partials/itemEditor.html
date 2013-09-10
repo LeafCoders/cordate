@@ -1,13 +1,16 @@
-<a href="#{{backPage}}">« Back to {{type}}s</a>
 <h1 ng-show="item.id != null">Edit {{type}}</h1>
 <h1 ng-show="item.id == null">New {{type}}</h1>
-<p>
-	<form>
-	  <div ng-transclude></div>
-	  <div class="form-actions">
-	    <a class="btn btn-primary save" ng-click="save()">Save</a>
-	    <a href="#{{type}}s" class="btn cancel">Cancel</a>
-	    <a class="btn btn-danger pull-right delete" ng-click="remove()" ng-show="item.id != null">Delete</a>
-	  </div>
-	</form>
-</p>
+
+<form role="form">
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <div ng-transclude></div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a class="btn btn-primary" ng-click="save()">Save</a>
+        <a href="#{{type}}s" class="btn btn-default">Cancel</a>
+        <a class="btn btn-danger pull-right" ng-click="remove()" ng-show="item.id != null">Delete</a>
+    </div>
+</form>

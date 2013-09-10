@@ -49,7 +49,7 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
                 var property = response.data[0].property;
                 var text = response.data[0].message;
 
-                flash.showAlert({ type: 'error', text: property + ' ' + text});
+                flash.showAlert({ type: 'danger', text: property + ' ' + text});
             });
         } else {
             $scope.item.$update(function(data, headers) {
@@ -129,13 +129,12 @@ function UserController($scope, $rootScope, $location, item, UserResource, flash
 }
 
 UserController.data = {
-    item : function($q, $route, rosetteResource) {
-        if ($route.current.pathParams.id != undefined) {
-            return rosetteResource('users').get({id: $route.current.pathParams.id}).$promise;
+    item : function($route, UserResource) {
+        if ($route.current.pathParams.id == undefined) {
+            return {};
+        } else {
+            return UserResource.get({id: $route.current.pathParams.id}).$promise;
         }
-    },
-    itemService : function(rosetteResource) {
-        return rosetteResource('users');
     }
 };
 
@@ -149,86 +148,55 @@ function GroupsController($scope, $rootScope, $location, currentType, items) {
 }
 
 GroupsController.data = {
-    items : function($q, rosetteResource) {
-        var deferred = $q.defer();
-        var resource = rosetteResource('groups');
-        var items = resource.query(function() {
-            deferred.resolve(items);
-        });
-        return deferred.promise;
+    items : function(GroupResource) {
+        return GroupResource.query().$promise;
     }
 };
 
-function GroupController($scope, $rootScope, $location, item, itemService, flash) {
+function GroupController($scope, $rootScope, $location, item, GroupResource, flash) {
     $scope.type = 'group';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, item, GroupResource, flash));
 }
 
 GroupController.data = {
-    item : function($q, $route, rosetteResource) {
-        var deferred = $q.defer();
+    item : function($route, GroupResource) {
         if ($route.current.pathParams.id == undefined) {
-            var item = {};
-            deferred.resolve(item);
+            return {};
         } else {
-            var resource = rosetteResource('groups');
-            var item = resource.get({id: $route.current.pathParams.id}, function() {
-                deferred.resolve(item);
-            });
+            return GroupResource.get({id: $route.current.pathParams.id}).$promise;
         }
-        return deferred.promise;
-    },
-    itemService : function(rosetteResource) {
-        return rosetteResource('groups');
     }
 };
 
 
 // Group Memberships
 
-function GroupMembershipsController($scope, $rootScope, $location, currentType, items, users, groups) {
+function GroupMembershipsController($scope, $rootScope, $location, currentType, items) {
     angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
     $rootScope.currentPage = 'groupMemberships';
     $scope.type = 'groupMembership';
-    $scope.users = users;
 }
 
 GroupMembershipsController.data = {
-    items : function($q, rosetteResource) {
-        var deferred = $q.defer();
-        var resource = rosetteResource('groupMemberships');
-        var items = resource.query(function() {
-            deferred.resolve(items);
-        });
-        return deferred.promise;
-    },
-    users : UsersController.data.items,
-    groups : GroupsController.data.items
+    items : function(GroupMembershipResource) {
+        return GroupMembershipResource.query().$promise;
+    }
 };
 
-function GroupMembershipController($scope, $rootScope, $location, item, itemService, flash, users, groups) {
+function GroupMembershipController($scope, $rootScope, $location, item, GroupMembershipResource, flash, users, groups) {
     $scope.type = 'groupMembership';
     $scope.users = users;
     $scope.groups = groups;
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, item, GroupMembershipResource, flash));
 }
 
 GroupMembershipController.data = {
-    item : function($q, $route, rosetteResource) {
-        var deferred = $q.defer();
+    item : function($route, GroupMembershipResource) {
         if ($route.current.pathParams.id == undefined) {
-            var item = {};
-            deferred.resolve(item);
+            return {};
         } else {
-            var resource = rosetteResource('groupMemberships');
-            var item = resource.get({id: $route.current.pathParams.id}, function() {
-                deferred.resolve(item);
-            });
+            return GroupMembershipResource.get({id: $route.current.pathParams.id}).$promise;
         }
-        return deferred.promise;
-    },
-    itemService : function(rosetteResource) {
-        return rosetteResource('groupMemberships');
     },
     users : UsersController.data.items,
     groups : GroupsController.data.items
@@ -244,37 +212,23 @@ function PermissionsController($scope, $rootScope, $location, currentType, items
 }
 
 PermissionsController.data = {
-    items : function($q, rosetteResource) {
-        var deferred = $q.defer();
-        var resource = rosetteResource('permissions');
-        var items = resource.query(function() {
-            deferred.resolve(items);
-        });
-        return deferred.promise;
+    items : function(PermissionResource) {
+        return PermissionResource.query().$promise;
     }
 };
 
-function PermissionController($scope, $rootScope, $location, item, itemService, flash) {
+function PermissionController($scope, $rootScope, $location, item, PermissionResource, flash) {
     $scope.type = 'permission';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, itemService, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, item, PermissionResource, flash));
 }
 
 PermissionController.data = {
-    item : function($q, $route, rosetteResource) {
-        var deferred = $q.defer();
+    item : function($route, PermissionResource) {
         if ($route.current.pathParams.id == undefined) {
-            var item = {};
-            deferred.resolve(item);
+            return {};
         } else {
-            var resource = rosetteResource('permissions');
-            var item = resource.get({id: $route.current.pathParams.id}, function() {
-                deferred.resolve(item);
-            });
+            return PermissionResource.get({id: $route.current.pathParams.id}).$promise;
         }
-        return deferred.promise;
-    },
-    itemService : function(rosetteResource) {
-        return rosetteResource('permissions');
     }
 };
 
@@ -379,7 +333,7 @@ function EventItemController($scope, $rootScope, $location, currentType, item, i
                 var property = response.data[0].property;
                 var text = response.data[0].message;
 
-                flash.showAlert({ type: 'error', text: property + ' ' + text });
+                flash.showAlert({ type: 'danger', text: property + ' ' + text });
             });
         } else {
             item.$update(function(data, headers) {
@@ -387,7 +341,7 @@ function EventItemController($scope, $rootScope, $location, currentType, item, i
 
                 $location.path('/events/' + item.id);
             }, function (response) {
-                flash.showAlert({ type: 'error', text: response.data});
+                flash.showAlert({ type: 'danger', text: response.data});
             });
         }
     };

@@ -19,6 +19,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/css/**" location="/css/" cache-period="3600"/>
     <resources mapping="/img/**" location="/img/" cache-period="3600"/>
+    <resources mapping="/fonts/**" location="/fonts/" cache-period="3600"/>
     <resources mapping="/js/**" location="/js/" cache-period="0"/>
     <resources mapping="/lib/**" location="/lib/" cache-period="3600"/>
     <resources mapping="/partials/**" location="/partials/" cache-period="0"/>

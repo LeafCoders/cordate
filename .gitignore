@@ -2,3 +2,4 @@
 .classpath
 .settings
 target
+src/main/webapp/lib/bower_components

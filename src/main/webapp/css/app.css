@@ -1,43 +1,63 @@
 html {
-    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-input[type='date'] {
-    height: 28px;
-}
-
-.calendarDay {
-	margin-bottom: 10px;
-}
-
-.calendarDate {
-	float: left;
-	width: 80px;
-	text-align: center;
-	background: #eee;
-	margin-right: 10px;
-	border-radius: 5px;
-}
-
-.calendarDayNr h2 {
-	margin: 2px;
-}
-
-.calendarInfo {
-	margin-left: 90px;
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .table-hover {
-	cursor: hand;
-	cursor: pointer;
+    cursor: hand;
+    cursor: pointer;
 }
 
 .navbar {
-	-webkit-user-select: none; /* Chrome/Safari */
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* IE10+ */
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
 }
 
-#content {
-    padding-bottom: 50px;
+.navbar-brand {
+    /*position: fixed;*/
+    /*overflow: visible;*/
+    /*padding-left: 0;*/
+    /*padding-top: 0;*/
+    /*background: red;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+
+.spacer {
+    margin-right:10px;
+}
+
+#alerts {
+    padding-top: 20px;
+}
+
+.calendarDay {
+    margin-bottom: 10px;
+}
+
+.calendarDate {
+    float: left;
+    width: 80px;
+    text-align: center;
+    background: #eee;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.calendarDayNr h2 {
+    margin: 2px;
+}
+
+.calendarInfo {
+    margin-left: 90px;
+}
+
+
+
+
+

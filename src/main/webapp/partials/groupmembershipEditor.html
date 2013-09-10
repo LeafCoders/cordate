@@ -1,13 +1,15 @@
 <itemeditor>
-    <label>Group</label>
-    <select ng-model="item.groupId" ng-options="group.id as group.name for group in groups">
-        <option value="">Chose group...</option>
-    </select>
+    <div class="form-group">
+        <label for="form-group">Group</label>
+        <select id="form-group" class="form-control" ng-model="item.groupId" ng-options="group.id as group.name for group in groups">
+            <option value="">Chose group...</option>
+        </select>
+    </div>
 
-    <br/>
-
-    <label>User</label>
-    <select ng-model="item.userId" ng-options="user.id as user.username for user in users">
-        <option value="">Chose user...</option>
-    </select>
+    <div class="form-group">
+        <label for="form-user">User</label>
+        <select id="form-user" class="form-control" ng-model="item.userId" ng-options="user.id as user.username for user in users">
+            <option value="">Chose user...</option>
+        </select>
+    </div>
 </itemeditor>

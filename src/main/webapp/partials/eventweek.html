@@ -18,12 +18,12 @@
 	
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<a class="btn" href="#{{item.previous_page}}">
-				<i class="icon-arrow-left"></i>
+			<a class="btn btn-default" href="#{{item.previous_page}}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
 			</a>
-			<a class="btn" href="#eventweek">Today</a>
-			<a class="btn" href="#{{item.next_page}}">
-				<i class="icon-arrow-right"></i>
+			<a class="btn btn-default" href="#eventweek">Today</a>
+			<a class="btn btn-default" href="#{{item.next_page}}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
 			</a>
 		</div>
 	</div>
@@ -41,7 +41,7 @@
 		</div>
 	
 		<div class="calendarInfo" ng-show="day.events">
-			<table class="table table-bordered table-hover">
+			<table class="table table-hover">
 				<tr id="{{event.id}}" ng-repeat="event in day.events" ng-click="showDetails(event.id)">
 					<td>{{event.startTime | time}} {{event.title}}</td>
 				</tr>
