@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', '$strap.directives']).
+var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngRoute']).
     config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {templateUrl:'partials/home.html', controller:HomeController});
 
@@ -15,6 +15,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
     $routeProvider.when('/groups/new', {templateUrl:'partials/groupEditor.html', controller:GroupController, resolve:GroupController.data});
     $routeProvider.when('/groups/:id', {templateUrl:'partials/group.html', controller:GroupController, resolve:GroupController.data});
     $routeProvider.when('/groups/:id/edit', {templateUrl:'partials/groupEditor.html', controller:GroupController, resolve:GroupController.data});
+
+    $routeProvider.when('/groupMemberships', {templateUrl:'partials/groupMemberships.html', controller:GroupMembershipsController, resolve:GroupMembershipsController.data});
+    $routeProvider.when('/groupMemberships/new', {templateUrl:'partials/groupMembershipEditor.html', controller:GroupMembershipController, resolve:GroupMembershipController.data});
+    $routeProvider.when('/groupMemberships/:id', {templateUrl:'partials/groupMembership.html', controller:GroupMembershipController, resolve:GroupMembershipController.data});
+    $routeProvider.when('/groupMemberships/:id/edit', {templateUrl:'partials/groupMembershipEditor.html', controller:GroupMembershipController, resolve:GroupMembershipController.data});
 
     $routeProvider.when('/permissions', {templateUrl:'partials/permissions.html', controller:PermissionsController, resolve:PermissionsController.data});
     $routeProvider.when('/permissions/new', {templateUrl:'partials/permissionEditor.html', controller:PermissionController, resolve:PermissionController.data});

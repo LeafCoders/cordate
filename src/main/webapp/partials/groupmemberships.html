@@ -1,0 +1,17 @@
+<h1>Group Memberships</h1>
+
+<p>
+<table class="table table-bordered table-hover">
+    <tbody>
+    <tr id="{{item.id}}" ng-repeat="item in items | orderBy:['groupName', 'username']"
+        ng-click="showDetails(item.id)">
+        <td>{{item.groupName}}</td>
+        <td>{{item.username}}</td>
+    </tr>
+    </tbody>
+</table>
+</p>
+
+<button class="btn btn-primary create" ng-click="createNew()">
+    <i class="icon-plus icon-white"></i> New group membership
+</button>

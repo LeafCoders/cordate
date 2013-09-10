@@ -34,6 +34,7 @@
                             href="#eventweek">Events</a></li>
                     <li class="users-menu" ng-class="{active: currentPage=='users'}"><a href="#users">Users</a></li>
                     <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#groups">Groups</a></li>
+                    <li class="groupMemberships-menu" ng-class="{active: currentPage=='groupMemberships'}"><a href="#groupMemberships">Group Memberships</a></li>
                     <li class="permissions-menu" ng-class="{active: currentPage=='permissions'}"><a href="#permissions">Permissions</a>
                     </li>
                 </ul>
@@ -52,11 +53,12 @@
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+<script src="lib/angular.js"></script>
+<script src="lib/angular-route.js"></script>
+<script src="lib/angular-resource.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.6.6/angular-strap.min.js"></script>
-<script src="lib/bootstrap-datepicker.js"></script>
+<%--<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.6.6/angular-strap.min.js"></script>--%>
+<%--<script src="lib/bootstrap-datepicker.js"></script>--%>
 
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>
