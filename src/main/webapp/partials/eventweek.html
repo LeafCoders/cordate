@@ -1,4 +1,4 @@
-<collection>
+<items>
 	<style>
 		.weekHeader {
 			margin-bottom: 0;
@@ -13,6 +13,7 @@
 	</style>
 	
 	<div class="pull-left">
+
 		<h2 class="weekHeader">Week {{item.week}}</h2>
 	</div>
 	
@@ -43,7 +44,7 @@
 		<div class="calendarInfo" ng-show="day.events">
 			<table class="table table-hover">
 				<tr id="{{event.id}}" ng-repeat="event in day.events" ng-click="showDetails(event.id)">
-					<td>{{event.startTime | time}} {{event.title}}</td>
+					<td>{{event.startTime | time}} <strong>{{event.title}}</strong></td>
 				</tr>
 			</table>
 		</div>
@@ -52,4 +53,4 @@
 	
 	</div>
 	
-</collection>
+</items>

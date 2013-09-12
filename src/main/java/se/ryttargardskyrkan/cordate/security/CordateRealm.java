@@ -56,7 +56,7 @@ public class CordateRealm extends AuthorizingRealm {
 
 				HttpResponse response = httpClient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_UNAUTHORIZED) {
-					throw new AuthenticationException("Unauthorized");
+                    throw new AuthenticationException("The username or password you entered is incorrect.");
 				} else {
 					simpleAuthenticationInfo = new SimpleAuthenticationInfo(providedUsername, providedPassword, "cordateRealm");
 				}
@@ -67,13 +67,12 @@ public class CordateRealm extends AuthorizingRealm {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                throw new AuthenticationException("Oops! The server is not responding at the moment.");
 			}
 
 			return simpleAuthenticationInfo;
 		} else {
-			throw new AuthenticationException("Unexpected '" + authenticationToken.getClass().getName() + "'. Expected UsernamePasswordToken instead.");
+			throw new AuthenticationException("The username or password you entered is incorrect.");
 		}
 	}
 }

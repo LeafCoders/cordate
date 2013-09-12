@@ -4,14 +4,14 @@
 
 app.controller('MainController', function($rootScope, $scope, flash) {
     $scope.closeAlert = function(index) {
-        flash.removeAlert();
+        flash.clearAlerts();
     }
 });
 
 
 // Base controllers
 
-function CollectionController($scope, $rootScope, $location, currentType, items, flash) {
+function ItemsController($scope, $rootScope, $location, currentType, items, flash) {
 	$scope.items = items;
 
     $scope.showDetails = function(id) {
@@ -23,17 +23,6 @@ function CollectionController($scope, $rootScope, $location, currentType, items,
 	};
 }
 
-CollectionController.resolveCollection = {
-    items : function($q, $route, $location, $resource, currentType) {
-        var deferred = $q.defer();
-        var Resource = $resource('/cordate/api/v1-snapshot/:collection/:id', {collection: currentType() + 's', id:'@id'}, {update: {method:'PUT'}});
-        var items = Resource.query(function() {
-            deferred.resolve(items);
-        });
-        return deferred.promise;
-    }
-};
-
 function ItemController($scope, $rootScope, $location, item, itemService, flash) {
     $rootScope.currentPage = $scope.type + 's';
     $scope.backPage = $rootScope.currentPage;
@@ -43,13 +32,8 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
     $scope.save = function() {
         if ($scope.item.id == undefined) {
             itemService.save(item, function (data, headers) {
-                flash.showAlertAfterRedirect({ type: 'info', text: 'Success'});
+                flash.addAlert({ type: 'info', text: 'Success'});
                 $location.path('/' + $scope.type + 's/' + data.id);
-            }, function (response) {
-                var property = response.data[0].property;
-                var text = response.data[0].message;
-
-                flash.showAlert({ type: 'danger', text: property + ' ' + text});
             });
         } else {
             $scope.item.$update(function(data, headers) {
@@ -69,38 +53,6 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
     };
 }
 
-ItemController.resolveItem = {
-    item : function($q, $route, $location, $resource) {
-        var deferred = $q.defer();
-        if ($route.current.pathParams.id == undefined) {
-            var model = {};
-            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
-            if (collection == 'events') {
-                var currentTime = new Date();
-                var year = currentTime.getFullYear();
-                var month = currentTime.getMonth() + 1;
-                var day = currentTime.getDate();
-                month = month < 10 ? '0' + month : month;
-                day = day < 10 ? '0' + day : day;
-
-                model = {startTime: year + '-' + month + '-' + day + ' 11:00 Europe/Stockholm'};
-            }
-            deferred.resolve(model);
-        } else {
-            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
-            var Resource = $resource('/cordate/api/v1-snapshot/:collection/:id', {collection: collection, id:'@id'}, {update: {method:'PUT'}});
-            var item = Resource.get({id: $route.current.pathParams.id}, function() {
-                deferred.resolve(item);
-            });
-        }
-        return deferred.promise;
-    },
-    itemService : function($location, $resource) {
-        var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
-        return $resource('/cordate/api/v1-snapshot/:collection/:id', {collection: collection, id:'@id'}, {update: {method:'PUT'}});
-    }
-};
-
 
 // Home
 
@@ -112,7 +64,7 @@ function HomeController($location) {
 // Users
 
 function UsersController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
     $rootScope.currentPage = 'users';
     $scope.type = 'user';
 }
@@ -142,7 +94,7 @@ UserController.data = {
 // Groups
 
 function GroupsController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
     $rootScope.currentPage = 'groups';
     $scope.type = 'group';
 }
@@ -172,7 +124,7 @@ GroupController.data = {
 // Group Memberships
 
 function GroupMembershipsController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
     $rootScope.currentPage = 'groupMemberships';
     $scope.type = 'groupMembership';
 }
@@ -206,7 +158,7 @@ GroupMembershipController.data = {
 // Permissions
 
 function PermissionsController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new CollectionController($scope, $rootScope, $location, currentType, items));
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
     $rootScope.currentPage = 'permissions';
     $scope.type = 'permission';
 }
@@ -251,11 +203,10 @@ function EventWeekController($scope, $rootScope, $location, item, flash) {
     };
 }
 
-EventWeekController.resolveEventweek = {
-    item : function($q, $route, $resource) {
+EventWeekController.data = {
+    item : function($q, $route, EventWeekResource) {
         var deferred = $q.defer();
-        var Resource = $resource('/cordate/api/v1-snapshot/eventweek/:id', {id:'@id'}, {update: {method:'PUT'}});
-        var item = Resource.get({id: $route.current.pathParams.id}, function(data, headers) {
+        var item = EventWeekResource.get({id: $route.current.pathParams.id}, function(data, headers) {
             var linkHeader = headers().link;
             if (linkHeader.length == 0) {
                 throw new Error("input must not be of zero length");
@@ -282,7 +233,7 @@ EventWeekController.resolveEventweek = {
     }
 };
 
-function EventItemController($scope, $rootScope, $location, currentType, item, itemService, flash, $filter) {
+function EventController($scope, $rootScope, $location, currentType, item, EventResource, flash, $filter) {
     var type = currentType();
 
     $rootScope.currentPage = type + 's';
@@ -325,23 +276,16 @@ function EventItemController($scope, $rootScope, $location, currentType, item, i
 
 
         if (item.id == undefined) {
-            itemService.save(item, function (data, headers) {
-                flash.showAlertAfterRedirect({ type: 'info', text: 'Success!' });
+            EventResource.save(item, function (data, headers) {
+                flash.addAlert({ type: 'info', text: 'Success!' });
 
                 $location.path('/events/' + data.id);
-            }, function (response) {
-                var property = response.data[0].property;
-                var text = response.data[0].message;
-
-                flash.showAlert({ type: 'danger', text: property + ' ' + text });
             });
         } else {
             item.$update(function(data, headers) {
-                flash.showAlertAfterRedirect({ type: 'info', text: 'Success!' });
+                flash.addAlert({ type: 'info', text: 'Success!' });
 
                 $location.path('/events/' + item.id);
-            }, function (response) {
-                flash.showAlert({ type: 'danger', text: response.data});
             });
         }
     };
@@ -355,3 +299,25 @@ function EventItemController($scope, $rootScope, $location, currentType, item, i
         }
     };
 }
+
+EventController.data = {
+    item : function($q, $route, $location, EventResource) {
+        if ($route.current.pathParams.id == undefined) {
+            var model = {};
+            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
+            if (collection == 'events') {
+                var currentTime = new Date();
+                var year = currentTime.getFullYear();
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                model = {startTime: year + '-' + month + '-' + day + ' 11:00 Europe/Stockholm'};
+            }
+            return model;
+        } else {
+            return EventResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
+};

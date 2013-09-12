@@ -4,18 +4,18 @@
 
 
 angular.module('myApp.directives', []).
-    directive("collection",function () {
+    directive("items",function () {
         return {
             restrict:'E',
             transclude:true,
-            templateUrl:'partials/collection.html'
+            templateUrl:'partials/items.html'
         };
     }).
-    directive("collectiontable",function () {
+    directive("itemstable",function () {
         return {
             restrict:'E',
             transclude:true,
-            templateUrl:'partials/collectionTable.html'
+            templateUrl:'partials/itemsTable.html'
         };
     }).
     directive("item",function () {

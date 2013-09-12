@@ -15,6 +15,9 @@ angular.module('myApp.services', [])
         };
     }])
     .value('basePath', '/cordate/api/v1-snapshot')
+    .factory('EventWeekResource', function ($resource, basePath) {
+        return $resource(basePath + '/eventweek/:id', {id:'@id'}, {update:{method:'PUT'}});
+    })
     .factory('EventResource', function ($resource, basePath) {
         return $resource(basePath + '/events/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
@@ -31,35 +34,67 @@ angular.module('myApp.services', [])
         return $resource(basePath + '/permissions/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
     .factory("flash", function ($rootScope) {
-        var alert;
+        var alerts = [];
 
         $rootScope.$on('$routeChangeSuccess', function () {
-            if (alert) {
-                showAlert(alert);
+            if (alerts) {
+                showAlerts();
+                clearAlerts();
             } else {
-                $rootScope.alerts = [];
+                hideAlerts();
             }
         });
 
-        var showAlert = function(newAlert) {
-            $rootScope.alerts = [
-                { type:newAlert.type, text:newAlert.text }
-            ];
-            alert = null;
+        var addAlert = function(alert) {
+            alerts.push(alert);
         }
 
-        var showAlertAfterRedirect = function(newAlert) {
-            alert = newAlert;
+        var clearAlerts = function() {
+            alerts = [];
         }
 
-        var removeAlert = function() {
-            alert = null;
+        var hideAlerts = function() {
             $rootScope.alerts = [];
         }
 
-        return {
-            showAlert: showAlert,
-            showAlertAfterRedirect: showAlertAfterRedirect,
-            removeAlert: removeAlert
+        var showAlerts = function() {
+            $rootScope.alerts = alerts;
         }
+
+        return {
+            addAlert: addAlert,
+            clearAlerts: clearAlerts,
+            showAlerts: showAlerts
+        }
+    })
+    .factory('myHttpInterceptor', function ($q, flash) {
+        return {
+            response: function (response) {
+                return response;
+            },
+            responseError: function (response) {
+                flash.clearAlerts();
+
+                if (response.status == 400) {
+                    var property = response.data[0].property;
+                    var text = response.data[0].message;
+
+                    if (property != undefined) {
+                        flash.addAlert({ type: 'danger', text: property + ' ' + text});
+                        flash.showAlerts();
+                        flash.clearAlerts();
+                    }
+                } else if (response.status == 403) {
+                    flash.addAlert({ type: 'danger', text: 'You don\'t have the privilages to do this.'});
+                    flash.showAlerts();
+                    flash.clearAlerts();
+                } else {
+                    flash.addAlert({ type: 'danger', text: 'Oops! Something went wrong.'});
+                    flash.showAlerts();
+                    flash.clearAlerts();
+                }
+
+                return $q.reject(response);
+            }
+        };
     });

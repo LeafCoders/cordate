@@ -83,7 +83,7 @@
         <div class="alert alert-danger">
             <strong>Authentication failed</strong>
             <br/>
-            The username or password you entered is incorrect.
+            ${errorMessage}
         </div>
         </c:if>
     </div>

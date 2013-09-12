@@ -56,7 +56,10 @@ public class SessionController {
 	        } else 
 	        	return "redirect:/";
 		} catch (AuthenticationException e) {
-			redirectAttributes.addFlashAttribute("loginFailed", true);
+			String errorMessage = e.getMessage();
+
+            redirectAttributes.addFlashAttribute("loginFailed", true);
+            redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
 			redirectAttributes.addFlashAttribute("username", username);
 			return "redirect:/login";
 		}
@@ -71,6 +74,7 @@ public class SessionController {
 		Map<String, ?> map = RequestContextUtils.getInputFlashMap(request); 
         if (map != null) {
         	modelAndView.addObject("loginFailed", map.get("loginFailed"));
+            modelAndView.addObject("errorMessage", map.get("errorMessage"));
         	modelAndView.addObject("username", map.get("username"));
         }
 		
