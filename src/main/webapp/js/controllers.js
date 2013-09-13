@@ -57,7 +57,8 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
 // Home
 
 function HomeController($location) {
-    $location.path('/eventweek');
+    alert('nisse');
+    $location.path('/eventweeks/current');
 }
 
 
@@ -187,12 +188,12 @@ PermissionController.data = {
 
 // Events
 
-function EventWeekController($scope, $rootScope, $location, item, flash) {
+function EventweekController($scope, $rootScope, $location, item, flash) {
     var type = 'event';
 	$rootScope.currentPage = 'eventweek';
 	$scope.type = type;
 	$scope.item = item;
-    $scope.backPage = $rootScope.currentPage;
+    $scope.backPage = "eventweeks/current";
 
     $scope.showDetails = function(id) {
         $location.path('/' + type + 's/' + id);
@@ -203,10 +204,15 @@ function EventWeekController($scope, $rootScope, $location, item, flash) {
     };
 }
 
-EventWeekController.data = {
-    item : function($q, $route, EventWeekResource) {
+EventweekController.data = {
+    item : function($q, $route, EventweekResource) {
         var deferred = $q.defer();
-        var item = EventWeekResource.get({id: $route.current.pathParams.id}, function(data, headers) {
+
+        var id = $route.current.pathParams.id;
+        if ($route.current.pathParams.id == undefined) {
+            id = "current";
+        }
+        var item = EventweekResource.get({id: id}, function(data, headers) {
             var linkHeader = headers().link;
             if (linkHeader.length == 0) {
                 throw new Error("input must not be of zero length");
@@ -239,7 +245,7 @@ function EventController($scope, $rootScope, $location, currentType, item, Event
     $rootScope.currentPage = type + 's';
     $scope.type = type;
     $scope.item = item;
-    $scope.backPage = 'eventweek';
+    $scope.backPage = 'eventweeks/current';
 
     $scope.item.startTimePartDate = $filter('date')(item.startTime);
     $scope.item.startTimePartTime = $filter('time')(item.startTime);

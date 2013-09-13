@@ -4,7 +4,7 @@
 // Declare app level module which depends on filters, and services
 var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngRoute'])
     .config(function ($routeProvider, $httpProvider) {
-        $routeProvider.when('/', {templateUrl:'partials/home.html', controller:HomeController});
+//        $routeProvider.when('/', {templateUrl:'partials/home.html', controller:HomeController});
 
         $routeProvider.when('/users', {templateUrl:'partials/users.html', controller:UsersController, resolve:UsersController.data});
         $routeProvider.when('/users/new', {templateUrl:'partials/userEditor.html', controller:UserController, resolve:UserController.data});
@@ -26,12 +26,12 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/permissions/:id', {templateUrl:'partials/permission.html', controller:PermissionController, resolve:PermissionController.data});
         $routeProvider.when('/permissions/:id/edit', {templateUrl:'partials/permissionEditor.html', controller:PermissionController, resolve:PermissionController.data});
 
-        $routeProvider.when('/eventweek', {templateUrl:'partials/eventweek.html', controller:EventWeekController, resolve:EventWeekController.data});
-        $routeProvider.when('/eventweek/:id', {templateUrl:'partials/eventweek.html', controller:EventWeekController, resolve:EventWeekController.data});
+        $routeProvider.when('/eventweeks/current', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
+        $routeProvider.when('/eventweeks/:id', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
         $routeProvider.when('/events/new', {templateUrl:'partials/eventEditor.html', controller:EventController, resolve:EventController.data});
         $routeProvider.when('/events/:id', {templateUrl:'partials/event.html', controller:EventController, resolve:EventController.data});
         $routeProvider.when('/events/:id/edit', {templateUrl:'partials/eventEditor.html', controller:EventController, resolve:EventController.data});
-        $routeProvider.otherwise({redirectTo:'/'});
+        $routeProvider.otherwise({redirectTo:'/eventweeks/current'});
 
         $httpProvider.interceptors.push('myHttpInterceptor');
     })

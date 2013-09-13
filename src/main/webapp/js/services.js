@@ -15,8 +15,8 @@ angular.module('myApp.services', [])
         };
     }])
     .value('basePath', '/cordate/api/v1-snapshot')
-    .factory('EventWeekResource', function ($resource, basePath) {
-        return $resource(basePath + '/eventweek/:id', {id:'@id'}, {update:{method:'PUT'}});
+    .factory('EventweekResource', function ($resource, basePath) {
+        return $resource(basePath + '/eventweeks/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
     .factory('EventResource', function ($resource, basePath) {
         return $resource(basePath + '/events/:id', {id:'@id'}, {update:{method:'PUT'}});

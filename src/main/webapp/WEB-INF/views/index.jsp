@@ -29,11 +29,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
+            <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="events-menu" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweek">Events</a></li>
+                <li class="events-menu" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">Events</a></li>
                 <li class="users-menu" ng-class="{active: currentPage=='users'}"><a href="#/users">Users</a></li>
                 <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#/groups">Groups</a></li>
                 <li class="groupMemberships-menu" ng-class="{active: currentPage=='groupMemberships'}"><a href="#/groupMemberships">Group Memberships</a></li>
