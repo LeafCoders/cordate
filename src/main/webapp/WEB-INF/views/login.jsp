@@ -91,7 +91,7 @@
     <div id="content">
       <form method="post" action="sessions" class="form-signin">
           <h2 class="form-signin-heading">Please sign in</h2>
-          <input id="username" type="text" value="${username}" name="username" class="form-control" placeholder="Email" autofocus>
+          <input id="username" type="email" value="${username}" name="username" class="form-control" placeholder="Email" autofocus>
           <input id="password" type="password" name="password" class="form-control" placeholder="Password">
           <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
