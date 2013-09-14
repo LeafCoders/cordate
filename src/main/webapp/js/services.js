@@ -70,6 +70,11 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
     .factory('myHttpInterceptor', function ($q, flash) {
         return {
             response: function (response) {
+                if (response.headers()['x-cordate-login']) {
+                    window.location.reload();
+                    return null;
+                }
+
                 return response;
             },
             responseError: function (response) {
