@@ -185,6 +185,10 @@ PermissionsController.data = {
 function PermissionController($scope, $rootScope, $location, $filter, item, PermissionResource, flash) {
     $scope.type = 'permission';
     angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+
+    $scope.save = function() {
+        alert('todo');
+    }
 }
 
 PermissionController.data = {

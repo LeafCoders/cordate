@@ -125,8 +125,11 @@ angular.module('myApp.translation_sv_SE', []).
         "items.permissionsForUsers" : "Behörigheter för användare",
         "items.everyone" : "Alla",
 
+        "item.permissionForEveryone" : "Alla",
+
         "itemEditor.newTitle.permission" : "Ny behörighet",
         "itemEditor.editTitle.permission" : "Redigera behörighet",
+        "itemEditor.permissionType" : "Behörighetstyp",
         "itemEditor.itemCreated.permission" : "Behörigheten skapades!",
         "itemEditor.itemUpdated.permission" : "Behörigheten uppdaterades!",
         "itemEditor.itemDeleted.permission" : "Behörigheten raderades!",

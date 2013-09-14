@@ -1,7 +1,7 @@
 <item>
-	<h1 ng-show="item.everyone">Permission for everyone</h1>
-	<h1 ng-show="item.groupId">Permission for everyone</h1>
-	<h1 ng-show="item.userId">Permission for {{item.userFullName}}</h1>
+	<h1 ng-show="item.everyone">{{ 'item.permissionForEveryone' | t }}</h1>
+	<h1 ng-show="item.groupId">{{item.groupName}}</h1>
+	<h1 ng-show="item.userId">{{item.userFullName}}</h1>
 	
 	<p>
 		<div ng-repeat="pattern in item.patterns">

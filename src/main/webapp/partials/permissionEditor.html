@@ -1,2 +1,23 @@
 <itemeditor>
+    <div class="form-group">
+        <label for="form-type">{{ 'itemEditor.permissionType' | t }}</label>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="item.type" value="everyone">
+                Behörighet för alla <br/>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="item.type" value="group">
+                Behörighet för grupp
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="item.type" value="user">
+                Behörighet för användare
+            </label>
+        </div>
+    </div>
 </itemeditor>
