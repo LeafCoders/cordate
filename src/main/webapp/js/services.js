@@ -5,7 +5,7 @@
 
 // Demonstrate how to register services
 // In this case it is a simple value service.
-angular.module('myApp.services', [])
+angular.module('myApp.services', ['myApp.translation_sv_SE'])
     .factory('currentType', [ '$location', function (location) {
         return function () {
             var pattern = /\/\w+/;
@@ -80,7 +80,7 @@ angular.module('myApp.services', [])
                     var text = response.data[0].message;
 
                     if (property != undefined) {
-                        flash.addAlert({ type: 'danger', text: property + ' ' + text});
+                        flash.addAlert({ type: 'danger', text: text});
                         flash.showAlerts();
                         flash.clearAlerts();
                     }

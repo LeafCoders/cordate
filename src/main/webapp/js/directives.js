@@ -31,16 +31,4 @@ angular.module('myApp.directives', []).
             transclude:true,
             templateUrl:'partials/itemEditor.html'
         };
-    }).
-    directive('alert',function () {
-        return {
-            restrict:'EA',
-            templateUrl:'partials/alert.html',
-            transclude:true,
-            replace:true,
-            scope:{
-                type:'=',
-                close:'&'
-            }
-        };
     });

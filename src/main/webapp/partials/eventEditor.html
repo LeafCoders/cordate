@@ -1,12 +1,12 @@
 <itemeditor>
 
     <div class="form-group">
-        <label for="form-title">Title</label>
+        <label for="form-title">{{ 'itemEditor.event.title' | t }}</label>
         <input type="text" class="form-control" id="form-title" ng-model="item.title" autofocus/>
     </div>
 
     <div class="form-group">
-        <label for="form-starttime">Start time</label>
+        <label for="form-starttime">{{ 'itemEditor.event.startTime' | t }}</label>
         <div>
             <div class="pull-left spacer"><input class="form-control" type="date" id="form-starttime" ng-model="item.startTimePartDate" data-date-format="yyyy-mm-dd"></div>
             <div class="pull-left"><select class="form-control" ng-model="item.startTimePartTime" ng-options="time.value as time.text for time in times"/></div>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="form-group">
-        <label for="form-endtime">End time</label>
+        <label for="form-endtime">{{ 'itemEditor.event.endTime' | t }}</label>
         <div>
             <div class="pull-left spacer"><input class="form-control" type="date" id="form-endtime" ng-model="item.endTimePartDate" data-date-format="yyyy-mm-dd"></div>
             <div class="pull-left"><select class="form-control" ng-model="item.endTimePartTime" ng-options="time.value as time.text for time in times"/></div>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group">
-        <label for="form-description">Description</label>
+        <label for="form-description">{{ 'itemEditor.event.description' | t }}</label>
         <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
     </div>
 </itemeditor>

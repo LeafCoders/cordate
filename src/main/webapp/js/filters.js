@@ -106,4 +106,15 @@ angular.module('myApp.filters', []).
             }
             return date;
         }
-    });
+    }).
+    filter('t', ['translationMap', function (translationMap) {
+
+    return function (input, scope) {
+        var translation = translationMap[input];
+        if (translation == undefined) {
+            translation = input;
+        }
+
+        return translation;
+    };
+}]);

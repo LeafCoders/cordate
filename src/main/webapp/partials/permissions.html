@@ -2,13 +2,13 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th colspan="2">Permissions for everyone</th>
+            <th colspan="2">{{ 'items.permissionsForEveryone' | t }}</th>
         </tr>
         </thead>
         <tbody>
         <tr id="{{item.id}}" ng-repeat="item in items | commonPermissions"
             ng-click="showDetails(item.id)">
-            <td width="40%">Everyone</td>
+            <td width="40%">{{ 'items.everyone' }}</td>
             <td>{{item.patterns}}</td>
         </tr>
         </tbody>
@@ -17,7 +17,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th colspan="2">Group permissions</th>
+            <th colspan="2">{{ 'items.permissionsForGroups' | t }}</th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th colspan="2">User permissions</th>
+            <th colspan="2">{{ 'items.permissionsForUsers' | t }}</th>
         </tr>
         </thead>
         <tbody>

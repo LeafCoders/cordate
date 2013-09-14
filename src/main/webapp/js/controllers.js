@@ -23,7 +23,7 @@ function ItemsController($scope, $rootScope, $location, currentType, items, flas
 	};
 }
 
-function ItemController($scope, $rootScope, $location, item, itemService, flash) {
+function ItemController($scope, $rootScope, $location, $filter, item, itemService, flash) {
     $rootScope.currentPage = $scope.type + 's';
     $scope.backPage = $rootScope.currentPage;
 
@@ -32,11 +32,12 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
     $scope.save = function() {
         if ($scope.item.id == undefined) {
             itemService.save(item, function (data, headers) {
-                flash.addAlert({ type: 'info', text: 'Success'});
+                flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.' + $scope.type});
                 $location.path('/' + $scope.type + 's/' + data.id);
             });
         } else {
             $scope.item.$update(function(data, headers) {
+                flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.' + $scope.type});
                 $location.path('/' + $scope.type + 's/' + data.id);
             });
         }
@@ -44,9 +45,10 @@ function ItemController($scope, $rootScope, $location, item, itemService, flash)
     };
 
     $scope.remove = function() {
-        var confirmed = confirm('Are you sure you want to delete this ' + $scope.type + '?');
+        var confirmed = confirm($filter('t')('itemEditor.itemDeleteConfirmation.' + $scope.type));
         if (confirmed) {
             $scope.item.$remove(function() {
+                flash.addAlert({ type: 'success', text: 'itemEditor.itemDeleted.' + $scope.type});
                 $location.path('/' + $scope.type + 's');
             });
         }
@@ -76,9 +78,9 @@ UsersController.data = {
     }
 };
 
-function UserController($scope, $rootScope, $location, item, UserResource, flash) {
+function UserController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
     $scope.type = 'user';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, UserResource, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, UserResource, flash));
 }
 
 UserController.data = {
@@ -106,9 +108,9 @@ GroupsController.data = {
     }
 };
 
-function GroupController($scope, $rootScope, $location, item, GroupResource, flash) {
+function GroupController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
     $scope.type = 'group';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, GroupResource, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, GroupResource, flash));
 }
 
 GroupController.data = {
@@ -136,11 +138,11 @@ GroupMembershipsController.data = {
     }
 };
 
-function GroupMembershipController($scope, $rootScope, $location, item, GroupMembershipResource, flash, users, groups) {
+function GroupMembershipController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash, users, groups) {
     $scope.type = 'groupMembership';
     $scope.users = users;
     $scope.groups = groups;
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, GroupMembershipResource, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
 }
 
 GroupMembershipController.data = {
@@ -170,9 +172,9 @@ PermissionsController.data = {
     }
 };
 
-function PermissionController($scope, $rootScope, $location, item, PermissionResource, flash) {
+function PermissionController($scope, $rootScope, $location, $filter, item, PermissionResource, flash) {
     $scope.type = 'permission';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, item, PermissionResource, flash));
+    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, PermissionResource, flash));
 }
 
 PermissionController.data = {
@@ -239,7 +241,7 @@ EventweekController.data = {
     }
 };
 
-function EventController($scope, $rootScope, $location, currentType, item, EventResource, flash, $filter) {
+function EventController($scope, $rootScope, $location, $filter, currentType, item, EventResource, flash) {
     var type = currentType();
 
     $rootScope.currentPage = type + 's';
@@ -283,23 +285,22 @@ function EventController($scope, $rootScope, $location, currentType, item, Event
 
         if (item.id == undefined) {
             EventResource.save(item, function (data, headers) {
-                flash.addAlert({ type: 'info', text: 'Success!' });
-
+                flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.event'});
                 $location.path('/events/' + data.id);
             });
         } else {
             item.$update(function(data, headers) {
-                flash.addAlert({ type: 'info', text: 'Success!' });
-
+                flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.event'});
                 $location.path('/events/' + item.id);
             });
         }
     };
 
     $scope.remove = function() {
-        var confirmed = confirm('Are you sure you want to delete this ' + type + '?');
+        var confirmed = confirm($filter('t')('itemEditor.itemDeleteConfirmation.event'));
         if (confirmed) {
             $scope.item.$remove(function() {
+                flash.addAlert({ type: 'success', text: 'itemEditor.itemDeleted.event'});
                 $location.path('/' + type + 's');
             });
         }

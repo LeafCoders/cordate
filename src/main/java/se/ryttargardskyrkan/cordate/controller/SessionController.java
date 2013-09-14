@@ -44,6 +44,7 @@ public class SessionController {
 		
 			String successUrl = null;
 	        boolean contextRelative = true;
+
 	        SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(request);
 	        if (savedRequest != null && savedRequest.getMethod().equalsIgnoreCase(AccessControlFilter.GET_METHOD)) {
 	            successUrl = savedRequest.getRequestUrl();

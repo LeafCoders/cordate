@@ -1,5 +1,5 @@
-<h1>{{type | capitalize}}s</h1>
+<h1>{{'items.title.' + type | t}}</h1>
 
 <div ng-transclude></div>
 
-<button class="btn btn-primary" ng-click="createNew()">New {{type}}</button>
+<button class="btn btn-primary" ng-click="createNew()">{{ 'items.new.' + type | t}}</button>

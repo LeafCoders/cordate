@@ -33,14 +33,14 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="events-menu" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">Events</a></li>
-                <li class="users-menu" ng-class="{active: currentPage=='users'}"><a href="#/users">Users</a></li>
-                <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#/groups">Groups</a></li>
-                <li class="groupMemberships-menu" ng-class="{active: currentPage=='groupMemberships'}"><a href="#/groupMemberships">Group Memberships</a></li>
-                <li class="permissions-menu" ng-class="{active: currentPage=='permissions'}"><a href="#/permissions">Permissions</a></li>
+                <li class="events-menu" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">{{'navbar.events' | t}}</a></li>
+                <li class="users-menu" ng-class="{active: currentPage=='users'}"><a href="#/users">{{'navbar.users' | t}}</a></li>
+                <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#/groups">{{'navbar.groups' | t}}</a></li>
+                <li class="groupMemberships-menu" ng-class="{active: currentPage=='groupMemberships'}"><a href="#/groupMemberships">{{'navbar.groupMemberships' | t}}</a></li>
+                <li class="permissions-menu" ng-class="{active: currentPage=='permissions'}"><a href="#/permissions">{{'navbar.permissions' | t}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class=""><a href="logout">Logout</a></li>
+                <li class=""><a href="logout">{{'navbar.logout' | t}}</a></li>
             </ul>
         </div>
     </div>
@@ -48,9 +48,13 @@
 
 <div class="container">
     <div id="alerts" ng-if="alerts">
-        <alert ng-repeat="alert in alerts" type="alert.type">
-            {{alert.text}}
-        </alert>
+        <div ng-repeat="alert in alerts">
+            <div class="alert alert-{{alert.type}}">
+                <span ng-if="alert.type=='success'"class="glyphicon glyphicon-ok"></span>
+                <span ng-if="alert.type=='danger'"class="glyphicon glyphicon-remove"></span>
+                {{ alert.text | t }}
+            </div>
+        </div>
     </div>
     <div id="content">
         <div ng-view></div>
@@ -68,6 +72,8 @@
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
 <script src="js/directives.js"></script>
+
+<script src="js/i18n/sv_SE.js"></script>
 
 <script type="text/javascript">
     <%-- For collapsing the menu when clicking a link in the menu --%>

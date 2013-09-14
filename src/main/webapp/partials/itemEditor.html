@@ -1,5 +1,5 @@
-<h1 ng-show="item.id != null">Edit {{type}}</h1>
-<h1 ng-show="item.id == null">New {{type}}</h1>
+<h1 ng-show="item.id != null">{{'itemEditor.editTitle.' + type | t}}</h1>
+<h1 ng-show="item.id == null">{{'itemEditor.newTitle.' + type | t}}</h1>
 
 <form role="form">
     <div class="row">
@@ -9,8 +9,8 @@
     </div>
 
     <div class="form-actions">
-        <a class="btn btn-primary" ng-click="save()">Save</a>
-        <a href="#/{{backPage}}" class="btn btn-default">Cancel</a>
-        <a class="btn btn-danger pull-right" ng-click="remove()" ng-show="item.id != null">Delete</a>
+        <a class="btn btn-primary" ng-click="save()">{{ 'itemEditor.save' | t }}</a>
+        <a href="#/{{backPage}}" class="btn btn-default">{{ 'itemEditor.cancel' | t }}</a>
+        <a class="btn btn-danger pull-right" ng-click="remove()" ng-show="item.id != null">{{ 'itemEditor.delete' | t }}</a>
     </div>
 </form>
