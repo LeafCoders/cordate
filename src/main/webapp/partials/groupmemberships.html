@@ -1,7 +1,12 @@
 <h1>{{ 'items.title.groupMembership' | t }}</h1>
 
-<p>
 <table class="table table-default table-hover">
+    <thead>
+    <tr>
+        <th>{{ 'groupMemberships.tableTitleGroup' | t }}</th>
+        <th>{{ 'groupMemberships.tableTitleUser' | t }}</th>
+    </tr>
+    </thead>
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items | orderBy:['groupName', 'username']"
         ng-click="showDetails(item.id)">
@@ -10,7 +15,6 @@
     </tr>
     </tbody>
 </table>
-</p>
 
 <button class="btn btn-primary create" ng-click="createNew()">
     {{ 'items.new.groupMembership' | t }}

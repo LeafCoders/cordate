@@ -9,6 +9,19 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.permissions" : "Behörigheter",
         "navbar.logout" : "Logga ut",
 
+        "January": "Januari",
+        "February" : "Februari",
+        "March" : "Mars",
+        "April" : "April",
+        "May" : "Maj",
+        "June" : "Juni",
+        "July" : "Juli",
+        "August" : "Augusti",
+        "September" : "September",
+        "October" : "Oktober",
+        "November" : "November",
+        "December" : "December",
+
         "item.edit" : "Redigera",
         "itemEditor.editTitle" : "",
         "itemEditor.newTitle" : "",
@@ -41,7 +54,11 @@ angular.module('myApp.translation_sv_SE', []).
         "event.startTime.notNull" : "Starttid saknas",
 
         "items.title.user" : "Användare",
+
         "items.new.user" : "Ny användare",
+        "users.tableTitleUsername" : "Användarnamn",
+        "users.tableTitleFirstName" : "Förnamn",
+        "users.tableTitleLastName" : "Efternamn",
         "itemEditor.newTitle.user" : "Ny användare",
         "itemEditor.editTitle.user" : "Redigera användare",
         "itemEditor.username" : "Användarnamn",
@@ -53,6 +70,7 @@ angular.module('myApp.translation_sv_SE', []).
         'itemEditor.itemDeleted.user' : "Användaren raderades!",
         'itemEditor.itemDeleteConfirmation.user' : "Vill du verkligen radera användaren?",
         "user.username.notNull":"Användarnamn saknas",
+        "user.username.duplicatedUsernameNotAllowed" : "Användarnamnet är upptaget",
 
         "items.title.group" : "Grupper",
         "items.new.group" : "Ny grupp",
@@ -66,6 +84,8 @@ angular.module('myApp.translation_sv_SE', []).
         "group.name.notNull":"Namn saknas",
 
         "items.title.groupMembership" : "Gruppmedlemskap",
+        "groupMemberships.tableTitleGroup" : "Grupp",
+        "groupMemberships.tableTitleUser" : "Användare",
         "items.new.groupMembership" : "Nytt gruppmedlemskap",
         "itemEditor.newTitle.groupMembership" : "Nytt gruppmedlemskap",
         "itemEditor.editTitle.groupMembership" : "Redigera gruppmedlemskap",

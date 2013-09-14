@@ -13,7 +13,6 @@
 	</style>
 	
 	<div class="pull-left">
-
 		<h2 class="weekHeader">{{ 'items.eventweek.week' | t }} {{item.week}}</h2>
 	</div>
 	
@@ -31,12 +30,12 @@
 	
 	<div class="clearfix"></div>
 	
-	<h4 class="dateRange">{{item.since + '-' + item.until | dateRange}} ---- fixa översättning</h4>
+	<h4 class="dateRange">{{item.since + '-' + item.until | dateRange}}</h4>
 	
 	<div class="calendarDay" ng-repeat="day in item.days">
 		<div class="calendarDate">
 			<div class="calendarDayNr">
-				<h2>{{day.date | dayNumber}}</h2>
+				<h3>{{day.date | dayNumber}}</h3>
 			</div>
 			<div class="calendarDayName">{{'items.eventweek.' + (day.dayNumber | dayName) | t}}</div>
 		</div>

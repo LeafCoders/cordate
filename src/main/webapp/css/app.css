@@ -7,7 +7,7 @@ body {
     padding-bottom: 50px;
 }
 
-.table-hover {
+.table-hover tbody {
     cursor: hand;
     cursor: pointer;
 }
@@ -46,11 +46,12 @@ body {
     text-align: center;
     background: #eee;
     margin-right: 10px;
+    padding: 5px;
     border-radius: 5px;
 }
 
-.calendarDayNr h2 {
-    margin: 2px;
+.calendarDayNr h3 {
+    margin: 0;
 }
 
 .calendarInfo {

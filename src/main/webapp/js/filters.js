@@ -59,14 +59,14 @@ angular.module('myApp.filters', []).
         var range = sinceDayNumber;
         if (sinceYearNumber != untilYearNumber ||
             (sinceYearNumber == untilYearNumber && sinceMonthNumber != untilMonthNumber)) {
-            range += " " + filter('lowercase')(filter('monthName')(sinceMonthNumber));
+            range += " " + filter('lowercase')(filter('t')(filter('monthName')(sinceMonthNumber)));
         }
         if (sinceYearNumber != untilYearNumber) {
             range += " " + sinceYearNumber;
         }
         range += " - ";
         range += untilDayNumber;
-        range += " " + filter('lowercase')(filter('monthName')(untilMonthNumber));
+        range += " " + filter('lowercase')(filter('t')(filter('monthName')(untilMonthNumber)));
         range += " " + untilYearNumber;
 
         return range;
@@ -112,7 +112,7 @@ angular.module('myApp.filters', []).
     return function (input, scope) {
         var translation = translationMap[input];
         if (translation == undefined) {
-            translation = input;
+            translation = "{" + input + "}";
         }
 
         return translation;
