@@ -42,8 +42,20 @@
 	
 		<div class="calendarInfo" ng-show="day.events">
 			<table class="table table-hover">
-				<tr id="{{event.id}}" ng-repeat="event in day.events" ng-click="showDetails(event.id)">
-					<td>{{event.startTime | time}} <strong>{{event.title}}</strong></td>
+				<tr id="{{event.id}}" ng-repeat="event in day.events">
+					<td ng-click="showDetails(event.id)">{{event.startTime | time}} <strong>{{event.title}}</strong></td>
+                    <td width="46">
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/{{type}}s/{{event.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                                <li class="divider"></li>
+                                <li class="text-danger"><a href="" class="text-danger" ng-click="remove(event)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                            </ul>
+                        </div>
+                    </td>
 				</tr>
 			</table>
 		</div>

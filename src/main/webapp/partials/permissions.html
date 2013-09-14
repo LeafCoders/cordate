@@ -2,14 +2,25 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th colspan="2">{{ 'items.permissionsForEveryone' | t }}</th>
+            <th colspan="3">{{ 'items.permissionsForEveryone' | t }}</th>
         </tr>
         </thead>
         <tbody>
-        <tr id="{{item.id}}" ng-repeat="item in items | commonPermissions"
-            ng-click="showDetails(item.id)">
-            <td width="40%">{{ 'items.everyone' }}</td>
-            <td>{{item.patterns}}</td>
+        <tr id="{{item.id}}" ng-repeat="item in items | commonPermissions">
+            <td width="40%" ng-click="showDetails(item.id)">{{ 'items.everyone' }}</td>
+            <td ng-click="showDetails(item.id)">{{item.patterns}}</td>
+            <td width="46">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                        <li class="divider"></li>
+                        <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -17,14 +28,25 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th colspan="2">{{ 'items.permissionsForGroups' | t }}</th>
+            <th colspan="3">{{ 'items.permissionsForGroups' | t }}</th>
         </tr>
         </thead>
         <tbody>
-        <tr id="{{item.id}}" ng-repeat="item in items | groupPermissions"
-            ng-click="showDetails(item.id)">
-            <td width="40%">{{item.groupName}}</td>
-            <td>{{item.patterns}}</td>
+        <tr id="{{item.id}}" ng-repeat="item in items | groupPermissions">
+            <td width="40%" ng-click="showDetails(item.id)">{{item.groupName}}</td>
+            <td ng-click="showDetails(item.id)">{{item.patterns}}</td>
+            <td width="46">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                        <li class="divider"></li>
+                        <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -32,14 +54,25 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th colspan="2">{{ 'items.permissionsForUsers' | t }}</th>
+            <th colspan="3">{{ 'items.permissionsForUsers' | t }}</th>
         </tr>
         </thead>
         <tbody>
-        <tr id="{{item.id}}" ng-repeat="item in items | userPermissions"
-            ng-click="showDetails(item.id)">
-            <td width="40%">{{item.userFullName}}</td>
-            <td>{{item.patterns}}</td>
+        <tr id="{{item.id}}" ng-repeat="item in items | userPermissions">
+            <td width="40%" ng-click="showDetails(item.id)">{{item.userFullName}}</td>
+            <td ng-click="showDetails(item.id)">{{item.patterns}}</td>
+            <td width="46">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                        <li class="divider"></li>
+                        <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

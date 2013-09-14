@@ -11,7 +11,7 @@ app.controller('MainController', function($rootScope, $scope, flash) {
 
 // Base controllers
 
-function ItemsController($scope, $rootScope, $location, currentType, items, flash) {
+function ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
 	$scope.items = items;
 
     $scope.showDetails = function(id) {
@@ -21,6 +21,16 @@ function ItemsController($scope, $rootScope, $location, currentType, items, flas
 	$scope.createNew = function() {
 		$location.path('/' + $scope.type + 's/new');
 	};
+
+    $scope.remove = function(item) {
+        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.' + $scope.type));
+        if (confirmed) {
+            item.$remove(function() {
+                flash.addAlert({ type: 'success', text: 'items.itemDeleted.' + $scope.type});
+                $route.reload();
+            });
+        }
+    };
 }
 
 function ItemController($scope, $rootScope, $location, $filter, item, itemService, flash) {
@@ -66,8 +76,8 @@ function HomeController($location) {
 
 // Users
 
-function UsersController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
+function UsersController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
     $rootScope.currentPage = 'users';
     $scope.type = 'user';
 }
@@ -96,8 +106,8 @@ UserController.data = {
 
 // Groups
 
-function GroupsController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
+function GroupsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
     $rootScope.currentPage = 'groups';
     $scope.type = 'group';
 }
@@ -126,8 +136,8 @@ GroupController.data = {
 
 // Group Memberships
 
-function GroupMembershipsController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
+function GroupMembershipsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
     $rootScope.currentPage = 'groupMemberships';
     $scope.type = 'groupMembership';
 }
@@ -160,8 +170,8 @@ GroupMembershipController.data = {
 
 // Permissions
 
-function PermissionsController($scope, $rootScope, $location, currentType, items) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, currentType, items));
+function PermissionsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
     $rootScope.currentPage = 'permissions';
     $scope.type = 'permission';
 }
@@ -190,7 +200,7 @@ PermissionController.data = {
 
 // Events
 
-function EventweekController($scope, $rootScope, $location, item, flash) {
+function EventweekController($scope, $rootScope, $location, $filter, $route, item, EventResource, flash) {
     var type = 'event';
 	$rootScope.currentPage = 'eventweek';
 	$scope.type = type;
@@ -203,6 +213,16 @@ function EventweekController($scope, $rootScope, $location, item, flash) {
 
     $scope.createNew = function() {
         $location.path('/' + type + 's/new');
+    };
+
+    $scope.remove = function(item) {
+        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.' + $scope.type));
+        if (confirmed) {
+            EventResource.delete({id : item.id}, function(response, headers) {
+                flash.addAlert({ type: 'success', text: 'items.itemDeleted.' + $scope.type});
+                $route.reload();
+            });
+        }
     };
 }
 
