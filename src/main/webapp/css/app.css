@@ -36,28 +36,6 @@ body {
     padding-top: 20px;
 }
 
-.calendarDay {
-    margin-bottom: 10px;
-}
-
-.calendarDate {
-    float: left;
-    width: 80px;
-    text-align: center;
-    background: #eee;
-    margin-right: 10px;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.calendarDayNr h3 {
-    margin: 0;
-}
-
-.calendarInfo {
-    margin-left: 90px;
-}
-
 
 
 

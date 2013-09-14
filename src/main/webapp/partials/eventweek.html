@@ -1,7 +1,30 @@
 <items>
 	<style>
+        .calendarDay {
+            margin-bottom: 10px;
+        }
+
+        .calendarDate {
+            float: left;
+            width: 80px;
+            text-align: center;
+            background: #eee;
+            margin-right: 10px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .calendarDayNr h3 {
+            margin: 0;
+        }
+
+        .calendarInfo {
+            margin-left: 90px;
+        }
+
 		.weekHeader {
 			margin-bottom: 0;
+            margin-top: 0;
 			color: #333;
 		}
 		
@@ -13,7 +36,7 @@
 	</style>
 	
 	<div class="pull-left">
-		<h2 class="weekHeader">{{ 'items.eventweek.week' | t }} {{item.week}}</h2>
+		<h3 class="weekHeader">{{ 'items.eventweek.week' | t }} {{item.week}}</h3>
 	</div>
 	
 	<div class="btn-toolbar pull-right">
