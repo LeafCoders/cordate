@@ -59,6 +59,7 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
 
         var showAlerts = function() {
             $rootScope.alerts = alerts;
+            window.scrollTo(0, 0);
         }
 
         return {
