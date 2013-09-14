@@ -101,6 +101,8 @@ angular.module('myApp.translation_sv_SE', []).
         "groupMemberships.tableTitleGroup" : "Grupp",
         "groupMemberships.tableTitleUser" : "Användare",
 
+        "item.title.groupMembership" : "Gruppmedlemskap",
+
         "itemEditor.newTitle.groupMembership" : "Nytt gruppmedlemskap",
         "itemEditor.editTitle.groupMembership" : "Redigera gruppmedlemskap",
         "itemEditor.group" : "Grupp",
