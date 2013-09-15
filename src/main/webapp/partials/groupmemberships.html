@@ -11,7 +11,7 @@
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items | orderBy:['groupName', 'username']">
         <td ng-click="showDetails(item.id)">{{item.groupName}}</td>
-        <td ng-click="showDetails(item.id)">{{item.username}}</td>
+        <td ng-click="showDetails(item.id)">{{item.userFullName}}</td>
         <td width="46">
             <div class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

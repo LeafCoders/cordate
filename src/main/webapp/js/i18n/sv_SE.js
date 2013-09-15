@@ -120,9 +120,9 @@ angular.module('myApp.translation_sv_SE', []).
         "items.new.permission" : "Ny behörighet",
         "items.itemDeleteConfirmation.permission" : "Vill du verkligen radera behörigheten?",
         "items.itemDeleted.permission" : "Behörigheten raderades!",
-        "items.permissionsForEveryone" : "Behörigheter för alla",
-        "items.permissionsForGroups" : "Behörigheter för grupper",
-        "items.permissionsForUsers" : "Behörigheter för användare",
+        "items.permissionsForEveryone" : "Alla",
+        "items.permissionsForGroups" : "Grupper",
+        "items.permissionsForUsers" : "Användare",
         "items.everyone" : "Alla",
 
         "item.permissionForEveryone" : "Alla",

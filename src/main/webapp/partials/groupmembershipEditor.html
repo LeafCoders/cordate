@@ -8,7 +8,7 @@
 
     <div class="form-group">
         <label for="form-user">{{ 'itemEditor.user' | t }}</label>
-        <select id="form-user" class="form-control" ng-model="item.userId" ng-options="user.id as user.username for user in users">
+        <select id="form-user" class="form-control" ng-model="item.userId" ng-options="user.id as user.fullName for user in users">
             <option value="">{{ 'itemEditor.choseUser' | t }}</option>
         </select>
     </div>

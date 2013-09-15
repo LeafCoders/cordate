@@ -3,8 +3,8 @@
 	<h1 ng-show="item.groupId">{{item.groupName}}</h1>
 	<h1 ng-show="item.userId">{{item.userFullName}}</h1>
 
+    <label>Permissions</label>
     <div ng-repeat="pattern in item.patterns">
-        Permissions
         <span class="label label-default">{{ pattern }}</span>
     </div>
 </item>

@@ -16,33 +16,33 @@ angular.module('myApp.filters', []).
     filter('commonPermissions',function () {
         return function (items, scope) {
             var arrayToReturn = [];
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].everyone != null) {
-                    arrayToReturn.push(items[i]);
+            angular.forEach(items, function (item) {
+                if (item.everyone == true) {
+                    arrayToReturn.push(item);
                 }
-            }
+            });
             return arrayToReturn;
         };
     }).
     filter('groupPermissions',function () {
         return function (items, scope) {
             var arrayToReturn = [];
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].groupId != null) {
-                    arrayToReturn.push(items[i]);
+            angular.forEach(items, function (item) {
+                if (item.groupId) {
+                    arrayToReturn.push(item);
                 }
-            }
+            });
             return arrayToReturn;
         };
     }).
     filter('userPermissions',function () {
         return function (items, scope) {
             var arrayToReturn = [];
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].userId != null) {
-                    arrayToReturn.push(items[i]);
+            angular.forEach(items, function (item) {
+                if (item.userId) {
+                    arrayToReturn.push(item);
                 }
-            }
+            });
             return arrayToReturn;
         };
     }).
