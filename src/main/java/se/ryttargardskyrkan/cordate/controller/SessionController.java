@@ -30,8 +30,13 @@ public class SessionController {
 	private UserSession userSession;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getIndex() {
-		return "index";
+	public ModelAndView getIndex() {
+        ModelAndView modelAndView = new ModelAndView("index");
+
+        String principal = (String)SecurityUtils.getSubject().getPrincipal();
+        modelAndView.addObject("username", principal);
+
+        return modelAndView;
 	}
 	
 	@RequestMapping(value = "/sessions", method = RequestMethod.POST)

@@ -21,7 +21,7 @@
 
 <body ng-controller="MainController">
 
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" id="navbar-toggle-button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,8 +31,8 @@
             </button>
             <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
         </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="main-menu nav navbar-nav">
                 <li class="events-menu" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">{{'navbar.events' | t}}</a></li>
                 <li class="users-menu" ng-class="{active: currentPage=='users'}"><a href="#/users">{{'navbar.users' | t}}</a></li>
                 <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#/groups">{{'navbar.groups' | t}}</a></li>
@@ -40,7 +40,14 @@
                 <li class="permissions-menu" ng-class="{active: currentPage=='permissions'}"><a href="#/permissions">{{'navbar.permissions' | t}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class=""><a href="logout">{{'navbar.logout' | t}}</a></li>
+                <li class="dropdown" >
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">${username}</li>
+                        <li class="divider"></li>
+                        <li><a href="logout">{{'navbar.logout' | t}}</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -77,7 +84,7 @@
 
 <script type="text/javascript">
     <%-- For collapsing the menu when clicking a link in the menu --%>
-    $('.nav a').click(function() {
+    $('.main-menu a').click(function() {
         $('.navbar-collapse.in').collapse('hide');
     })
 </script>
