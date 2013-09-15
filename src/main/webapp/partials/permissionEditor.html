@@ -1,23 +1,46 @@
 <itemeditor>
     <div class="form-group">
-        <label for="form-type">{{ 'itemEditor.permissionType' | t }}</label>
+        <label>{{ 'itemEditor.permissionType' | t }}</label>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="item.type" value="everyone">
+                <input type="radio" ng-model="formHelper.permissionType" value="everyone">
                 Behörighet för alla <br/>
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="item.type" value="group">
+                <input type="radio" ng-model="formHelper.permissionType" value="group">
                 Behörighet för grupp
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="item.type" value="user">
+                <input type="radio" ng-model="formHelper.permissionType" value="user">
                 Behörighet för användare
             </label>
         </div>
+
+        <div ng-if="formHelper.permissionType=='group'">
+            <div class="form-group">
+                <label for="form-group">{{ 'itemEditor.group' | t }}</label>
+                <select id="form-group" class="form-control" ng-model="formHelper.permissionId" ng-options="group.id as group.name for group in formHelper.groups">
+                    <option value="">{{ 'itemEditor.choseGroup' | t }}</option>
+                </select>
+            </div>
+        </div>
+        <div ng-if="formHelper.permissionType=='user'">
+            <div class="form-group">
+                <label for="form-user">{{ 'itemEditor.user' | t }}</label>
+                <select id="form-user" class="form-control" ng-model="formHelper.permissionId" ng-options="user.id as user.username for user in formHelper.users">
+                    <option value="">{{ 'itemEditor.choseUser' | t }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="form-patterns">{{ 'itemEditor.patterns' | t }}</label>
+            <textarea id="form-patterns" class="form-control" ng-model="patterns"></textarea>
+        </div>
+
     </div>
 </itemeditor>

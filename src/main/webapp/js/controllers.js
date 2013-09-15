@@ -33,25 +33,35 @@ function ItemsController($scope, $rootScope, $location, $filter, $route, current
     };
 }
 
-function ItemController($scope, $rootScope, $location, $filter, item, itemService, flash) {
+function ItemController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
+    $scope.type = type;
     $rootScope.currentPage = $scope.type + 's';
     $scope.backPage = $rootScope.currentPage;
-
     $scope.item = item;
+}
+
+function ItemEditorController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
+    angular.extend(this, new ItemController(type, $scope, $rootScope, $location, $filter, item, itemService, flash));
+
+    $scope.beforeSave = function(item) {
+        return item;
+    };
 
     $scope.save = function() {
-        if ($scope.item.id == undefined) {
+        var item = angular.copy($scope.item);
+        item = $scope.beforeSave(item);
+
+        if (item.id == undefined) {
             itemService.save(item, function (data, headers) {
                 flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.' + $scope.type});
                 $location.path('/' + $scope.type + 's/' + data.id);
             });
         } else {
-            $scope.item.$update(function(data, headers) {
+            item.$update(function(data, headers) {
                 flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.' + $scope.type});
                 $location.path('/' + $scope.type + 's/' + data.id);
             });
         }
-
     };
 
     $scope.remove = function() {
@@ -69,7 +79,6 @@ function ItemController($scope, $rootScope, $location, $filter, item, itemServic
 // Home
 
 function HomeController($location) {
-    alert('nisse');
     $location.path('/eventweeks/current');
 }
 
@@ -89,8 +98,11 @@ UsersController.data = {
 };
 
 function UserController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
-    $scope.type = 'user';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, UserResource, flash));
+    angular.extend(this, new ItemController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
+}
+
+function UserEditorController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
+    angular.extend(this, new ItemEditorController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
 }
 
 UserController.data = {
@@ -119,8 +131,11 @@ GroupsController.data = {
 };
 
 function GroupController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
-    $scope.type = 'group';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, GroupResource, flash));
+    angular.extend(this, new ItemController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
+}
+
+function GroupEditorController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
+    angular.extend(this, new ItemEditorController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
 }
 
 GroupController.data = {
@@ -148,11 +163,14 @@ GroupMembershipsController.data = {
     }
 };
 
-function GroupMembershipController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash, users, groups) {
-    $scope.type = 'groupMembership';
+function GroupMembershipController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash) {
+    angular.extend(this, new ItemController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
+}
+
+function GroupMembershipEditorController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash, users, groups) {
+    angular.extend(this, new ItemEditorController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
     $scope.users = users;
     $scope.groups = groups;
-    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
 }
 
 GroupMembershipController.data = {
@@ -182,12 +200,34 @@ PermissionsController.data = {
     }
 };
 
-function PermissionController($scope, $rootScope, $location, $filter, item, PermissionResource, flash) {
-    $scope.type = 'permission';
-    angular.extend(this, new ItemController($scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+function PermissionController($scope, $rootScope, $location, $filter, item, users, groups, PermissionResource, flash) {
+    angular.extend(this, new ItemController('permission', $scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+}
 
-    $scope.save = function() {
-        alert('todo');
+function PermissionEditorController($scope, $rootScope, $location, $filter, item, users, groups, PermissionResource, flash) {
+    angular.extend(this, new ItemEditorController('permission', $scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+
+    $scope.formHelper = {
+        permissionType:"everyone",
+        users:users,
+        groups:groups
+    };
+
+    $scope.beforeSave = function(item) {
+        if ($scope.formHelper.permissionType == "everyone") {
+            item.everyone = true;
+            delete item.userId;
+            delete item.groupId;
+        } else if ($scope.formHelper.permissionType == "group") {
+            item.everyone = false;
+            delete item.userId;
+            item.groupId = $scope.formHelper.permissionId;
+        } else if ($scope.formHelper.permissionType == "user") {
+            item.everyone = false;
+            item.userId = $scope.formHelper.permissionId;
+            delete item.groupId;
+        }
+        return item;
     }
 }
 
@@ -198,32 +238,26 @@ PermissionController.data = {
         } else {
             return PermissionResource.get({id: $route.current.pathParams.id}).$promise;
         }
-    }
+    },
+    users : UsersController.data.items,
+    groups : GroupsController.data.items
 };
 
 
 // Events
+function EventweekController($scope, $rootScope, $location, $filter, $route, currentType, item, EventResource, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, null, flash));
 
-function EventweekController($scope, $rootScope, $location, $filter, $route, item, EventResource, flash) {
-    var type = 'event';
 	$rootScope.currentPage = 'eventweek';
-	$scope.type = type;
+	$scope.type = 'event';
 	$scope.item = item;
     $scope.backPage = "eventweeks/current";
 
-    $scope.showDetails = function(id) {
-        $location.path('/' + type + 's/' + id);
-    };
-
-    $scope.createNew = function() {
-        $location.path('/' + type + 's/new');
-    };
-
     $scope.remove = function(item) {
-        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.' + $scope.type));
+        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.event'));
         if (confirmed) {
             EventResource.delete({id : item.id}, function(response, headers) {
-                flash.addAlert({ type: 'success', text: 'items.itemDeleted.' + $scope.type});
+                flash.addAlert({ type: 'success', text: 'items.itemDeleted.event'});
                 $route.reload();
             });
         }
@@ -265,18 +299,18 @@ EventweekController.data = {
     }
 };
 
-function EventController($scope, $rootScope, $location, $filter, currentType, item, EventResource, flash) {
-    var type = currentType();
+function EventController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
+    angular.extend(this, new ItemController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
 
-    $rootScope.currentPage = type + 's';
-    $scope.type = type;
-    $scope.item = item;
+    $rootScope.currentPage = 'events';
     $scope.backPage = 'eventweeks/current';
+}
 
-    $scope.item.startTimePartDate = $filter('date')(item.startTime);
-    $scope.item.startTimePartTime = $filter('time')(item.startTime);
-    $scope.item.endTimePartDate = $filter('date')(item.endTime);
-    $scope.item.endTimePartTime = $filter('time')(item.endTime);
+function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
+    angular.extend(this, new ItemEditorController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
+
+    $rootScope.currentPage = 'events';
+    $scope.backPage = 'eventweeks/current';
 
     var times = [{text: '', value: ''}];
     for (var i = 0; i < 24; i++) {
@@ -284,50 +318,30 @@ function EventController($scope, $rootScope, $location, $filter, currentType, it
         times.push({text: hour + ':00', value: hour + ':00'});
         times.push({text: hour + ':30', value: hour + ':30'});
     }
-    $scope.times = times;
 
-    $scope.save = function() {
-        var item = angular.copy($scope.item);
-
-        if (item.startTimePartDate == '' && item.startTimePartTime == '') {
-            delete item.startTime;
-        } else {
-            item.startTime = item.startTimePartDate + ' ' + item.startTimePartTime + ' Europe/Stockholm';
-        }
-        delete item.startTimePartDate;
-        delete item.startTimePartTime;
-
-        if ((item.endTimePartDate == null || item.endTimePartDate == '') &&
-            (item.endTimePartTime == null || item.endTimePartTime == '')) {
-            delete item.endTime;
-        } else {
-            item.endTime = item.endTimePartDate + ' ' + item.endTimePartTime + ' Europe/Stockholm';
-        }
-        delete item.endTimePartDate;
-        delete item.endTimePartTime;
-
-
-        if (item.id == undefined) {
-            EventResource.save(item, function (data, headers) {
-                flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.event'});
-                $location.path('/events/' + data.id);
-            });
-        } else {
-            item.$update(function(data, headers) {
-                flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.event'});
-                $location.path('/events/' + item.id);
-            });
-        }
+    $scope.formHelper = {
+        startTimePartDate:$filter('date')(item.startTime),
+        startTimePartTime:$filter('time')(item.startTime),
+        endTimePartDate:$filter('date')(item.endTime),
+        endTimePartTime:$filter('time')(item.endTime),
+        times:times
     };
 
-    $scope.remove = function() {
-        var confirmed = confirm($filter('t')('itemEditor.itemDeleteConfirmation.event'));
-        if (confirmed) {
-            $scope.item.$remove(function() {
-                flash.addAlert({ type: 'success', text: 'itemEditor.itemDeleted.event'});
-                $location.path('/' + type + 's');
-            });
+    $scope.beforeSave = function(item) {
+        if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
+            delete item.startTime;
+        } else {
+            item.startTime = $scope.formHelper.startTimePartDate + ' ' + $scope.formHelper.startTimePartTime + ' Europe/Stockholm';
         }
+
+        if (($scope.formHelper.endTimePartDate == null || $scope.formHelper.endTimePartDate == '') &&
+            ($scope.formHelper.endTimePartTime == null || $scope.formHelper.endTimePartTime == '')) {
+            delete item.endTime;
+        } else {
+            item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
+        }
+
+        return item;
     };
 }
 
