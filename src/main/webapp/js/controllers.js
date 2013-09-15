@@ -6,7 +6,7 @@ app.controller('MainController', function($rootScope, $scope, flash) {
     $scope.closeAlert = function(index) {
         flash.clearAlerts();
     }
-});
+})
 
 
 // Base controllers
@@ -95,14 +95,10 @@ UsersController.data = {
     items : function(UserResource) {
         return UserResource.query().$promise;
     }
-};
+}
 
 function UserController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
     angular.extend(this, new ItemController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
-}
-
-function UserEditorController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
-    angular.extend(this, new ItemEditorController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
 }
 
 UserController.data = {
@@ -113,7 +109,15 @@ UserController.data = {
             return UserResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-};
+}
+
+function UserEditorController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
+    angular.extend(this, new ItemEditorController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
+}
+
+UserEditorController.data = {
+    item : UserController.data.item
+}
 
 
 // Groups
@@ -128,14 +132,10 @@ GroupsController.data = {
     items : function(GroupResource) {
         return GroupResource.query().$promise;
     }
-};
+}
 
 function GroupController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
     angular.extend(this, new ItemController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
-}
-
-function GroupEditorController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
-    angular.extend(this, new ItemEditorController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
 }
 
 GroupController.data = {
@@ -146,7 +146,15 @@ GroupController.data = {
             return GroupResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-};
+}
+
+function GroupEditorController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
+    angular.extend(this, new ItemEditorController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
+}
+
+GroupEditorController.data = {
+    item : GroupController.data.item
+}
 
 
 // Group Memberships
@@ -161,16 +169,10 @@ GroupMembershipsController.data = {
     items : function(GroupMembershipResource) {
         return GroupMembershipResource.query().$promise;
     }
-};
+}
 
 function GroupMembershipController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash) {
     angular.extend(this, new ItemController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
-}
-
-function GroupMembershipEditorController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash, users, groups) {
-    angular.extend(this, new ItemEditorController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
-    $scope.users = users;
-    $scope.groups = groups;
 }
 
 GroupMembershipController.data = {
@@ -180,10 +182,20 @@ GroupMembershipController.data = {
         } else {
             return GroupMembershipResource.get({id: $route.current.pathParams.id}).$promise;
         }
-    },
+    }
+}
+
+function GroupMembershipEditorController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash, users, groups) {
+    angular.extend(this, new ItemEditorController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
+    $scope.users = users;
+    $scope.groups = groups;
+}
+
+GroupMembershipEditorController.data = {
+    item : GroupMembershipController.data.item,
     users : UsersController.data.items,
     groups : GroupsController.data.items
-};
+}
 
 
 // Permissions
@@ -198,10 +210,20 @@ PermissionsController.data = {
     items : function(PermissionResource) {
         return PermissionResource.query().$promise;
     }
-};
+}
 
-function PermissionController($scope, $rootScope, $location, $filter, item, users, groups, PermissionResource, flash) {
+function PermissionController($scope, $rootScope, $location, $filter, item, PermissionResource, flash) {
     angular.extend(this, new ItemController('permission', $scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+}
+
+PermissionController.data = {
+    item : function($route, PermissionResource) {
+        if ($route.current.pathParams.id == undefined) {
+            return {};
+        } else {
+            return PermissionResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
 }
 
 function PermissionEditorController($scope, $rootScope, $location, $filter, item, users, groups, PermissionResource, flash) {
@@ -231,17 +253,11 @@ function PermissionEditorController($scope, $rootScope, $location, $filter, item
     }
 }
 
-PermissionController.data = {
-    item : function($route, PermissionResource) {
-        if ($route.current.pathParams.id == undefined) {
-            return {};
-        } else {
-            return PermissionResource.get({id: $route.current.pathParams.id}).$promise;
-        }
-    },
+PermissionEditorController.data = {
+    item : PermissionController.data.item,
     users : UsersController.data.items,
     groups : GroupsController.data.items
-};
+}
 
 
 // Events
@@ -297,13 +313,35 @@ EventweekController.data = {
         });
         return deferred.promise;
     }
-};
+}
 
 function EventController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
     angular.extend(this, new ItemController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
 
     $rootScope.currentPage = 'events';
     $scope.backPage = 'eventweeks/current';
+}
+
+EventController.data = {
+    item : function($q, $route, $location, EventResource) {
+        if ($route.current.pathParams.id == undefined) {
+            var model = {};
+            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
+            if (collection == 'events') {
+                var currentTime = new Date();
+                var year = currentTime.getFullYear();
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                model = {startTime: year + '-' + month + '-' + day + ' 11:00 Europe/Stockholm'};
+            }
+            return model;
+        } else {
+            return EventResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
 }
 
 function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
@@ -345,24 +383,6 @@ function EventEditorController($scope, $rootScope, $location, $filter, item, Eve
     };
 }
 
-EventController.data = {
-    item : function($q, $route, $location, EventResource) {
-        if ($route.current.pathParams.id == undefined) {
-            var model = {};
-            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
-            if (collection == 'events') {
-                var currentTime = new Date();
-                var year = currentTime.getFullYear();
-                var month = currentTime.getMonth() + 1;
-                var day = currentTime.getDate();
-                month = month < 10 ? '0' + month : month;
-                day = day < 10 ? '0' + day : day;
-
-                model = {startTime: year + '-' + month + '-' + day + ' 11:00 Europe/Stockholm'};
-            }
-            return model;
-        } else {
-            return EventResource.get({id: $route.current.pathParams.id}).$promise;
-        }
-    }
-};
+EventEditorController.data = {
+    item : EventController.data.item
+}
