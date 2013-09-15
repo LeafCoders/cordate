@@ -36,7 +36,7 @@
 	</style>
 	
 	<div class="pull-left">
-		<h3 class="weekHeader">{{ 'items.eventweek.week' | t }} {{item.week}}</h3>
+		<h3 class="weekHeader">{{ 'eventItems.label.week' | t }} {{item.week}}</h3>
 	</div>
 	
 	<div class="btn-toolbar pull-right">
@@ -44,7 +44,7 @@
 			<a class="btn btn-default" href="#{{item.previous_page}}">
                 <span class="glyphicon glyphicon-chevron-left"></span>
 			</a>
-			<a class="btn btn-default" href="#/eventweeks/current">{{ 'items.eventweek.today' | t }}</a>
+			<a class="btn btn-default" href="#/eventweeks/current">{{ 'eventItems.label.today' | t }}</a>
 			<a class="btn btn-default" href="#{{item.next_page}}">
                 <span class="glyphicon glyphicon-chevron-right"></span>
 			</a>
@@ -60,7 +60,7 @@
 			<div class="calendarDayNr">
 				<h3>{{day.date | dayNumber}}</h3>
 			</div>
-			<div class="calendarDayName">{{'items.eventweek.' + (day.dayNumber | dayName) | t}}</div>
+			<div class="calendarDayName">{{ 'eventItems.label.' + (day.dayNumber | dayName) | t}}</div>
 		</div>
 	
 		<div class="calendarInfo" ng-show="day.events">
@@ -73,9 +73,9 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#/{{type}}s/{{event.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                                <li><a href="#/{{type}}s/{{event.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
                                 <li class="divider"></li>
-                                <li class="text-danger"><a href="" class="text-danger" ng-click="remove(event)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                                <li class="text-danger"><a href="" class="text-danger" ng-click="remove(event)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                             </ul>
                         </div>
                     </td>
@@ -84,7 +84,5 @@
 		</div>
 	
 		<div class="clearfix"></div>
-	
 	</div>
-	
 </items>

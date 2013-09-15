@@ -1,10 +1,10 @@
-<h1>{{ 'items.title.groupMembership' | t }}</h1>
+<h1>{{ 'groupMembershipItems.label.title' | t }}</h1>
 
 <table class="table table-default table-hover">
     <thead>
     <tr>
-        <th>{{ 'groupMemberships.tableTitleGroup' | t }}</th>
-        <th>{{ 'groupMemberships.tableTitleUser' | t }}</th>
+        <th>{{ 'groupMembershipItems.label.tableTitleGroup' | t }}</th>
+        <th>{{ 'groupMembershipItems.label.tableTitleUser' | t }}</th>
         <th>&nbsp;</th>
     </tr>
     </thead>
@@ -18,9 +18,9 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                    <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
                     <li class="divider"></li>
-                    <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                    <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>
@@ -29,5 +29,5 @@
 </table>
 
 <button class="btn btn-primary create" ng-click="createNew()">
-    {{ 'items.new.groupMembership' | t }}
+    {{ 'groupMembershipItems.action.new' | t }}
 </button>

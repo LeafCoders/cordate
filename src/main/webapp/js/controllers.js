@@ -23,10 +23,10 @@ function ItemsController($scope, $rootScope, $location, $filter, $route, current
 	};
 
     $scope.remove = function(item) {
-        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.' + $scope.type));
+        var confirmed = confirm($filter('t')($scope.type + 'Items.prompt.itemDeleteConfirmation'));
         if (confirmed) {
             item.$remove(function() {
-                flash.addAlert({ type: 'success', text: 'items.itemDeleted.' + $scope.type});
+                flash.addAlert({ type: 'success', text: $scope.type + 'Items.alert.itemWasDeleted'});
                 $route.reload();
             });
         }
@@ -54,12 +54,12 @@ function ItemEditorController(type, $scope, $rootScope, $location, $filter, item
         if (item) {
             if (item.id == undefined) {
                 itemService.save(item, function (data, headers) {
-                    flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.' + $scope.type});
+                    flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasCreated'});
                     $location.path('/' + $scope.type + 's/' + data.id);
                 });
             } else {
                 item.$update(function(data, headers) {
-                    flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.' + $scope.type});
+                    flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
                     $location.path('/' + $scope.type + 's/' + data.id);
                 });
             }
@@ -67,10 +67,10 @@ function ItemEditorController(type, $scope, $rootScope, $location, $filter, item
     };
 
     $scope.remove = function() {
-        var confirmed = confirm($filter('t')('itemEditor.itemDeleteConfirmation.' + $scope.type));
+        var confirmed = confirm($filter('t')($scope.type + 'Editor.alert.itemDeleteConfirmation'));
         if (confirmed) {
             $scope.item.$remove(function() {
-                flash.addAlert({ type: 'success', text: 'itemEditor.itemDeleted.' + $scope.type});
+                flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasDeleted'});
                 $location.path('/' + $scope.type + 's');
             });
         }
@@ -95,10 +95,10 @@ function EventweekController($scope, $rootScope, $location, $filter, $route, cur
     $scope.backPage = "eventweeks/current";
 
     $scope.remove = function(item) {
-        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.event'));
+        var confirmed = confirm($filter('t')('eventItems.prompt.itemDeleteConfirmation'));
         if (confirmed) {
             EventResource.delete({id : item.id}, function(response, headers) {
-                flash.addAlert({ type: 'success', text: 'items.itemDeleted.event'});
+                flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted'});
                 $route.reload();
             });
         }
@@ -244,13 +244,15 @@ UserController.data = {
 function UserEditorController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
     angular.extend(this, new ItemEditorController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
 
+    $scope.item.password = "";
+
     $scope.formHelper = {
         reenteredPassword:""
     }
 
     $scope.beforeSave = function(item) {
         if (item.password != $scope.formHelper.reenteredPassword) {
-            flash.addAlert({ type: 'danger', text: 'password not the same'});
+            flash.addAlert({ type: 'danger', text: 'userEditor.alert.passwordsNotMatching'});
             flash.showAlerts();
             flash.clearAlerts();
 

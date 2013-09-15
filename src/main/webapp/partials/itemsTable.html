@@ -1,4 +1,4 @@
-<h1>{{'items.title.' + type | t}}</h1>
+<h1>{{ type + 'Items.label.title' | t}}</h1>
 
 <table class="table table-hover">
     <tbody>
@@ -10,9 +10,9 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.edit' | t }}</a></li>
+                    <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
                     <li class="divider"></li>
-                    <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.delete' | t }}</span></a></li>
+                    <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>
@@ -20,4 +20,4 @@
     </tbody>
 </table>
 
-<button class="btn btn-primary" ng-click="createNew()">{{ 'items.new.' + type | t}}</button>
+<button class="btn btn-primary" ng-click="createNew()">{{ type + 'Items.action.new' | t}}</button>
