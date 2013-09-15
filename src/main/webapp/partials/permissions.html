@@ -8,7 +8,11 @@
         <tbody>
         <tr id="{{item.id}}" ng-repeat="item in items | commonPermissions">
             <td width="40%" ng-click="showDetails(item.id)">{{ 'items.everyone' }}</td>
-            <td ng-click="showDetails(item.id)">{{item.patterns}}</td>
+            <td ng-click="showDetails(item.id)">
+                <span ng-repeat="pattern in item.patterns">
+                    <span class="label label-default">{{ pattern }}</span>
+                </span>
+            </td>
             <td width="46">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -34,7 +38,11 @@
         <tbody>
         <tr id="{{item.id}}" ng-repeat="item in items | groupPermissions">
             <td width="40%" ng-click="showDetails(item.id)">{{item.groupName}}</td>
-            <td ng-click="showDetails(item.id)">{{item.patterns}}</td>
+            <td ng-click="showDetails(item.id)">
+                <span ng-repeat="pattern in item.patterns">
+                    <span class="label label-default">{{ pattern }}</span>
+                </span>
+            </td>
             <td width="46">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -60,7 +68,11 @@
         <tbody>
         <tr id="{{item.id}}" ng-repeat="item in items | userPermissions">
             <td width="40%" ng-click="showDetails(item.id)">{{item.userFullName}}</td>
-            <td ng-click="showDetails(item.id)">{{item.patterns}}</td>
+            <td ng-click="showDetails(item.id)">
+                <span ng-repeat="pattern in item.patterns">
+                    <span class="label label-default">{{ pattern }}</span>
+                </span>
+            </td>
             <td width="46">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

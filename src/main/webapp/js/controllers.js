@@ -83,6 +83,134 @@ function HomeController($location) {
 }
 
 
+// Events
+function EventweekController($scope, $rootScope, $location, $filter, $route, currentType, item, EventResource, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, null, flash));
+
+    $rootScope.currentPage = 'eventweek';
+    $scope.type = 'event';
+    $scope.item = item;
+    $scope.backPage = "eventweeks/current";
+
+    $scope.remove = function(item) {
+        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.event'));
+        if (confirmed) {
+            EventResource.delete({id : item.id}, function(response, headers) {
+                flash.addAlert({ type: 'success', text: 'items.itemDeleted.event'});
+                $route.reload();
+            });
+        }
+    };
+}
+
+EventweekController.data = {
+    item : function($q, $route, EventweekResource) {
+        var deferred = $q.defer();
+
+        var id = $route.current.pathParams.id;
+        if ($route.current.pathParams.id == undefined) {
+            id = "current";
+        }
+        var item = EventweekResource.get({id: id}, function(data, headers) {
+            var linkHeader = headers().link;
+            if (linkHeader.length == 0) {
+                throw new Error("input must not be of zero length");
+            }
+            // Split parts by comma
+            var parts = linkHeader.split(',');
+            var links = {};
+            // Parse each part into a named link
+            angular.forEach(parts, function (p) {
+                var section = p.split(';');
+                if (section.length != 2) {
+                    throw new Error("section could not be split on ';'");
+                }
+                var url = section[0].replace(/<(.*)>/, '$1').trim();
+                var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+                links[name] = url;
+            });
+            item.next_page = '/' + links['next'];
+            item.previous_page = '/' + links['previous'];
+
+            deferred.resolve(item);
+        });
+        return deferred.promise;
+    }
+}
+
+function EventController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
+    angular.extend(this, new ItemController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
+
+    $rootScope.currentPage = 'events';
+    $scope.backPage = 'eventweeks/current';
+}
+
+EventController.data = {
+    item : function($q, $route, $location, EventResource) {
+        if ($route.current.pathParams.id == undefined) {
+            var model = {};
+            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
+            if (collection == 'events') {
+                var currentTime = new Date();
+                var year = currentTime.getFullYear();
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                model = {startTime: year + '-' + month + '-' + day + ' 11:00 Europe/Stockholm'};
+            }
+            return model;
+        } else {
+            return EventResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
+}
+
+function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
+    angular.extend(this, new ItemEditorController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
+
+    $rootScope.currentPage = 'events';
+    $scope.backPage = 'eventweeks/current';
+
+    var times = [{text: '', value: ''}];
+    for (var i = 0; i < 24; i++) {
+        var hour = i < 10 ? '0' + i : '' + i;
+        times.push({text: hour + ':00', value: hour + ':00'});
+        times.push({text: hour + ':30', value: hour + ':30'});
+    }
+
+    $scope.formHelper = {
+        startTimePartDate:$filter('date')(item.startTime),
+        startTimePartTime:$filter('time')(item.startTime),
+        endTimePartDate:$filter('date')(item.endTime),
+        endTimePartTime:$filter('time')(item.endTime),
+        times:times
+    };
+
+    $scope.beforeSave = function(item) {
+        if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
+            delete item.startTime;
+        } else {
+            item.startTime = $scope.formHelper.startTimePartDate + ' ' + $scope.formHelper.startTimePartTime + ' Europe/Stockholm';
+        }
+
+        if (($scope.formHelper.endTimePartDate == null || $scope.formHelper.endTimePartDate == '') &&
+            ($scope.formHelper.endTimePartTime == null || $scope.formHelper.endTimePartTime == '')) {
+            delete item.endTime;
+        } else {
+            item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
+        }
+
+        return item;
+    };
+}
+
+EventEditorController.data = {
+    item : EventController.data.item
+}
+
+
 // Users
 
 function UsersController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
@@ -229,10 +357,22 @@ PermissionController.data = {
 function PermissionEditorController($scope, $rootScope, $location, $filter, item, users, groups, PermissionResource, flash) {
     angular.extend(this, new ItemEditorController('permission', $scope, $rootScope, $location, $filter, item, PermissionResource, flash));
 
+    var permissionType = "everyone";
+    var permissionId = null;
+    if ($scope.item.groupId) {
+        permissionType = "group";
+        permissionId = $scope.item.groupId;
+    } else if ($scope.item.userId) {
+        permissionType = "user";
+        permissionId = $scope.item.userId;
+    }
+
     $scope.formHelper = {
-        permissionType:"everyone",
+        permissionType:permissionType,
+        permissionId:permissionId,
         users:users,
-        groups:groups
+        groups:groups,
+        patterns:$scope.item.patterns ? $scope.item.patterns.join('\n') : ""
     };
 
     $scope.beforeSave = function(item) {
@@ -249,6 +389,9 @@ function PermissionEditorController($scope, $rootScope, $location, $filter, item
             item.userId = $scope.formHelper.permissionId;
             delete item.groupId;
         }
+
+        item.patterns = $scope.formHelper.patterns.split('\n');
+
         return item;
     }
 }
@@ -259,130 +402,3 @@ PermissionEditorController.data = {
     groups : GroupsController.data.items
 }
 
-
-// Events
-function EventweekController($scope, $rootScope, $location, $filter, $route, currentType, item, EventResource, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, null, flash));
-
-	$rootScope.currentPage = 'eventweek';
-	$scope.type = 'event';
-	$scope.item = item;
-    $scope.backPage = "eventweeks/current";
-
-    $scope.remove = function(item) {
-        var confirmed = confirm($filter('t')('items.itemDeleteConfirmation.event'));
-        if (confirmed) {
-            EventResource.delete({id : item.id}, function(response, headers) {
-                flash.addAlert({ type: 'success', text: 'items.itemDeleted.event'});
-                $route.reload();
-            });
-        }
-    };
-}
-
-EventweekController.data = {
-    item : function($q, $route, EventweekResource) {
-        var deferred = $q.defer();
-
-        var id = $route.current.pathParams.id;
-        if ($route.current.pathParams.id == undefined) {
-            id = "current";
-        }
-        var item = EventweekResource.get({id: id}, function(data, headers) {
-            var linkHeader = headers().link;
-            if (linkHeader.length == 0) {
-                throw new Error("input must not be of zero length");
-            }
-            // Split parts by comma
-            var parts = linkHeader.split(',');
-            var links = {};
-            // Parse each part into a named link
-            angular.forEach(parts, function (p) {
-                var section = p.split(';');
-                if (section.length != 2) {
-                    throw new Error("section could not be split on ';'");
-                }
-                var url = section[0].replace(/<(.*)>/, '$1').trim();
-                var name = section[1].replace(/rel="(.*)"/, '$1').trim();
-                links[name] = url;
-            });
-            item.next_page = '/' + links['next'];
-            item.previous_page = '/' + links['previous'];
-
-            deferred.resolve(item);
-        });
-        return deferred.promise;
-    }
-}
-
-function EventController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
-    angular.extend(this, new ItemController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
-
-    $rootScope.currentPage = 'events';
-    $scope.backPage = 'eventweeks/current';
-}
-
-EventController.data = {
-    item : function($q, $route, $location, EventResource) {
-        if ($route.current.pathParams.id == undefined) {
-            var model = {};
-            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
-            if (collection == 'events') {
-                var currentTime = new Date();
-                var year = currentTime.getFullYear();
-                var month = currentTime.getMonth() + 1;
-                var day = currentTime.getDate();
-                month = month < 10 ? '0' + month : month;
-                day = day < 10 ? '0' + day : day;
-
-                model = {startTime: year + '-' + month + '-' + day + ' 11:00 Europe/Stockholm'};
-            }
-            return model;
-        } else {
-            return EventResource.get({id: $route.current.pathParams.id}).$promise;
-        }
-    }
-}
-
-function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
-    angular.extend(this, new ItemEditorController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
-
-    $rootScope.currentPage = 'events';
-    $scope.backPage = 'eventweeks/current';
-
-    var times = [{text: '', value: ''}];
-    for (var i = 0; i < 24; i++) {
-        var hour = i < 10 ? '0' + i : '' + i;
-        times.push({text: hour + ':00', value: hour + ':00'});
-        times.push({text: hour + ':30', value: hour + ':30'});
-    }
-
-    $scope.formHelper = {
-        startTimePartDate:$filter('date')(item.startTime),
-        startTimePartTime:$filter('time')(item.startTime),
-        endTimePartDate:$filter('date')(item.endTime),
-        endTimePartTime:$filter('time')(item.endTime),
-        times:times
-    };
-
-    $scope.beforeSave = function(item) {
-        if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
-            delete item.startTime;
-        } else {
-            item.startTime = $scope.formHelper.startTimePartDate + ' ' + $scope.formHelper.startTimePartTime + ' Europe/Stockholm';
-        }
-
-        if (($scope.formHelper.endTimePartDate == null || $scope.formHelper.endTimePartDate == '') &&
-            ($scope.formHelper.endTimePartTime == null || $scope.formHelper.endTimePartTime == '')) {
-            delete item.endTime;
-        } else {
-            item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
-        }
-
-        return item;
-    };
-}
-
-EventEditorController.data = {
-    item : EventController.data.item
-}
