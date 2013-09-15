@@ -51,16 +51,18 @@ function ItemEditorController(type, $scope, $rootScope, $location, $filter, item
         var item = angular.copy($scope.item);
         item = $scope.beforeSave(item);
 
-        if (item.id == undefined) {
-            itemService.save(item, function (data, headers) {
-                flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.' + $scope.type});
-                $location.path('/' + $scope.type + 's/' + data.id);
-            });
-        } else {
-            item.$update(function(data, headers) {
-                flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.' + $scope.type});
-                $location.path('/' + $scope.type + 's/' + data.id);
-            });
+        if (item) {
+            if (item.id == undefined) {
+                itemService.save(item, function (data, headers) {
+                    flash.addAlert({ type: 'success', text: 'itemEditor.itemCreated.' + $scope.type});
+                    $location.path('/' + $scope.type + 's/' + data.id);
+                });
+            } else {
+                item.$update(function(data, headers) {
+                    flash.addAlert({ type: 'success', text: 'itemEditor.itemUpdated.' + $scope.type});
+                    $location.path('/' + $scope.type + 's/' + data.id);
+                });
+            }
         }
     };
 
@@ -241,6 +243,22 @@ UserController.data = {
 
 function UserEditorController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
     angular.extend(this, new ItemEditorController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
+
+    $scope.formHelper = {
+        reenteredPassword:""
+    }
+
+    $scope.beforeSave = function(item) {
+        if (item.password != $scope.formHelper.reenteredPassword) {
+            flash.addAlert({ type: 'danger', text: 'password not the same'});
+            flash.showAlerts();
+            flash.clearAlerts();
+
+            item = null;
+        }
+
+        return item;
+    }
 }
 
 UserEditorController.data = {
