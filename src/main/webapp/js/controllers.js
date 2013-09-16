@@ -56,11 +56,14 @@ function ItemController(type, $scope, $rootScope, $location, $filter, item, item
 function ItemEditorController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
     angular.extend(this, new ItemController(type, $scope, $rootScope, $location, $filter, item, itemService, flash));
 
+    $scope.errors = {};
+
     $scope.beforeSave = function(item) {
         return item;
     };
 
     $scope.save = function() {
+        $scope.errors = {};
         var item = angular.copy($scope.item);
         item = $scope.beforeSave(item);
 
@@ -69,6 +72,17 @@ function ItemEditorController(type, $scope, $rootScope, $location, $filter, item
                 itemService.save(item, function (data, headers) {
                     flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasCreated'});
                     $location.path('/' + $scope.type + 's/' + data.id);
+                }, function(response) {
+                    var property = response.data[0].property;
+                    var text = response.data[0].message;
+
+                    if (property != undefined) {
+                        flash.addAlert({ type: 'danger', text: text});
+                        flash.showAlerts();
+                        flash.clearAlerts();
+                    }
+
+                    $scope.errors[property] = "has-error";
                 });
             } else {
                 item.$update(function(data, headers) {
@@ -270,6 +284,9 @@ function UserEditorController($scope, $rootScope, $location, $filter, item, User
             flash.clearAlerts();
 
             item = null;
+
+            $scope.errors['password'] = "has-error";
+            $scope.errors['reenteredPassword'] = "has-error";
         }
 
         return item;

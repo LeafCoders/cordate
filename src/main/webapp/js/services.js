@@ -81,17 +81,7 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
             responseError: function (response) {
                 flash.clearAlerts();
 
-                if (response.status == 400) {
-                    var property = response.data[0].property;
-                    var text = response.data[0].message;
-
-                    if (property != undefined) {
-                        flash.addAlert({ type: 'danger', text: text});
-                        flash.showAlerts();
-                        flash.clearAlerts();
-                    }
-                } else if (response.status == 403) {
-                    flash.addAlert({ type: 'danger', text: 'You don\'t have the privilages to do this.'});
+                if (response.status == 403) {
                     flash.showAlerts();
                     flash.clearAlerts();
                 } else {

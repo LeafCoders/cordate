@@ -1,26 +1,26 @@
 <itemeditor>
-    <div class="form-group">
-        <label for="form-username">{{ 'userEditor.formLabel.username' | t }}</label>
+    <div class="form-group" ng-class="errors.username">
+        <label for="form-username" class="control-label">{{ 'userEditor.formLabel.username' | t }}</label>
         <input type="text" class="form-control" id="form-username" ng-model="item.username" autofocus/>
     </div>
 
     <div class="form-group">
-        <label for="form-firstname">{{ 'userEditor.formLabel.firstName' | t }}</label>
+        <label for="form-firstname" class="control-label">{{ 'userEditor.formLabel.firstName' | t }}</label>
         <input type="text" class="form-control" id="form-firstname" ng-model="item.firstName"/>
     </div>
 
     <div class="form-group">
-        <label for="form-lastname">{{ 'userEditor.formLabel.lastName' | t }}</label>
+        <label for="form-lastname" class="control-label">{{ 'userEditor.formLabel.lastName' | t }}</label>
         <input type="text" class="form-control" id="form-lastname" ng-model="item.lastName"/>
     </div>
 
-    <div class="form-group">
-        <label for="form-password">{{ 'userEditor.formLabel.password' | t }}</label>
+    <div class="form-group" ng-class="errors.password">
+        <label for="form-password" class="control-label">{{ 'userEditor.formLabel.password' | t }}</label>
         <input type="password" class="form-control" id="form-password" ng-model="item.password"/>
     </div>
 
-    <div class="form-group">
-        <label for="form-reenteredPassword">{{ 'userEditor.formLabel.reenterPassword' | t }}</label>
+    <div class="form-group" ng-class="errors.reenteredPassword">
+        <label for="form-reenteredPassword" class="control-label">{{ 'userEditor.formLabel.reenterPassword' | t }}</label>
         <input type="password" class="form-control" id="form-reenteredPassword" ng-model="formHelper.reenteredPassword"/>
     </div>
 </itemeditor>

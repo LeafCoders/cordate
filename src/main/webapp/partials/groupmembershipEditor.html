@@ -1,13 +1,13 @@
 <itemeditor>
-    <div class="form-group">
-        <label for="form-user">{{ 'groupMembershipEditor.formLabel.user' | t }}</label>
+    <div class="form-group" ng-class="errors.userId">
+        <label for="form-user" class="control-label">{{ 'groupMembershipEditor.formLabel.user' | t }}</label>
         <select id="form-user" class="form-control" ng-model="item.userId" ng-options="user.id as user.fullName for user in users">
             <option value="">{{ 'groupMembershipEditor.formLabel.choseUser' | t }}</option>
         </select>
     </div>
 
-    <div class="form-group">
-        <label for="form-group">{{ 'groupMembershipEditor.formLabel.group' | t }}</label>
+    <div class="form-group" ng-class="errors.groupId">
+        <label for="form-group" class="control-label">{{ 'groupMembershipEditor.formLabel.group' | t }}</label>
         <select id="form-group" class="form-control" ng-model="item.groupId" ng-options="group.id as group.name for group in groups">
             <option value="">{{ 'groupMembershipEditor.formLabel.choseGroup' | t }}</option>
         </select>
