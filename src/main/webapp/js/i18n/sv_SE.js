@@ -26,6 +26,7 @@ angular.module('myApp.translation_sv_SE', []).
         "items.action.delete" : "Radera",
 
         "item.action.edit" : "Redigera",
+        "item.action.delete" : "Radera",
 
         "itemEditor.label.save" : "Spara",
         "itemEditor.label.cancel" : "Avbryt",
@@ -44,6 +45,8 @@ angular.module('myApp.translation_sv_SE', []).
         "eventItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera händelsen?",
         "eventItems.alert.itemWasDeleted" : "Händelsen raderades!",
 
+        "eventItem.label.backToItems" : "« Tillbaka till händelser",
+
         "eventEditor.label.newTitle" : "Ny händelse",
         "eventEditor.label.editTitle" : "Redigera händelse",
         "eventEditor.formLabel.title" : "Titel",
@@ -52,7 +55,6 @@ angular.module('myApp.translation_sv_SE', []).
         "eventEditor.formLabel.description" : "Beskrivning",
         "eventEditor.alert.itemWasCreated" : "Händelsen skapades!",
         "eventEditor.alert.itemWasUpdated" : "Händelsen uppdaterades!",
-        "eventEditor.alert.itemWasDeleted" : "Händelsen raderades!",
         "event.title.notEmpty" : "Titel saknas",
         "event.startTime.notNull" : "Starttid saknas",
 
@@ -60,6 +62,10 @@ angular.module('myApp.translation_sv_SE', []).
         "userItems.action.new" : "Ny användare",
         "userItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera användaren?",
         "userItems.alert.itemWasDeleted" : "Användaren raderades!",
+
+        "userItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera användaren?",
+        "userItem.alert.itemWasDeleted" : "Användaren raderades!",
+        "userItem.label.backToItems" : "« Tillbaka till användare",
 
         "userEditor.label.newTitle" : "Ny användare",
         "userEditor.label.editTitle" : "Redigera användare",
@@ -70,7 +76,6 @@ angular.module('myApp.translation_sv_SE', []).
         "userEditor.formLabel.reenterPassword" : "Repetera lösenord",
         "userEditor.alert.itemWasCreated" : "Användaren skapades!",
         "userEditor.alert.itemWasUpdated" : "Användaren uppdaterades!",
-        "userEditor.alert.itemWasDeleted" : "Användaren raderades!",
         "userEditor.alert.passwordsNotMatching" : "Lösenorden matchar inte",
         "user.username.notEmpty":"Användarnamn saknas",
         "user.username.duplicatedUsernameNotAllowed" : "Användarnamnet är upptaget",
@@ -80,13 +85,15 @@ angular.module('myApp.translation_sv_SE', []).
         "groupItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera gruppen?",
         "groupItems.alert.itemWasDeleted" : "Gruppen raderades!",
 
+        "groupItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera gruppen?",
+        "groupItem.alert.itemWasDeleted" : "Gruppen raderades!",
+        "groupItem.label.backToItems" : "« Tillbaka till grupper",
+
         "groupEditor.label.newTitle" : "Ny grupp",
         "groupEditor.label.editTitle" : "Redigera grupp",
         "groupEditor.formLabel.name" : "Namn",
         "groupEditor.alert.itemWasCreated" : "Gruppen skapades!",
         "groupEditor.alert.itemWasUpdated" : "Gruppen uppdaterades!",
-        "groupEditor.alert.itemWasDeleted" : "Gruppen raderades!",
-        "groupEditor.prompt.itemDeleteConfirmation" : "Vill du verkligen radera gruppen?",
         "group.name.notNull":"Namn saknas",
 
         "groupMembershipItems.label.title" : "Gruppmedlemskap",
@@ -97,6 +104,9 @@ angular.module('myApp.translation_sv_SE', []).
         "groupMembershipItems.label.tableTitleUser" : "Användare",
 
         "groupMembershipItem.label.title" : "Gruppmedlemskap",
+        "groupMembershipItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera gruppmedlemskapet?",
+        "groupMembershipItem.alert.itemWasDeleted" : "Gruppmedlemskapet raderades!",
+        "groupMembershipItem.label.backToItems" : "« Tillbaka till gruppmedlemskap",
 
         "groupMembershipEditor.label.newTitle" : "Nytt gruppmedlemskap",
         "groupMembershipEditor.label.editTitle" : "Redigera gruppmedlemskap",
@@ -106,7 +116,6 @@ angular.module('myApp.translation_sv_SE', []).
         "groupMembershipEditor.formLabel.choseUser" : "Välj användare...",
         "groupMembershipEditor.alert.itemWasCreated" : "Gruppmedlemskapet skapades!",
         "groupMembershipEditor.alert.itemWasUpdated" : "Gruppmedlemskapet uppdaterades!",
-        "groupMembershipEditor.alert.itemWasDeleted" : "Gruppmedlemskapet raderades!",
         "groupMembership.groupId.notNull" : "Grupp saknas",
         "groupMembership.userId.notNull" : "Användare saknas",
         "groupMembership.alreadyExists" : "Gruppmedlemskapet finns redan",
@@ -122,6 +131,9 @@ angular.module('myApp.translation_sv_SE', []).
 
         "permissionItem.label.permissionsForEveryone" : "Alla",
         "permissionItem.label.permissions" : "Behörigheter",
+        "permissionItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera behörigheten?",
+        "permissionItem.alert.itemWasDeleted" : "Behörigheten raderades!",
+        "permissionItem.label.backToItems" : "« Tillbaka till behörigheter",
 
         "permissionEditor.label.newTitle" : "Ny behörighet",
         "permissionEditor.label.editTitle" : "Redigera behörighet",
@@ -134,6 +146,5 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionEditor.formLabel.patterns" : "Behörigheter",
         "permissionEditor.alert.itemWasCreated" : "Behörigheten skapades!",
         "permissionEditor.alert.itemWasUpdated" : "Behörigheten uppdaterades!",
-        "permissionEditor.alert.itemWasDeleted" : "Behörigheten raderades!",
         "permission.patterns.notEmpty" : "Behörigheter saknas"
     })

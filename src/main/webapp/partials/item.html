@@ -2,4 +2,9 @@
 
 <div class="form-actions">
     <a href="#/{{type}}s/{{item.id}}/edit" class="btn btn-default">{{ 'item.action.edit' | t }}</a>
+    <button ng-click="remove(item)" class="btn btn-danger pull-right">{{ 'item.action.delete' | t }}</button>
+</div>
+
+<div class="form-extra-actions">
+    <a href="#/{{backPage}}">{{ type + 'Item.label.backToItems' | t }}</a>
 </div>

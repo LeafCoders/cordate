@@ -19,11 +19,6 @@ body {
 }
 
 .navbar-brand {
-    /*position: fixed;*/
-    /*overflow: visible;*/
-    /*padding-left: 0;*/
-    /*padding-top: 0;*/
-    /*background: red;*/
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -38,6 +33,10 @@ body {
 
 .form-actions {
     margin-top: 10px;
+}
+
+.form-extra-actions {
+    margin-top: 20px;
 }
 
 

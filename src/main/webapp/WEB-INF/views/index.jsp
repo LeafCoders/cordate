@@ -2,8 +2,9 @@
 <html lang="en" ng-app="myApp" ng-cloak>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -41,7 +42,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" >
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">${username}</li>
                         <li class="divider"></li>

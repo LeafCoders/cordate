@@ -13,6 +13,7 @@ app.controller('MainController', function($rootScope, $scope, flash) {
 
 function ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
 	$scope.items = items;
+    $scope.backPage = currentType + 's';
 
     $scope.showDetails = function(id) {
 		$location.path('/' + $scope.type + 's/' + id);
@@ -38,6 +39,16 @@ function ItemController(type, $scope, $rootScope, $location, $filter, item, item
     $rootScope.currentPage = $scope.type + 's';
     $scope.backPage = $rootScope.currentPage;
     $scope.item = item;
+
+    $scope.remove = function(item) {
+        var confirmed = confirm($filter('t')($scope.type + 'Item.prompt.itemDeleteConfirmation'));
+        if (confirmed) {
+            item.$remove(function() {
+                flash.addAlert({ type: 'success', text: $scope.type + 'Item.alert.itemWasDeleted'});
+                $location.path('/' + $scope.backPage);
+            });
+        }
+    };
 }
 
 function ItemEditorController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
