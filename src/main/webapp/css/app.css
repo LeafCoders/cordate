@@ -1,0 +1,50 @@
+html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.table-hover tbody {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.navbar {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+}
+
+.navbar-brand {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.spacer {
+    margin-right:10px;
+}
+
+#alerts {
+    padding-top: 20px;
+}
+
+.form-actions {
+    margin-top: 10px;
+}
+
+.form-extra-actions {
+    margin-top: 20px;
+}
+
+/* modal fix */
+body, .navbar-fixed-top, .navbar-fixed-bottom {
+    margin-right: 0 !important;
+}
+
+.search {
+    margin-bottom: 10px;
+}
+

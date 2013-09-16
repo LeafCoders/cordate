@@ -1,0 +1,15 @@
+<h1 ng-show="item.id != null">{{ type + 'Editor.label.editTitle' | t}}</h1>
+<h1 ng-show="item.id == null">{{ type + 'Editor.label.newTitle' | t}}</h1>
+
+<form role="form">
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <div ng-transclude></div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a class="btn btn-primary" ng-click="save()">{{ 'itemEditor.action.save' | t }}</a>
+        <a href="#/{{backPage}}" class="btn btn-default">{{ 'itemEditor.action.cancel' | t }}</a>
+    </div>
+</form>

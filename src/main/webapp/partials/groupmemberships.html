@@ -1,0 +1,35 @@
+<h1>{{ 'groupMembershipItems.label.title' | t }}</h1>
+
+<search/>
+
+<table class="table table-default table-hover">
+    <thead>
+    <tr>
+        <th>{{ 'groupMembershipItems.label.tableTitleGroup' | t }}</th>
+        <th>{{ 'groupMembershipItems.label.tableTitleUser' | t }}</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query | orderBy:['groupName', 'username']">
+        <td ng-click="showDetails(item.id)">{{item.groupName}}</td>
+        <td ng-click="showDetails(item.id)">{{item.userFullName}}</td>
+        <td width="46">
+            <div class="btn-group pull-right">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                    <li class="divider"></li>
+                    <li class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<button class="btn btn-primary create" ng-click="createNew()">
+    {{ 'groupMembershipItems.action.new' | t }}
+</button>
