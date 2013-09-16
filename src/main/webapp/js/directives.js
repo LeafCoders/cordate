@@ -31,4 +31,11 @@ angular.module('myApp.directives', []).
             transclude:true,
             templateUrl:'partials/itemEditor.html'
         };
+    }).
+    directive("deleteModal",function () {
+        return {
+            restrict:'E',
+            transclude:true,
+            templateUrl:'partials/deleteModal.html'
+        };
     });

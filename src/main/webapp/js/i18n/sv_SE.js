@@ -27,9 +27,10 @@ angular.module('myApp.translation_sv_SE', []).
 
         "item.action.edit" : "Redigera",
         "item.action.delete" : "Radera",
+        "item.action.cancel" : "Avbryt",
 
-        "itemEditor.label.save" : "Spara",
-        "itemEditor.label.cancel" : "Avbryt",
+        "itemEditor.action.save" : "Spara",
+        "itemEditor.action.cancel" : "Avbryt",
 
         "eventItems.label.title" : "Händelser",
         "eventItems.label.week" : "Vecka",

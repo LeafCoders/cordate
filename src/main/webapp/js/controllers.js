@@ -41,13 +41,11 @@ function ItemController(type, $scope, $rootScope, $location, $filter, item, item
     $scope.item = item;
 
     $scope.remove = function(item) {
-        var confirmed = confirm($filter('t')($scope.type + 'Item.prompt.itemDeleteConfirmation'));
-        if (confirmed) {
-            item.$remove(function() {
-                flash.addAlert({ type: 'success', text: $scope.type + 'Item.alert.itemWasDeleted'});
-                $location.path('/' + $scope.backPage);
-            });
-        }
+        $('#myModal').modal('hide');
+        item.$remove(function() {
+            flash.addAlert({ type: 'success', text: $scope.type + 'Item.alert.itemWasDeleted'});
+            $location.path('/' + $scope.backPage);
+        });
     };
 }
 

@@ -39,5 +39,8 @@ body {
     margin-top: 20px;
 }
 
-
+/* modal fix */
+body, .navbar-fixed-top, .navbar-fixed-bottom {
+    margin-right: 0 !important;
+}
 
