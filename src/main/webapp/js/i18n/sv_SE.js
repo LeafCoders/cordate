@@ -32,6 +32,10 @@ angular.module('myApp.translation_sv_SE', []).
         "itemEditor.action.save" : "Spara",
         "itemEditor.action.cancel" : "Avbryt",
 
+        "error.badRequest" : "Sorry, ogiltigt anrop",
+        "error.permissionDenied" : "Behörighet saknas",
+        "error.unknownError" : "Oops! Något gick snett. Försök igen.",
+
         "eventItems.label.title" : "Händelser",
         "eventItems.label.week" : "Vecka",
         "eventItems.label.today" : "Idag",

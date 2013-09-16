@@ -81,11 +81,16 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
             responseError: function (response) {
                 flash.clearAlerts();
 
-                if (response.status == 403) {
+                if (response.status == 400) {
+                    flash.addAlert({ type: 'danger', text: 'error.badRequest'});
+                    flash.showAlerts();
+                    flash.clearAlerts();
+                } else if (response.status == 403) {
+                    flash.addAlert({ type: 'danger', text: 'error.permissionDenied'});
                     flash.showAlerts();
                     flash.clearAlerts();
                 } else {
-                    flash.addAlert({ type: 'danger', text: 'Oops! Something went wrong.'});
+                    flash.addAlert({ type: 'danger', text: 'error.unknownError'});
                     flash.showAlerts();
                     flash.clearAlerts();
                 }
