@@ -44,3 +44,7 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
     margin-right: 0 !important;
 }
 
+.search {
+    margin-bottom: 10px;
+}
+

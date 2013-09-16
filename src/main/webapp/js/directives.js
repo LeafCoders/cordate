@@ -38,4 +38,11 @@ angular.module('myApp.directives', []).
             transclude:true,
             templateUrl:'partials/deleteModal.html'
         };
+    }).
+    directive("search",function () {
+        return {
+            restrict:'E',
+            transclude:true,
+            templateUrl:'partials/search.html'
+        };
     });

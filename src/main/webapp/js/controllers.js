@@ -15,6 +15,10 @@ function ItemsController($scope, $rootScope, $location, $filter, $route, current
 	$scope.items = items;
     $scope.backPage = currentType + 's';
 
+    $scope.searchFormHelper = {
+        query:""
+    };
+
     $scope.showDetails = function(id) {
 		$location.path('/' + $scope.type + 's/' + id);
 	};
