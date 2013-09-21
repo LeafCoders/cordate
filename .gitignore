@@ -3,3 +3,5 @@
 .settings
 target
 src/main/webapp/lib/bower_components
+.idea
+cordate.iml

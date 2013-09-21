@@ -88,6 +88,17 @@ function ItemEditorController(type, $scope, $rootScope, $location, $filter, item
                 item.$update(function(data, headers) {
                     flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
                     $location.path('/' + $scope.type + 's/' + data.id);
+                }, function(response) {
+                    var property = response.data[0].property;
+                    var text = response.data[0].message;
+
+                    if (property != undefined) {
+                        flash.addAlert({ type: 'danger', text: text});
+                        flash.showAlerts();
+                        flash.clearAlerts();
+                    }
+
+                    $scope.errors[property] = "has-error";
                 });
             }
         }
@@ -450,5 +461,42 @@ PermissionEditorController.data = {
     item : PermissionController.data.item,
     users : UsersController.data.items,
     groups : GroupsController.data.items
+}
+
+
+// Posters
+
+function PostersController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+    $rootScope.currentPage = 'posters';
+    $scope.type = 'poster';
+}
+
+PostersController.data = {
+    items : function(PosterResource) {
+        return PosterResource.query().$promise;
+    }
+}
+
+function PosterController($scope, $rootScope, $location, $filter, item, PosterResource, flash) {
+    angular.extend(this, new ItemController('poster', $scope, $rootScope, $location, $filter, item, PosterResource, flash));
+}
+
+PosterController.data = {
+    item : function($route, PosterResource) {
+        if ($route.current.pathParams.id == undefined) {
+            return {};
+        } else {
+            return PosterResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
+}
+
+function PosterEditorController($scope, $rootScope, $location, $filter, item, PosterResource, flash) {
+    angular.extend(this, new ItemEditorController('poster', $scope, $rootScope, $location, $filter, item, PosterResource, flash));
+}
+
+PosterEditorController.data = {
+    item : PosterController.data.item
 }
 

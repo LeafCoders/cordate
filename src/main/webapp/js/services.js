@@ -33,6 +33,9 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
     .factory('PermissionResource', function ($resource, basePath) {
         return $resource(basePath + '/permissions/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
+    .factory('PosterResource', function ($resource, basePath) {
+            return $resource(basePath + '/posters/:id', {id:'@id'}, {update:{method:'PUT'}});
+        })
     .factory("flash", function ($rootScope) {
         var alerts = [];
 

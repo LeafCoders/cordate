@@ -7,6 +7,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.groups" : "Grupper",
         "navbar.groupMemberships" : "Gruppmedlemskap",
         "navbar.permissions" : "Behörigheter",
+        "navbar.posters" : "Affischer",
         "navbar.logout" : "Logga ut",
 
         "January": "Januari",
@@ -151,5 +152,22 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionEditor.formLabel.patterns" : "Behörigheter",
         "permissionEditor.alert.itemWasCreated" : "Behörigheten skapades!",
         "permissionEditor.alert.itemWasUpdated" : "Behörigheten uppdaterades!",
-        "permission.patterns.notEmpty" : "Behörigheter saknas"
+        "permission.patterns.notEmpty" : "Behörigheter saknas",
+
+        "posterItems.label.title" : "Affischer",
+        "posterItems.action.new" : "Ny affisch",
+        "posterItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera affischen?",
+        "posterItems.alert.itemWasDeleted" : "Affischen raderades!",
+
+        "posterItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera affischen?",
+        "posterItem.alert.itemWasDeleted" : "Affischen raderades!",
+        "posterItem.label.backToItems" : "« Tillbaka till affischer",
+
+        "posterEditor.label.newTitle" : "Ny affisch",
+        "posterEditor.label.editTitle" : "Redigera affisch",
+        "posterEditor.formLabel.title" : "Titel",
+        "posterEditor.formLabel.imageName" : "Bildnamn",
+        "posterEditor.alert.itemWasCreated" : "Affischen skapades!",
+        "posterEditor.alert.itemWasUpdated" : "Affischen uppdaterades!",
+        "poster.title.notEmpty" : "Titel saknas"
     })

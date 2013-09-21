@@ -33,6 +33,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/events/:id/edit', {templateUrl:'partials/eventEditor.html', controller:EventEditorController, resolve:EventEditorController.data});
         $routeProvider.otherwise({redirectTo:'/eventweeks/current'});
 
+        $routeProvider.when('/posters', {templateUrl:'partials/posters.html', controller:PostersController, resolve:PostersController.data});
+        $routeProvider.when('/posters/new', {templateUrl:'partials/posterEditor.html', controller:PosterEditorController, resolve:PosterEditorController.data});
+        $routeProvider.when('/posters/:id', {templateUrl:'partials/poster.html', controller:PosterController, resolve:PosterController.data});
+        $routeProvider.when('/posters/:id/edit', {templateUrl:'partials/posterEditor.html', controller:PosterEditorController, resolve:PosterEditorController.data});
+
         $httpProvider.interceptors.push('myHttpInterceptor');
     })
     .value('$anchorScroll', angular.noop);

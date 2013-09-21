@@ -1,0 +1,11 @@
+<itemeditor>
+    <div class="form-group" ng-class="errors.title">
+        <label for="form-title" class="control-label">{{ 'posterEditor.formLabel.title' | t }}</label>
+        <input type="text" class="form-control" id="form-title" ng-model="item.title" autofocus/>
+    </div>
+
+    <div class="form-group" ng-class="errors.imageName">
+        <label for="form-imageName" class="control-label">{{ 'posterEditor.formLabel.imageName' | t }}</label>
+        <input type="text" class="form-control" id="form-imageName" ng-model="item.imageName"/>
+    </div>
+</itemeditor>

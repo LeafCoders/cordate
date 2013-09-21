@@ -39,6 +39,7 @@
                 <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#/groups">{{'navbar.groups' | t}}</a></li>
                 <li class="groupMemberships-menu" ng-class="{active: currentPage=='groupMemberships'}"><a href="#/groupMemberships">{{'navbar.groupMemberships' | t}}</a></li>
                 <li class="permissions-menu" ng-class="{active: currentPage=='permissions'}"><a href="#/permissions">{{'navbar.permissions' | t}}</a></li>
+                <li class="posters-menu" ng-class="{active: currentPage=='posters'}"><a href="#/posters">{{'navbar.posters' | t}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" >
