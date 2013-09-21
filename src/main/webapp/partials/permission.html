@@ -1,0 +1,10 @@
+<item>
+	<h1 ng-show="item.everyone">{{ 'permissionItem.label.permissionsForEveryone' | t }}</h1>
+	<h1 ng-show="item.groupId">{{item.groupName}}</h1>
+	<h1 ng-show="item.userId">{{item.userFullName}}</h1>
+
+    <label>{{ 'permissionItem.label.permissions' | t }}</label>
+    <div ng-repeat="pattern in item.patterns">
+        <span class="label label-default">{{ pattern }}</span>
+    </div>
+</item>
