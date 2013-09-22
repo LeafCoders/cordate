@@ -22,39 +22,58 @@
 
 <body ng-controller="MainController">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" id="navbar-toggle-button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <div class="navbar-header hidden-xs">
             <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
         </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="main-menu nav navbar-nav">
-                <li class="events-menu" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">{{'navbar.events' | t}}</a></li>
-                <li class="users-menu" ng-class="{active: currentPage=='users'}"><a href="#/users">{{'navbar.users' | t}}</a></li>
-                <li class="groups-menu" ng-class="{active: currentPage=='groups'}"><a href="#/groups">{{'navbar.groups' | t}}</a></li>
-                <li class="groupMemberships-menu" ng-class="{active: currentPage=='groupMemberships'}"><a href="#/groupMemberships">{{'navbar.groupMemberships' | t}}</a></li>
-                <li class="permissions-menu" ng-class="{active: currentPage=='permissions'}"><a href="#/permissions">{{'navbar.permissions' | t}}</a></li>
-                <li class="posters-menu" ng-class="{active: currentPage=='posters'}"><a href="#/posters">{{'navbar.posters' | t}}</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown" >
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-user"></span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">${username}</li>
-                        <li class="divider"></li>
-                        <li><a href="logout">{{'navbar.logout' | t}}</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <ul class="main-menu nav navbar-nav">
+            <li class="events-menu hidden-xs" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">{{ 'navbar.label.events' | t }}</a></li>
+            <li class="posters-menu hidden-xs" ng-class="{active: currentPage=='posters'}"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
+
+            <li class="dropdown">
+                <a href="" class="hidden-xs dropdown-toggle top-header" data-toggle="dropdown">
+                    {{ 'navbar.label.admin' | t }} <b class="caret"></b>
+                </a>
+                <a href="" class="visible-xs dropdown-toggle top-header" data-toggle="dropdown">
+                    <img src="img/logo.png" alt="Logo" width="55" height="30" style="margin-right:10px">
+                    <div type="" class="menu-toggle">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="events-menu visible-xs"><a href="#/eventweeks/current">{{ 'navbar.label.events' | t }}</a></li>
+                    <li class="posters-menu visible-xs"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
+                    <li class="divider visible-xs"></li>
+                    <li class="users-menu"><a href="#/users">{{ 'navbar.label.users' | t }}</a></li>
+                    <li class="groups-menu"><a href="#/groups">{{ 'navbar.label.groups' | t }}</a></li>
+                    <li class="groupMemberships-menu"><a href="#/groupMemberships">{{ 'navbar.label.groupMemberships' | t }}</a></li>
+                    <li class="permissions-menu"><a href="#/permissions">{{ 'navbar.label.permissions' | t }}</a></li>
+
+                    <li class="divider visible-xs"></li>
+
+                    <li class="dropdown-header visible-xs">${username}</li>
+                    <li class="visible-xs">
+                        <a href="logout">{{'navbar.label.logout' | t}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">${username}</li>
+                    <li class="divider"></li>
+                    <li><a href="logout">{{'navbar.label.logout' | t}}</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>
 

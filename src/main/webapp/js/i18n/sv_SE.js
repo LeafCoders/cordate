@@ -2,13 +2,15 @@
 
 angular.module('myApp.translation_sv_SE', []).
     value('translationMap', {
-        "navbar.events" : "Händelser",
-        "navbar.users" : "Användare",
-        "navbar.groups" : "Grupper",
-        "navbar.groupMemberships" : "Gruppmedlemskap",
-        "navbar.permissions" : "Behörigheter",
-        "navbar.posters" : "Affischer",
-        "navbar.logout" : "Logga ut",
+        "navbar.label.eventweek" : "Händelser",
+        "navbar.label.events" : "Händelser",
+        "navbar.label.posters" : "Affischer",
+        "navbar.label.admin" : "Admin",
+        "navbar.label.users" : "Användare",
+        "navbar.label.groups" : "Grupper",
+        "navbar.label.groupMemberships" : "Gruppmedlemskap",
+        "navbar.label.permissions" : "Behörigheter",
+        "navbar.label.logout" : "Logga ut",
 
         "January": "Januari",
         "February" : "Februari",

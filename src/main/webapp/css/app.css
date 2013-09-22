@@ -3,7 +3,6 @@ html {
 }
 
 body {
-    padding-top: 50px;
     padding-bottom: 50px;
 }
 
@@ -48,3 +47,22 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
     margin-bottom: 10px;
 }
 
+.menu-toggle {
+    position: relative;
+    float: right;
+    padding: 9px 10px;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.menu-toggle .icon-bar {
+    background-color: #cccccc;
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+}
+
+.menu-toggle .icon-bar + .icon-bar {
+    margin-top: 4px;
+}
