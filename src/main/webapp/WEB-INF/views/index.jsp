@@ -103,6 +103,7 @@
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
 <script src="js/directives.js"></script>
+<script src="js/utils.js"></script>
 
 <script src="js/i18n/sv_SE.js"></script>
 

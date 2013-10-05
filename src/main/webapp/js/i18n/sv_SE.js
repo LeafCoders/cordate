@@ -32,6 +32,10 @@ angular.module('myApp.translation_sv_SE', []).
         "item.action.delete" : "Radera",
         "item.action.cancel" : "Avbryt",
 
+        "item.status.shallShow" : "Ska visas",
+        "item.status.isShowing" : "Visas nu",
+        "item.status.hasBeenShown" : "Har visats",
+
         "itemEditor.action.save" : "Spara",
         "itemEditor.action.cancel" : "Avbryt",
 
@@ -156,6 +160,12 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionEditor.alert.itemWasUpdated" : "Behörigheten uppdaterades!",
         "permission.patterns.notEmpty" : "Behörigheter saknas",
 
+        "poster.title.notEmpty" : "Titel saknas.",
+        "poster.startTime.notNull" : "Starttid saknas.",
+        "poster.endTime.notNull" : "Sluttid saknas.",
+        "poster.startBeforeEndTime" : "Starttiden måste vara före sluttiden.",
+        "poster.duration.tooShort" : "Visningstiden är för kort.",
+
         "posterItems.label.title" : "Affischer",
         "posterItems.action.new" : "Ny affisch",
         "posterItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera affischen?",
@@ -168,8 +178,9 @@ angular.module('myApp.translation_sv_SE', []).
         "posterEditor.label.newTitle" : "Ny affisch",
         "posterEditor.label.editTitle" : "Redigera affisch",
         "posterEditor.formLabel.title" : "Titel",
-        "posterEditor.formLabel.imageName" : "Bildnamn",
+        "posterEditor.formLabel.startTime" : "Börjar",
+        "posterEditor.formLabel.endTime" : "Slutar",
+        "posterEditor.formLabel.duration" : "Visningstid",
         "posterEditor.alert.itemWasCreated" : "Affischen skapades!",
-        "posterEditor.alert.itemWasUpdated" : "Affischen uppdaterades!",
-        "poster.title.notEmpty" : "Titel saknas"
+        "posterEditor.alert.itemWasUpdated" : "Affischen uppdaterades!"
     })
