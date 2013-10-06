@@ -71,7 +71,7 @@
 
 <body onLoad="focus();">
 
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Logo" width="55" height="30"> Cordate</a>

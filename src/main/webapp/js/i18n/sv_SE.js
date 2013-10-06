@@ -65,6 +65,7 @@ angular.module('myApp.translation_sv_SE', []).
         "eventEditor.alert.itemWasUpdated" : "Händelsen uppdaterades!",
         "event.title.notEmpty" : "Titel saknas",
         "event.startTime.notNull" : "Starttid saknas",
+        "event.startBeforeEndTime" : "Händelsen får inte sluta innan den har börjat",
 
         "userItems.label.title" : "Användare",
         "userItems.action.new" : "Ny användare",
