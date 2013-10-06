@@ -1,7 +1,7 @@
 <h1>{{ type + 'Items.label.title' | t}}</h1>
 
 <search/>
-
+<div ng-if="tableHeaderUrl" ng-include="tableHeaderUrl"/>
 <table class="table table-hover">
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query">

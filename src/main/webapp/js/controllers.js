@@ -466,10 +466,27 @@ PermissionEditorController.data = {
 
 // Posters
 
+function PosterBase($scope) {
+    $scope.rowClass = function(item) {
+    	var now = new Date();
+    	var endTime = stringToTime(item.endTime);
+    	if (now > endTime) {
+    		return 'label label-danger';
+    	}
+    	var startTime = stringToTime(item.startTime);
+    	if (now > startTime) {
+    		return 'label label-success';
+    	}
+    	return 'label label-warning';
+    };
+}
+
 function PostersController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
     angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+    angular.extend(this, new PosterBase($scope));
     $rootScope.currentPage = 'posters';
     $scope.type = 'poster';
+    $scope.tableHeaderUrl = 'partials/postersHeader.html';
 }
 
 PostersController.data = {
@@ -480,12 +497,25 @@ PostersController.data = {
 
 function PosterController($scope, $rootScope, $location, $filter, item, PosterResource, flash) {
     angular.extend(this, new ItemController('poster', $scope, $rootScope, $location, $filter, item, PosterResource, flash));
+    angular.extend(this, new PosterBase($scope));
 }
 
 PosterController.data = {
-    item : function($route, PosterResource) {
+    item : function($q, $route, $location, PosterResource) {
         if ($route.current.pathParams.id == undefined) {
-            return {};
+            var model = {};
+            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
+            if (collection == 'posters') {
+                var currentTime = new Date();
+                var year = currentTime.getFullYear();
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                model = {startTime: year + '-' + month + '-' + day + ' 07:00 Europe/Stockholm', endTime: year + '-' + (month + 1) + '-' + day + ' 22:00 Europe/Stockholm', duration: 15};
+            }
+            return model;
         } else {
             return PosterResource.get({id: $route.current.pathParams.id}).$promise;
         }
@@ -494,6 +524,41 @@ PosterController.data = {
 
 function PosterEditorController($scope, $rootScope, $location, $filter, item, PosterResource, flash) {
     angular.extend(this, new ItemEditorController('poster', $scope, $rootScope, $location, $filter, item, PosterResource, flash));
+
+    var times = [{text: '', value: ''}];
+    for (var i = 0; i < 24; i++) {
+        var hour = i < 10 ? '0' + i : '' + i;
+        times.push({text: hour + ':00', value: hour + ':00'});
+        times.push({text: hour + ':30', value: hour + ':30'});
+    }
+
+    $scope.formHelper = {
+        startTimePartDate:$filter('date')(item.startTime),
+        startTimePartTime:$filter('time')(item.startTime),
+        endTimePartDate:$filter('date')(item.endTime),
+        endTimePartTime:$filter('time')(item.endTime),
+        duration:item.duration,
+        times:times,
+        durations:[{text: '10 s', value: 10}, {text: '15 s', value: 15}]
+    };
+
+    $scope.beforeSave = function(item) {
+        if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
+            delete item.startTime;
+        } else {
+            item.startTime = $scope.formHelper.startTimePartDate + ' ' + $scope.formHelper.startTimePartTime + ' Europe/Stockholm';
+        }
+
+        if ($scope.formHelper.endTimePartDate == '' && $scope.formHelper.endTimePartTime == '') {
+            delete item.endTime;
+        } else {
+            item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
+        }
+
+        item.duration = $scope.formHelper.duration;
+
+        return item;
+    };
 }
 
 PosterEditorController.data = {

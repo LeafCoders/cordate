@@ -4,8 +4,29 @@
         <input type="text" class="form-control" id="form-title" ng-model="item.title" autofocus/>
     </div>
 
-    <div class="form-group" ng-class="errors.imageName">
-        <label for="form-imageName" class="control-label">{{ 'posterEditor.formLabel.imageName' | t }}</label>
-        <input type="text" class="form-control" id="form-imageName" ng-model="item.imageName"/>
+    <div class="form-group">
+        <label for="form-starttime" class="control-label">{{ 'posterEditor.formLabel.startTime' | t }}</label>
+        <div>
+            <div class="pull-left spacer"><input class="form-control" type="date" id="form-starttime" ng-model="formHelper.startTimePartDate" data-date-format="yyyy-mm-dd"></div>
+            <div class="pull-left"><select class="form-control" ng-model="formHelper.startTimePartTime" ng-options="time.value as time.text for time in formHelper.times"/></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="form-endtime" class="control-label">{{ 'posterEditor.formLabel.endTime' | t }}</label>
+        <div>
+            <div class="pull-left spacer"><input class="form-control" type="date" id="form-endtime" ng-model="formHelper.endTimePartDate" data-date-format="yyyy-mm-dd"></div>
+            <div class="pull-left"><select class="form-control" ng-model="formHelper.endTimePartTime" ng-options="time.value as time.text for time in formHelper.times"/></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="form-duration" class="control-label">{{ 'posterEditor.formLabel.duration' | t }}</label>
+        <div>
+            <div class="pull-left spacer"><select class="form-control" id="form-duration" ng-model="formHelper.duration" ng-options="duration.value as duration.text for duration in formHelper.durations"/></div>
+            <div class="clearfix"></div>
+        </div>
     </div>
 </itemeditor>
