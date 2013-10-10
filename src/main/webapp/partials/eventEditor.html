@@ -26,4 +26,32 @@
         <label for="form-description" class="control-label">{{ 'eventEditor.formLabel.description' | t }}</label>
         <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
     </div>
+
+    <div ng-repeat="userResourceType in formHelper.userResourceTypes">
+        <div class="form-group">
+            <label class="control-label">
+                <input type="checkbox" ng-model="formHelper.requiredUserResourceTypes[userResourceType.name]">
+                {{ userResourceType.name }}
+            </label>
+
+            <div ng-if="formHelper.requiredUserResourceTypes[userResourceType.name]">
+                <ul class="list-group eventUserResources">
+                    <li class="list-group-item" ng-repeat="userResource in formHelper.userResources[userResourceType.id]">
+                        <span class="glyphicon glyphicon-user"></span> {{ userResource.userFullName }}
+                        <button class="btn btn-danger btn-xs pull-right" ng-click="removeUser($index, userResourceType.id)">{{ 'eventEditor.formLabel.deleteUser' | t }}</button>
+                    </li>
+                </ul>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-9 col-sm-9">
+                            <select class="form-control" ng-model="formHelper.userIdToAdd" ng-change="addUser(formHelper.userIdToAdd, userResourceType)" ng-options="groupMembership.userId as groupMembership.userFullName for groupMembership in formHelper.groupMemberships[userResourceType.groupId]">
+                                <option value="">{{ 'eventEditor.formLabel.addUser' | t }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </itemeditor>

@@ -66,3 +66,8 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
 .menu-toggle .icon-bar + .icon-bar {
     margin-top: 4px;
 }
+
+.eventUserResources {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

@@ -10,6 +10,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.groups" : "Grupper",
         "navbar.label.groupMemberships" : "Gruppmedlemskap",
         "navbar.label.permissions" : "Behörigheter",
+        "navbar.label.userResourceTypes" : "Resurser",
         "navbar.label.logout" : "Logga ut",
 
         "January": "Januari",
@@ -57,6 +58,9 @@ angular.module('myApp.translation_sv_SE', []).
         "eventItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera händelsen?",
         "eventItems.alert.itemWasDeleted" : "Händelsen raderades!",
 
+        "eventItem.label.startTime" : "Börjar",
+        "eventItem.label.endTime" : "Slutar",
+        "eventItem.label.description" : "Beskrivning",
         "eventItem.label.backToItems" : "« Tillbaka till händelser",
 
         "eventEditor.label.newTitle" : "Ny händelse",
@@ -65,6 +69,8 @@ angular.module('myApp.translation_sv_SE', []).
         "eventEditor.formLabel.startTime" : "Börjar",
         "eventEditor.formLabel.endTime" : "Slutar",
         "eventEditor.formLabel.description" : "Beskrivning",
+        "eventEditor.formLabel.deleteUser" : "Ta bort",
+        "eventEditor.formLabel.addUser" : "Lägg till...",
         "eventEditor.alert.itemWasCreated" : "Händelsen skapades!",
         "eventEditor.alert.itemWasUpdated" : "Händelsen uppdaterades!",
         "event.title.notEmpty" : "Titel saknas",
@@ -160,6 +166,25 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionEditor.alert.itemWasCreated" : "Behörigheten skapades!",
         "permissionEditor.alert.itemWasUpdated" : "Behörigheten uppdaterades!",
         "permission.patterns.notEmpty" : "Behörigheter saknas",
+
+        "userResourceTypeItems.label.title" : "Resurser",
+        "userResourceTypeItems.action.new" : "Ny resurser",
+        "userResourceTypeItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera resursen?",
+        "userResourceTypeItems.alert.itemWasDeleted" : "Resursen raderades!",
+
+        "userResourceTypeItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera resursen?",
+        "userResourceTypeItem.alert.itemWasDeleted" : "Resursen raderades!",
+        "userResourceTypeItem.label.backToItems" : "« Tillbaka till resurser",
+
+        "userResourceTypeEditor.label.newTitle" : "Ny resurs",
+        "userResourceTypeEditor.label.editTitle" : "Redigera resurs",
+        "userResourceTypeEditor.formLabel.name" : "Namn",
+        "userResourceTypeEditor.formLabel.group" : "Grupp",
+        "userResourceTypeEditor.formLabel.sortOrder" : "Sorteringsordning",
+        "userResourceTypeEditor.formLabel.choseGroup" : "Välj grupp...",
+        "userResourceTypeEditor.alert.itemWasCreated" : "Resursen skapades!",
+        "userResourceTypeEditor.alert.itemWasUpdated" : "Resursen uppdaterades!",
+        "userResourceType.name.notEmpty" : "Namn saknas",
 
         "poster.title.notEmpty" : "Titel saknas.",
         "poster.startTime.notNull" : "Starttid saknas.",

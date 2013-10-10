@@ -46,7 +46,13 @@
                 <ul class="dropdown-menu">
                     <li class="events-menu visible-xs"><a href="#/eventweeks/current">{{ 'navbar.label.events' | t }}</a></li>
                     <li class="posters-menu visible-xs"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
+
                     <li class="divider visible-xs"></li>
+
+                    <li class="userResourceType-menu"><a href="#/userResourceTypes">{{ 'navbar.label.userResourceTypes' | t }}</a></li>
+
+                    <li class="divider"></li>
+
                     <li class="users-menu"><a href="#/users">{{ 'navbar.label.users' | t }}</a></li>
                     <li class="groups-menu"><a href="#/groups">{{ 'navbar.label.groups' | t }}</a></li>
                     <li class="groupMemberships-menu"><a href="#/groupMemberships">{{ 'navbar.label.groupMemberships' | t }}</a></li>

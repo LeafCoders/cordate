@@ -1,6 +1,8 @@
 package se.ryttargardskyrkan.cordate.controller;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,19 +14,19 @@ import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import se.ryttargardskyrkan.cordate.model.UserSession;
 
 @Controller
@@ -40,12 +42,13 @@ public class ApiProxyController {
 	public void proxyPost(HttpServletRequest request, @RequestBody String requestBody, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
 		HttpClient httpClient = new DefaultHttpClient();
 		String requestURI = request.getRequestURI().replaceAll("/cordate", "");
+        requestURI = requestURI + "?" + request.getQueryString();
 		
 		String username = userSession.getUsername();
 		String password = userSession.getPassword();
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
-		
-		HttpResponse remoteResponse = null;
+
+        HttpResponse remoteResponse = null;
 		if ("GET".equals(request.getMethod())) {
 			HttpGet httpGet = new HttpGet(baseUrl + requestURI);
 			httpGet.addHeader(new BasicScheme().authenticate(credentials, httpGet));

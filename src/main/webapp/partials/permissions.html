@@ -69,7 +69,7 @@
         </thead>
         <tbody>
         <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query | userPermissions">
-            <td width="40%" ng-click="showDetails(item.id)">{{item.userFullName}}</td>
+            <td width="40%" ng-click="showDetails(item.id)"><span class="glyphicon glyphicon-user"></span> {{item.userFullName}}</td>
             <td ng-click="showDetails(item.id)">
                 <span ng-repeat="pattern in item.patterns">
                     <span class="label label-default">{{ pattern }}</span>

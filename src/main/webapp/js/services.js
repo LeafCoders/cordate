@@ -30,12 +30,26 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
     .factory('GroupMembershipResource', function ($resource, basePath) {
         return $resource(basePath + '/groupMemberships/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
+    .factory('GroupMembershipsResource', function ($resource, basePath) {
+        return $resource(basePath + '/groupMemberships?groupId=:groupId', {}, {
+            findByGroupId: {
+                method: 'GET',
+                params: {
+                    groupId:'@groupId'
+                },
+                isArray: true
+            }
+        });
+    })
     .factory('PermissionResource', function ($resource, basePath) {
         return $resource(basePath + '/permissions/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
     .factory('PosterResource', function ($resource, basePath) {
             return $resource(basePath + '/posters/:id', {id:'@id'}, {update:{method:'PUT'}});
         })
+    .factory('UserResourceTypeResource', function ($resource, basePath) {
+        return $resource(basePath + '/userResourceTypes/:id', {id:'@id'}, {update:{method:'PUT'}});
+    })
     .factory("flash", function ($rootScope) {
         var alerts = [];
 

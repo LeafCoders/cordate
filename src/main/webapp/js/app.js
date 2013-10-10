@@ -26,6 +26,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/permissions/:id', {templateUrl:'partials/permission.html', controller:PermissionController, resolve:PermissionController.data});
         $routeProvider.when('/permissions/:id/edit', {templateUrl:'partials/permissionEditor.html', controller:PermissionEditorController, resolve:PermissionEditorController.data});
 
+        $routeProvider.when('/userResourceTypes', {templateUrl:'partials/userResourceTypes.html', controller:UserResourceTypesController, resolve:UserResourceTypesController.data});
+        $routeProvider.when('/userResourceTypes/new', {templateUrl:'partials/userResourceTypeEditor.html', controller:UserResourceTypeEditorController, resolve:UserResourceTypeEditorController.data});
+        $routeProvider.when('/userResourceTypes/:id', {templateUrl:'partials/userResourceType.html', controller:UserResourceTypeController, resolve:UserResourceTypeController.data});
+        $routeProvider.when('/userResourceTypes/:id/edit', {templateUrl:'partials/userResourceTypeEditor.html', controller:UserResourceTypeEditorController, resolve:UserResourceTypeEditorController.data});
+
         $routeProvider.when('/eventweeks/current', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
         $routeProvider.when('/eventweeks/:id', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
         $routeProvider.when('/events/new', {templateUrl:'partials/eventEditor.html', controller:EventEditorController, resolve:EventEditorController.data});

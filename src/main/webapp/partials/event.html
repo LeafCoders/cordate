@@ -1,5 +1,25 @@
 <item>
     <h1>{{item.title}}</h1>
+
+    <h5>{{ 'eventItem.label.startTime' | t }}</h5>
     <p>{{item.startTime | date}} {{item.startTime | time}}</p>
+
+    <h5>{{ 'eventItem.label.endTime' | t }}</h5>
+    {{item.endTime | date}} {{item.endTime | time}}
+
+    <h5>{{ 'eventItem.label.description' | t }}</h5>
     <p>{{item.description}}</p>
+
+    <div ng-repeat="userResource in item.userResources">
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <h5>{{ userResource.userResourceTypeName }}</h5>
+                <ul class="list-group eventUserResources">
+                    <li class="list-group-item" ng-repeat="userReference in userResource.userReferences">
+                        <span class="glyphicon glyphicon-user"></span> {{ userReference.userFullName }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </item>
