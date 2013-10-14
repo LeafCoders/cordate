@@ -1,10 +1,9 @@
 <h1>{{ type + 'Items.label.title' | t}}</h1>
 
-<search/>
 <div ng-if="tableHeaderUrl" ng-include="tableHeaderUrl"/>
 <table class="table table-hover">
     <tbody>
-    <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query">
+    <tr id="{{item.id}}" ng-repeat="item in items">
         <td ng-click="showDetails(item.id)" ng-transclude></td>
         <td width="46">
             <div class="btn-group pull-right">
