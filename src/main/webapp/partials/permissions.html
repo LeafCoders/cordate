@@ -1,6 +1,4 @@
 <items>
-    <search/>
-
     <table class="table table-hover">
         <thead>
         <tr>
@@ -8,7 +6,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query | commonPermissions">
+        <tr id="{{item.id}}" ng-repeat="item in items | commonPermissions">
             <td width="40%" ng-click="showDetails(item.id)">{{ 'permissionItems.label.everyone' | t }}</td>
             <td ng-click="showDetails(item.id)">
                 <span ng-repeat="pattern in item.patterns">
