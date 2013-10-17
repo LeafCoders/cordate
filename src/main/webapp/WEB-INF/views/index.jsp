@@ -50,6 +50,7 @@
                     <li class="divider visible-xs"></li>
 
                     <li class="userResourceType-menu"><a href="#/userResourceTypes">{{ 'navbar.label.userResourceTypes' | t }}</a></li>
+                    <li class="eventTypes-menu"><a href="#/eventTypes">{{ 'navbar.label.eventTypes' | t }}</a></li>
 
                     <li class="divider"></li>
 
