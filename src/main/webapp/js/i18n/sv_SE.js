@@ -11,6 +11,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.groupMemberships" : "Gruppmedlemskap",
         "navbar.label.permissions" : "Behörigheter",
         "navbar.label.userResourceTypes" : "Resurser",
+        "navbar.label.eventTypes" : "Händelsetyper",
         "navbar.label.logout" : "Logga ut",
 
         "January": "Januari",
@@ -185,6 +186,22 @@ angular.module('myApp.translation_sv_SE', []).
         "userResourceTypeEditor.alert.itemWasCreated" : "Resursen skapades!",
         "userResourceTypeEditor.alert.itemWasUpdated" : "Resursen uppdaterades!",
         "userResourceType.name.notEmpty" : "Namn saknas",
+
+        "eventTypeItems.label.title" : "Händelsetyper",
+        "eventTypeItems.action.new" : "Ny händelsetyp",
+        "eventTypeItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera händelsetypen?",
+        "eventTypeItems.alert.itemWasDeleted" : "Händelsetypen raderades!",
+
+        "eventTypeItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera händelsetypen?",
+        "eventTypeItem.alert.itemWasDeleted" : "Händelsetypen raderades!",
+        "eventTypeItem.label.backToItems" : "« Tillbaka till händelsetyper",
+
+        "eventTypeEditor.label.newTitle" : "Ny händelsetyp",
+        "eventTypeEditor.label.editTitle" : "Redigera händelsetyp",
+        "eventTypeEditor.formLabel.name" : "Namn",
+        "eventTypeEditor.alert.itemWasCreated" : "Händelsetypen skapades!",
+        "eventTypeEditor.alert.itemWasUpdated" : "Händelsetypen uppdaterades!",
+        "eventType.name.notNull":"Namn saknas",
 
         "poster.title.notEmpty" : "Titel saknas.",
         "poster.startTime.notNull" : "Starttid saknas.",

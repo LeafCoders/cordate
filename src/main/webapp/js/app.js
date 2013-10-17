@@ -31,6 +31,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/userResourceTypes/:id', {templateUrl:'partials/userResourceType.html', controller:UserResourceTypeController, resolve:UserResourceTypeController.data});
         $routeProvider.when('/userResourceTypes/:id/edit', {templateUrl:'partials/userResourceTypeEditor.html', controller:UserResourceTypeEditorController, resolve:UserResourceTypeEditorController.data});
 
+        $routeProvider.when('/eventTypes', {templateUrl:'partials/eventTypes.html', controller:EventTypesController, resolve:EventTypesController.data});
+        $routeProvider.when('/eventTypes/new', {templateUrl:'partials/eventTypeEditor.html', controller:EventTypeEditorController, resolve:EventTypeEditorController.data});
+        $routeProvider.when('/eventTypes/:id', {templateUrl:'partials/eventType.html', controller:EventTypeController, resolve:EventTypeController.data});
+        $routeProvider.when('/eventTypes/:id/edit', {templateUrl:'partials/eventTypeEditor.html', controller:EventTypeEditorController, resolve:EventTypeEditorController.data});
+
         $routeProvider.when('/eventweeks/current', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
         $routeProvider.when('/eventweeks/:id', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
         $routeProvider.when('/events/new', {templateUrl:'partials/eventEditor.html', controller:EventEditorController, resolve:EventEditorController.data});
