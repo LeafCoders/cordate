@@ -71,3 +71,7 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
     margin-top: 5px;
     margin-bottom: 10px;
 }
+
+.user-resource {
+    margin-left: 18px;
+}

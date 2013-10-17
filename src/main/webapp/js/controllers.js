@@ -533,7 +533,7 @@ EventController.data = {
     }
 }
 
-function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash, userResourceTypes, GroupMembershipsResource) {
+function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash, eventTypes, locations, userResourceTypes, GroupMembershipsResource) {
     angular.extend(this, new ItemEditorController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
 
     $rootScope.currentPage = 'events';
@@ -544,6 +544,16 @@ function EventEditorController($scope, $rootScope, $location, $filter, item, Eve
         var hour = i < 10 ? '0' + i : '' + i;
         times.push({text: hour + ':00', value: hour + ':00'});
         times.push({text: hour + ':30', value: hour + ':30'});
+    }
+
+    var eventTypeId = null;
+    if (item.eventType != null && item.eventType.eventTypeId != null) {
+        eventTypeId = item.eventType.eventTypeId;
+    }
+
+    var locationId = null;
+    if (item.location != null && item.location.locationId != null) {
+        locationId = item.location.locationId;
     }
 
     var requiredUserResourceTypes = {};
@@ -572,6 +582,10 @@ function EventEditorController($scope, $rootScope, $location, $filter, item, Eve
         endTimePartDate:$filter('date')(item.endTime),
         endTimePartTime:$filter('time')(item.endTime),
         times:times,
+        eventTypes:eventTypes,
+        eventTypeId:eventTypeId,
+        locations:locations,
+        locationId:locationId,
         userResourceTypes : userResourceTypes,
         requiredUserResourceTypes : requiredUserResourceTypes,
         groupMemberships : groupMemberships,
@@ -620,6 +634,32 @@ function EventEditorController($scope, $rootScope, $location, $filter, item, Eve
             item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
         }
 
+        if ($scope.formHelper.eventTypeId != null) {
+            angular.forEach(eventTypes, function(eventType) {
+                if (eventType.id == $scope.formHelper.eventTypeId) {
+                    item.eventType = {
+                        eventTypeId:eventType.id,
+                        eventTypeName:eventType.name
+                    };
+                }
+            });
+        } else {
+            item.eventType = null;
+        }
+
+        if ($scope.formHelper.locationId != null) {
+            angular.forEach(locations, function(location) {
+                if (location.id == $scope.formHelper.locationId) {
+                    item.location = {
+                        locationId:location.id,
+                        locationName:location.name
+                    };
+                }
+            });
+        } else {
+            item.location = null;
+        }
+
         item.requiredUserResourceTypes = [];
         angular.forEach($scope.formHelper.requiredUserResourceTypes, function(value, key) {
             if (value) {
@@ -647,7 +687,9 @@ function EventEditorController($scope, $rootScope, $location, $filter, item, Eve
 
 EventEditorController.data = {
     item : EventController.data.item,
-    userResourceTypes : UserResourceTypesController.data.items
+    userResourceTypes : UserResourceTypesController.data.items,
+    eventTypes : EventTypesController.data.items,
+    locations : LocationsController.data.items
 }
 
 
