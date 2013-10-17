@@ -10,6 +10,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.groups" : "Grupper",
         "navbar.label.groupMemberships" : "Gruppmedlemskap",
         "navbar.label.permissions" : "Behörigheter",
+        "navbar.label.locations" : "Lokaler",
         "navbar.label.userResourceTypes" : "Resurser",
         "navbar.label.eventTypes" : "Händelsetyper",
         "navbar.label.logout" : "Logga ut",
@@ -167,6 +168,23 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionEditor.alert.itemWasCreated" : "Behörigheten skapades!",
         "permissionEditor.alert.itemWasUpdated" : "Behörigheten uppdaterades!",
         "permission.patterns.notEmpty" : "Behörigheter saknas",
+
+        "locationItems.label.title" : "Lokaler",
+        "locationItems.action.new" : "Ny lokal",
+        "locationItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera lokalen?",
+        "locationItems.alert.itemWasDeleted" : "Lokalen raderades!",
+
+        "locationItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera lokalen?",
+        "locationItem.alert.itemWasDeleted" : "Lokalen raderades!",
+        "locationItem.label.backToItems" : "« Tillbaka till lokaler",
+
+        "locationEditor.label.newTitle" : "Ny lokal",
+        "locationEditor.label.editTitle" : "Redigera lokal",
+        "locationEditor.formLabel.name" : "Namn",
+        "locationEditor.formLabel.description" : "Beskrivning",
+        "locationEditor.alert.itemWasCreated" : "Lokalen skapades!",
+        "locationEditor.alert.itemWasUpdated" : "Lokalen uppdaterades!",
+        "location.name.notNull":"Namn saknas",
 
         "userResourceTypeItems.label.title" : "Resurser",
         "userResourceTypeItems.action.new" : "Ny resurser",
