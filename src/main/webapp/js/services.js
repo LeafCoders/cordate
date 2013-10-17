@@ -46,7 +46,10 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
     })
     .factory('PosterResource', function ($resource, basePath) {
             return $resource(basePath + '/posters/:id', {id:'@id'}, {update:{method:'PUT'}});
-        })
+    })
+    .factory('LocationResource', function ($resource, basePath) {
+        return $resource(basePath + '/locations/:id', {id:'@id'}, {update:{method:'PUT'}});
+    })
     .factory('UserResourceTypeResource', function ($resource, basePath) {
         return $resource(basePath + '/userResourceTypes/:id', {id:'@id'}, {update:{method:'PUT'}});
     })

@@ -334,6 +334,43 @@ PermissionEditorController.data = {
 }
 
 
+// Locations
+
+function LocationsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+    $rootScope.currentPage = 'locations';
+    $scope.type = 'location';
+}
+
+LocationsController.data = {
+    items : function(LocationResource) {
+        return LocationResource.query().$promise;
+    }
+}
+
+function LocationController($scope, $rootScope, $location, $filter, item, LocationResource, flash) {
+    angular.extend(this, new ItemController('location', $scope, $rootScope, $location, $filter, item, LocationResource, flash));
+}
+
+LocationController.data = {
+    item : function($route, LocationResource) {
+        if ($route.current.pathParams.id == undefined) {
+            return {};
+        } else {
+            return LocationResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
+}
+
+function LocationEditorController($scope, $rootScope, $location, $filter, item, LocationResource, flash) {
+    angular.extend(this, new ItemEditorController('location', $scope, $rootScope, $location, $filter, item, LocationResource, flash));
+}
+
+LocationEditorController.data = {
+    item : LocationController.data.item
+}
+
+
 // UserResourceTypes
 
 function UserResourceTypesController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {

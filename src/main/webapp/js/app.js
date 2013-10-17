@@ -26,6 +26,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/permissions/:id', {templateUrl:'partials/permission.html', controller:PermissionController, resolve:PermissionController.data});
         $routeProvider.when('/permissions/:id/edit', {templateUrl:'partials/permissionEditor.html', controller:PermissionEditorController, resolve:PermissionEditorController.data});
 
+        $routeProvider.when('/locations', {templateUrl:'partials/locations.html', controller:LocationsController, resolve:LocationsController.data});
+        $routeProvider.when('/locations/new', {templateUrl:'partials/locationEditor.html', controller:LocationEditorController, resolve:LocationEditorController.data});
+        $routeProvider.when('/locations/:id', {templateUrl:'partials/location.html', controller:LocationController, resolve:LocationController.data});
+        $routeProvider.when('/locations/:id/edit', {templateUrl:'partials/locationEditor.html', controller:LocationEditorController, resolve:LocationEditorController.data});
+        
         $routeProvider.when('/userResourceTypes', {templateUrl:'partials/userResourceTypes.html', controller:UserResourceTypesController, resolve:UserResourceTypesController.data});
         $routeProvider.when('/userResourceTypes/new', {templateUrl:'partials/userResourceTypeEditor.html', controller:UserResourceTypeEditorController, resolve:UserResourceTypeEditorController.data});
         $routeProvider.when('/userResourceTypes/:id', {templateUrl:'partials/userResourceType.html', controller:UserResourceTypeController, resolve:UserResourceTypeController.data});
