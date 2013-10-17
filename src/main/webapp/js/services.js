@@ -50,6 +50,9 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
     .factory('UserResourceTypeResource', function ($resource, basePath) {
         return $resource(basePath + '/userResourceTypes/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
+    .factory('EventTypeResource', function ($resource, basePath) {
+        return $resource(basePath + '/eventTypes/:id', {id:'@id'}, {update:{method:'PUT'}});
+    })
     .factory("flash", function ($rootScope) {
         var alerts = [];
 

@@ -374,6 +374,44 @@ UserResourceTypeEditorController.data = {
     groups : GroupsController.data.items
 }
 
+
+// EventTypes
+
+function EventTypesController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+    $rootScope.currentPage = 'eventTypes';
+    $scope.type = 'eventType';
+}
+
+EventTypesController.data = {
+    items : function(EventTypeResource) {
+        return EventTypeResource.query().$promise;
+    }
+}
+
+function EventTypeController($scope, $rootScope, $location, $filter, item, EventTypeResource, flash) {
+    angular.extend(this, new ItemController('eventType', $scope, $rootScope, $location, $filter, item, EventTypeResource, flash));
+}
+
+EventTypeController.data = {
+    item : function($route, EventTypeResource) {
+        if ($route.current.pathParams.id == undefined) {
+            return {};
+        } else {
+            return EventTypeResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
+}
+
+function EventTypeEditorController($scope, $rootScope, $location, $filter, item, EventTypeResource, flash) {
+    angular.extend(this, new ItemEditorController('eventType', $scope, $rootScope, $location, $filter, item, EventTypeResource, flash));
+}
+
+EventTypeEditorController.data = {
+    item : EventTypeController.data.item
+}
+
+
 // Events
 function EventweekController($scope, $rootScope, $location, $filter, $route, currentType, item, EventResource, flash) {
     angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, null, flash));
