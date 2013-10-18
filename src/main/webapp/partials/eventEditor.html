@@ -5,6 +5,11 @@
     </div>
 
     <div class="form-group">
+        <label for="form-description" class="control-label">{{ 'eventEditor.formLabel.description' | t }}</label>
+        <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
+    </div>
+
+    <div class="form-group">
         <label for="form-starttime" class="control-label">{{ 'eventEditor.formLabel.startTime' | t }}</label>
         <div>
             <div class="pull-left spacer"><input class="form-control" type="date" id="form-starttime" ng-model="formHelper.startTimePartDate" data-date-format="yyyy-mm-dd"></div>
@@ -22,10 +27,24 @@
         </div>
     </div>
 
+    <hr>
+
     <div class="form-group">
-        <label for="form-description" class="control-label">{{ 'eventEditor.formLabel.description' | t }}</label>
-        <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
+        <label for="form-eventType" class="control-label">{{ 'eventEditor.formLabel.eventType' | t }}</label>
+        <select class="form-control" ng-model="formHelper.eventTypeId" ng-options="eventType.id as eventType.name for eventType in formHelper.eventTypes">
+            <option value="">{{ 'eventEditor.formLabel.chooseEventType' | t }}</option>
+        </select>
     </div>
+
+    <div class="form-group">
+        <label for="form-location" class="control-label">{{ 'eventEditor.formLabel.location' | t }}</label>
+        <select class="form-control" ng-model="formHelper.locationId" ng-options="location.id as location.name for location in formHelper.locations">
+            <option value="">{{ 'eventEditor.formLabel.chooseLocation' | t }}</option>
+        </select>
+    </div>
+
+    <hr>
+
 
     <div ng-repeat="userResourceType in formHelper.userResourceTypes">
         <div class="form-group">
@@ -34,7 +53,7 @@
                 {{ userResourceType.name }}
             </label>
 
-            <div ng-if="formHelper.requiredUserResourceTypes[userResourceType.name]">
+            <div ng-if="formHelper.requiredUserResourceTypes[userResourceType.name]" class="user-resource">
                 <ul class="list-group eventUserResources">
                     <li class="list-group-item" ng-repeat="userResource in formHelper.userResources[userResourceType.id]">
                         <span class="glyphicon glyphicon-user"></span> {{ userResource.userFullName }}
@@ -42,14 +61,10 @@
                     </li>
                 </ul>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-9 col-sm-9">
-                            <select class="form-control" ng-model="formHelper.userIdToAdd" ng-change="addUser(formHelper.userIdToAdd, userResourceType)" ng-options="groupMembership.userId as groupMembership.userFullName for groupMembership in formHelper.groupMemberships[userResourceType.groupId]">
-                                <option value="">{{ 'eventEditor.formLabel.addUser' | t }}</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="form-group" class="user-resource">
+                    <select class="form-control" ng-model="formHelper.userIdToAdd" ng-change="addUser(formHelper.userIdToAdd, userResourceType)" ng-options="groupMembership.userId as groupMembership.userFullName for groupMembership in formHelper.groupMemberships[userResourceType.groupId]">
+                        <option value="">{{ 'eventEditor.formLabel.addUser' | t }}</option>
+                    </select>
                 </div>
             </div>
         </div>

@@ -1,14 +1,20 @@
 <item>
     <h1>{{item.title}}</h1>
 
+    <h5>{{ 'eventItem.label.description' | t }}</h5>
+    <p>{{item.description}}</p>
+
     <h5>{{ 'eventItem.label.startTime' | t }}</h5>
     <p>{{item.startTime | date}} {{item.startTime | time}}</p>
 
     <h5>{{ 'eventItem.label.endTime' | t }}</h5>
     {{item.endTime | date}} {{item.endTime | time}}
 
-    <h5>{{ 'eventItem.label.description' | t }}</h5>
-    <p>{{item.description}}</p>
+    <h5>{{ 'eventItem.label.eventType' | t }}</h5>
+    {{ item.eventType.eventTypeName }}
+
+    <h5>{{ 'eventItem.label.location' | t }}</h5>
+    {{ item.location.locationName }}
 
     <div ng-repeat="userResource in item.userResources">
         <div class="row">
