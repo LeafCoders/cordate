@@ -35,6 +35,11 @@ function ItemsController($scope, $rootScope, $location, $filter, $route, current
             });
         }
     };
+
+    // Get reference(s) as text or array of texts
+    $scope.getTextOfReference = function(ref, refType) {
+    	return referenceToText(ref, refType);
+    };
 }
 
 function ItemController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
@@ -794,3 +799,229 @@ PosterEditorController.data = {
     item : PosterController.data.item
 }
 
+//Bookings
+
+function BookingBase($scope) {
+    $scope.rowClass = function(item) {
+    	var now = new Date();
+    	var endTime = stringToTime(item.endTime);
+    	if (now > endTime) {
+    		return 'label label-danger';
+    	}
+    	var startTime = stringToTime(item.startTime);
+    	if (now > startTime) {
+    		return 'label label-success';
+    	}
+    	return 'label label-warning';
+    };
+}
+
+function BookingsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+    angular.extend(this, new BookingBase($scope));
+    $rootScope.currentPage = 'bookings';
+    $scope.type = 'booking';
+    $scope.tableHeaderUrl = 'partials/bookingsHeader.html';
+}
+
+BookingsController.data = {
+    items : function(BookingResource) {
+        return BookingResource.query().$promise;
+    }
+}
+
+function BookingController($scope, $rootScope, $location, $filter, item, BookingResource, flash) {
+    angular.extend(this, new ItemController('booking', $scope, $rootScope, $location, $filter, item, BookingResource, flash));
+    angular.extend(this, new BookingBase($scope));
+}
+
+BookingController.data = {
+    item : function($q, $route, $location, BookingResource) {
+        if ($route.current.pathParams.id == undefined) {
+            var model = {};
+            var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
+            if (collection == 'bookings') {
+                var currentTime = new Date();
+                var year = currentTime.getFullYear();
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                model = {startTime: year + '-' + month + '-' + day + ' 08:00 Europe/Stockholm', endTime: year + '-' + month + '-' + day + ' 12:00 Europe/Stockholm', location: null};
+            }
+            return model;
+        } else {
+            return BookingResource.get({id: $route.current.pathParams.id}).$promise;
+        }
+    }
+}
+
+function BookingEditorController($scope, $rootScope, $location, $filter, item, BookingResource, flash) {
+    angular.extend(this, new ItemEditorController('booking', $scope, $rootScope, $location, $filter, item, BookingResource, flash));
+
+    var times = [{text: '', value: ''}];
+    for (var i = 0; i < 24; i++) {
+        var hour = i < 10 ? '0' + i : '' + i;
+        times.push({text: hour + ':00', value: hour + ':00'});
+        times.push({text: hour + ':30', value: hour + ':30'});
+    }
+
+    $scope.formHelper = {
+        startTimePartDate:$filter('date')(item.startTime),
+        startTimePartTime:$filter('time')(item.startTime),
+        endTimePartDate:$filter('date')(item.endTime),
+        endTimePartTime:$filter('time')(item.endTime),
+        times:times
+    };
+
+    $scope.beforeSave = function(item) {
+        if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
+            delete item.startTime;
+        } else {
+            item.startTime = $scope.formHelper.startTimePartDate + ' ' + $scope.formHelper.startTimePartTime + ' Europe/Stockholm';
+        }
+
+        if ($scope.formHelper.endTimePartDate == '' && $scope.formHelper.endTimePartTime == '') {
+            delete item.endTime;
+        } else {
+            item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
+        }
+
+        item.duration = $scope.formHelper.duration;
+        return item;
+    };
+}
+
+BookingEditorController.data = {
+    item : BookingController.data.item
+}
+
+// Modal
+
+function ModalController($scope, $q, $modal, resource) {
+	// Options
+	$scope.modalTitle = "Not set";
+	$scope.singleSelect = true;
+	$scope.allowOptionalText = false;
+	$scope.panelItems = new Array();
+
+	$scope.showModal = function() {
+    	// Load resources
+		$q.when(resource.query().$promise).then(function(resources) {
+			// Convert resources to objects with 'id' and 'title' values
+			var items = new Array();
+			var lenRes = resources.length;
+			for (var r = 0; r < lenRes; r++) {
+				items.push($scope.createIdItem(resources[r]));
+			}
+			$scope.modalItems = items;
+
+			// Select items and set optional text
+			$scope.optionalText = '';
+			var lenPanel = $scope.panelItems.length;
+			var lenModal = $scope.modalItems.length;
+			for (var p = 0; p < lenPanel; p++) {
+				if ($scope.panelItems[p].id === undefined) {
+					$scope.optionalText = $scope.panelItems[p].title; 
+				} else {
+					for (var m = 0; m < lenModal; m++) {
+						if ($scope.panelItems[p].id === $scope.modalItems[m].id) {
+							$scope.modalItems[m].selected = true;
+						}
+					}
+				}
+	    	}
+		});
+
+		// Show modal dialog
+    	var modalPromise = $modal({template: 'partials/modalTextList.html', persist: true, show: false, backdrop: 'static', scope: $scope});
+		$q.when(modalPromise).then(function(modalElem) {
+			modalElem.modal('show');
+		});
+	};
+
+	$scope.toggleModalItem = function(modalItem) {
+		var length = $scope.modalItems.length;
+    	for (var i = 0; i < length; i++) {
+    		if ($scope.modalItems[i] === modalItem) {
+        		modalItem.selected = !modalItem.selected;
+        		if ($scope.singleSelect) {
+        			$scope.optionalText = '';
+        		}
+    		} else if ($scope.singleSelect && $scope.modalItems[i].selected) {
+    			$scope.modalItems[i].selected = false;
+    		}
+    	}
+	};
+
+	$scope.saveModalItems = function() {
+		var newPanelItems = new Array();
+		var length = $scope.modalItems.length;
+    	for (var i = 0; i < length; i++) {
+    		if ($scope.modalItems[i].selected) {
+    			newPanelItems.push($scope.modalItems[i]); 
+    		}
+    	}
+    	if ($scope.optionalText !== '') {
+    		newPanelItems.push($scope.createTextItem($scope.optionalText));
+    	}
+    	$scope.panelItems = newPanelItems;
+    	$scope.setReferences();
+	};
+
+	$scope.loadReferences = function() {
+		var ref = $scope.itemRef;
+		if (ref !== null) {
+			if (Array.isArray(ref)) {
+				// TODO: Handle multiple references
+			} else {
+				if (ref.referredObject !== null) {
+					$scope.panelItems.push($scope.createIdItem(ref.referredObject));
+				} else if (ref.text !== null) {
+					$scope.panelItems.push($scope.createTextItem(ref.text));
+				}
+			}
+		}
+	}
+
+	$scope.setReferences = function() {
+		$scope.itemRef = null;
+		if ($scope.panelItems.length > 0) {
+			if ($scope.singleSelect) {
+				if ($scope.panelItems[0].id !== undefined) {
+					$scope.itemRef = { 'idRef': $scope.panelItems[0].id };
+				} else {
+					$scope.itemRef = { 'text': $scope.panelItems[0].title };
+				}
+			} else {
+				// TODO: Handle multiple references
+			}
+		}
+	}
+	
+	$scope.createIdItem = function(resource) {
+		return { 'id': resource.id, 'title': $scope.resourceTitle(resource) };
+	}
+	$scope.createTextItem = function(title) {
+		return { 'title': title };
+	}
+}
+
+function LocationRefInputController($scope, $q, $modal, LocationResource) {
+	angular.extend(this, new ModalController($scope, $q, $modal, LocationResource));
+
+	$scope.refType = 'location';
+	$scope.modalTitle = 'location';
+	$scope.singleSelect = true;
+	$scope.allowOptionalText = true;
+
+	$scope.resourceTitle = function(resource) {
+		return resource.name;
+	}
+	$scope.loadReferences();
+}
+
+function TextRefViewController($scope) {
+	$scope.reference = referenceToText($scope.itemRef, $scope.refType);
+}

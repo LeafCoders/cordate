@@ -5,6 +5,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.eventweek" : "Händelser",
         "navbar.label.events" : "Händelser",
         "navbar.label.posters" : "Affischer",
+        "navbar.label.bookings" : "Bokningar",
         "navbar.label.admin" : "Admin",
         "navbar.label.users" : "Användare",
         "navbar.label.groups" : "Grupper",
@@ -45,7 +46,15 @@ angular.module('myApp.translation_sv_SE', []).
         "error.badRequest" : "Sorry, ogiltigt anrop",
         "error.permissionDenied" : "Behörighet saknas",
         "error.unknownError" : "Oops! Något gick snett. Försök igen.",
+        "error.hasIdOrText.oneMustBeSet" : "Id eller text måste sättas.",
 
+        "formLabel.startTime" : "Börjar",
+        "formLabel.endTime" : "Slutar",
+        "formLabel.customerName" : "Kund",
+        "formLabel.location" : "Lokal",
+        
+        "modalTitle.location" : "Välj lokal",
+        
         "eventItems.label.title" : "Händelser",
         "eventItems.label.week" : "Vecka",
         "eventItems.label.today" : "Idag",
@@ -250,5 +259,26 @@ angular.module('myApp.translation_sv_SE', []).
         "posterEditor.formLabel.endTime" : "Slutar",
         "posterEditor.formLabel.duration" : "Visningstid",
         "posterEditor.alert.itemWasCreated" : "Affischen skapades!",
-        "posterEditor.alert.itemWasUpdated" : "Affischen uppdaterades!"
-    })
+        "posterEditor.alert.itemWasUpdated" : "Affischen uppdaterades!",
+
+        "booking" : "Bokning",
+        "booking.startTime.notNull" : "Starttid saknas.",
+        "booking.endTime.notNull" : "Sluttid saknas.",
+        "booking.startBeforeEndTime" : "Starttiden måste vara före sluttiden.",
+        "booking.customerName.notEmpty" : "Namn på kund saknas.",
+        "booking.location.notNull" : "Lokal saknas.",
+
+        "bookingItems.label.title" : "Bokningar",
+        "bookingItems.action.new" : "Ny bokning",
+        "bookingItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera bokningen?",
+        "bookingItems.alert.itemWasDeleted" : "Bokningen raderades!",
+
+        "bookingItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera bokningen?",
+        "bookingItem.alert.itemWasDeleted" : "Bokningen raderades!",
+        "bookingItem.label.backToItems" : "« Tillbaka till bokningar",
+
+        "bookingEditor.label.newTitle" : "Ny bokning",
+        "bookingEditor.label.editTitle" : "Redigera bokning",
+        "bookingEditor.alert.itemWasCreated" : "Bokningen skapades!",
+        "bookingEditor.alert.itemWasUpdated" : "Bokningen uppdaterades!"
+    });

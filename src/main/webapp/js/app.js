@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngRoute'])
+var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngRoute', '$strap.directives'])
     .config(function ($routeProvider, $httpProvider) {
 //        $routeProvider.when('/', {templateUrl:'partials/home.html', controller:HomeController});
 
@@ -52,6 +52,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/posters/new', {templateUrl:'partials/posterEditor.html', controller:PosterEditorController, resolve:PosterEditorController.data});
         $routeProvider.when('/posters/:id', {templateUrl:'partials/poster.html', controller:PosterController, resolve:PosterController.data});
         $routeProvider.when('/posters/:id/edit', {templateUrl:'partials/posterEditor.html', controller:PosterEditorController, resolve:PosterEditorController.data});
+
+        $routeProvider.when('/bookings', {templateUrl:'partials/bookings.html', controller:BookingsController, resolve:BookingsController.data});
+        $routeProvider.when('/bookings/new', {templateUrl:'partials/bookingEditor.html', controller:BookingEditorController, resolve:BookingEditorController.data});
+        $routeProvider.when('/bookings/:id', {templateUrl:'partials/booking.html', controller:BookingController, resolve:BookingController.data});
+        $routeProvider.when('/bookings/:id/edit', {templateUrl:'partials/bookingEditor.html', controller:BookingEditorController, resolve:BookingEditorController.data});
 
         $httpProvider.interceptors.push('myHttpInterceptor');
     })
