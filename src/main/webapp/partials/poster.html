@@ -1,13 +1,9 @@
 <item>
-	<h1>{{item.title}}</h1>
-	<div class="row">
-		<div class="col-md-6 col-sm-4">
-			<img class="img-responsive" src="http://placehold.it/400x300" alt="Placeholder">
-		</div>
-		<div class="col-md-6 col-sm-8">
-			<dl class="dl-horizontal"><dt>{{ 'posterEditor.formLabel.startTime' | t }}</dt><dd><span ng-class="rowClass(item)">{{item.startTime | date}} {{item.startTime | time}}</span></dd></dl>
-			<dl class="dl-horizontal"><dt>{{ 'posterEditor.formLabel.endTime' | t }}</dt><dd><span ng-class="rowClass(item)">{{item.endTime | date}} {{item.endTime | time}}</span></dd></dl>
-			<dl class="dl-horizontal"><dt>{{ 'posterEditor.formLabel.duration' | t }}</dt><dd>{{item.duration}} s</dd></dl>
-		</div>
-	</div>
+	<h1>{{ 'poster' | t }}</h1>
+	<form class="form-horizontal" role="form">
+	 	<timeview item-name="startTime"></timeview>
+	 	<timeview item-name="endTime"></timeview>
+	 	<textview item-name="title"></textview>
+	 	<textview item-name="duration"></textview>
+	 </form>
 </item>

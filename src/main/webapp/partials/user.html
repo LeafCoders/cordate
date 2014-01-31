@@ -1,6 +1,8 @@
 <item>
-	<h1><span class="glyphicon glyphicon-user"></span> {{item.firstName}} {{item.lastName}}</h1>
-	<p>{{item.username}}</p>
+	<h1><span class="glyphicon glyphicon-user"></span> {{ 'user' | t }}</h1>
+	<form class="form-horizontal" role="form">
+	 	<textview item-name="username"></textview>
+	 	<textview item-name="firstName"></textview>
+	 	<textview item-name="lastName"></textview>
+	 </form>
 </item>
-
-

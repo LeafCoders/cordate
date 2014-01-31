@@ -50,11 +50,22 @@ angular.module('myApp.translation_sv_SE', []).
 
         "formLabel.startTime" : "Börjar",
         "formLabel.endTime" : "Slutar",
+        "formLabel.title" : "Titel",
+        "formLabel.name" : "Namn",
+        "formLabel.description" : "Beskrivning",
         "formLabel.customerName" : "Kund",
         "formLabel.location" : "Lokal",
+        "formLabel.duration" : "Visningstid",
+        "formLabel.username" : "Användarnamn",
+        "formLabel.firstName" : "Förnamn",
+        "formLabel.lastName" : "Efternamn",
+        "formLabel.password" : "Lösenord",
+        "formLabel.reenterPassword" : "Repetera lösenord",
+        "formLabel.eventType" : "Typ",
         
         "modalTitle.location" : "Välj lokal",
         
+        "event" : "Händelse",
         "eventItems.label.title" : "Händelser",
         "eventItems.label.week" : "Vecka",
         "eventItems.label.today" : "Idag",
@@ -95,6 +106,7 @@ angular.module('myApp.translation_sv_SE', []).
         "event.startTime.notNull" : "Starttid saknas",
         "event.startBeforeEndTime" : "Händelsen får inte sluta innan den har börjat",
 
+        "user" : "Användare",
         "userItems.label.title" : "Användare",
         "userItems.action.new" : "Ny användare",
         "userItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera användaren?",
@@ -106,17 +118,13 @@ angular.module('myApp.translation_sv_SE', []).
 
         "userEditor.label.newTitle" : "Ny användare",
         "userEditor.label.editTitle" : "Redigera användare",
-        "userEditor.formLabel.username" : "Användarnamn",
-        "userEditor.formLabel.firstName" : "Förnamn",
-        "userEditor.formLabel.lastName" : "Efternamn",
-        "userEditor.formLabel.password" : "Lösenord",
-        "userEditor.formLabel.reenterPassword" : "Repetera lösenord",
         "userEditor.alert.itemWasCreated" : "Användaren skapades!",
         "userEditor.alert.itemWasUpdated" : "Användaren uppdaterades!",
         "userEditor.alert.passwordsNotMatching" : "Lösenorden matchar inte",
         "user.username.notEmpty":"Användarnamn saknas",
         "user.username.duplicatedUsernameNotAllowed" : "Användarnamnet är upptaget",
 
+        "group" : "Grupp",
         "groupItems.label.title" : "Grupper",
         "groupItems.action.new" : "Ny grupp",
         "groupItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera gruppen?",
@@ -185,6 +193,7 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionEditor.alert.itemWasUpdated" : "Behörigheten uppdaterades!",
         "permission.patterns.notEmpty" : "Behörigheter saknas",
 
+        "location" : "Lokal",
         "locationItems.label.title" : "Lokaler",
         "locationItems.action.new" : "Ny lokal",
         "locationItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera lokalen?",
@@ -202,6 +211,7 @@ angular.module('myApp.translation_sv_SE', []).
         "locationEditor.alert.itemWasUpdated" : "Lokalen uppdaterades!",
         "location.name.notNull":"Namn saknas",
 
+        "userResourceType" : "Resurs",
         "userResourceTypeItems.label.title" : "Resurser",
         "userResourceTypeItems.action.new" : "Ny resurser",
         "userResourceTypeItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera resursen?",
@@ -221,6 +231,7 @@ angular.module('myApp.translation_sv_SE', []).
         "userResourceTypeEditor.alert.itemWasUpdated" : "Resursen uppdaterades!",
         "userResourceType.name.notEmpty" : "Namn saknas",
 
+        "eventType" : "Händelsetyp",
         "eventTypeItems.label.title" : "Händelsetyper",
         "eventTypeItems.action.new" : "Ny händelsetyp",
         "eventTypeItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera händelsetypen?",
@@ -237,6 +248,7 @@ angular.module('myApp.translation_sv_SE', []).
         "eventTypeEditor.alert.itemWasUpdated" : "Händelsetypen uppdaterades!",
         "eventType.name.notNull":"Namn saknas",
 
+        "poster" : "Affisch",
         "poster.title.notEmpty" : "Titel saknas.",
         "poster.startTime.notNull" : "Starttid saknas.",
         "poster.endTime.notNull" : "Sluttid saknas.",

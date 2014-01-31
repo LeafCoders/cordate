@@ -1,8 +1,5 @@
 <itemeditor>
-    <div class="form-group" ng-class="errors.name">
-        <label for="form-name" class="control-label">{{ 'userResourceTypeEditor.formLabel.name' | t }}</label>
-        <input type="text" class="form-control" id="form-name" ng-model="item.name" autofocus/>
-    </div>
+	<textinput item-name="name" autofocus></textinput>
 
     <div class="form-group" ng-class="errors.groupId">
         <label for="form-group" class="control-label">{{ 'userResourceTypeEditor.formLabel.group' | t }}</label>
