@@ -30,6 +30,7 @@
         <ul class="main-menu nav navbar-nav">
             <li class="events-menu hidden-xs" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">{{ 'navbar.label.events' | t }}</a></li>
             <li class="posters-menu hidden-xs" ng-class="{active: currentPage=='posters'}"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
+            <li class="bookings-menu hidden-xs" ng-class="{active: currentPage=='bookings'}"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
 
             <li class="dropdown">
                 <a href="" class="hidden-xs dropdown-toggle top-header" data-toggle="dropdown">
@@ -104,6 +105,7 @@
 <script src="lib/angular.js"></script>
 <script src="lib/angular-route.js"></script>
 <script src="lib/angular-resource.js"></script>
+<script src="lib/angular-strap-modal.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 
 <script src="js/app.js"></script>
