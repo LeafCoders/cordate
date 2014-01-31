@@ -1,11 +1,4 @@
 <itemeditor>
-    <div class="form-group" ng-class="errors.name">
-        <label for="form-name" class="control-label">{{ 'locationEditor.formLabel.name' | t }}</label>
-        <input type="text" class="form-control" id="form-name" ng-model="item.name" autofocus/>
-    </div>
-
-    <div class="form-group">
-        <label for="form-description" class="control-label">{{ 'locationEditor.formLabel.description' | t }}</label>
-        <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
-    </div>
+	<textinput item-name="name" autofocus></textinput>
+	<textinput item-name="description"></textinput>
 </itemeditor>

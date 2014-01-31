@@ -1,31 +1,8 @@
 <itemeditor>
-    <div class="form-group" ng-class="errors.title">
-        <label for="form-title" class="control-label">{{ 'eventEditor.formLabel.title' | t }}</label>
-        <input type="text" class="form-control" id="form-title" ng-model="item.title" autofocus/>
-    </div>
-
-    <div class="form-group">
-        <label for="form-description" class="control-label">{{ 'eventEditor.formLabel.description' | t }}</label>
-        <textarea rows="3" class="form-control" id="form-description" ng-model="item.description"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="form-starttime" class="control-label">{{ 'eventEditor.formLabel.startTime' | t }}</label>
-        <div>
-            <div class="pull-left spacer"><input class="form-control" type="date" id="form-starttime" ng-model="formHelper.startTimePartDate" data-date-format="yyyy-mm-dd"></div>
-            <div class="pull-left"><select class="form-control" ng-model="formHelper.startTimePartTime" ng-options="time.value as time.text for time in formHelper.times"/></div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="form-endtime" class="control-label">{{ 'eventEditor.formLabel.endTime' | t }}</label>
-        <div>
-            <div class="pull-left spacer"><input class="form-control" type="date" id="form-endtime" ng-model="formHelper.endTimePartDate" data-date-format="yyyy-mm-dd"></div>
-            <div class="pull-left"><select class="form-control" ng-model="formHelper.endTimePartTime" ng-options="time.value as time.text for time in formHelper.times"/></div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
+	<textinput item-name="title" autofocus></textinput>
+	<textinput item-name="description"></textinput>
+	<timeinput item-name="startTime"></timeinput>
+	<timeinput item-name="endTime"></timeinput>
 
     <hr>
 
