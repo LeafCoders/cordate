@@ -6,7 +6,7 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('myApp.services', ['myApp.translation_sv_SE'])
-    .factory('currentType', [ '$location', function (location) {
+    .factory('ItemType', [ '$location', function (location) {
         return function () {
             var pattern = /\/\w+/;
             var matches = pattern.exec(location.$$path);
