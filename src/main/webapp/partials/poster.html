@@ -1,9 +1,10 @@
 <item>
-	<h1>{{ 'poster' | t }}</h1>
-	<form class="form-horizontal" role="form">
-	 	<timeview item-name="startTime"></timeview>
-	 	<timeview item-name="endTime"></timeview>
-	 	<textview item-name="title"></textview>
-	 	<textview item-name="duration"></textview>
-	 </form>
+    <h1>{{ 'poster' | t }}</h1>
+    <form class="form-horizontal" role="form">
+        <timeview item-name="startTime"></timeview>
+        <timeview item-name="endTime"></timeview>
+        <textview item-name="title"></textview>
+        <textview item-name="duration"> s</textview>
+        <imagerefview item-ref="item.image" ref-type="image"></imagerefview>
+    </form>
 </item>

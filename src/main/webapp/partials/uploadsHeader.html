@@ -1,0 +1,13 @@
+<div class="row">
+	<div class="col-md-12">
+        <div class="btn-group" style="padding-bottom: 10px;">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                {{ "formLabel.folder" | t }}: {{ selectedFolder.title | t }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li ng-repeat="f in folders"><a href="#/uploads" ng-click="changeFolder(f)">{{ f.title | t }}</a></li>
+            </ul>
+        </div>
+	</div>
+</div>

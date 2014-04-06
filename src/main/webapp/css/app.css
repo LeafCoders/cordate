@@ -4,6 +4,7 @@ html {
 
 body {
     padding-bottom: 50px;
+    word-wrap: break-word;
 }
 
 .table-hover tbody {
@@ -74,4 +75,28 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
 
 .user-resource {
     margin-left: 18px;
+}
+
+.modal-img-item {
+    min-height: 100px;
+    max-height: 100px;
+
+    -moz-box-shadow:    0px 2px 5px 0px #999;
+    -webkit-box-shadow: 0px 2px 5px 0px #999;
+    -o-box-shadow:      0px 2px 5px 0px #999;
+    -ms-box-shadow:     0px 2px 5px 0px #999;
+    box-shadow:         0px 2px 5px 0px #999;
+}
+
+.panel-img-item {
+    max-height: 250px;
+    max-width: 100%;
+    padding: 3px;
+}
+
+.panel-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 19px;
 }

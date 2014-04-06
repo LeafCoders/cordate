@@ -1,0 +1,16 @@
+<item>
+    <h1>{{ 'upload' | t }}</h1>
+    <form class="form-horizontal" role="form">
+        <textview item-name="fileName"></textview>
+        <formitem label="content">
+            <div class="panel panel-default">
+                <img class="img-responsive" ng-src="{{ item.fileUrl }}">
+            </div>
+        </formitem>
+        <textview item-name="fileUrl"></textview>
+        <textview item-name="fileSize"> bytes</textview>
+        <textview item-name="width" ifexist> px</textview>
+        <textview item-name="height" ifexist> px</textview>
+        <textview item-name="mimeType"></textview>
+    </form>
+</item>

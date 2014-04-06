@@ -1,0 +1,11 @@
+<itemstable>
+    <div class="media">
+        <div class="pull-left">
+            <img style="min-width: 100px; max-width: 100px;" class="media-object" ng-src="{{item.fileUrl}}" alt="{{item.fileName}}">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{item.fileName}}</h4>
+            <p><span ng-class="rowClass(item)">{{item.mimeType}}</span></p>
+        </div>
+    </div>
+</itemstable>

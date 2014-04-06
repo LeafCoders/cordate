@@ -28,9 +28,10 @@
             <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
         </div>
         <ul class="main-menu nav navbar-nav">
-            <li class="events-menu hidden-xs" ng-class="{active: currentPage=='eventweek' || currentPage=='events'}"><a href="#/eventweeks/current">{{ 'navbar.label.events' | t }}</a></li>
+            <li class="events-menu hidden-xs" ng-class="{active: currentPage=='eventWeek' || currentPage=='events'}"><a href="#/eventWeeks/current">{{ 'navbar.label.events' | t }}</a></li>
             <li class="posters-menu hidden-xs" ng-class="{active: currentPage=='posters'}"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
             <li class="bookings-menu hidden-xs" ng-class="{active: currentPage=='bookings'}"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
+            <li class="uploads-menu hidden-xs" ng-class="{active: currentPage=='uploads'}"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>
 
             <li class="dropdown">
                 <a href="" class="hidden-xs dropdown-toggle top-header" data-toggle="dropdown">
@@ -45,8 +46,10 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="events-menu visible-xs"><a href="#/eventweeks/current">{{ 'navbar.label.events' | t }}</a></li>
+                    <li class="events-menu visible-xs"><a href="#/eventWeeks/current">{{ 'navbar.label.events' | t }}</a></li>
                     <li class="posters-menu visible-xs"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
+                    <li class="bookings-menu visible-xs"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
+                    <li class="uploads-menu visible-xs"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>
 
                     <li class="divider visible-xs"></li>
 
