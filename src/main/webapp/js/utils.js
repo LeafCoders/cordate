@@ -10,18 +10,29 @@ function stringToTime(rosetteDate) {
 }
 
 function referenceToText(ref, refType) {
-	if (ref !== null) {
+	if (ref != null) {
 		if (Array.isArray(ref)) {
 			// TODO: Handle multiple references
 		} else {
-			if (ref.referredObject !== null) {
+			if (ref.referredObject != null) {
 				switch (refType) {
 					case 'location': return ref.referredObject.name; break;
 				}
-			} else if (ref.text !== null) {
+			} else if (ref.text != null) {
 				return ref.text;
 			}
 		}
 	}
 	return null;
+}
+
+function referenceToObject(ref) {
+    if (ref != null) {
+        if (Array.isArray(ref)) {
+            // TODO: Handle multiple references
+        } else {
+             return ref.referredObject;
+        }
+    }
+    return null;
 }

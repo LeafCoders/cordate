@@ -2,11 +2,8 @@
 
 /* Services */
 
-
-// Demonstrate how to register services
-// In this case it is a simple value service.
 angular.module('myApp.services', ['myApp.translation_sv_SE'])
-    .factory('currentType', [ '$location', function (location) {
+    .factory('currentItemType', [ '$location', function (location) {
         return function () {
             var pattern = /\/\w+/;
             var matches = pattern.exec(location.$$path);
@@ -15,22 +12,22 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
         };
     }])
     .value('basePath', '/cordate/api/v1-snapshot')
-    .factory('EventweekResource', function ($resource, basePath) {
-        return $resource(basePath + '/eventweeks/:id', {id:'@id'}, {update:{method:'PUT'}});
+    .factory('eventWeekResource', function ($resource, basePath) {
+        return $resource(basePath + '/eventWeeks/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('EventResource', function ($resource, basePath) {
+    .factory('eventResource', function ($resource, basePath) {
         return $resource(basePath + '/events/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('UserResource', function ($resource, basePath) {
+    .factory('userResource', function ($resource, basePath) {
         return $resource(basePath + '/users/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('GroupResource', function ($resource, basePath) {
+    .factory('groupResource', function ($resource, basePath) {
         return $resource(basePath + '/groups/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('GroupMembershipResource', function ($resource, basePath) {
+    .factory('groupMembershipResource', function ($resource, basePath) {
         return $resource(basePath + '/groupMemberships/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('GroupMembershipsResource', function ($resource, basePath) {
+    .factory('groupMembershipResource', function ($resource, basePath) {
         return $resource(basePath + '/groupMemberships?groupId=:groupId', {}, {
             findByGroupId: {
                 method: 'GET',
@@ -41,22 +38,31 @@ angular.module('myApp.services', ['myApp.translation_sv_SE'])
             }
         });
     })
-    .factory('PermissionResource', function ($resource, basePath) {
+    .factory('permissionResource', function ($resource, basePath) {
         return $resource(basePath + '/permissions/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('PosterResource', function ($resource, basePath) {
+    .factory('posterResource', function ($resource, basePath) {
             return $resource(basePath + '/posters/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('BookingResource', function ($resource, basePath) {
+    .factory('bookingResource', function ($resource, basePath) {
             return $resource(basePath + '/bookings/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('LocationResource', function ($resource, basePath) {
+    .factory('locationResource', function ($resource, basePath) {
         return $resource(basePath + '/locations/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('UserResourceTypeResource', function ($resource, basePath) {
+    .factory('uploadResource', function ($resource, basePath) {
+        return $resource(basePath + '/uploads/:folderName/:id', {folderName:'@folderName', id:'@id'}, {update:{method:'PUT'}});
+    })
+    .factory('uploadFolder', function ($resource, basePath) {
+        return {
+            resource: $resource(basePath + '/uploadFolders/:id', {id:'@id'}, {update:{method:'PUT'}}),
+            currentFolder: null
+        }
+    })
+    .factory('userResourceTypeResource', function ($resource, basePath) {
         return $resource(basePath + '/userResourceTypes/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
-    .factory('EventTypeResource', function ($resource, basePath) {
+    .factory('eventTypeResource', function ($resource, basePath) {
         return $resource(basePath + '/eventTypes/:id', {id:'@id'}, {update:{method:'PUT'}});
     })
     .factory("flash", function ($rootScope) {

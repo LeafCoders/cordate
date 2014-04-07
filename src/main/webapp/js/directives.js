@@ -46,6 +46,45 @@ angular.module('myApp.directives', []).
             templateUrl:'partials/search.html'
         };
     }).
+    directive('fileselect', [ '$parse', '$timeout', function($parse, $timeout) {
+        return function(scope, elem, attr) {
+            var fn = $parse(attr['fileselect']);
+            elem.bind('change', function(evt) {
+                var files = [], fileList, i;
+                fileList = evt.target.files;
+                if (fileList != null) {
+                    for (i = 0; i < fileList.length; i++) {
+                        files.push(fileList.item(i));
+                    }
+                }
+                $timeout(function() {
+                    fn(scope, {
+                        $files : files,
+                        $event : evt
+                    });
+                });
+            });
+            elem.bind('click', function(){
+                this.value = null;
+            });
+        };
+    }]).
+    directive("formitem",function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            template: function(tElement, tAttrs) {
+                return '' +
+                '<div class="form-group">' +
+                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.label + '\' | t }}</label>' +
+                    '<div class="col-xs-8 col-sm-6">' +
+                        '<div ng-transclude></div>' +
+                    '</div>' +
+                '</div>';
+            }
+        };
+    }).
     directive("textinput",function () {
         return {
             restrict: 'E',
@@ -63,15 +102,16 @@ angular.module('myApp.directives', []).
     }).
     directive("textview",function () {
         return {
-            restrict:'E',
-            replace:true,
-            transclude:false,
+            restrict: 'E',
+            replace: true,
+            transclude: true,
             template: function(tElement, tAttrs) {
+                var ifExist = tAttrs.ifexist != null ? ' ng-show="item.' + tAttrs.itemName + '"' : '';
             	return '' +
-            	'<div class="form-group">' +
+            	'<div class="form-group"' + ifExist + '>' +
                     '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
-                        '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' }}</p>' +
+                        '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' }} <span ng-transclude></span></p>' +
                     '</div>' +
                 '</div>';
             }
@@ -117,6 +157,39 @@ angular.module('myApp.directives', []).
             scope: { itemRef: '=' },
             controller: 'LocationRefInputController',
             templateUrl: 'partials/panelTextList.html'
+        };
+    }).
+    directive("imagerefinput",function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: { itemRef: '=', uploadFolderName: '@' },
+            controller: 'ImageRefInputController',
+            templateUrl: 'partials/panelImageList.html'
+        };
+    }).
+    directive("imagerefview",function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: { itemRef: '=' },
+            controller: 'ObjectRefController',
+            template: function(tElement, tAttrs) {
+                return '' +
+                '<div class="form-group">' +
+                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.image\' | t }}</label>' +
+                    '<div class="col-xs-8 col-sm-6">' +
+                        '<div class="panel panel-default">' +
+                            '<div class="panel-heading">' +
+                                '<h3 class="panel-title">{{ reference.fileName }}</h3>' +
+                            '</div>' +
+                            '<img class="img-responsive" ng-src="{{ reference.fileUrl }}">' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }
         };
     }).
     directive("textrefview",function () {

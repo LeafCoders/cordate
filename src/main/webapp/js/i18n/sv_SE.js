@@ -2,10 +2,11 @@
 
 angular.module('myApp.translation_sv_SE', []).
     value('translationMap', {
-        "navbar.label.eventweek" : "Händelser",
+        "navbar.label.eventWeek" : "Händelser",
         "navbar.label.events" : "Händelser",
         "navbar.label.posters" : "Affischer",
         "navbar.label.bookings" : "Bokningar",
+        "navbar.label.uploads" : "Filer",
         "navbar.label.admin" : "Admin",
         "navbar.label.users" : "Användare",
         "navbar.label.groups" : "Grupper",
@@ -62,8 +63,19 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.password" : "Lösenord",
         "formLabel.reenterPassword" : "Repetera lösenord",
         "formLabel.eventType" : "Typ",
+        "formLabel.image" : "Bild",
+        "formLabel.content" : "Innehåll",
+        "formLabel.folder" : "Katalog",
+        "formLabel.file" : "Fil",
+        "formLabel.fileName" : "Filnamn",
+        "formLabel.fileSize" : "Filstorlek",
+        "formLabel.fileUrl" : "Länk",
+        "formLabel.mimeType" : "Filtyp",
+        "formLabel.width" : "Bredd",
+        "formLabel.height" : "Höjd",
         
         "modalTitle.location" : "Välj lokal",
+        "modalTitle.image" : "Välj bild",
         
         "event" : "Händelse",
         "eventItems.label.title" : "Händelser",
@@ -85,6 +97,7 @@ angular.module('myApp.translation_sv_SE', []).
         "eventItem.label.endTime" : "Slutar",
         "eventItem.label.eventType" : "Typ",
         "eventItem.label.location" : "Lokal",
+        "eventItem.label.image" : "Bild",
         "eventItem.label.backToItems" : "« Tillbaka till händelser",
 
         "eventEditor.label.newTitle" : "Ny händelse",
@@ -213,7 +226,7 @@ angular.module('myApp.translation_sv_SE', []).
 
         "userResourceType" : "Resurs",
         "userResourceTypeItems.label.title" : "Resurser",
-        "userResourceTypeItems.action.new" : "Ny resurser",
+        "userResourceTypeItems.action.new" : "Ny resurs",
         "userResourceTypeItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera resursen?",
         "userResourceTypeItems.alert.itemWasDeleted" : "Resursen raderades!",
 
@@ -292,5 +305,31 @@ angular.module('myApp.translation_sv_SE', []).
         "bookingEditor.label.newTitle" : "Ny bokning",
         "bookingEditor.label.editTitle" : "Redigera bokning",
         "bookingEditor.alert.itemWasCreated" : "Bokningen skapades!",
-        "bookingEditor.alert.itemWasUpdated" : "Bokningen uppdaterades!"
+        "bookingEditor.alert.itemWasUpdated" : "Bokningen uppdaterades!",
+
+        "upload" : "Fil",
+        "upload.fileName.notNull" : "Filnamn saknas.",
+        "upload.mimeType.notNull" : "Filtyp saknas.",
+        "upload.mimeType.notAllowed" : "Filtypen är inte tillåten.",
+        "upload.fileData.notNull" : "Filen saknar data.",
+        "upload.alreadyExists" : "Det finns redan en fil med samma filnamn. Ändra namnet på filen du vill skapa och försök att ladda upp den igen.",
+        "upload.invalidFileContent" : "Filens innehåll kunde inte läsas.",
+        "upload.image.invalidSize" : "Bredd och höjd kunde inte läsas från bilden.",
+        "upload.fileReader.notSupported" : "Din webbläsare kan inte användas för att ladda upp filer här.",
+
+        "uploadItems.label.title" : "Filer",
+        "uploadItems.action.new" : "Ny fil",
+        "uploadItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera filen?",
+        "uploadItems.alert.itemWasDeleted" : "Filen raderades!",
+
+        "uploadItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera filen?",
+        "uploadItem.alert.itemWasDeleted" : "Filen raderades!",
+        "uploadItem.label.backToItems" : "« Tillbaka till filer",
+
+        "uploadEditor.label.newTitle" : "Ny fil",
+        "uploadEditor.label.editTitle" : "Redigera fil",
+        "uploadEditor.alert.itemWasCreated" : "Filen skapades!",
+        
+        "uploadFolder.posters" : "Affischer",
+        "uploadFolder.locations" : "Lokaler"
     });

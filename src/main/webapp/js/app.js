@@ -41,12 +41,11 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/eventTypes/:id', {templateUrl:'partials/eventType.html', controller:EventTypeController, resolve:EventTypeController.data});
         $routeProvider.when('/eventTypes/:id/edit', {templateUrl:'partials/eventTypeEditor.html', controller:EventTypeEditorController, resolve:EventTypeEditorController.data});
 
-        $routeProvider.when('/eventweeks/current', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
-        $routeProvider.when('/eventweeks/:id', {templateUrl:'partials/eventweek.html', controller:EventweekController, resolve:EventweekController.data});
+        $routeProvider.when('/eventWeeks/current', {templateUrl:'partials/eventWeek.html', controller:EventWeekController, resolve:EventWeekController.data});
+        $routeProvider.when('/eventWeeks/:id', {templateUrl:'partials/eventWeek.html', controller:EventWeekController, resolve:EventWeekController.data});
         $routeProvider.when('/events/new', {templateUrl:'partials/eventEditor.html', controller:EventEditorController, resolve:EventEditorController.data});
         $routeProvider.when('/events/:id', {templateUrl:'partials/event.html', controller:EventController, resolve:EventController.data});
         $routeProvider.when('/events/:id/edit', {templateUrl:'partials/eventEditor.html', controller:EventEditorController, resolve:EventEditorController.data});
-        $routeProvider.otherwise({redirectTo:'/eventweeks/current'});
 
         $routeProvider.when('/posters', {templateUrl:'partials/posters.html', controller:PostersController, resolve:PostersController.data});
         $routeProvider.when('/posters/new', {templateUrl:'partials/posterEditor.html', controller:PosterEditorController, resolve:PosterEditorController.data});
@@ -58,6 +57,13 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
         $routeProvider.when('/bookings/:id', {templateUrl:'partials/booking.html', controller:BookingController, resolve:BookingController.data});
         $routeProvider.when('/bookings/:id/edit', {templateUrl:'partials/bookingEditor.html', controller:BookingEditorController, resolve:BookingEditorController.data});
 
+        $routeProvider.when('/uploads', {templateUrl:'partials/uploads.html', controller:UploadsController, resolve:UploadsController.data});
+        $routeProvider.when('/uploads/new', {templateUrl:'partials/uploadEditor.html', controller:UploadEditorController, resolve:UploadEditorController.data});
+        $routeProvider.when('/uploads/:id', {templateUrl:'partials/upload.html', controller:UploadController, resolve:UploadController.data});
+        $routeProvider.when('/uploads/:id/edit', {templateUrl:'partials/uploadEditor.html', controller:UploadEditorController, resolve:UploadEditorController.data});
+
+        $routeProvider.otherwise({redirectTo:'/eventWeeks/current'});
+        
         $httpProvider.interceptors.push('myHttpInterceptor');
     })
     .value('$anchorScroll', angular.noop);

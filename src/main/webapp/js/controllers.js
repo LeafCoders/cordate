@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-app.controller('MainController', function($rootScope, $scope, flash) {
+app.controller('MainController', function($scope, flash) {
     $scope.closeAlert = function(index) {
         flash.clearAlerts();
     }
@@ -11,9 +11,11 @@ app.controller('MainController', function($rootScope, $scope, flash) {
 
 // Base controllers
 
-function ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
+function ItemsController($scope, $location, $filter, $route, flash, itemType, items) {
 	$scope.items = items;
-    $scope.backPage = currentType + 's';
+	$scope.type = itemType();
+    $scope.backPage = $scope.type + 's';
+    $scope.allowEditItem = true;
 
     $scope.searchFormHelper = {
     };
@@ -21,7 +23,7 @@ function ItemsController($scope, $rootScope, $location, $filter, $route, current
     $scope.showDetails = function(id) {
 		$location.path('/' + $scope.type + 's/' + id);
 	};
-	
+
 	$scope.createNew = function() {
 		$location.path('/' + $scope.type + 's/new');
 	};
@@ -40,13 +42,23 @@ function ItemsController($scope, $rootScope, $location, $filter, $route, current
     $scope.getTextOfReference = function(ref, refType) {
     	return referenceToText(ref, refType);
     };
+    
+    // Get reference object
+    $scope.getReference = function(item, param) {
+        var ref = referenceToObject(item);
+        if (ref != null) {
+            return ref[param];
+        }
+        return null;
+    };
+    
 }
 
-function ItemController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
-    $scope.type = type;
-    $rootScope.currentPage = $scope.type + 's';
-    $scope.backPage = $rootScope.currentPage;
+function ItemController($scope, $location, $filter, flash, itemType, item) {
+    $scope.type = itemType();
+    $scope.backPage = $scope.type + 's';
     $scope.item = item;
+    $scope.allowEditItem = true;
 
     $scope.remove = function(item) {
         $('#myModal').modal('hide');
@@ -57,8 +69,8 @@ function ItemController(type, $scope, $rootScope, $location, $filter, item, item
     };
 }
 
-function ItemEditorController(type, $scope, $rootScope, $location, $filter, item, itemService, flash) {
-    angular.extend(this, new ItemController(type, $scope, $rootScope, $location, $filter, item, itemService, flash));
+function ItemEditorController($scope, $location, $filter, flash, itemType, itemService, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, itemType, item));
 
     $scope.errors = {};
 
@@ -123,39 +135,37 @@ function ItemEditorController(type, $scope, $rootScope, $location, $filter, item
 // Home
 
 function HomeController($location) {
-    $location.path('/eventweeks/current');
+    $location.path('/eventWeeks/current');
 }
 
 // Users
 
-function UsersController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'users';
-    $scope.type = 'user';
+function UsersController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 UsersController.data = {
-    items : function(UserResource) {
-        return UserResource.query().$promise;
+    items : function(userResource) {
+        return userResource.query().$promise;
     }
 }
 
-function UserController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
-    angular.extend(this, new ItemController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
+function UserController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 UserController.data = {
-    item : function($route, UserResource) {
+    item : function($route, userResource) {
         if ($route.current.pathParams.id == undefined) {
             return {};
         } else {
-            return UserResource.get({id: $route.current.pathParams.id}).$promise;
+            return userResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function UserEditorController($scope, $rootScope, $location, $filter, item, UserResource, flash) {
-    angular.extend(this, new ItemEditorController('user', $scope, $rootScope, $location, $filter, item, UserResource, flash));
+function UserEditorController($scope, $location, $filter, flash, currentItemType, userResource, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, userResource, item));
 
     $scope.item.password = "";
 
@@ -186,34 +196,32 @@ UserEditorController.data = {
 
 // Groups
 
-function GroupsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'groups';
-    $scope.type = 'group';
+function GroupsController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 GroupsController.data = {
-    items : function(GroupResource) {
-        return GroupResource.query().$promise;
+    items : function(groupResource) {
+        return groupResource.query().$promise;
     }
 }
 
-function GroupController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
-    angular.extend(this, new ItemController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
+function GroupController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 GroupController.data = {
-    item : function($route, GroupResource) {
+    item : function($route, groupResource) {
         if ($route.current.pathParams.id == undefined) {
             return {};
         } else {
-            return GroupResource.get({id: $route.current.pathParams.id}).$promise;
+            return groupResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function GroupEditorController($scope, $rootScope, $location, $filter, item, GroupResource, flash) {
-    angular.extend(this, new ItemEditorController('group', $scope, $rootScope, $location, $filter, item, GroupResource, flash));
+function GroupEditorController($scope, $location, $filter, flash, currentItemType, groupResource, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, groupResource, item));
 }
 
 GroupEditorController.data = {
@@ -223,34 +231,32 @@ GroupEditorController.data = {
 
 // Group Memberships
 
-function GroupMembershipsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'groupMemberships';
-    $scope.type = 'groupMembership';
+function GroupMembershipsController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 GroupMembershipsController.data = {
-    items : function(GroupMembershipResource) {
-        return GroupMembershipResource.query().$promise;
+    items : function(groupMembershipResource) {
+        return groupMembershipResource.query().$promise;
     }
 }
 
-function GroupMembershipController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash) {
-    angular.extend(this, new ItemController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
+function GroupMembershipController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 GroupMembershipController.data = {
-    item : function($route, GroupMembershipResource) {
+    item : function($route, groupMembershipResource) {
         if ($route.current.pathParams.id == undefined) {
             return {};
         } else {
-            return GroupMembershipResource.get({id: $route.current.pathParams.id}).$promise;
+            return groupMembershipResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function GroupMembershipEditorController($scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash, users, groups) {
-    angular.extend(this, new ItemEditorController('groupMembership', $scope, $rootScope, $location, $filter, item, GroupMembershipResource, flash));
+function GroupMembershipEditorController($scope, $location, $filter, flash, currentItemType, groupMembershipResource, item, users, groups) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, groupMembershipResource, item));
     $scope.users = users;
     $scope.groups = groups;
 }
@@ -264,34 +270,32 @@ GroupMembershipEditorController.data = {
 
 // Permissions
 
-function PermissionsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'permissions';
-    $scope.type = 'permission';
+function PermissionsController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 PermissionsController.data = {
-    items : function(PermissionResource) {
-        return PermissionResource.query().$promise;
+    items : function(permissionResource) {
+        return permissionResource.query().$promise;
     }
 }
 
-function PermissionController($scope, $rootScope, $location, $filter, item, PermissionResource, flash) {
-    angular.extend(this, new ItemController('permission', $scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+function PermissionController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 PermissionController.data = {
-    item : function($route, PermissionResource) {
+    item : function($route, permissionResource) {
         if ($route.current.pathParams.id == undefined) {
             return {};
         } else {
-            return PermissionResource.get({id: $route.current.pathParams.id}).$promise;
+            return permissionResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function PermissionEditorController($scope, $rootScope, $location, $filter, item, users, groups, PermissionResource, flash) {
-    angular.extend(this, new ItemEditorController('permission', $scope, $rootScope, $location, $filter, item, PermissionResource, flash));
+function PermissionEditorController($scope, $location, $filter, flash, currentItemType, permissionResource, item, users, groups) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, permissionResource, item));
 
     var permissionType = "everyone";
     var permissionId = null;
@@ -341,34 +345,32 @@ PermissionEditorController.data = {
 
 // Locations
 
-function LocationsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'locations';
-    $scope.type = 'location';
+function LocationsController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 LocationsController.data = {
-    items : function(LocationResource) {
-        return LocationResource.query().$promise;
+    items : function(locationResource) {
+        return locationResource.query().$promise;
     }
 }
 
-function LocationController($scope, $rootScope, $location, $filter, item, LocationResource, flash) {
-    angular.extend(this, new ItemController('location', $scope, $rootScope, $location, $filter, item, LocationResource, flash));
+function LocationController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 LocationController.data = {
-    item : function($route, LocationResource) {
+    item : function($route, locationResource) {
         if ($route.current.pathParams.id == undefined) {
             return {};
         } else {
-            return LocationResource.get({id: $route.current.pathParams.id}).$promise;
+            return locationResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function LocationEditorController($scope, $rootScope, $location, $filter, item, LocationResource, flash) {
-    angular.extend(this, new ItemEditorController('location', $scope, $rootScope, $location, $filter, item, LocationResource, flash));
+function LocationEditorController($scope, $location, $filter, flash, currentItemType, locationResource, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, locationResource, item));
 }
 
 LocationEditorController.data = {
@@ -378,34 +380,32 @@ LocationEditorController.data = {
 
 // UserResourceTypes
 
-function UserResourceTypesController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'userResourceTypes';
-    $scope.type = 'userResourceType';
+function UserResourceTypesController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 UserResourceTypesController.data = {
-    items : function(UserResourceTypeResource) {
-        return UserResourceTypeResource.query().$promise;
+    items : function(userResourceTypeResource) {
+        return userResourceTypeResource.query().$promise;
     }
 }
 
-function UserResourceTypeController($scope, $rootScope, $location, $filter, item, UserResourceTypeResource, flash) {
-    angular.extend(this, new ItemController('userResourceType', $scope, $rootScope, $location, $filter, item, UserResourceTypeResource, flash));
+function UserResourceTypeController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 UserResourceTypeController.data = {
-    item : function($route, UserResourceTypeResource) {
+    item : function($route, userResourceTypeResource) {
         if ($route.current.pathParams.id == undefined) {
             return {sortOrder:0};
         } else {
-            return UserResourceTypeResource.get({id: $route.current.pathParams.id}).$promise;
+            return userResourceTypeResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function UserResourceTypeEditorController($scope, $rootScope, $location, $filter, item, UserResourceTypeResource, flash, groups) {
-    angular.extend(this, new ItemEditorController('userResourceType', $scope, $rootScope, $location, $filter, item, UserResourceTypeResource, flash));
+function UserResourceTypeEditorController($scope, $location, $filter, flash, currentItemType, userResourceTypeResource, item, groups) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, userResourceTypeResource, item));
     $scope.formHelper = {
         "groups" : groups
     }
@@ -419,34 +419,32 @@ UserResourceTypeEditorController.data = {
 
 // EventTypes
 
-function EventTypesController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
-    $rootScope.currentPage = 'eventTypes';
-    $scope.type = 'eventType';
+function EventTypesController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
 }
 
 EventTypesController.data = {
-    items : function(EventTypeResource) {
-        return EventTypeResource.query().$promise;
+    items : function(eventTypeResource) {
+        return eventTypeResource.query().$promise;
     }
 }
 
-function EventTypeController($scope, $rootScope, $location, $filter, item, EventTypeResource, flash) {
-    angular.extend(this, new ItemController('eventType', $scope, $rootScope, $location, $filter, item, EventTypeResource, flash));
+function EventTypeController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 }
 
 EventTypeController.data = {
-    item : function($route, EventTypeResource) {
+    item : function($route, eventTypeResource) {
         if ($route.current.pathParams.id == undefined) {
             return {};
         } else {
-            return EventTypeResource.get({id: $route.current.pathParams.id}).$promise;
+            return eventTypeResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function EventTypeEditorController($scope, $rootScope, $location, $filter, item, EventTypeResource, flash) {
-    angular.extend(this, new ItemEditorController('eventType', $scope, $rootScope, $location, $filter, item, EventTypeResource, flash));
+function EventTypeEditorController($scope, $location, $filter, flash, currentItemType, eventTypeResource, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, eventTypeResource, item));
 }
 
 EventTypeEditorController.data = {
@@ -455,18 +453,17 @@ EventTypeEditorController.data = {
 
 
 // Events
-function EventweekController($scope, $rootScope, $location, $filter, $route, currentType, item, EventResource, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, null, flash));
+function EventWeekController($scope, $location, $filter, $route, flash, currentItemType, eventResource, item) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, null));
 
-    $rootScope.currentPage = 'eventweek';
     $scope.type = 'event';
     $scope.item = item;
-    $scope.backPage = "eventweeks/current";
+    $scope.backPage = "eventWeeks/current";
 
     $scope.remove = function(item) {
         var confirmed = confirm($filter('t')('eventItems.prompt.itemDeleteConfirmation'));
         if (confirmed) {
-            EventResource.delete({id : item.id}, function(response, headers) {
+            eventResource.delete({id : item.id}, function(response, headers) {
                 flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted'});
                 $route.reload();
             });
@@ -474,15 +471,15 @@ function EventweekController($scope, $rootScope, $location, $filter, $route, cur
     };
 }
 
-EventweekController.data = {
-    item : function($q, $route, EventweekResource) {
+EventWeekController.data = {
+    item : function($q, $route, eventWeekResource) {
         var deferred = $q.defer();
 
         var id = $route.current.pathParams.id;
         if ($route.current.pathParams.id == undefined) {
             id = "current";
         }
-        var item = EventweekResource.get({id: id}, function(data, headers) {
+        var item = eventWeekResource.get({id: id}, function(data, headers) {
             var linkHeader = headers().link;
             if (linkHeader.length == 0) {
                 throw new Error("input must not be of zero length");
@@ -509,15 +506,14 @@ EventweekController.data = {
     }
 }
 
-function EventController($scope, $rootScope, $location, $filter, item, EventResource, flash) {
-    angular.extend(this, new ItemController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
+function EventController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
 
-    $rootScope.currentPage = 'events';
-    $scope.backPage = 'eventweeks/current';
+    $scope.backPage = 'eventWeeks/current';
 }
 
 EventController.data = {
-    item : function($q, $route, $location, EventResource) {
+    item : function($q, $route, $location, eventResource) {
         if ($route.current.pathParams.id == undefined) {
             var model = {};
             var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
@@ -533,16 +529,15 @@ EventController.data = {
             }
             return model;
         } else {
-            return EventResource.get({id: $route.current.pathParams.id}).$promise;
+            return eventResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function EventEditorController($scope, $rootScope, $location, $filter, item, EventResource, flash, eventTypes, locations, userResourceTypes, GroupMembershipsResource) {
-    angular.extend(this, new ItemEditorController('event', $scope, $rootScope, $location, $filter, item, EventResource, flash));
+function EventEditorController($scope, $location, $filter, flash, currentItemType, eventResource, groupMembershipResource, item, eventTypes, locations, userResourceTypes) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, eventResource, item));
 
-    $rootScope.currentPage = 'events';
-    $scope.backPage = 'eventweeks/current';
+    $scope.backPage = 'eventWeeks/current';
 
     var times = [{text: '', value: ''}];
     for (var i = 0; i < 24; i++) {
@@ -573,7 +568,7 @@ function EventEditorController($scope, $rootScope, $location, $filter, item, Eve
             requiredUserResourceTypes[userResourceType.name] = false;
         }
 
-        groupMemberships[userResourceType.groupId] = GroupMembershipsResource.findByGroupId({groupId: userResourceType.groupId});
+        groupMemberships[userResourceType.groupId] = groupMembershipResource.findByGroupId({groupId: userResourceType.groupId});
         userResources[userResourceType.id] = [];
     });
 
@@ -715,27 +710,25 @@ function PosterBase($scope) {
     };
 }
 
-function PostersController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+function PostersController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
     angular.extend(this, new PosterBase($scope));
-    $rootScope.currentPage = 'posters';
-    $scope.type = 'poster';
     $scope.tableHeaderUrl = 'partials/postersHeader.html';
 }
 
 PostersController.data = {
-    items : function(PosterResource) {
-        return PosterResource.query().$promise;
+    items : function(posterResource) {
+        return posterResource.query().$promise;
     }
 }
 
-function PosterController($scope, $rootScope, $location, $filter, item, PosterResource, flash) {
-    angular.extend(this, new ItemController('poster', $scope, $rootScope, $location, $filter, item, PosterResource, flash));
+function PosterController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
     angular.extend(this, new PosterBase($scope));
 }
 
 PosterController.data = {
-    item : function($q, $route, $location, PosterResource) {
+    item : function($q, $route, $location, posterResource) {
         if ($route.current.pathParams.id == undefined) {
             var model = {};
             var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
@@ -751,13 +744,13 @@ PosterController.data = {
             }
             return model;
         } else {
-            return PosterResource.get({id: $route.current.pathParams.id}).$promise;
+            return posterResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function PosterEditorController($scope, $rootScope, $location, $filter, item, PosterResource, flash) {
-    angular.extend(this, new ItemEditorController('poster', $scope, $rootScope, $location, $filter, item, PosterResource, flash));
+function PosterEditorController($scope, $location, $filter, flash, currentItemType, posterResource, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, posterResource, item));
 
     var times = [{text: '', value: ''}];
     for (var i = 0; i < 24; i++) {
@@ -816,27 +809,25 @@ function BookingBase($scope) {
     };
 }
 
-function BookingsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash) {
-    angular.extend(this, new ItemsController($scope, $rootScope, $location, $filter, $route, currentType, items, flash));
+function BookingsController($scope, $location, $filter, $route, flash, currentItemType, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
     angular.extend(this, new BookingBase($scope));
-    $rootScope.currentPage = 'bookings';
-    $scope.type = 'booking';
     $scope.tableHeaderUrl = 'partials/bookingsHeader.html';
 }
 
 BookingsController.data = {
-    items : function(BookingResource) {
-        return BookingResource.query().$promise;
+    items : function(bookingResource) {
+        return bookingResource.query().$promise;
     }
 }
 
-function BookingController($scope, $rootScope, $location, $filter, item, BookingResource, flash) {
-    angular.extend(this, new ItemController('booking', $scope, $rootScope, $location, $filter, item, BookingResource, flash));
+function BookingController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
     angular.extend(this, new BookingBase($scope));
 }
 
 BookingController.data = {
-    item : function($q, $route, $location, BookingResource) {
+    item : function($q, $route, $location, bookingResource) {
         if ($route.current.pathParams.id == undefined) {
             var model = {};
             var collection = $location.$$path.substring(1, $location.$$path.indexOf('/', 1));
@@ -852,13 +843,13 @@ BookingController.data = {
             }
             return model;
         } else {
-            return BookingResource.get({id: $route.current.pathParams.id}).$promise;
+            return bookingResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
 }
 
-function BookingEditorController($scope, $rootScope, $location, $filter, item, BookingResource, flash) {
-    angular.extend(this, new ItemEditorController('booking', $scope, $rootScope, $location, $filter, item, BookingResource, flash));
+function BookingEditorController($scope, $location, $filter, flash, currentItemType, bookingResource, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, bookingResource, item));
 
     var times = [{text: '', value: ''}];
     for (var i = 0; i < 24; i++) {
@@ -897,131 +888,245 @@ BookingEditorController.data = {
     item : BookingController.data.item
 }
 
-// Modal
 
-function ModalController($scope, $q, $modal, resource) {
-	// Options
-	$scope.modalTitle = "Not set";
-	$scope.singleSelect = true;
-	$scope.allowOptionalText = false;
-	$scope.panelItems = new Array();
+// Uploads
 
-	$scope.showModal = function() {
-    	// Load resources
-		$q.when(resource.query().$promise).then(function(resources) {
-			// Convert resources to objects with 'id' and 'title' values
-			var items = new Array();
-			var lenRes = resources.length;
-			for (var r = 0; r < lenRes; r++) {
-				items.push($scope.createIdItem(resources[r]));
-			}
-			$scope.modalItems = items;
+function UploadsController($scope, $location, $filter, $route, flash, currentItemType, uploadFolder, items) {
+    angular.extend(this, new ItemsController($scope, $location, $filter, flash, $route, currentItemType, items.items));
 
-			// Select items and set optional text
-			$scope.optionalText = '';
-			var lenPanel = $scope.panelItems.length;
-			var lenModal = $scope.modalItems.length;
-			for (var p = 0; p < lenPanel; p++) {
-				if ($scope.panelItems[p].id === undefined) {
-					$scope.optionalText = $scope.panelItems[p].title; 
-				} else {
-					for (var m = 0; m < lenModal; m++) {
-						if ($scope.panelItems[p].id === $scope.modalItems[m].id) {
-							$scope.modalItems[m].selected = true;
-						}
-					}
-				}
-	    	}
-		});
+    $scope.tableHeaderUrl = 'partials/uploadsHeader.html';
+    $scope.selectedFolder = uploadFolder.currentFolder;
+    $scope.folders = items.folders;
 
-		// Show modal dialog
-    	var modalPromise = $modal({template: 'partials/modalTextList.html', persist: true, show: false, backdrop: 'static', scope: $scope});
-		$q.when(modalPromise).then(function(modalElem) {
-			modalElem.modal('show');
-		});
-	};
-
-	$scope.toggleModalItem = function(modalItem) {
-		var length = $scope.modalItems.length;
-    	for (var i = 0; i < length; i++) {
-    		if ($scope.modalItems[i] === modalItem) {
-        		modalItem.selected = !modalItem.selected;
-        		if ($scope.singleSelect) {
-        			$scope.optionalText = '';
-        		}
-    		} else if ($scope.singleSelect && $scope.modalItems[i].selected) {
-    			$scope.modalItems[i].selected = false;
-    		}
-    	}
-	};
-
-	$scope.saveModalItems = function() {
-		var newPanelItems = new Array();
-		var length = $scope.modalItems.length;
-    	for (var i = 0; i < length; i++) {
-    		if ($scope.modalItems[i].selected) {
-    			newPanelItems.push($scope.modalItems[i]); 
-    		}
-    	}
-    	if ($scope.optionalText !== '') {
-    		newPanelItems.push($scope.createTextItem($scope.optionalText));
-    	}
-    	$scope.panelItems = newPanelItems;
-    	$scope.setReferences();
-	};
-
-	$scope.loadReferences = function() {
-		var ref = $scope.itemRef;
-		if (ref !== null) {
-			if (Array.isArray(ref)) {
-				// TODO: Handle multiple references
-			} else {
-				if (ref.referredObject !== null) {
-					$scope.panelItems.push($scope.createIdItem(ref.referredObject));
-				} else if (ref.text !== null) {
-					$scope.panelItems.push($scope.createTextItem(ref.text));
-				}
-			}
-		}
-	}
-
-	$scope.setReferences = function() {
-		$scope.itemRef = null;
-		if ($scope.panelItems.length > 0) {
-			if ($scope.singleSelect) {
-				if ($scope.panelItems[0].id !== undefined) {
-					$scope.itemRef = { 'idRef': $scope.panelItems[0].id };
-				} else {
-					$scope.itemRef = { 'text': $scope.panelItems[0].title };
-				}
-			} else {
-				// TODO: Handle multiple references
-			}
-		}
-	}
-	
-	$scope.createIdItem = function(resource) {
-		return { 'id': resource.id, 'title': $scope.resourceTitle(resource) };
-	}
-	$scope.createTextItem = function(title) {
-		return { 'title': title };
-	}
+    $scope.changeFolder = function(folder) {
+        uploadFolder.currentFolder = folder;
+        $location.path('/uploads/');
+    };
 }
 
-function LocationRefInputController($scope, $q, $modal, LocationResource) {
-	angular.extend(this, new ModalController($scope, $q, $modal, LocationResource));
+UploadsController.data = {
+    items : function(uploadFolder, uploadResource) {
+        return uploadFolder.resource.query().$promise.then(function (folders) {
+            uploadFolder.currentFolder = uploadFolder.currentFolder || folders[0];
+            return { folders : folders,
+                     items : uploadResource.query({folderName: uploadFolder.currentFolder.name}).$promise };
+        });
+    }
+}
 
-	$scope.refType = 'location';
-	$scope.modalTitle = 'location';
-	$scope.singleSelect = true;
-	$scope.allowOptionalText = true;
+function UploadController($scope, $location, $filter, flash, currentItemType, item) {
+    angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
+    $scope.allowEditItem = false;
+}
 
-	$scope.resourceTitle = function(resource) {
-		return resource.name;
+UploadController.data = {
+    item : function(uploadFolder, uploadResource, $route) {
+        var itemId = $route.current.pathParams.id;
+        return uploadFolder.resource.query().$promise.then(function (folders) {
+            uploadFolder.currentFolder = uploadFolder.currentFolder || folders[0];
+            if (itemId == undefined) {
+                return {folderName: uploadFolder.currentFolder.name};
+            } else {
+                return uploadResource.get({id: itemId, folderName: uploadFolder.currentFolder.name}).$promise;
+            }
+        });
+    }
+}
+
+function UploadEditorController($scope, $location, $filter, $timeout, flash, currentItemType, uploadResource, uploadFolder, item) {
+    angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, uploadResource, item));
+
+    $scope.uploadIsSupported = window.FileReader;
+
+    $scope.onFileSelect = function(files) {
+        flash.clearAlerts();
+        flash.showAlerts();
+        $scope.item.fileName = null;
+        $scope.item.mimeType = null;
+        $scope.item.fileData = null;
+        if (files[0] != null) {
+            // Validate mime type
+            var folder = uploadFolder.currentFolder, allowed = false;
+            if (folder != null) {
+                for (var i = 0; i < folder.mimeTypes.length; ++i) {
+                    allowed |= files[0].type.indexOf(folder.mimeTypes[i]) == 0;
+                }
+            }
+
+            if (allowed && $scope.uploadIsSupported) {
+                var fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    $timeout(function() {
+                        $scope.item.fileData = e.target.result;
+                    });
+                };
+                fileReader.onerror = function(e) {
+                    $timeout(function() {
+                        flash.addAlert({ type: 'danger', text: 'upload.invalidFileContent'});
+                        flash.showAlerts();
+                        flash.clearAlerts();
+                    });
+                };
+                fileReader.readAsDataURL(files[0]);
+                $scope.item.fileName = files[0].name;
+                $scope.item.mimeType = files[0].type;
+            } else {
+                flash.addAlert({ type: 'danger', text: 'upload.mimeType.notAllowed'});
+                flash.showAlerts();
+                flash.clearAlerts();
+            }
+        }
+    }
+}
+
+UploadEditorController.data = {
+    item : UploadController.data.item
+}
+
+
+// Modal
+
+function ModalController($scope, $q, $modal, modalTemplate, resource, resourceQuery) {
+    // Options
+    $scope.modalTitle = "Not set";
+    $scope.singleSelect = true;
+    $scope.allowOptionalText = false;
+    $scope.panelItems = new Array();
+
+    $scope.showModal = function() {
+        // Load resources
+        $q.when(resource.query(resourceQuery).$promise).then(function(resources) {
+            // Convert resources to objects with 'id' and 'title' values
+            var items = new Array();
+            var lenRes = resources.length;
+            for (var r = 0; r < lenRes; r++) {
+                items.push($scope.createIdItem(resources[r]));
+            }
+            $scope.modalItems = items;
+
+            // Select items and set optional text
+            $scope.optionalText = '';
+            var lenPanel = $scope.panelItems.length;
+            var lenModal = $scope.modalItems.length;
+            for (var p = 0; p < lenPanel; p++) {
+                if ($scope.panelItems[p].id === undefined) {
+                    $scope.optionalText = $scope.panelItems[p].title; 
+                } else {
+                    for (var m = 0; m < lenModal; m++) {
+                        if ($scope.panelItems[p].id === $scope.modalItems[m].id) {
+                            $scope.modalItems[m].selected = true;
+                        }
+                    }
+                }
+            }
+        });
+
+        // Show modal dialog
+        var modalPromise = $modal({template: modalTemplate, persist: true, show: false, backdrop: 'static', scope: $scope});
+        $q.when(modalPromise).then(function(modalElem) {
+            modalElem.modal('show');
+        });
+    };
+
+    $scope.toggleModalItem = function(modalItem) {
+        var length = $scope.modalItems.length;
+        for (var i = 0; i < length; i++) {
+            if ($scope.modalItems[i] === modalItem) {
+                modalItem.selected = !modalItem.selected;
+                if ($scope.singleSelect) {
+                    $scope.optionalText = '';
+                }
+            } else if ($scope.singleSelect && $scope.modalItems[i].selected) {
+                $scope.modalItems[i].selected = false;
+            }
+        }
+    };
+
+    $scope.saveModalItems = function() {
+        var newPanelItems = new Array();
+        var length = $scope.modalItems.length;
+        for (var i = 0; i < length; i++) {
+            if ($scope.modalItems[i].selected) {
+                newPanelItems.push($scope.modalItems[i]); 
+            }
+        }
+        if ($scope.optionalText !== '') {
+            newPanelItems.push($scope.createTextItem($scope.optionalText));
+        }
+        $scope.panelItems = newPanelItems;
+        $scope.setReferences();
+    };
+
+    $scope.loadReferences = function() {
+        var ref = $scope.itemRef;
+        if (ref != null) {
+            if (Array.isArray(ref)) {
+                // TODO: Handle multiple references
+            } else {
+                if (ref.referredObject != null) {
+                    $scope.panelItems.push($scope.createIdItem(ref.referredObject));
+                } else if (ref.text != null) {
+                    $scope.panelItems.push($scope.createTextItem(ref.text));
+                }
+            }
+        }
+    }
+
+    $scope.setReferences = function() {
+        $scope.itemRef = null;
+        if ($scope.panelItems.length > 0) {
+            if ($scope.singleSelect) {
+                if ($scope.panelItems[0].id != undefined) {
+                    $scope.itemRef = { 'idRef': $scope.panelItems[0].id };
+                } else {
+                    $scope.itemRef = { 'text': $scope.panelItems[0].title };
+                }
+            } else {
+                // TODO: Handle multiple references
+            }
+        }
+    }
+
+    $scope.createIdItem = function(resource) {
+        return $scope.resourceData(resource);
+    }
+    $scope.createTextItem = function(title) {
+        return { 'title': title };
+    }
+}
+
+function LocationRefInputController($scope, $q, $modal, locationResource) {
+    angular.extend(this, new ModalController($scope, $q, $modal, 'partials/modalTextList.html', locationResource), null);
+
+    $scope.refType = 'location';
+    $scope.modalTitle = 'location';
+    $scope.singleSelect = true;
+    $scope.allowOptionalText = true;
+
+    $scope.resourceData = function(resource) {
+	    return { 'id': resource.id, 'title': resource.name };
 	}
-	$scope.loadReferences();
+    $scope.loadReferences();
+}
+
+function ImageRefInputController($scope, $q, $modal, uploadResource) {
+    angular.extend(this, new ModalController($scope, $q, $modal, 'partials/modalImageList.html',
+            uploadResource, {folderName: $scope.uploadFolderName}));
+
+    $scope.refType = 'upload';
+    $scope.modalTitle = 'image';
+    $scope.singleSelect = true;
+
+    $scope.resourceData = function(resource) {
+        return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
+    }
+    $scope.loadReferences();
 }
 
 function TextRefViewController($scope) {
-	$scope.reference = referenceToText($scope.itemRef, $scope.refType);
+    $scope.reference = referenceToText($scope.itemRef, $scope.refType);
+}
+
+function ObjectRefController($scope) {
+    $scope.reference = referenceToObject($scope.itemRef);
 }
