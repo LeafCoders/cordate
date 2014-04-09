@@ -46,7 +46,7 @@ angular.module('myApp.filters', []).
             return arrayToReturn;
         };
     }).
-    filter('dateRange', [ '$filter', function (filter) {
+    filter('cordateDateRange', [ '$filter', function (filter) {
     return function (text) {
         var sinceDayNumber = parseInt(text.substring(8, 10), 10);
         var sinceMonthNumber = parseInt(text.substring(5, 7), 10);
@@ -59,37 +59,37 @@ angular.module('myApp.filters', []).
         var range = sinceDayNumber;
         if (sinceYearNumber != untilYearNumber ||
             (sinceYearNumber == untilYearNumber && sinceMonthNumber != untilMonthNumber)) {
-            range += " " + filter('lowercase')(filter('t')(filter('monthName')(sinceMonthNumber)));
+            range += " " + filter('lowercase')(filter('t')(filter('cordateMonthName')(sinceMonthNumber)));
         }
         if (sinceYearNumber != untilYearNumber) {
             range += " " + sinceYearNumber;
         }
         range += " - ";
         range += untilDayNumber;
-        range += " " + filter('lowercase')(filter('t')(filter('monthName')(untilMonthNumber)));
+        range += " " + filter('lowercase')(filter('t')(filter('cordateMonthName')(untilMonthNumber)));
         range += " " + untilYearNumber;
 
         return range;
     };
 }]).
-    filter('monthName',function () {
+    filter('cordateMonthName',function () {
         return function (monthNumber) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             return months[monthNumber - 1];
         }
     }).
-    filter('dayName',function () {
+    filter('cordateDayName',function () {
         return function (dayNumber) {
             var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             return weekdays[dayNumber - 1];
         }
     }).
-    filter('dayNumber',function () {
+    filter('cordateDayNumber',function () {
         return function (text) {
             return parseInt(text.substring(8, 10), 10);
         }
     }).
-    filter('time', function () {
+    filter('cordateTime', function () {
         return function (text) {
             var time = null;
             if (text && text.length >= 16) {
@@ -98,7 +98,7 @@ angular.module('myApp.filters', []).
             return time;
         }
     }).
-    filter('date', function () {
+    filter('cordateDate', function () {
         return function (text) {
             var date = null;
             if (text && text.length >= 10) {

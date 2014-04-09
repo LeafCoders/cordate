@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngRoute', '$strap.directives'])
+var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngRoute', 'mgcrea.ngStrap'])
     .config(function ($routeProvider, $httpProvider) {
 //        $routeProvider.when('/', {templateUrl:'partials/home.html', controller:HomeController});
 

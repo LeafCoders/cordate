@@ -91,7 +91,7 @@ angular.module('myApp.directives', []).
             replace: true,
             transclude: false,
             template: function(tElement, tAttrs) {
-            	var autofocus = tAttrs.autofocus != null ? " autofocus" : "";
+            	var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
             	return '' +
             	'<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
                   '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
@@ -106,7 +106,7 @@ angular.module('myApp.directives', []).
             replace: true,
             transclude: true,
             template: function(tElement, tAttrs) {
-                var ifExist = tAttrs.ifexist != null ? ' ng-show="item.' + tAttrs.itemName + '"' : '';
+                var ifExist = tAttrs.ifexist != undefined ? ' ng-show="item.' + tAttrs.itemName + '"' : '';
             	return '' +
             	'<div class="form-group"' + ifExist + '>' +
                     '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
@@ -123,12 +123,12 @@ angular.module('myApp.directives', []).
             replace: true,
             transclude: false,
             template: function(tElement, tAttrs) {
-            	var autofocus = tAttrs.autofocus !== null ? " autofocus" : "";
+            	var autofocus = tAttrs.autofocus !== undefined ? " autofocus" : "";
             	return '' +
             	'<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
             		'<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
-            		'<div class="col-xs-5 col-sm-3"><input type="date" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="formHelper.' + tAttrs.itemName + 'PartDate" data-date-format="yyyy-mm-dd"' + autofocus + '></div>' +
-            		'<div class="col-xs-3 col-sm-2"><select class="form-control" ng-model="formHelper.' + tAttrs.itemName + 'PartTime" ng-options="time.value as time.text for time in formHelper.times"></div>' +
+            		'<div class="col-xs-5 col-sm-3"><input type="text" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="formHelper.' + tAttrs.itemName + 'PartDate" bs-datepicker data-start-week="1" data-date-type="string" data-use-native="true" ' + autofocus + '></div>' +
+            		'<div class="col-xs-3 col-sm-2"><input type="text" class="form-control" ng-model="formHelper.' + tAttrs.itemName + 'PartTime" bs-timepicker data-time-type="string" data-minute-step="10" data-use-native="true"></div>' +
             	'</div>';
             }
         };
@@ -143,7 +143,7 @@ angular.module('myApp.directives', []).
             	'<div class="form-group">' +
             		'<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
-                        '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' | date }} {{ item.' + tAttrs.itemName + ' | time }}</p>' +
+                        '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' | cordateDate }} {{ item.' + tAttrs.itemName + ' | cordateTime }}</p>' +
                     '</div>' +
             	'</div>';
             }

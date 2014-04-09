@@ -577,10 +577,10 @@ function EventEditorController($scope, $location, $filter, flash, currentItemTyp
     });
 
     $scope.formHelper = {
-        startTimePartDate:$filter('date')(item.startTime),
-        startTimePartTime:$filter('time')(item.startTime),
-        endTimePartDate:$filter('date')(item.endTime),
-        endTimePartTime:$filter('time')(item.endTime),
+        startTimePartDate:$filter('cordateDate')(item.startTime),
+        startTimePartTime:$filter('cordateTime')(item.startTime),
+        endTimePartDate:$filter('cordateDate')(item.endTime),
+        endTimePartTime:$filter('cordateTime')(item.endTime),
         times:times,
         eventTypes:eventTypes,
         eventTypeId:eventTypeId,
@@ -590,7 +590,8 @@ function EventEditorController($scope, $location, $filter, flash, currentItemTyp
         requiredUserResourceTypes : requiredUserResourceTypes,
         groupMemberships : groupMemberships,
         userResources : userResources,
-        userIdToAdd : null
+        userIdToAdd : null,
+        larsadate: "2014-04-09"
     };
 
     $scope.addUser = function(userId, userResourceType) {
@@ -760,10 +761,10 @@ function PosterEditorController($scope, $location, $filter, flash, currentItemTy
     }
 
     $scope.formHelper = {
-        startTimePartDate:$filter('date')(item.startTime),
-        startTimePartTime:$filter('time')(item.startTime),
-        endTimePartDate:$filter('date')(item.endTime),
-        endTimePartTime:$filter('time')(item.endTime),
+        startTimePartDate:$filter('cordateDate')(item.startTime),
+        startTimePartTime:$filter('cordateTime')(item.startTime),
+        endTimePartDate:$filter('cordateDate')(item.endTime),
+        endTimePartTime:$filter('cordateTime')(item.endTime),
         duration:item.duration,
         times:times,
         durations:[{text: '10 s', value: 10}, {text: '15 s', value: 15}]
@@ -859,10 +860,10 @@ function BookingEditorController($scope, $location, $filter, flash, currentItemT
     }
 
     $scope.formHelper = {
-        startTimePartDate:$filter('date')(item.startTime),
-        startTimePartTime:$filter('time')(item.startTime),
-        endTimePartDate:$filter('date')(item.endTime),
-        endTimePartTime:$filter('time')(item.endTime),
+        startTimePartDate:$filter('cordateDate')(item.startTime),
+        startTimePartTime:$filter('cordateTime')(item.startTime),
+        endTimePartDate:$filter('cordateDate')(item.endTime),
+        endTimePartTime:$filter('cordateTime')(item.endTime),
         times:times
     };
 
