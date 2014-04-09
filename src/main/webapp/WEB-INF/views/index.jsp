@@ -10,7 +10,7 @@
 
     <title>Cordate</title>
 
-    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css"/>
 
     <link rel="shortcut icon" href="img/favicon.ico">
@@ -104,12 +104,15 @@
     </div>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="lib/angular.js"></script>
-<script src="lib/angular-route.js"></script>
-<script src="lib/angular-resource.js"></script>
-<script src="lib/angular-strap-modal.js"></script>
-<script src="lib/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-resource.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-animate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.2.15/angular-locale_sv-se.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.0.0/angular-strap.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.0.0/angular-strap.tpl.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>

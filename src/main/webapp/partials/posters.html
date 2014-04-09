@@ -5,7 +5,7 @@
         </div>
         <div class="media-body">
             <h4 class="media-heading">{{item.title}}</h4>
-            <p><span ng-class="rowClass(item)">{{item.startTime | date}}</span> - <span ng-class="rowClass(item)">{{item.endTime | date}}</span></p>
+            <p><span ng-class="rowClass(item)">{{item.startTime | cordateDate}}</span> - <span ng-class="rowClass(item)">{{item.endTime | cordateDate}}</span></p>
         </div>
     </div>
 </itemstable>
