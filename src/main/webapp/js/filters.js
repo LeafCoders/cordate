@@ -76,18 +76,18 @@ angular.module('myApp.filters', []).
         return function (monthNumber) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             return months[monthNumber - 1];
-        }
+        };
     }).
     filter('dayName',function () {
         return function (dayNumber) {
             var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             return weekdays[dayNumber - 1];
-        }
+        };
     }).
     filter('dayNumber',function () {
         return function (text) {
             return parseInt(text.substring(8, 10), 10);
-        }
+        };
     }).
     filter('time', function () {
         return function (text) {
@@ -96,7 +96,7 @@ angular.module('myApp.filters', []).
                 time = text.substring(11, 16);
             }
             return time;
-        }
+        };
     }).
     filter('date', function () {
         return function (text) {
@@ -105,16 +105,19 @@ angular.module('myApp.filters', []).
                 date = text.substring(0, 10);
             }
             return date;
-        }
+        };
     }).
-    filter('t', ['translationMap', function (translationMap) {
-
-    return function (input, scope) {
-        var translation = translationMap[input];
-        if (translation == undefined) {
-            translation = "{" + input + "}";
-        }
-
-        return translation;
-    };
-}]);
+    filter('t', ['translationMap', '$parse', function (translationMap, parse) {
+        return function (input, values) {
+            var translation = translationMap[input];
+            if (translation == undefined) {
+                return "{" + input + "}";
+            } else if (values != null) {
+                // Handles the following format: {{ 'Show person: {{title}} | t: {title: 'Kalle'} }}
+                return translation.replace(/{{\S*}}/g, function(m,key) {
+                    return parse(m.replace(/[{} ]/g, ''))(values);
+                });
+            }
+            return translation;
+        };
+    }]);

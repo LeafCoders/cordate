@@ -30,6 +30,9 @@ angular.module('myApp.translation_sv_SE', []).
         "November" : "November",
         "December" : "December",
 
+        "yes" : "Ja",
+        "no" : "Nej",
+        
         "items.action.edit" : "Redigera",
         "items.action.delete" : "Radera",
 
@@ -43,6 +46,9 @@ angular.module('myApp.translation_sv_SE', []).
 
         "itemEditor.action.save" : "Spara",
         "itemEditor.action.cancel" : "Avbryt",
+        "itemEditor.action.prev" : "Föregående",
+        "itemEditor.action.next" : "Nästa",
+        "itemEditor.action.import" : "Importera",
 
         "error.badRequest" : "Sorry, ogiltigt anrop",
         "error.permissionDenied" : "Behörighet saknas",
@@ -295,6 +301,7 @@ angular.module('myApp.translation_sv_SE', []).
 
         "bookingItems.label.title" : "Bokningar",
         "bookingItems.action.new" : "Ny bokning",
+        "bookingItems.action.import" : "Importera",
         "bookingItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera bokningen?",
         "bookingItems.alert.itemWasDeleted" : "Bokningen raderades!",
 
@@ -306,6 +313,15 @@ angular.module('myApp.translation_sv_SE', []).
         "bookingEditor.label.editTitle" : "Redigera bokning",
         "bookingEditor.alert.itemWasCreated" : "Bokningen skapades!",
         "bookingEditor.alert.itemWasUpdated" : "Bokningen uppdaterades!",
+
+        "bookingImport.label.title" : "Importera bokningar",
+        "bookingImport.content.invalid" : "Texten innehåller fel eller är felaktigt formaterad på följande rader:",
+        "bookingImport.content.foundCount" : "{{count}} bokningar hittades i texten.",
+        "bookingImport.content.selectItems" : "Välj bokningar som ska importeras.",
+        "bookingImport.alert.numItemsImported" : "{{count}} av {{total}} bokningar importerades!",
+        "bookingImport.alert.numItemsFailed" : "{{count}} av {{total}} bokningar kunde inte importeras! Bokningarna har kundnamn och starttid: {{customers}}",
+        "bookingImport.alert.deleteAllFailed" : "Kunde inte radera alla existerande bokningar före importen! Importen avbröts.",
+        "bookingImport.prompt.deleteAllConfirmation" : "Vill du radera alla existerande bokningar innan importen startas?",
 
         "upload" : "Fil",
         "upload.fileName.notNull" : "Filnamn saknas.",

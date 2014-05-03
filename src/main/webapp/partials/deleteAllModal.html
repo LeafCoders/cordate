@@ -1,0 +1,13 @@
+<div class="modal" id="deleteAllModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="modal-title" ng-transclude></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteAll(false)">{{ 'no' | t }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteAll(true)">{{ 'yes' | t }}</button>
+            </div>
+        </div>
+    </div>
+</div>

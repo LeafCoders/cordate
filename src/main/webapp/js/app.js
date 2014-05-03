@@ -54,6 +54,7 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
 
         $routeProvider.when('/bookings', {templateUrl:'partials/bookings.html', controller:BookingsController, resolve:BookingsController.data});
         $routeProvider.when('/bookings/new', {templateUrl:'partials/bookingEditor.html', controller:BookingEditorController, resolve:BookingEditorController.data});
+        $routeProvider.when('/bookings/import', {templateUrl:'partials/bookingsImportEditor.html', controller:BookingsImportEditorController, resolve:BookingsImportEditorController.data});
         $routeProvider.when('/bookings/:id', {templateUrl:'partials/booking.html', controller:BookingController, resolve:BookingController.data});
         $routeProvider.when('/bookings/:id/edit', {templateUrl:'partials/bookingEditor.html', controller:BookingEditorController, resolve:BookingEditorController.data});
 

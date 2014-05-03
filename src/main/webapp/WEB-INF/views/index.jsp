@@ -95,7 +95,7 @@
             <div class="alert alert-{{alert.type}}">
                 <span ng-if="alert.type=='success'"class="glyphicon glyphicon-ok"></span>
                 <span ng-if="alert.type=='danger'"class="glyphicon glyphicon-remove"></span>
-                {{ alert.text | t }}
+                {{ alert.text | t: alert.values }}
             </div>
         </div>
     </div>

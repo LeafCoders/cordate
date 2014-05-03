@@ -5,8 +5,8 @@
 app.controller('MainController', function($scope, flash) {
     $scope.closeAlert = function(index) {
         flash.clearAlerts();
-    }
-})
+    };
+});
 
 
 // Base controllers
@@ -16,6 +16,7 @@ function ItemsController($scope, $location, $filter, $route, flash, itemType, it
 	$scope.type = itemType();
     $scope.backPage = $scope.type + 's';
     $scope.allowEditItem = true;
+    $scope.allowImport = false;
 
     $scope.searchFormHelper = {
     };
@@ -27,6 +28,10 @@ function ItemsController($scope, $location, $filter, $route, flash, itemType, it
 	$scope.createNew = function() {
 		$location.path('/' + $scope.type + 's/new');
 	};
+
+    $scope.import = function() {
+        $location.path('/' + $scope.type + 's/import');
+    };
 
     $scope.remove = function(item) {
         var confirmed = confirm($filter('t')($scope.type + 'Items.prompt.itemDeleteConfirmation'));
@@ -148,7 +153,7 @@ UsersController.data = {
     items : function(userResource) {
         return userResource.query().$promise;
     }
-}
+};
 
 function UserController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -162,7 +167,7 @@ UserController.data = {
             return userResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function UserEditorController($scope, $location, $filter, flash, currentItemType, userResource, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, userResource, item));
@@ -170,8 +175,8 @@ function UserEditorController($scope, $location, $filter, flash, currentItemType
     $scope.item.password = "";
 
     $scope.formHelper = {
-        reenteredPassword:""
-    }
+        reenteredPassword: ""
+    };
 
     $scope.beforeSave = function(item) {
         if (item.password != $scope.formHelper.reenteredPassword) {
@@ -186,12 +191,12 @@ function UserEditorController($scope, $location, $filter, flash, currentItemType
         }
 
         return item;
-    }
+    };
 }
 
 UserEditorController.data = {
     item : UserController.data.item
-}
+};
 
 
 // Groups
@@ -204,7 +209,7 @@ GroupsController.data = {
     items : function(groupResource) {
         return groupResource.query().$promise;
     }
-}
+};
 
 function GroupController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -218,7 +223,7 @@ GroupController.data = {
             return groupResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function GroupEditorController($scope, $location, $filter, flash, currentItemType, groupResource, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, groupResource, item));
@@ -226,7 +231,7 @@ function GroupEditorController($scope, $location, $filter, flash, currentItemTyp
 
 GroupEditorController.data = {
     item : GroupController.data.item
-}
+};
 
 
 // Group Memberships
@@ -239,7 +244,7 @@ GroupMembershipsController.data = {
     items : function(groupMembershipResource) {
         return groupMembershipResource.query().$promise;
     }
-}
+};
 
 function GroupMembershipController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -253,7 +258,7 @@ GroupMembershipController.data = {
             return groupMembershipResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function GroupMembershipEditorController($scope, $location, $filter, flash, currentItemType, groupMembershipResource, item, users, groups) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, groupMembershipResource, item));
@@ -265,7 +270,7 @@ GroupMembershipEditorController.data = {
     item : GroupMembershipController.data.item,
     users : UsersController.data.items,
     groups : GroupsController.data.items
-}
+};
 
 
 // Permissions
@@ -278,7 +283,7 @@ PermissionsController.data = {
     items : function(permissionResource) {
         return permissionResource.query().$promise;
     }
-}
+};
 
 function PermissionController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -292,7 +297,7 @@ PermissionController.data = {
             return permissionResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function PermissionEditorController($scope, $location, $filter, flash, currentItemType, permissionResource, item, users, groups) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, permissionResource, item));
@@ -333,14 +338,14 @@ function PermissionEditorController($scope, $location, $filter, flash, currentIt
         item.patterns = $scope.formHelper.patterns.split('\n');
 
         return item;
-    }
+    };
 }
 
 PermissionEditorController.data = {
     item : PermissionController.data.item,
     users : UsersController.data.items,
     groups : GroupsController.data.items
-}
+};
 
 
 // Locations
@@ -353,7 +358,7 @@ LocationsController.data = {
     items : function(locationResource) {
         return locationResource.query().$promise;
     }
-}
+};
 
 function LocationController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -367,7 +372,7 @@ LocationController.data = {
             return locationResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function LocationEditorController($scope, $location, $filter, flash, currentItemType, locationResource, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, locationResource, item));
@@ -375,7 +380,7 @@ function LocationEditorController($scope, $location, $filter, flash, currentItem
 
 LocationEditorController.data = {
     item : LocationController.data.item
-}
+};
 
 
 // UserResourceTypes
@@ -388,7 +393,7 @@ UserResourceTypesController.data = {
     items : function(userResourceTypeResource) {
         return userResourceTypeResource.query().$promise;
     }
-}
+};
 
 function UserResourceTypeController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -402,19 +407,19 @@ UserResourceTypeController.data = {
             return userResourceTypeResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function UserResourceTypeEditorController($scope, $location, $filter, flash, currentItemType, userResourceTypeResource, item, groups) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, userResourceTypeResource, item));
     $scope.formHelper = {
         "groups" : groups
-    }
+    };
 }
 
 UserResourceTypeEditorController.data = {
     item : UserResourceTypeController.data.item,
     groups : GroupsController.data.items
-}
+};
 
 
 // EventTypes
@@ -427,7 +432,7 @@ EventTypesController.data = {
     items : function(eventTypeResource) {
         return eventTypeResource.query().$promise;
     }
-}
+};
 
 function EventTypeController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -441,7 +446,7 @@ EventTypeController.data = {
             return eventTypeResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function EventTypeEditorController($scope, $location, $filter, flash, currentItemType, eventTypeResource, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, eventTypeResource, item));
@@ -449,7 +454,7 @@ function EventTypeEditorController($scope, $location, $filter, flash, currentIte
 
 EventTypeEditorController.data = {
     item : EventTypeController.data.item
-}
+};
 
 
 // Events
@@ -463,8 +468,8 @@ function EventWeekController($scope, $location, $filter, $route, flash, currentI
     $scope.remove = function(item) {
         var confirmed = confirm($filter('t')('eventItems.prompt.itemDeleteConfirmation'));
         if (confirmed) {
-            eventResource.delete({id : item.id}, function(response, headers) {
-                flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted'});
+            eventResource.remove({id : item.id}, function(response, headers) {
+                flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted' });
                 $route.reload();
             });
         }
@@ -504,7 +509,7 @@ EventWeekController.data = {
         });
         return deferred.promise;
     }
-}
+};
 
 function EventController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -532,7 +537,7 @@ EventController.data = {
             return eventResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function EventEditorController($scope, $location, $filter, flash, currentItemType, eventResource, groupMembershipResource, item, eventTypes, locations, userResourceTypes) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, eventResource, item));
@@ -612,13 +617,13 @@ function EventEditorController($scope, $location, $filter, flash, currentItemTyp
             }
         }
         $scope.formHelper.userIdToAdd = null;
-    }
+    };
 
     $scope.removeUser = function(userIndex, userResourceTypeId) {
         if (userIndex > -1) {
             $scope.formHelper.userResources[userResourceTypeId].splice(userIndex, 1);
         }
-    }
+    };
 
     $scope.beforeSave = function(item) {
         if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
@@ -690,7 +695,7 @@ EventEditorController.data = {
     userResourceTypes : UserResourceTypesController.data.items,
     eventTypes : EventTypesController.data.items,
     locations : LocationsController.data.items
-}
+};
 
 
 // Posters
@@ -720,7 +725,7 @@ PostersController.data = {
     items : function(posterResource) {
         return posterResource.query().$promise;
     }
-}
+};
 
 function PosterController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -747,7 +752,7 @@ PosterController.data = {
             return posterResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function PosterEditorController($scope, $location, $filter, flash, currentItemType, posterResource, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, posterResource, item));
@@ -790,7 +795,7 @@ function PosterEditorController($scope, $location, $filter, flash, currentItemTy
 
 PosterEditorController.data = {
     item : PosterController.data.item
-}
+};
 
 //Bookings
 
@@ -813,13 +818,14 @@ function BookingsController($scope, $location, $filter, $route, flash, currentIt
     angular.extend(this, new ItemsController($scope, $location, $filter, $route, flash, currentItemType, items));
     angular.extend(this, new BookingBase($scope));
     $scope.tableHeaderUrl = 'partials/bookingsHeader.html';
+    $scope.allowImport = true;
 }
 
 BookingsController.data = {
     items : function(bookingResource) {
         return bookingResource.query().$promise;
     }
-}
+};
 
 function BookingController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -846,7 +852,7 @@ BookingController.data = {
             return bookingResource.get({id: $route.current.pathParams.id}).$promise;
         }
     }
-}
+};
 
 function BookingEditorController($scope, $location, $filter, flash, currentItemType, bookingResource, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, bookingResource, item));
@@ -886,7 +892,123 @@ function BookingEditorController($scope, $location, $filter, flash, currentItemT
 
 BookingEditorController.data = {
     item : BookingController.data.item
+};
+
+function BookingsImportEditorController($scope, $location, $filter, flash, currentItemType, bookingResource, locations) {
+    $scope.type = currentItemType();
+    $scope.backPage = $scope.type + 's';
+    $scope.importStage = 0;
+    $scope.contentErrors = [];
+    $scope.contentSuccess = [];
+    $scope.isValid = false;
+    $scope.importErrors = [];
+    $scope.importSuccess = [];
+
+    var bookingFormat = [
+        { text: "Kund:",      value: "customerName" },
+        { text: "Kundgrupp:", value: "customerGroup" },
+        { text: "Starttid:",  value: "startTime" },
+        { text: "Sluttid:",   value: "endTime" },
+        { text: "Lokal:",     value: "location" }
+    ];
+
+    $scope.prevStage = function() { $scope.importStage = Math.max(0, $scope.importStage - 1); };
+    $scope.nextStage = function() { $scope.importStage = Math.min(1, $scope.importStage + 1); };
+
+    $scope.contentChanged = function() {
+        if ($scope.importStage == 0) {
+            var objects = parseVerticalTextByFormat($scope.content, bookingFormat);
+            $scope.contentErrors = objects.errors;
+            $scope.contentSuccess = objects.success;
+            $scope.isValid = objects.errors.length == 0 && objects.success.length > 0;
+        }
+    };
+
+    $scope.import = function() {
+        if ($scope.importStage == 1) {
+            $('#deleteAllModal').modal();
+        }
+    };
+
+    $scope.deleteAll = function(confirmed) {
+        if (confirmed) {
+            bookingResource.remove({}, function() {
+                $scope.importStage = 2;
+                importNext(0);
+            }, function() {
+                flash.addAlert({ type: 'danger', text: $scope.type + 'Import.alert.deleteAllFailed'});
+                flash.showAlerts();
+                flash.clearAlerts();
+            });
+        } else {
+            $scope.importStage = 2;
+            importNext(0);
+        }
+    };
+
+    var importNext = function(index) {
+        if (index >= $scope.contentSuccess.length) {
+            // All booking have been sent to server. Show result
+            $scope.importStage = 3;
+            var numSuccess = $scope.importSuccess.length,
+                numErrors = $scope.importErrors.length,
+                numTotals = numSuccess + numErrors;
+            
+            if (numErrors > 0) {
+                flash.addAlert({
+                    type: 'danger',
+                    text: $scope.type + 'Import.alert.numItemsFailed',
+                    values: {count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ') }
+                });
+            }
+            if (numSuccess > 0) {
+                flash.addAlert({
+                    type: 'success',
+                    text: $scope.type + 'Import.alert.numItemsImported',
+                    values: {count: numSuccess, total: numTotals}
+                });
+            }
+            $location.path('/' + $scope.backPage);
+        } else {
+            // Get next booking to send to server
+            var booking = $scope.contentSuccess[index];
+            if (booking.ignore) {
+                importNext(index + 1);
+            } else {
+                // Remove members that isn't allowed
+                delete booking.ignore;
+                delete booking.customerGroup;
+                // Add region to time
+                booking.startTime += " Europe/Stockholm";
+                booking.endTime += " Europe/Stockholm";
+                setLocation(booking);
+                
+                // Send booking to server
+                bookingResource.save(booking, function (data, headers) {
+                    $scope.importSuccess.push(booking.customerName);
+                    importNext(index + 1);
+                }, function(response) {
+                    $scope.importErrors.push(booking.customerName + ' (' + booking.startTime + ')');
+                    importNext(index + 1);
+                });
+            }
+        }
+    };
+
+    // Find location item from text. Otherwise use text as location.
+    var setLocation = function(booking) {
+        for (var i = 0; i < locations.length; i++) {
+            if (locations[i].name == booking.location) {
+                return booking.location = { idRef: locations[i].id };
+            }
+        }
+        return booking.location = { text: booking.location };
+    };
 }
+
+BookingsImportEditorController.data = {
+    locations : LocationsController.data.items
+};
 
 
 // Uploads
@@ -912,7 +1034,7 @@ UploadsController.data = {
                      items : uploadResource.query({folderName: uploadFolder.currentFolder.name}).$promise };
         });
     }
-}
+};
 
 function UploadController($scope, $location, $filter, flash, currentItemType, item) {
     angular.extend(this, new ItemController($scope, $location, $filter, flash, currentItemType, item));
@@ -931,7 +1053,7 @@ UploadController.data = {
             }
         });
     }
-}
+};
 
 function UploadEditorController($scope, $location, $filter, $timeout, flash, currentItemType, uploadResource, uploadFolder, item) {
     angular.extend(this, new ItemEditorController($scope, $location, $filter, flash, currentItemType, uploadResource, item));
@@ -976,12 +1098,12 @@ function UploadEditorController($scope, $location, $filter, $timeout, flash, cur
                 flash.clearAlerts();
             }
         }
-    }
+    };
 }
 
 UploadEditorController.data = {
     item : UploadController.data.item
-}
+};
 
 
 // Modal
@@ -1070,7 +1192,7 @@ function ModalController($scope, $q, $modal, modalTemplate, resource, resourceQu
                 }
             }
         }
-    }
+    };
 
     $scope.setReferences = function() {
         $scope.itemRef = null;
@@ -1085,14 +1207,14 @@ function ModalController($scope, $q, $modal, modalTemplate, resource, resourceQu
                 // TODO: Handle multiple references
             }
         }
-    }
+    };
 
     $scope.createIdItem = function(resource) {
         return $scope.resourceData(resource);
-    }
+    };
     $scope.createTextItem = function(title) {
         return { 'title': title };
-    }
+    };
 }
 
 function LocationRefInputController($scope, $q, $modal, locationResource) {
@@ -1105,7 +1227,7 @@ function LocationRefInputController($scope, $q, $modal, locationResource) {
 
     $scope.resourceData = function(resource) {
 	    return { 'id': resource.id, 'title': resource.name };
-	}
+	};
     $scope.loadReferences();
 }
 
@@ -1119,7 +1241,7 @@ function ImageRefInputController($scope, $q, $modal, uploadResource) {
 
     $scope.resourceData = function(resource) {
         return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
-    }
+    };
     $scope.loadReferences();
 }
 

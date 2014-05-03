@@ -1,0 +1,41 @@
+<form role="form" class="form form-horizontal">
+    <h1>{{ 'bookingImport.label.title' | t }}</h1>
+
+    <div ng-show="importStage == 0">
+        <textarea rows="15" style="min-width: 100%; margin-bottom: 5px;" ng-model="content" ng-change="contentChanged()"></textarea>
+        <div ng-show="contentErrors" class="alert alert-danger">{{ 'bookingImport.content.invalid' | t }}
+            <ul>
+                <li ng-repeat="err in contentErrors">{{ err.row + 1 }} - "{{ err.errorText }}"</li>
+            </ul>
+        </div>
+        <p>{{ 'bookingImport.content.foundCount' | t: {count: contentSuccess.length} }}</p>
+    </div>
+    
+    <div ng-show="importStage == 1">
+        <p>{{ 'bookingImport.content.selectItems' | t }}</p>
+        <table class="table table-hover">
+            <tbody>
+                <tr ng-repeat="b in contentSuccess" ng-click="b.ignore = !b.ignore">
+                    <td>
+                        <span ng-hide="b.ignore" class="glyphicon glyphicon-ok" style="color: #5cb85c;"></span>
+                        <span ng-show="b.ignore" class="glyphicon glyphicon-remove" style="color: #d9534f;"></span>
+                    </td>
+                    <td>{{ b.customerGroup }}</td>
+                    <td>{{ b.customerName }}</td>
+                    <td>{{ b.location }}</td>
+                    <td>{{ b.startTime }}</td>
+                    <td>{{ b.endTime }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="form-actions">
+        <a ng-class="{disabled: importStage != 1}" class="btn btn-default" ng-click="prevStage()">{{ 'itemEditor.action.prev' | t }}</a>
+        <a ng-show="importStage == 0" ng-class="{disabled: !isValid}" class="btn btn-primary" ng-click="nextStage()">{{ 'itemEditor.action.next' | t }}</a>
+        <a ng-show="importStage == 1" class="btn btn-primary" ng-click="import()">{{ 'itemEditor.action.import' | t }}</a>
+        <a ng-show="importStage < 2" href="#/{{backPage}}" class="btn btn-default">{{ 'itemEditor.action.cancel' | t }}</a>
+    </div>
+</form>
+
+<delete-all-modal>{{ 'bookingImport.prompt.deleteAllConfirmation' | t }}</delete-all-modal>
