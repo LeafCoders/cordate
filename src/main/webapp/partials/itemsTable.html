@@ -1,4 +1,5 @@
 <button class="btn btn-primary pull-right" ng-click="createNew()">{{ type + 'Items.action.new' | t}}</button>
+<button ng-show="allowImport" class="btn btn-default pull-right" style="margin-right: 3px;" ng-click="import()">{{ type + 'Items.action.import' | t}}</button>
 <h1>{{ type + 'Items.label.title' | t}}</h1>
 
 <div ng-if="tableHeaderUrl" ng-include="tableHeaderUrl"/>
