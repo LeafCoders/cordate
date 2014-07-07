@@ -919,8 +919,10 @@ function BookingsImportEditorController($scope, $location, $filter, flash, curre
         if ($scope.importStage == 0) {
             var objects = parseVerticalTextByFormat($scope.content, bookingFormat);
             $scope.contentErrors = objects.errors;
-            $scope.contentSuccess = objects.success;
-            $scope.isValid = objects.errors.length == 0 && objects.success.length > 0;
+            $scope.contentSuccess = combineBookingsWithSameTime(objects.success);
+            $scope.numSuccess = objects.success.length;
+            $scope.isValid = objects.success.length > 0;
+            $scope.customerGroupTypes = getCustomerGroupTypes(objects.success);
         }
     };
 
@@ -936,7 +938,7 @@ function BookingsImportEditorController($scope, $location, $filter, flash, curre
                 $scope.importStage = 2;
                 importNext(0);
             }, function() {
-                flash.addAlert({ type: 'danger', text: $scope.type + 'Import.alert.deleteAllFailed'});
+                flash.addAlert({type: 'danger', text: $scope.type + 'Import.alert.deleteAllFailed'});
                 flash.showAlerts();
                 flash.clearAlerts();
             });
@@ -944,6 +946,22 @@ function BookingsImportEditorController($scope, $location, $filter, flash, curre
             $scope.importStage = 2;
             importNext(0);
         }
+    };
+
+    $scope.ignoreCustomerGroup = function(groupType) {
+        $scope.contentSuccess.forEach(function(booking) {
+            if (booking.customerGroup == groupType) {
+                booking.ignore = true;
+            }
+        });
+    };
+    
+    $scope.isIgnore = function(booking) {
+        var ignoreLocations = true;
+        booking.locations.forEach(function(l) {
+            ignoreLocations &= l.ignore;
+        });
+        return booking.ignore || ignoreLocations;
     };
 
     var importNext = function(index) {
@@ -958,7 +976,7 @@ function BookingsImportEditorController($scope, $location, $filter, flash, curre
                 flash.addAlert({
                     type: 'danger',
                     text: $scope.type + 'Import.alert.numItemsFailed',
-                    values: {count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ') }
+                    values: {count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ')}
                 });
             }
             if (numSuccess > 0) {
@@ -972,37 +990,70 @@ function BookingsImportEditorController($scope, $location, $filter, flash, curre
         } else {
             // Get next booking to send to server
             var booking = $scope.contentSuccess[index];
-            if (booking.ignore) {
+            if ($scope.isIgnore(booking)) {
                 importNext(index + 1);
             } else {
-                // Remove members that isn't allowed
-                delete booking.ignore;
-                delete booking.customerGroup;
-                // Add region to time
-                booking.startTime += " Europe/Stockholm";
-                booking.endTime += " Europe/Stockholm";
-                setLocation(booking);
+                var toImport = {customerName: booking.customerName};
+                toImport.startTime = booking.startTime + " Europe/Stockholm";
+                toImport.endTime = booking.endTime + " Europe/Stockholm";
+                toImport.location = nextLocation(booking);
                 
                 // Send booking to server
-                bookingResource.save(booking, function (data, headers) {
-                    $scope.importSuccess.push(booking.customerName);
-                    importNext(index + 1);
+                bookingResource.save(toImport, function (data, headers) {
+                    $scope.importSuccess.push(toImport.customerName);
+                    importNext(index);
                 }, function(response) {
-                    $scope.importErrors.push(booking.customerName + ' (' + booking.startTime + ')');
-                    importNext(index + 1);
+                    $scope.importErrors.push(toImport.customerName + ' (' + toImport.startTime + ')');
+                    importNext(index);
                 });
             }
         }
     };
 
     // Find location item from text. Otherwise use text as location.
-    var setLocation = function(booking) {
+    var nextLocation = function(booking) {
+        var location = booking.locations.shift();
+        while (location.ignore) { location = booking.locations.shift(); }
         for (var i = 0; i < locations.length; i++) {
-            if (locations[i].name == booking.location) {
-                return booking.location = { idRef: locations[i].id };
+            if (locations[i].name == location.name) {
+                return { idRef: locations[i].id };
             }
         }
-        return booking.location = { text: booking.location };
+        return { text: location.name };
+    };
+    
+    var combineBookingsWithSameTime = function(bookings) {
+        var combined = [];
+
+        var combine = function(b) {
+            if (combined.every(function(c) {
+                if ((c.startTime    === b.startTime) &&
+                    (c.endTime      === b.endTime) &&
+                    (c.customerName === b.customerName)) {
+                    c.locations.push({name: b.location, ignore: false});
+                    return false;
+                }
+                return true;
+            })) {
+                b.locations = [{name: b.location, ignore: false}];
+                combined.push(b);
+            }
+        };
+
+        bookings.forEach(function(booking) {
+            combine(booking);
+        });
+        return combined;
+    };
+    
+    var getCustomerGroupTypes = function(bookings) {
+        var types = [];
+        bookings.forEach(function(b) {
+            if (types.indexOf(b.customerGroup) < 0) {
+                types.push(b.customerGroup);
+            }
+        });
+        return types;
     };
 }
 

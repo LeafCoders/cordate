@@ -8,30 +8,60 @@
                 <li ng-repeat="err in contentErrors">{{ err.row + 1 }} - "{{ err.errorText }}"</li>
             </ul>
         </div>
-        <p>{{ 'bookingImport.content.foundCount' | t: {count: contentSuccess.length} }}</p>
+        <p>{{ 'bookingImport.content.foundCount' | t: {count: numSuccess} }}</p>
     </div>
     
     <div ng-show="importStage == 1">
         <p>{{ 'bookingImport.content.selectItems' | t }}</p>
-        <table class="table table-hover">
-            <tbody>
-                <tr ng-repeat="b in contentSuccess" ng-click="b.ignore = !b.ignore">
-                    <td>
-                        <span ng-hide="b.ignore" class="glyphicon glyphicon-ok" style="color: #5cb85c;"></span>
-                        <span ng-show="b.ignore" class="glyphicon glyphicon-remove" style="color: #d9534f;"></span>
-                    </td>
-                    <td>{{ b.customerGroup }}</td>
-                    <td>{{ b.customerName }}</td>
-                    <td>{{ b.location }}</td>
-                    <td>{{ b.startTime }}</td>
-                    <td>{{ b.endTime }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <p>
+            <div class="btn-group">
+                <button ng-repeat="type in customerGroupTypes" type="button" class="btn btn-sm btn-default" ng-click="ignoreCustomerGroup(type)">
+                    <span class="glyphicon glyphicon-remove" style="color: #d9534f;"></span> {{ type }}
+                </button>
+            </div>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ 'formLabel.startTime' | t }}</th>
+                        <th>{{ 'formLabel.endTime' | t }}</th>
+                        <th>{{ 'formLabel.customerGroup' | t }}</th>
+                        <th>{{ 'formLabel.customerName' | t }}</th>
+                        <th>{{ 'formLabel.location' | t }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="b in contentSuccess" ng-class="{success: !isIgnore(b)}">
+                        <td ng-click="b.ignore = !b.ignore">
+                            <span ng-hide="isIgnore(b)" class="glyphicon glyphicon-ok" style="color: #5cb85c;"></span>
+                            <span ng-show="isIgnore(b)" class="glyphicon glyphicon-remove" style="color: #d9534f;"></span>
+                        </td>
+                        <td ng-click="b.ignore = !b.ignore">{{ b.startTime }}</td>
+                        <td ng-click="b.ignore = !b.ignore">{{ b.endTime }}</td>
+                        <td ng-click="b.ignore = !b.ignore">{{ b.customerGroup }}</td>
+                        <td ng-click="b.ignore = !b.ignore">{{ b.customerName }}</td>
+                        <td ng-if="b.locations.length > 1">
+                            <div ng-repeat="location in b.locations" ng-click="location.ignore = !location.ignore" ng-hide="b.ignore">
+                                <div ng-show="!location.ignore && !b.ignore"><span class="glyphicon glyphicon-ok" style="color: #5cb85c;"></span> {{ location.name }}</div>
+                                <div ng-show="location.ignore || b.ignore"><span class="glyphicon glyphicon-remove" style="color: #d9534f;"></span> {{ location.name }}</div>
+                            </div>
+                        </td>
+                        <td ng-if="b.locations.length == 1" ng-click="b.ignore = !b.ignore">
+                           {{ b.locations[0].name }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-show="importStage == 2">
+        {{ 'bookingImport.progress.importing' | t }}
     </div>
     
     <div class="form-actions">
-        <a ng-class="{disabled: importStage != 1}" class="btn btn-default" ng-click="prevStage()">{{ 'itemEditor.action.prev' | t }}</a>
+        <a ng-class="{disabled: importStage != 1}" ng-show="importStage < 2" class="btn btn-default" ng-click="prevStage()">{{ 'itemEditor.action.prev' | t }}</a>
         <a ng-show="importStage == 0" ng-class="{disabled: !isValid}" class="btn btn-primary" ng-click="nextStage()">{{ 'itemEditor.action.next' | t }}</a>
         <a ng-show="importStage == 1" class="btn btn-primary" ng-click="import()">{{ 'itemEditor.action.import' | t }}</a>
         <a ng-show="importStage < 2" href="#/{{backPage}}" class="btn btn-default">{{ 'itemEditor.action.cancel' | t }}</a>
