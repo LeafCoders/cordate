@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="jwr" uri="http://jawr.net/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +14,7 @@
 
     <title>Cordate</title>
 
-    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="css/app.css"/>
+    <jwr:style src="/bundles/all.css" />
 
     <style type="text/css">
         .form-signin {

@@ -36,6 +36,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+        <!-- Jawr (combine js and css files) -->
+		<dependency>
+			<groupId>net.jawr</groupId>
+			<artifactId>jawr-core</artifactId>
+			<version>[3,]</version>
+		</dependency>
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
