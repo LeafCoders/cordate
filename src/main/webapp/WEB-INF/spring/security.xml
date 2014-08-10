@@ -20,6 +20,7 @@
 				/css/** = anon
 				/img/** = anon
                 /fonts/** = anon
+                /modules/** = authc
 				/js/** = authc
                 /lib/** = authc
                 /partials/** = authc

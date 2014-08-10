@@ -111,13 +111,31 @@
 <script src="lib/angular-strap-modal.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 
-<script src="js/app.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/directives.js"></script>
+<script src="js/utils/controllerUtils.js"></script>
+<script src="js/utils/routeUtils.js"></script>
 <script src="js/utils.js"></script>
 
+<script src="modules/rosetteResources/rosetteResources.js"></script>
+
+<script src="modules/baseUI/baseUI.js"></script>
+<script src="modules/baseUI/directives.js"></script>
+<script src="modules/baseUI/filters.js"></script>
+<script src="modules/baseUI/references.js"></script>
+
+<script src="modules/bookings/bookings.js"></script>
+<script src="modules/events/events.js"></script>
+<script src="modules/eventWeeks/eventWeeks.js"></script>
+<script src="modules/eventTypes/eventTypes.js"></script>
+<script src="modules/groupMemberships/groupMemberships.js"></script>
+<script src="modules/groups/groups.js"></script>
+<script src="modules/locations/locations.js"></script>
+<script src="modules/permissions/permissions.js"></script>
+<script src="modules/posters/posters.js"></script>
+<script src="modules/uploads/uploads.js"></script>
+<script src="modules/users/users.js"></script>
+<script src="modules/userResourceTypes/userResourceTypes.js"></script>
+
+<script src="js/app.js"></script>
 <script src="js/i18n/sv_SE.js"></script>
 
 <script type="text/javascript">
