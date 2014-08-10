@@ -70,9 +70,9 @@
         };
     }];
 
-    var bookingsImportEditorController = ['$scope', '$location', '$filter', 'flash', 'currentItemType', 'bookingResource', 'locations',
-                                          function($scope, $location, $filter, flash, currentItemType, bookingResource, locations) {
-        $scope.type = currentItemType();
+    var bookingsImportEditorController = ['$scope', '$location', '$filter', 'flash', 'bookingResource', 'locations',
+                                          function($scope, $location, $filter, flash, bookingResource, locations) {
+        $scope.type = 'booking';
         $scope.backPage = $scope.type + 's';
         $scope.importStage = 0;
         $scope.contentErrors = [];
@@ -111,7 +111,7 @@
 
         $scope.deleteAll = function(confirmed) {
             if (confirmed) {
-                bookingResource.remove({}, function() {
+                bookingResource.getQuery().remove({}, function() {
                     $scope.importStage = 2;
                     importNext(0);
                 }, function() {
@@ -153,14 +153,14 @@
                     flash.addAlert({
                         type: 'danger',
                         text: $scope.type + 'Import.alert.numItemsFailed',
-                        values: {count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ')}
+                        values: { count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ') }
                     });
                 }
                 if (numSuccess > 0) {
                     flash.addAlert({
                         type: 'success',
                         text: $scope.type + 'Import.alert.numItemsImported',
-                        values: {count: numSuccess, total: numTotals}
+                        values: { count: numSuccess, total: numTotals }
                     });
                 }
                 $location.path('/' + $scope.backPage);
@@ -176,7 +176,7 @@
                     toImport.location = nextLocation(booking);
                     
                     // Send booking to server
-                    bookingResource.save(toImport, function (data, headers) {
+                    bookingResource.getQuery().save(toImport, function (data, headers) {
                         $scope.importSuccess.push(toImport.customerName);
                         importNext(index);
                     }, function(response) {
