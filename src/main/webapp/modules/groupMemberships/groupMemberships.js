@@ -14,11 +14,9 @@
         utils.extendItemController(this, $injector, $scope, item);
     }];
 
-    var groupMembershipEditorController = ['$injector', '$scope', 'groupMembershipResource', 'item', 'users', 'groups',
-                                           function($injector, $scope, groupMembershipResource, item, users, groups) {
+    var groupMembershipEditorController = ['$injector', '$scope', 'groupMembershipResource', 'item',
+                                           function($injector, $scope, groupMembershipResource, item) {
         utils.extendItemEditorController(this, $injector, $scope, groupMembershipResource, item);
-        $scope.users = users;
-        $scope.groups = groups;
     }];
 
 
@@ -32,17 +30,9 @@
         var getOneGroupMembership = ['groupMembershipResource', function(groupMembershipResource) {
             return groupMembershipResource.getOne();
         }];
-        var getAllUsers = ['userResource', function(userResource) {
-            return userResource.getAll();
-        }];
-        var getAllGroups = ['groupResource', function(groupResource) {
-            return groupResource.getAll();
-        }];
 
         utils.createBasicAllRoute($routeProvider, groupMembershipsPath, { items: getAllGroupMemberships });
-        utils.createBasicOneRoute($routeProvider, groupMembershipsPath,
-                { item: getOneGroupMembership },
-                { item: getOneGroupMembership, users: getAllUsers, groups: getAllGroups });
+        utils.createBasicOneRoute($routeProvider, groupMembershipsPath, { item: getOneGroupMembership } );
     }];
 
 

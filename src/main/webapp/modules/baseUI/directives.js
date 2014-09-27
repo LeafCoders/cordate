@@ -117,6 +117,22 @@
         };
     });
 
+    thisModule.directive("textareainput", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            template: function(tElement, tAttrs) {
+                var autofocus = tAttrs.autofocus != null ? " autofocus" : "";
+                return '' +
+                '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<div class="col-xs-8 col-sm-6"><textarea class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
+                '</div>';
+            }
+        };
+    });
+
     thisModule.directive("textview", function () {
         return {
             restrict: 'E',
@@ -130,6 +146,22 @@
                     '<div class="col-xs-8 col-sm-6">' +
                         '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' }} <span ng-transclude></span></p>' +
                     '</div>' +
+                '</div>';
+            }
+        };
+    });
+
+    thisModule.directive("checkboxinput", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            template: function(tElement, tAttrs) {
+                var autofocus = tAttrs.autofocus != null ? " autofocus" : "";
+                return '' +
+                '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<div class="col-xs-8 col-sm-6"><input type="checkbox" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
                 '</div>';
             }
         };

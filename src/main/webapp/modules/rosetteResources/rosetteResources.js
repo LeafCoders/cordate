@@ -100,8 +100,8 @@
     var uploadFolderResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'uploadFolders'));
     }];
-    var userResourceTypeResource = ['$route', '$resource', function($route, $resource) {
-        return BasicResource($route, BasicQuery($resource, 'userResourceTypes'));
+    var resourceTypeResource = ['$route', '$resource', function($route, $resource) {
+        return BasicResource($route, BasicQuery($resource, 'resourceTypes'));
     }];
     var userResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'users'));
@@ -120,7 +120,7 @@
     thisModule.factory('posterResource', posterResource);
     thisModule.factory('uploadResource', uploadResource);
     thisModule.factory('uploadFolderResource', uploadFolderResource);
-    thisModule.factory('userResourceTypeResource', userResourceTypeResource);
+    thisModule.factory('resourceTypeResource', resourceTypeResource);
     thisModule.factory('userResource', userResource);
 
 }());

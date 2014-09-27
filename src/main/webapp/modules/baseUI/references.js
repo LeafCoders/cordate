@@ -87,6 +87,8 @@
                         $scope.panelItems.push($scope.createIdItem(ref.referredObject));
                     } else if (ref.text != null) {
                         $scope.panelItems.push($scope.createTextItem(ref.text));
+                    } else {
+                        $scope.panelItems.push($scope.createIdItem(ref));
                     }
                 }
             }
@@ -130,6 +132,41 @@
         $scope.loadReferences();
     }];
 
+    var resourceRefInputController = ['$injector', '$scope', '$q', '$modal', function($injector, $scope, $q, $modal) {
+        var resourceService = $injector.get($scope.resourceType + "Resource");
+        angular.extend(this,
+                new AbstractModalController($scope, $q, $modal, 'modules/baseUI/html/modalTextList.html', resourceService));
+
+//        $scope.refType = $scope.resourceType;
+        $scope.labels = { inputTitle: 'formLabel.' + $scope.resourceType, modalTitle: 'modalLabel.' + $scope.resourceType };
+        $scope.singleSelect = true;
+        $scope.allowOptionalText = false;
+
+        $scope.resourceData = function(resource) {
+            switch ($scope.resourceType) {
+                case 'group':
+                    return { 'id': resource.id, 'title': resource.name };
+                case 'user':
+                    return { 'id': resource.id, 'title': resource.firstName + ' ' + resource.lastName };
+                    
+                default:
+                    return { 'id': resource.id, 'title': resource.name };
+            }
+        };
+        $scope.loadReferences();
+        
+        $scope.setReferences = function() {
+            $scope.itemRef = null;
+            if ($scope.panelItems.length > 0) {
+                if ($scope.singleSelect) {
+                    $scope.itemRef = { idRef: $scope.panelItems[0].id };
+                } else {
+                    // TODO: Handle multiple references
+                }
+            }
+        };
+    }];
+
     var imageRefInputController = ['$scope', '$q', '$modal', 'uploadResource', function($scope, $q, $modal, uploadResource) {
         angular.extend(this,
                 new AbstractModalController($scope, $q, $modal, 'modules/baseUI/html/modalImageList.html',
@@ -149,14 +186,15 @@
         $scope.reference = referenceToText($scope.itemRef, $scope.refType);
     }];
 
-    var objectRefController = ['$scope', function($scope) {
+    var objectRefViewController = ['$scope', function($scope) {
         $scope.reference = referenceToObject($scope.itemRef);
     }];
 
     thisModule.controller('locationRefInputController', locationRefInputController);
+    thisModule.controller('resourceRefInputController', resourceRefInputController);
     thisModule.controller('imageRefInputController', imageRefInputController);
     thisModule.controller('textRefViewController', textRefViewController);
-    thisModule.controller('objectRefController', objectRefController);
+    thisModule.controller('objectRefViewController', objectRefViewController);
 
     
     /* Directives */
@@ -168,6 +206,17 @@
             transclude: false,
             scope: { itemRef: '=' },
             controller: 'locationRefInputController',
+            templateUrl: 'modules/baseUI/html/panelTextList.html'
+        };
+    });
+
+    thisModule.directive("resourcerefinput", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: { itemRef: '=', resourceType: '@' },
+            controller: 'resourceRefInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'
         };
     });
@@ -189,7 +238,7 @@
             replace: true,
             transclude: false,
             scope: { itemRef: '=' },
-            controller: 'objectRefController',
+            controller: 'objectRefViewController',
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +

@@ -85,3 +85,7 @@ function parseVerticalTextByFormat(text, format) {
     }
     return dataList;
 }
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};

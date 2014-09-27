@@ -55,7 +55,7 @@
                     <li class="divider visible-xs"></li>
 
                     <li class="locations-menu"><a href="#/locations">{{ 'navbar.label.locations' | t }}</a></li>
-                    <li class="userResourceType-menu"><a href="#/userResourceTypes">{{ 'navbar.label.userResourceTypes' | t }}</a></li>
+                    <li class="resourceType-menu"><a href="#/resourceTypes">{{ 'navbar.label.resourceTypes' | t }}</a></li>
                     <li class="eventTypes-menu"><a href="#/eventTypes">{{ 'navbar.label.eventTypes' | t }}</a></li>
 
                     <li class="divider"></li>

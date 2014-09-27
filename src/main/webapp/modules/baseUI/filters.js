@@ -16,42 +16,6 @@
         };
     });
 
-    thisModule.filter('commonPermissions', function() {
-        return function(items, scope) {
-            var arrayToReturn = [];
-            angular.forEach(items, function(item) {
-                if (item.everyone == true) {
-                    arrayToReturn.push(item);
-                }
-            });
-            return arrayToReturn;
-        };
-    });
-
-    thisModule.filter('groupPermissions', function() {
-        return function(items, scope) {
-            var arrayToReturn = [];
-            angular.forEach(items, function(item) {
-                if (item.groupId) {
-                    arrayToReturn.push(item);
-                }
-            });
-            return arrayToReturn;
-        };
-    });
-
-    thisModule.filter('userPermissions', function() {
-        return function(items, scope) {
-            var arrayToReturn = [];
-            angular.forEach(items, function(item) {
-                if (item.userId) {
-                    arrayToReturn.push(item);
-                }
-            });
-            return arrayToReturn;
-        };
-    });
-
     thisModule.filter('dateRange', ['$filter', function(filter) {
         return function(text) {
             var sinceDayNumber = parseInt(text.substring(8, 10), 10);
@@ -125,7 +89,7 @@
             if (translation == undefined) {
                 return "{" + input + "}";
             } else if (values != null) {
-                // Handles the following format: {{ 'Show person: {{title}} | t: {title: 'Kalle'} }}
+                // Handles the following format: {{ 'Show person: {{title}}' | t: {title: 'Kalle'} }}
                 return translation.replace(/{{\S*}}/g, function(m,key) {
                     return parse(m.replace(/[{} ]/g, ''))(values);
                 });

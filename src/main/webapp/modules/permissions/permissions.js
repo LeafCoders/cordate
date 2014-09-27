@@ -14,49 +14,86 @@
         utils.extendItemController(this, $injector, $scope, item);
     }];
 
-    var permissionEditorController = ['$injector', '$scope', 'permissionResource', 'item', 'users', 'groups',
-                                      function($injector, $scope, permissionResource, item, users, groups) {
+    var permissionEditorController = ['$injector', '$scope', 'permissionResource', 'item',
+                                      function($injector, $scope, permissionResource, item) {
         utils.extendItemEditorController(this, $injector, $scope, permissionResource, item);
 
         var permissionType = "everyone";
         var permissionId = null;
-        if ($scope.item.groupId) {
+        if ($scope.item.group) {
             permissionType = "group";
-            permissionId = $scope.item.groupId;
-        } else if ($scope.item.userId) {
+            permissionId = $scope.item.group.idRef;
+        } else if ($scope.item.user) {
             permissionType = "user";
-            permissionId = $scope.item.userId;
+            permissionId = $scope.item.user.idRef;
         }
 
         $scope.formHelper = {
             permissionType: permissionType,
             permissionId: permissionId,
-            users: users,
-            groups: groups,
-            patterns: $scope.item.patterns ? $scope.item.patterns.join('\n') : ""
         };
 
+        $scope.item.patterns = $scope.item.patterns ? $scope.item.patterns.join('\n') : "";
+        
         $scope.beforeSave = function(item) {
             if ($scope.formHelper.permissionType == "everyone") {
                 item.everyone = true;
-                delete item.userId;
-                delete item.groupId;
+                delete item.user;
+                delete item.group;
             } else if ($scope.formHelper.permissionType == "group") {
                 item.everyone = false;
-                delete item.userId;
-                item.groupId = $scope.formHelper.permissionId;
+                delete item.user;
+                item.group.idRef = $scope.formHelper.permissionId;
             } else if ($scope.formHelper.permissionType == "user") {
                 item.everyone = false;
-                item.userId = $scope.formHelper.permissionId;
-                delete item.groupId;
+                item.user.idRef = $scope.formHelper.permissionId;
+                delete item.group;
             }
 
-            item.patterns = $scope.formHelper.patterns.split('\n');
-
+            item.patterns = item.patterns.split('\n');
             return item;
         };
     }];
 
+
+    /* Filters */
+
+    var commonPermissionsFilter = function() {
+        return function(items, scope) {
+            var arrayToReturn = [];
+            angular.forEach(items, function(item) {
+                if (item.everyone == true) {
+                    arrayToReturn.push(item);
+                }
+            });
+            return arrayToReturn;
+        };
+    };
+
+    var groupPermissionsFilter = function() {
+        return function(items, scope) {
+            var arrayToReturn = [];
+            angular.forEach(items, function(item) {
+                if (item.group) {
+                    arrayToReturn.push(item);
+                }
+            });
+            return arrayToReturn;
+        };
+    };
+
+    var userPermissionsFilter = function() {
+        return function(items, scope) {
+            var arrayToReturn = [];
+            angular.forEach(items, function(item) {
+                if (item.user) {
+                    arrayToReturn.push(item);
+                }
+            });
+            return arrayToReturn;
+        };
+    };
+    
 
     /* Configuration */
     var permissionsConfig = ['$routeProvider', function($routeProvider) {
@@ -68,17 +105,9 @@
         var getOnePermission = ['permissionResource', function(permissionResource) {
             return permissionResource.getOne();
         }];
-        var getAllUsers = ['userResource', function(userResource) {
-            return userResource.getAll();
-        }];
-        var getAllGroups = ['groupResource', function(groupResource) {
-            return groupResource.getAll();
-        }];
 
         utils.createBasicAllRoute($routeProvider, permissionsPath, { items: getAllPermissions });
-        utils.createBasicOneRoute($routeProvider, permissionsPath,
-                { item: getOnePermission },
-                { item: getOnePermission, users: getAllUsers, groups: getAllGroups });
+        utils.createBasicOneRoute($routeProvider, permissionsPath, { item: getOnePermission });
     }];
 
 
@@ -88,5 +117,8 @@
     thisModule.controller('permissionsController', permissionsController);
     thisModule.controller('permissionController', permissionController);
     thisModule.controller('permissionEditorController', permissionEditorController);
+    thisModule.filter('commonPermissions', commonPermissionsFilter); 
+    thisModule.filter('groupPermissions', groupPermissionsFilter); 
+    thisModule.filter('userPermissions', userPermissionsFilter); 
 
 }());

@@ -8,7 +8,7 @@
 
     var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'item',
                                function($injector, $scope, $filter, $route, item) {
-        utils.extendItemController(this, $injector, $scope, item);
+        utils.extendItemsController(this, $injector, $scope, item);
 
         $scope.type = 'event';
         $scope.backPage = "eventWeeks/current";

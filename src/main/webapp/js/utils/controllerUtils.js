@@ -82,6 +82,7 @@ var utils = utils || {};
         angular.extend(this, new ItemController($scope, $location, $filter, flash, item));
 
         $scope.errors = {};
+        $scope.isCreate = $location.path().endsWith('/new');
 
         $scope.beforeSave = function(item) {
             return item;

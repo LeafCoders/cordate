@@ -9,9 +9,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr id="{{item.id}}" ng-repeat="item in items | orderBy:['groupName', 'username']">
-        <td ng-click="showDetails(item.id)">{{item.groupName}}</td>
-        <td ng-click="showDetails(item.id)"><span class="glyphicon glyphicon-user"></span> {{item.userFullName}}</td>
+    <tr id="{{item.id}}" ng-repeat="item in items | orderBy:['group.referredObject.name', 'user.referredObject.username']">
+        <td ng-click="showDetails(item.id)">{{item.group.referredObject.name}}</td>
+        <td ng-click="showDetails(item.id)"><span class="glyphicon glyphicon-user"></span> {{item.user.referredObject.username}}</td>
         <td width="46">
             <div class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

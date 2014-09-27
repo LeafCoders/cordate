@@ -1,3 +1,41 @@
-<itemeditor>
-	<textinput item-name="name" autofocus></textinput>
-</itemeditor>
+<itemEditor>
+    <textInput item-name="name"></textInput>
+    <textAreaInput item-name="description"></textAreaInput>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <h4>{{ 'Valda resurstyper' | t }}</h4>
+            <div ng-repeat="section in sections">
+                <h5>{{ section.sectionName }}</h5>
+                <ul style="margin-left: 15px" class="list-group">
+                    <li href="" class="list-group-item" ng-repeat="resourceType in section.resourceTypes">
+
+                        <div class="btn-group pull-right">
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li ng-if="!$first && section.resourceTypes.length > 1" ng-click="moveResourceType(resourceType, -1);"><a href=""><i class="glyphicon glyphicon-chevron-up"></i> Flytta upp</a></li>
+                            <li ng-click="removeResourceType(resourceType);"><a href=""><i class="glyphicon glyphicon-remove"></i> {{ 'items.action.delete' | t }}</a></li>
+                            <li ng-if="!$last && section.resourceTypes.length > 1" ng-click="moveResourceType(resourceType, 1);"><a href=""><i class="glyphicon glyphicon-chevron-down"></i> Flytta ner</a></li>
+                          </ul>
+                        </div>                    
+                        <h4 class="list-group-item-heading">{{ resourceType.name }}</h4>
+                        <p class="list-group-item-text">{{ resourceType.description }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <h4>{{ 'LŠgg till resurstyper' | t }}</h4>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="resourceType in availableResourceTypes | orderBy: 'name'">
+                    <button type="button" class="btn btn-default btn-sm pull-right" ng-click="addResourceType(resourceType);"><i class="glyphicon glyphicon-plus"></i></button>
+                    <h4 class="list-group-item-heading">{{ resourceType.name }}</h4>
+                    <p class="list-group-item-text">{{ resourceType.description }}</p>
+                </li>
+            </ul>
+        </div>
+    </div>    
+
+</itemEditor>

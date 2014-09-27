@@ -1,46 +1,34 @@
 <itemeditor>
-    <div class="form-group">
-        <label class="control-label">{{ 'permissionEditor.formLabel.permissionFor' | t }}</label>
-        <div class="radio">
-            <label>
-                <input type="radio" ng-model="formHelper.permissionType" value="everyone">
-                {{ 'permissionEditor.formLabel.everyone' | t }}
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" ng-model="formHelper.permissionType" value="group">
-                {{ 'permissionEditor.formLabel.group' | t }}
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" ng-model="formHelper.permissionType" value="user">
-                {{ 'permissionEditor.formLabel.user' | t }}
-            </label>
+    <form class="form-horizontal" role="form">
+        <formitem label="permissionFor">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="formHelper.permissionType" value="everyone">
+                    {{ 'permissionEditor.formLabel.everyone' | t }}
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="formHelper.permissionType" value="group">
+                    {{ 'permissionEditor.formLabel.group' | t }}
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="formHelper.permissionType" value="user">
+                    {{ 'permissionEditor.formLabel.user' | t }}
+                </label>
+            </div>
+        </formitem>
+
+        <div ng-if="formHelper.permissionType == 'group'">
+            <resourcerefinput item-ref="item.group" resource-type="group"></resourcerefinput>
         </div>
 
-        <div ng-if="formHelper.permissionType=='group'">
-            <div class="form-group">
-                <label for="form-group" class="control-label">{{ 'permissionEditor.formLabel.group' | t }}</label>
-                <select id="form-group" class="form-control" ng-model="formHelper.permissionId" ng-options="group.id as group.name for group in formHelper.groups">
-                    <option value="">{{ 'permissionEditor.formLabel.choseGroup' | t }}</option>
-                </select>
-            </div>
-        </div>
         <div ng-if="formHelper.permissionType=='user'">
-            <div class="form-group">
-                <label for="form-user" class="control-label">{{ 'permissionEditor.formLabel.user' | t }}</label>
-                <select id="form-user" class="form-control" ng-model="formHelper.permissionId" ng-options="user.id as user.username for user in formHelper.users">
-                    <option value="">{{ 'permissionEditor.formLabel.choseUser' | t }}</option>
-                </select>
-            </div>
+            <resourcerefinput item-ref="item.user" resource-type="user"></resourcerefinput>
         </div>
 
-        <div class="form-group">
-            <label for="form-patterns" class="control-label">{{ 'permissionEditor.formLabel.patterns' | t }}</label>
-            <textarea id="form-patterns" class="form-control" ng-model="formHelper.patterns"></textarea>
-        </div>
-
-    </div>
+        <textareainput item-name="patterns" autofocus></textareainput>
+    </form>
 </itemeditor>

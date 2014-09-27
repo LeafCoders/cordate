@@ -7,7 +7,7 @@
                         'myApp.translation_sv_SE',
                         'bookings', 'events', 'eventTypes', 'eventWeeks',
                         'groups', 'groupMemberships', 'locations', 'permissions', 'posters',
-                        'uploads', 'users', 'userResourceTypes'
+                        'uploads', 'users', 'resourceTypes'
                         ];
 
     var app = angular.module('myApp', dependencies);

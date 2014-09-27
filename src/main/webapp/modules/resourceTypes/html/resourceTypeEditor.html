@@ -1,0 +1,24 @@
+<itemEditor>
+    <textInput ng-if="isCreate" item-name="type"></textInput>
+    <textView ng-if="!isCreate" item-name="type"></textView>
+
+    <div ng-if="item.type === 'user' || item.type === 'upload'">
+        <textInput item-name="section" autofocus></textInput>
+
+        <textInput ng-if="isCreate" item-name="key"></textInput>
+        <textView ng-if="!isCreate" item-name="key"></textView>
+
+    	<textInput item-name="name"></textInput>
+        <textAreaInput item-name="description"></textAreaInput>
+    
+        <div ng-if="item.type == 'user'">
+            <resourceRefInput item-ref="item.group" resource-type="group"></resourceRefInput>
+            <checkboxInput item-name="multiSelect"></checkboxInput>
+            <checkboxInput item-name="allowText"></checkboxInput>
+        </div>
+        <div ng-if="item.type == 'upload'">
+            <textInput item-name="folderName"></textInput>
+            <checkboxInput item-name="multiSelect"></checkboxInput>
+        </div>
+    </div>
+</itemEditor>
