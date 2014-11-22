@@ -7,7 +7,7 @@
 <table class="table table-hover">
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items">
-        <td ng-click="showDetails(item.id)" ng-transclude></td>
+        <td ng-click="showDetails(item.id)" item-transclude></td>
         <td width="46">
             <div class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -16,7 +16,7 @@
                 <ul class="dropdown-menu">
                     <li ng-show="allowEditItem"><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
                     <li ng-show="allowEditItem" class="divider"></li>
-                    <li class="text-danger"><a href="#" class="text-danger" ng-click="remove(item)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                    <li><a href="#" ng-click="removeConfirm(item)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>

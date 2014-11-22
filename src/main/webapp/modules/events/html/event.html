@@ -1,26 +1,17 @@
 <item>
 	<h1>{{ 'event' | t }}</h1>
 	<form class="form-horizontal" role="form">
+        <ref-view ref-item="item.eventType" ref-type="eventType"></ref-view>
 	 	<textview item-name="title"></textview>
 	 	<textview item-name="description"></textview>
 	 	<timeview item-name="startTime"></timeview>
 	 	<timeview item-name="endTime"></timeview>
-	 	<textview item-name="eventType"></textview>
-	 </form>
+        <ref-view ref-item="item.location" ref-type="location"></ref-view>
 
-    <h5>{{ 'eventItem.label.location' | t }}</h5>
-    {{ item.location.locationName }}
+        <hr>
 
-    <div ng-repeat="userResource in item.userResources">
-        <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <h5>{{ userResource.userResourceTypeName }}</h5>
-                <ul class="list-group eventUserResources">
-                    <li class="list-group-item" ng-repeat="userReference in userResource.userReferences">
-                        <span class="glyphicon glyphicon-user"></span> {{ userReference.userFullName }}
-                    </li>
-                </ul>
-            </div>
+        <div ng-repeat="resource in item.resources">
+            <event-resource-view resource="resource"></event-resource-view>
         </div>
-    </div>
+    </form>
 </item>

@@ -22,11 +22,11 @@
         </formitem>
 
         <div ng-if="formHelper.permissionType == 'group'">
-            <resourcerefinput item-ref="item.group" resource-type="group"></resourcerefinput>
+            <ref-input ref-item="item.group" ref-type="group"></ref-input>
         </div>
 
         <div ng-if="formHelper.permissionType=='user'">
-            <resourcerefinput item-ref="item.user" resource-type="user"></resourcerefinput>
+            <ref-input ref-item="item.user" ref-type="user"></ref-input>
         </div>
 
         <textareainput item-name="patterns" autofocus></textareainput>

@@ -8,6 +8,15 @@
 
     var resourceTypesController = ['$injector', '$scope', 'items', function($injector, $scope, items) {
         utils.extendItemsController(this, $injector, $scope, items);
+
+        utils.extendCreateWithModal(this, $injector, $scope,
+                'modules/baseUI/html/modalCreateFromList.html',
+                'resourceType.modalTitle.create',
+                [
+                    { title: 'resourceType.type.user', params: 'type=user' },
+                    { title: 'resourceType.type.upload', params: 'type=upload' },
+                ]
+        );
     }];
 
     var resourceTypeController = ['$injector', '$scope', 'item', function($injector, $scope, item) {

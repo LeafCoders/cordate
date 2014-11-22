@@ -1,20 +1,22 @@
-<div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-header">
-		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		  <h4>{{ labels.modalTitle | t }}</h4>
-		</div>
-		<div class="modal-body">
-			<div class="list-group">
-				<a href="" ng-click="toggleModalItem(item)" ng-class="{active: item.selected}" ng-repeat="item in modalItems" class="list-group-item">{{ item.title }}</a>
-				<a href="" class="list-group-item" ng-class="{active: optionalText}" ng-show="allowOptionalText">
-					<input type="text" class="form-control" id="optionalText" ng-model="optionalText" ng-change="toggleModalItem(null)" placeholder="Ange namn här om det saknas i listan">
-				</a>
-			</div>
-		</div>
-		<div class="modal-footer">
-		  <button class="btn btn-primary" ng-click="modal.saved=true;hide();saveModalItems()">{{ 'itemEditor.action.save' | t }}</button>
-		  <button type="button" class="btn" ng-click="hide();">{{ 'itemEditor.action.cancel' | t }}</button>
-		</div>
-	</div>
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+    	<div class="modal-content">
+    		<div class="modal-header">
+    		  <button type="button" class="close" ng-click="$hide()">×</button>
+    		  <h4>{{ labels.modalTitle | t }}</h4>
+    		</div>
+    		<div class="modal-body">
+    			<div class="list-group">
+    				<a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" ng-repeat="item in modalItems" class="list-group-item">{{ item.title }}</a>
+    				<a href="" class="list-group-item" ng-class="{active: optionalText}" ng-show="allowOptionalText">
+    					<input type="text" class="form-control" id="optionalText" ng-model="optionalText" ng-change="toggleModalItem(null)" placeholder="Ange namn här om det saknas i listan">
+    				</a>
+    			</div>
+    		</div>
+    		<div class="modal-footer">
+    		  <button type="button" class="btn btn-primary" ng-click="$hide();inputModal.saveModalItems()">{{ 'itemEditor.action.ok' | t }}</button>
+    		  <button type="button" class="btn btn-default" ng-click="$hide();">{{ 'itemEditor.action.cancel' | t }}</button>
+    		</div>
+    	</div>
+    </div>
 </div>

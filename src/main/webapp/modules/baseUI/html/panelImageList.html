@@ -5,7 +5,7 @@
 			<div class="panel-heading" ng-if="panelTitle"><h3 class="panel-title">{{ 'formLabel.' + panelTitle | t }}</h3></div>
             <img ng-repeat="pi in panelItems" class="panel-img-item" ng-src="{{ pi.fileUrl }}" alt="{{ pi.title }}">
 			<div class="panel-footer">
-				<button type="button" class="btn btn-primary btn-sm" ng-click="showModal()">{{ 'item.action.edit' | t }}</button>
+				<button type="button" class="btn btn-primary btn-sm" ng-click="inputModal.showModal()">{{ 'itemEditor.action.select' | t }}</button>
 			</div>
 		</div>
 	</div>

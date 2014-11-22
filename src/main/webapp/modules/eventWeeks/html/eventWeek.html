@@ -53,20 +53,20 @@
 	
 	<div class="clearfix"></div>
 	
-	<h4 class="dateRange">{{item.since + '-' + item.until | dateRange}}</h4>
+	<h4 class="dateRange">{{item.since + '-' + item.until | cordateDateRange}}</h4>
 	
 	<div class="calendarDay" ng-repeat="day in item.days">
 		<div class="calendarDate">
 			<div class="calendarDayNr">
-				<h3>{{day.date | dayNumber}}</h3>
+				<h3>{{day.date | cordateDayNumber}}</h3>
 			</div>
-			<div class="calendarDayName">{{ 'eventItems.label.' + (day.dayNumber | dayName) | t}}</div>
+			<div class="calendarDayName">{{ 'eventItems.label.' + (day.dayNumber | cordateDayName) | t}}</div>
 		</div>
 	
 		<div class="calendarInfo" ng-show="day.events">
 			<table class="table table-hover">
 				<tr id="{{event.id}}" ng-repeat="event in day.events">
-					<td ng-click="showDetails(event.id)">{{event.startTime | time}} <strong>{{event.title}}</strong></td>
+					<td ng-click="showDetails(event.id)">{{event.startTime | cordateTime}} <strong>{{event.title}}</strong></td>
                     <td width="46">
                         <div class="btn-group pull-right">
                             <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -75,7 +75,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#/{{type}}s/{{event.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
                                 <li class="divider"></li>
-                                <li class="text-danger"><a href="" class="text-danger" ng-click="remove(event)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                                <li><a href="#" ng-click="removeConfirm(event)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                             </ul>
                         </div>
                     </td>

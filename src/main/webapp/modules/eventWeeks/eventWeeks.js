@@ -6,22 +6,31 @@
 
     /* Controllers */
 
-    var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'item',
-                               function($injector, $scope, $filter, $route, item) {
+    var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'flash', 'eventResource', 'eventTypes', 'item',
+                               function($injector, $scope, $filter, $route, flash, eventResource, eventTypes, item) {
         utils.extendItemsController(this, $injector, $scope, item);
 
         $scope.type = 'event';
         $scope.backPage = "eventWeeks/current";
         $scope.item = item;
+        
+        utils.extendCreateWithModal(this, $injector, $scope,
+                'modules/baseUI/html/modalCreateFromList.html',
+                'event.modalTitle.create',
+                function () {
+                    var items = [];
+                    angular.forEach(eventTypes, function (type) {
+                        items.push({ title: type.name, params: 'eventTypeId=' + type.id });
+                    });
+                    return items;
+                }
+        );
 
         $scope.remove = function(item) {
-            var confirmed = confirm($filter('t')('eventItems.prompt.itemDeleteConfirmation'));
-            if (confirmed) {
-                eventResource.getQuery().remove({ id : item.id }, function(response, headers) {
-                    flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted' });
-                    $route.reload();
-                });
-            }
+            eventResource.getQuery().remove({ id : item.id }, function(response, headers) {
+                flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted' });
+                $route.reload();
+            });
         };
     }];
 
@@ -63,16 +72,20 @@
             });
             return deferred.promise;
         }];
+
+        var getAllEventTypes = ['eventTypeResource', function(eventTypeResource) {
+            return eventTypeResource.getAll();
+        }];
         
         $routeProvider.when('/eventWeeks/current', {
             templateUrl: 'modules/eventWeeks/html/eventWeek.html',
             controller:  'eventWeekController',
-            resolve:     { item: getOneWeek }
+            resolve:     { item: getOneWeek, eventTypes: getAllEventTypes }
         });
         $routeProvider.when('/eventWeeks/:id', {
             templateUrl: 'modules/eventWeeks/html/eventWeek.html',
             controller:  'eventWeekController',
-            resolve:     { item: getOneWeek }
+            resolve:     { item: getOneWeek, eventTypes: getAllEventTypes }
         });
     }];
 

@@ -1,49 +1,14 @@
-<itemeditor>
-	<textinput item-name="title" autofocus></textinput>
-	<textareainput item-name="description"></textareainput>
-	<timeinput item-name="startTime"></timeinput>
-	<timeinput item-name="endTime"></timeinput>
+<itemEditor>
+    <textView item-name="eventType.referredObject.name" form-label="eventType"></textView>
+    <timeInput item-name="startTime"></timeInput>
+    <timeInput item-name="endTime"></timeInput>
+	<textInput item-name="title" autofocus></textInput>
+	<textAreaInput item-name="description"></textAreaInput>
+    <ref-input ref-item="item.location" ref-type="location"></ref-input>
 
     <hr>
 
-    <div class="form-group">
-        <label for="form-eventType" class="control-label">{{ 'eventEditor.formLabel.eventType' | t }}</label>
-        <select class="form-control" ng-model="formHelper.eventTypeId" ng-options="eventType.id as eventType.name for eventType in formHelper.eventTypes">
-            <option value="">{{ 'eventEditor.formLabel.chooseEventType' | t }}</option>
-        </select>
+    <div ng-repeat="resource in item.resources">
+        <event-resource-input resource="resource" on-remove="removeResource(resource)"></event-resource-input>
     </div>
-
-    <div class="form-group">
-        <label for="form-location" class="control-label">{{ 'eventEditor.formLabel.location' | t }}</label>
-        <select class="form-control" ng-model="formHelper.locationId" ng-options="location.id as location.name for location in formHelper.locations">
-            <option value="">{{ 'eventEditor.formLabel.chooseLocation' | t }}</option>
-        </select>
-    </div>
-
-    <hr>
-
-
-    <div ng-repeat="userResourceType in formHelper.userResourceTypes">
-        <div class="form-group">
-            <label class="control-label">
-                <input type="checkbox" ng-model="formHelper.requiredUserResourceTypes[userResourceType.name]">
-                {{ userResourceType.name }}
-            </label>
-
-            <div ng-if="formHelper.requiredUserResourceTypes[userResourceType.name]" class="user-resource">
-                <ul class="list-group eventUserResources">
-                    <li class="list-group-item" ng-repeat="userResource in formHelper.userResources[userResourceType.id]">
-                        <span class="glyphicon glyphicon-user"></span> {{ userResource.userFullName }}
-                        <button class="btn btn-danger btn-xs pull-right" ng-click="removeUser($index, userResourceType.id)">{{ 'eventEditor.formLabel.deleteUser' | t }}</button>
-                    </li>
-                </ul>
-
-                <div class="form-group" class="user-resource">
-                    <select class="form-control" ng-model="formHelper.userIdToAdd" ng-change="addUser(formHelper.userIdToAdd, userResourceType)" ng-options="groupMembership.userId as groupMembership.userFullName for groupMembership in formHelper.groupMemberships[userResourceType.groupId]">
-                        <option value="">{{ 'eventEditor.formLabel.addUser' | t }}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-</itemeditor>
+</itemEditor>

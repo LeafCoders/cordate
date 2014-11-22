@@ -16,11 +16,24 @@
     };
     
     // Methods to get promises for one or all items of a resource
-    function BasicResource($route, query, newModel) {
+    function BasicResource($route, query, newModelFn) {
         var getOne = function(extraQueryParams) {
             var itemId = $route.current.pathParams.id;
             if (itemId == undefined) {
-                return newModel || {};
+                if (newModelFn != null) {
+                    return newModelFn($route.current.params); 
+                } else {
+                    return {};
+                }
+            } else {
+                var params = angular.extend({ id: itemId }, extraQueryParams);
+                return query().get(params).$promise;
+            }
+        };
+        var getOneUseParamAsId = function(paramAsId, extraQueryParams) {
+            var itemId = $route.current.params[paramAsId];
+            if (itemId == undefined) {
+                return {};
             } else {
                 var params = angular.extend({ id: itemId }, extraQueryParams);
                 return query().get(params).$promise;
@@ -33,6 +46,7 @@
         return {
             getQuery: query,
             getOne: getOne,
+            getOneUseParamAsId: getOneUseParamAsId,
             getAll: getAll
         };
     };
@@ -56,9 +70,12 @@
         return BasicResource($route, BasicQuery($resource, 'bookings'));
     }];
     var eventResource = ['$route', '$resource', function($route, $resource) {
-        var newModel = {};
-        setStartAndEndTimes(newModel, 'startTime', '11:00', 'endTime', '12:00');
-        return BasicResource($route, BasicQuery($resource, 'events', newModel));
+        var newModelFn = function(params) {
+            var newModel = {};
+            setStartAndEndTimes(newModel, 'startTime', '11:00', 'endTime', '12:00');
+            return newModel;
+        };
+        return BasicResource($route, BasicQuery($resource, 'events'), newModelFn);
     }];
     var eventWeekResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'eventWeeks'));
@@ -85,10 +102,13 @@
         return BasicResource($route, BasicQuery($resource, 'permissions'));
     }];
     var posterResource = ['$route', '$resource', function($route, $resource) {
-        var newModel = {};
-        setStartAndEndTimes(newModel, 'startTime', '07:00', 'endTime', '22:00');
-        newModel['duration'] = 15;
-        return BasicResource($route, BasicQuery($resource, 'posters', newModel));
+        var newModelFn = function(params) {
+            var newModel = {};
+            setStartAndEndTimes(newModel, 'startTime', '07:00', 'endTime', '22:00');
+            newModel['duration'] = 15;
+            return newModel;
+        };
+        return BasicResource($route, BasicQuery($resource, 'posters'), newModelFn);
     }];
     var uploadResource = ['$route', '$resource', function($route, $resource) {
         var query = function() {
@@ -101,7 +121,10 @@
         return BasicResource($route, BasicQuery($resource, 'uploadFolders'));
     }];
     var resourceTypeResource = ['$route', '$resource', function($route, $resource) {
-        return BasicResource($route, BasicQuery($resource, 'resourceTypes'));
+        var newModelFn = function(params) {
+            return { type: params.type };
+        };
+        return BasicResource($route, BasicQuery($resource, 'resourceTypes'), newModelFn);
     }];
     var userResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'users'));

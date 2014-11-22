@@ -27,8 +27,11 @@ import org.springframework.stereotype.Service;
 @Service("cordateRealm")
 public class CordateRealm extends AuthorizingRealm {
 	
-	@Value("${rosette.baseUrlWithVersion}")
-	private String baseUrlWithVersion;
+	@Value("${cordate.rosetteBaseUrl}")
+	private String rosetteBaseUrl;
+
+	@Value("${cordate.rosetteApiVersion}")
+	private String rosetteApiVersion;
 
 	@PostConstruct
 	public void initialize() {
@@ -51,7 +54,7 @@ public class CordateRealm extends AuthorizingRealm {
 				String providedPassword = new String(token.getPassword());
 
 				HttpClient httpClient = new DefaultHttpClient();
-				HttpGet httpGet = new HttpGet(baseUrlWithVersion + "/authentication");
+				HttpGet httpGet = new HttpGet(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/authentication");
 				httpGet.addHeader(new BasicScheme().authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), httpGet));
 
 				HttpResponse response = httpClient.execute(httpGet);

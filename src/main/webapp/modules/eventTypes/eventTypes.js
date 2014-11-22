@@ -21,12 +21,14 @@
         // Filter used resource types from all available
         $scope.availableResourceTypes = resourceTypes.filter(function(allResourceType) {
             var found = false;
-            item.resourceTypes.some(function(itemResourceTypeRef) {
-                if (allResourceType.id == itemResourceTypeRef.idRef) {
-                    found = true;
-                }
-                return found;
-            });
+            if (item.resourceTypes) {
+                item.resourceTypes.some(function(itemResourceTypeRef) {
+                    if (allResourceType.id == itemResourceTypeRef.idRef) {
+                        found = true;
+                    }
+                    return found;
+                });
+            }
             return !found;
         });
 
@@ -66,9 +68,11 @@
 
     var resourceTypesToSections = function(resourceTypeRefs) {
         var sections = [];
-        resourceTypeRefs.forEach(function(rtRef) {
-            addResourceTypeToSections(rtRef.referredObject, sections);
-        });
+        if (resourceTypeRefs) {
+            resourceTypeRefs.forEach(function(rtRef) {
+                addResourceTypeToSections(rtRef.referredObject, sections);
+            });
+        }
         return sections;
     }; 
 
@@ -102,7 +106,7 @@
             return false;
         });
         return foundSection;
-    }
+    };
     
     var sectionsToResourceTypes = function(sections) {
         var refs = [];

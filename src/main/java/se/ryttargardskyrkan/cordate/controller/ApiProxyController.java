@@ -1,8 +1,6 @@
 package se.ryttargardskyrkan.cordate.controller;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,15 +16,12 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.bind.annotation.RequestParam;
 import se.ryttargardskyrkan.cordate.model.UserSession;
 
 @Controller
@@ -34,9 +29,9 @@ public class ApiProxyController {
 	
 	@Autowired
 	private UserSession userSession;
-	
-	@Value("${rosette.baseUrl}")
-	private String baseUrl;
+
+	@Value("${cordate.rosetteBaseUrl}")
+	private String rosetteBaseUrl;
 
 	@RequestMapping(value="/api/**", produces = "application/json;charset=utf-8")
 	public void proxyPost(HttpServletRequest request, @RequestBody String requestBody, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
@@ -50,21 +45,21 @@ public class ApiProxyController {
 
         HttpResponse remoteResponse = null;
 		if ("GET".equals(request.getMethod())) {
-			HttpGet httpGet = new HttpGet(baseUrl + requestURI);
+			HttpGet httpGet = new HttpGet(rosetteBaseUrl + requestURI);
 			httpGet.addHeader(new BasicScheme().authenticate(credentials, httpGet));
 			remoteResponse = httpClient.execute(httpGet);
 		} else if ("POST".equals(request.getMethod())) {
-			HttpPost httpPost = new HttpPost(baseUrl + requestURI);
+			HttpPost httpPost = new HttpPost(rosetteBaseUrl + requestURI);
 			httpPost.setEntity(new StringEntity(requestBody, "application/json", "UTF-8"));
 			httpPost.addHeader(new BasicScheme().authenticate(credentials, httpPost));
 			remoteResponse = httpClient.execute(httpPost);
 		} else if ("PUT".equals(request.getMethod())) {
-			HttpPut httpPut = new HttpPut(baseUrl + requestURI);
+			HttpPut httpPut = new HttpPut(rosetteBaseUrl + requestURI);
 			httpPut.setEntity(new StringEntity(requestBody, "application/json", "UTF-8"));
 			httpPut.addHeader(new BasicScheme().authenticate(credentials, httpPut));
 			remoteResponse = httpClient.execute(httpPut);
 		} else if ("DELETE".equals(request.getMethod())) {
-			HttpDelete httpDelete = new HttpDelete(baseUrl + requestURI);
+			HttpDelete httpDelete = new HttpDelete(rosetteBaseUrl + requestURI);
 			httpDelete.addHeader(new BasicScheme().authenticate(credentials, httpDelete));
 			remoteResponse = httpClient.execute(httpDelete);
 		}

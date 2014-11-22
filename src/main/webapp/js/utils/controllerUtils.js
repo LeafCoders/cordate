@@ -13,10 +13,25 @@ var utils = utils || {};
     };
 
     utils.extendItemEditorController = function(base, injector, scope, itemService, item) {
+        angular.extend(base, injector.invoke(ItemController, base, { $scope: scope, item: item }));
         angular.extend(base, injector.invoke(ItemEditorController, base, { $scope: scope, itemService: itemService, item: item }));
     };
 
-    function ItemsController($scope, $location, $filter, $route, flash, items) {
+    utils.extendCreateWithModal = function(base, injector, scope, modalTemplate, title, items) {
+        angular.extend(base, injector.invoke(CreateWithModal, base, {
+            $scope: scope,
+            modalTemplate: modalTemplate,
+            title: title,
+            items: angular.isFunction(items) ? items() : items
+        }));
+
+        // Override default behaviour of "Create new". Shows a model instead 
+        scope.createNew = function() {
+            scope.createModal.showModal();
+        };
+    };
+
+    function ItemsController($scope, $location, $filter, $modal, $q, $route, flash, items) {
         $scope.items = items;
         $scope.type = getCurrentItemType($location);
         $scope.backPage = $scope.type + 's';
@@ -38,14 +53,18 @@ var utils = utils || {};
             $location.path('/' + $scope.type + 's/import');
         };
 
+        $scope.removeConfirm = function(item) {
+            var modalScope = $scope.$new();
+            modalScope.item = item;
+            var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: modalScope });
+            modalPromise.$promise.then(modalPromise.show);
+        };
+
         $scope.remove = function(item) {
-            var confirmed = confirm($filter('t')($scope.type + 'Items.prompt.itemDeleteConfirmation'));
-            if (confirmed) {
-                item.$remove(function() {
-                    flash.addAlert({ type: 'success', text: $scope.type + 'Items.alert.itemWasDeleted'});
-                    $route.reload();
-                });
-            }
+            item.$remove(function() {
+                flash.addAlert({ type: 'success', text: $scope.type + 'Item.alert.itemWasDeleted'});
+                $route.reload();
+            });
         };
 
         // Get reference(s) as text or array of texts
@@ -63,24 +82,26 @@ var utils = utils || {};
         };
     }
 
-    function ItemController($scope, $location, $filter, flash, item) {
+    function ItemController($scope, $location, $filter, $modal, $q, flash, item) {
         $scope.item = item;
         $scope.type = getCurrentItemType($location);
         $scope.backPage = $scope.type + 's';
         $scope.allowEditItem = true;
 
+        $scope.removeConfirm = function() {
+            var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: $scope });
+            modalPromise.$promise.then(modalPromise.show);
+        };
+
         $scope.remove = function(item) {
-            $('#myModal').modal('hide');
             item.$remove(function() {
                 flash.addAlert({ type: 'success', text: $scope.type + 'Item.alert.itemWasDeleted'});
-                $location.path('/' + $scope.backPage);
+                $location.path('/' + $scope.type + 's');
             });
         };
     }
 
     function ItemEditorController($scope, $location, $filter, flash, itemService, item) {
-        angular.extend(this, new ItemController($scope, $location, $filter, flash, item));
-
         $scope.errors = {};
         $scope.isCreate = $location.path().endsWith('/new');
 
@@ -129,18 +150,30 @@ var utils = utils || {};
                 }
             }
         };
+    }
 
-        $scope.remove = function() {
-            var confirmed = confirm($filter('t')($scope.type + 'Editor.alert.itemDeleteConfirmation'));
-            if (confirmed) {
-                $scope.item.$remove(function() {
-                    flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasDeleted'});
-                    $location.path('/' + $scope.type + 's');
-                });
+    /**
+     * Shows a modal dialog with content from a template.
+     * All items in 'items' must contain a 'params' property like { ..., params: 'type=user&age=12&name=Kalle' }
+     */
+    function CreateWithModal($scope, $location, $modal, modalTemplate, title, items) {
+        $scope.createModal = {
+            modalTitle: title,
+            modalItems : items,
+
+            // Show modal dialog
+            showModal : function() {
+                var modalPromise = $modal({template: modalTemplate, show: false, backdrop: 'static', scope: $scope});
+                modalPromise.$promise.then(modalPromise.show);
+            },
+    
+            // Calls new url, with params from selected item, when user clicks an item
+            create : function(item) {
+                $location.url('/' + $scope.type + 's/new?' + item.params);
             }
         };
     }
-
+    
     function getCurrentItemType(location) {
         var pattern = /\/\w+/;
         var matches = pattern.exec(location.$$path);

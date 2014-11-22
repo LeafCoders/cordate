@@ -37,19 +37,11 @@
     var bookingEditorController = ['$injector', '$scope', '$filter', 'bookingResource', 'item', function($injector, $scope, $filter, bookingResource, item) {
         utils.extendItemEditorController(this, $injector, $scope, bookingResource, item);
 
-        var times = [{text: '', value: ''}];
-        for (var i = 0; i < 24; i++) {
-            var hour = i < 10 ? '0' + i : '' + i;
-            times.push({text: hour + ':00', value: hour + ':00'});
-            times.push({text: hour + ':30', value: hour + ':30'});
-        }
-
         $scope.formHelper = {
-            startTimePartDate: $filter('date')(item.startTime),
-            startTimePartTime: $filter('time')(item.startTime),
-            endTimePartDate: $filter('date')(item.endTime),
-            endTimePartTime: $filter('time')(item.endTime),
-            times: times
+            startTimePartDate: $filter('cordateDate')(item.startTime),
+            startTimePartTime: $filter('cordateTime')(item.startTime),
+            endTimePartDate: $filter('cordateDate')(item.endTime),
+            endTimePartTime: $filter('cordateTime')(item.endTime)
         };
 
         $scope.beforeSave = function(item) {
@@ -105,7 +97,7 @@
 
         $scope.import = function() {
             if ($scope.importStage == 1) {
-                $('#deleteAllModal').modal();
+                $('#deleteAllModalConfirm').modal();
             }
         };
 

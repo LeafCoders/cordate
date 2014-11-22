@@ -14,7 +14,7 @@
 
     <title>Cordate</title>
 
-    <jwr:style src="/bundles/all.css" />
+    <jwr:style src="/bundles/bootstrap.css" />
 
     <style type="text/css">
         .form-signin {

@@ -37,20 +37,12 @@
         utils.extendItemEditorController(this, $injector, $scope, posterResource, item);
         angular.extend(this, new PosterBase($scope));
 
-        var times = [{text: '', value: ''}];
-        for (var i = 0; i < 24; i++) {
-            var hour = i < 10 ? '0' + i : '' + i;
-            times.push({ text: hour + ':00', value: hour + ':00' });
-            times.push({ text: hour + ':30', value: hour + ':30' });
-        }
-
         $scope.formHelper = {
-            startTimePartDate: $filter('date')(item.startTime),
-            startTimePartTime: $filter('time')(item.startTime),
-            endTimePartDate: $filter('date')(item.endTime),
-            endTimePartTime: $filter('time')(item.endTime),
+            startTimePartDate: $filter('cordateDate')(item.startTime),
+            startTimePartTime: $filter('cordateTime')(item.startTime),
+            endTimePartDate: $filter('cordateDate')(item.endTime),
+            endTimePartTime: $filter('cordateTime')(item.endTime),
             duration: item.duration,
-            times: times,
             durations: [{ text: '10 s', value: 10}, { text: '15 s', value: 15 }]
         };
 

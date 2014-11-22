@@ -3,7 +3,8 @@
 
 (function () {
 
-    var dependencies = ['ngResource', 'ngRoute', '$strap.directives',
+    var dependencies = ['ngResource', 'ngRoute', 'ngAnimate',
+                        'mgcrea.ngStrap.tooltip', 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStrap.timepicker',
                         'myApp.translation_sv_SE',
                         'bookings', 'events', 'eventTypes', 'eventWeeks',
                         'groups', 'groupMemberships', 'locations', 'permissions', 'posters',

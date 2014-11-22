@@ -17,6 +17,8 @@ function referenceToText(ref, refType) {
 			if (ref.referredObject != null) {
 				switch (refType) {
 					case 'location': return ref.referredObject.name; break;
+                    case 'eventType': return ref.referredObject.name; break;
+                    default: return ref.referredObject.name; break;
 				}
 			} else if (ref.text != null) {
 				return ref.text;

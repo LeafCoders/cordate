@@ -12,7 +12,8 @@
 
     <title>Cordate</title>
 
-    <jwr:style src="/bundles/all.css" />
+    <jwr:style src="/bundles/bootstrap.css" />
+    <jwr:style src="/bundles/app.css" />
 
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
@@ -106,7 +107,9 @@
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<jwr:script src="/bundles/lib.js"/> 
+<jwr:script src="/bundles/bootstrap.js"/> 
+<jwr:script src="/bundles/angular.js"/> 
+<jwr:script src="/bundles/angular-strap.js"/> 
 <jwr:script src="/bundles/app.js"/> 
 
 <script type="text/javascript">

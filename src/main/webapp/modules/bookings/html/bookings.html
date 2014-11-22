@@ -1,7 +1,7 @@
 <itemstable>
   <div class="media">
     <div class="media-body">
-      <p><span ng-class="rowClass(item)">{{item.startTime | date}} | {{item.startTime | time}}</span> - <span ng-class="rowClass(item)">{{item.endTime | date}} | {{item.endTime | time}}</span></p>
+      <p><span ng-class="rowClass(item)">{{item.startTime | cordateDate}} | {{item.startTime | cordateTime}}</span> - <span ng-class="rowClass(item)">{{item.endTime | cordateDate}} | {{item.endTime | cordateTime}}</span></p>
       <h4 class="media-heading">{{item.customerName}}</h4>
       <p>{{getTextOfReference(item.location, 'location')}}</p>
     </div>

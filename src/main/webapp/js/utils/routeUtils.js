@@ -11,16 +11,13 @@ utils.createBasicAllRoute = function(routeProvider, name, resolve) {
     });
 };
     
-utils.createBasicOneRoute = function(routeProvider, name, resolveShow, resolveEdit) {
-    if (resolveEdit == null) {
-        resolveEdit = resolveShow;
-    }
-    var single = name.slice(0, - 1);
+utils.createBasicOneRoute = function(routeProvider, name, resolveShow, resolveEdit, resolveNew) {
+    var single = name.slice(0, -1);
     var templateBaseUrl = 'modules/' + name + '/html/' + single;
     routeProvider.when('/' + name + '/new', {
         templateUrl: templateBaseUrl + 'Editor.html',
         controller:  single + 'EditorController',
-        resolve:     resolveEdit
+        resolve:     resolveNew ? resolveNew : (resolveEdit ? resolveEdit : resolveShow)
     });
     routeProvider.when('/' + name + '/:id', {
         templateUrl: templateBaseUrl + '.html',
@@ -30,7 +27,7 @@ utils.createBasicOneRoute = function(routeProvider, name, resolveShow, resolveEd
     routeProvider.when('/' + name + '/:id/edit', {
         templateUrl: templateBaseUrl + 'Editor.html',
         controller:  single + 'EditorController',
-        resolve:     resolveEdit
+        resolve:     resolveEdit ? resolveEdit : resolveShow
     });
 };
     

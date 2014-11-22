@@ -46,8 +46,11 @@ angular.module('myApp.translation_sv_SE', []).
 
         "itemEditor.action.save" : "Spara",
         "itemEditor.action.cancel" : "Avbryt",
+        "itemEditor.action.delete" : "Radera",
         "itemEditor.action.prev" : "Föregående",
         "itemEditor.action.next" : "Nästa",
+        "itemEditor.action.select" : "Välj",
+        "itemEditor.action.ok" : "Ok",
         "itemEditor.action.import" : "Importera",
 
         "error.badRequest" : "Sorry, ogiltigt anrop",
@@ -69,10 +72,16 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.lastName" : "Efternamn",
         "formLabel.password" : "Lösenord",
         "formLabel.reenterPassword" : "Repetera lösenord",
-        "formLabel.eventType" : "Typ",
+        "formLabel.type" : "Typ",
+        "formLabel.key" : "Nyckelvärde",
+        "formLabel.section" : "Sektion",
+        "formLabel.eventType" : "Händelsetyp",
         "formLabel.image" : "Bild",
+        "formLabel.user" : "Användare",
+        "formLabel.group" : "Grupp",
         "formLabel.content" : "Innehåll",
         "formLabel.folder" : "Katalog",
+        "formLabel.folderName" : "Katalognamn",
         "formLabel.file" : "Fil",
         "formLabel.fileName" : "Filnamn",
         "formLabel.fileSize" : "Filstorlek",
@@ -82,9 +91,13 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.height" : "Höjd",
         "formLabel.permissionFor" : "Behörighet för",
         "formLabel.patterns" : "Behörigheter",
+        "formLabel.multiSelect" : "Flerval",
+        "formLabel.allowText" : "Tillåt text",
         
-        "modalTitle.location" : "Välj lokal",
-        "modalTitle.image" : "Välj bild",
+        "modalLabel.location" : "Välj lokal",
+        "modalLabel.image" : "Välj bild",
+        "modalLabel.userResource" : "Välj användare",
+        "modalLabel.uploadResource" : "Välj fil",
         
         "event" : "Händelse",
         "eventItems.label.title" : "Händelser",
@@ -128,6 +141,8 @@ angular.module('myApp.translation_sv_SE', []).
         "event.startTime.notNull" : "Starttid saknas",
         "event.startBeforeEndTime" : "Händelsen får inte sluta innan den har börjat",
 
+        "event.modalTitle.create" : "Välj händelsetyp",
+        
         "user" : "Användare",
         "userItems.label.title" : "Användare",
         "userItems.action.new" : "Ny användare",
@@ -251,6 +266,10 @@ angular.module('myApp.translation_sv_SE', []).
         "resourceTypeEditor.alert.itemWasUpdated" : "Resursen uppdaterades!",
         "resourceType.name.notEmpty" : "Namn saknas",
 
+        "resourceType.modalTitle.create" : "Välj resurstyp",
+        "resourceType.type.user" : "Användare från grupp",
+        "resourceType.type.upload" : "Fil från katalog",
+        
         "eventType" : "Händelsetyp",
         "eventTypeItems.label.title" : "Händelsetyper",
         "eventTypeItems.action.new" : "Ny händelsetyp",
@@ -263,6 +282,8 @@ angular.module('myApp.translation_sv_SE', []).
 
         "eventTypeEditor.label.newTitle" : "Ny händelsetyp",
         "eventTypeEditor.label.editTitle" : "Redigera händelsetyp",
+        "eventTypeEditor.label.selectedResourceTypes" : "Valda resurstyper",
+        "eventTypeEditor.label.availableResourceTypes" : "Tillgängliga resurstyper",
         "eventTypeEditor.formLabel.name" : "Namn",
         "eventTypeEditor.alert.itemWasCreated" : "Händelsetypen skapades!",
         "eventTypeEditor.alert.itemWasUpdated" : "Händelsetypen uppdaterades!",

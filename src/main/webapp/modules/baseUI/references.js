@@ -6,239 +6,310 @@
 
     /* Controllers */
     
-    function AbstractModalController($scope, $q, $modal, modalTemplate, resource, resourceQuery) {
+    function AbstractModalController($injector, $scope, modalTemplate, resource, resourceQuery) {
+        var $q = $injector.get('$q');
+        var $modal = $injector.get('$modal');
+        var $filter = $injector.get('$filter');
+
         // Options
         $scope.modalTitle = "Not set";
         $scope.singleSelect = true;
         $scope.allowOptionalText = false;
         $scope.panelItems = new Array();
 
-        $scope.showModal = function() {
-            // Load resources
-            $q.when(resource.getQuery().query(resourceQuery).$promise).then(function(resources) {
-                // Convert resources to objects with 'id' and 'title' values
-                var items = new Array();
-                var lenRes = resources.length;
-                for (var r = 0; r < lenRes; r++) {
-                    items.push($scope.createIdItem(resources[r]));
-                }
-                $scope.modalItems = items;
-
-                // Select items and set optional text
-                $scope.optionalText = '';
-                var lenPanel = $scope.panelItems.length;
-                var lenModal = $scope.modalItems.length;
-                for (var p = 0; p < lenPanel; p++) {
-                    if ($scope.panelItems[p].id === undefined) {
-                        $scope.optionalText = $scope.panelItems[p].title; 
-                    } else {
-                        for (var m = 0; m < lenModal; m++) {
-                            if ($scope.panelItems[p].id === $scope.modalItems[m].id) {
-                                $scope.modalItems[m].selected = true;
+        $scope.inputModal = {
+            showModal: function() {
+                // Load resources
+                $q.when(resource.getQuery().query(resourceQuery).$promise).then(function(resources) {
+                    // Convert resources to objects with 'id' and 'title' values
+                    var items = new Array();
+                    var lenRes = resources.length;
+                    for (var r = 0; r < lenRes; r++) {
+                        items.push($scope.createIdItem(resources[r]));
+                    }
+                    $scope.modalItems = items;
+    
+                    // Select items and set optional text
+                    $scope.optionalText = '';
+                    var lenPanel = $scope.panelItems.length;
+                    var lenModal = $scope.modalItems.length;
+                    for (var p = 0; p < lenPanel; p++) {
+                        if ($scope.panelItems[p].id === undefined) {
+                            $scope.optionalText = $scope.panelItems[p].title; 
+                        } else {
+                            for (var m = 0; m < lenModal; m++) {
+                                if ($scope.panelItems[p].id === $scope.modalItems[m].id) {
+                                    $scope.modalItems[m].selected = true;
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
 
-            // Show modal dialog
-            var modalPromise = $modal({template: modalTemplate, persist: true, show: false, backdrop: 'static', scope: $scope});
-            $q.when(modalPromise).then(function(modalElem) {
-                modalElem.modal('show');
-            });
-        };
-
-        $scope.toggleModalItem = function(modalItem) {
-            var length = $scope.modalItems.length;
-            for (var i = 0; i < length; i++) {
-                if ($scope.modalItems[i] === modalItem) {
-                    modalItem.selected = !modalItem.selected;
-                    if ($scope.singleSelect) {
-                        $scope.optionalText = '';
-                    }
-                } else if ($scope.singleSelect && $scope.modalItems[i].selected) {
-                    $scope.modalItems[i].selected = false;
-                }
-            }
-        };
-
-        $scope.saveModalItems = function() {
-            var newPanelItems = new Array();
-            var length = $scope.modalItems.length;
-            for (var i = 0; i < length; i++) {
-                if ($scope.modalItems[i].selected) {
-                    newPanelItems.push($scope.modalItems[i]); 
-                }
-            }
-            if ($scope.optionalText !== '') {
-                newPanelItems.push($scope.createTextItem($scope.optionalText));
-            }
-            $scope.panelItems = newPanelItems;
-            $scope.setReferences();
-        };
-
-        $scope.loadReferences = function() {
-            var ref = $scope.itemRef;
-            if (ref != null) {
-                if (Array.isArray(ref)) {
-                    // TODO: Handle multiple references
-                } else {
-                    if (ref.referredObject != null) {
-                        $scope.panelItems.push($scope.createIdItem(ref.referredObject));
-                    } else if (ref.text != null) {
-                        $scope.panelItems.push($scope.createTextItem(ref.text));
-                    } else {
-                        $scope.panelItems.push($scope.createIdItem(ref));
+                // Show modal dialog
+                var modalPromise = $modal({template: modalTemplate, persist: true, show: false, backdrop: 'static', scope: $scope});
+                modalPromise.$promise.then(modalPromise.show);
+            },
+            toggleModalItem: function(modalItem) {
+                var length = $scope.modalItems.length;
+                for (var i = 0; i < length; i++) {
+                    if ($scope.modalItems[i] === modalItem) {
+                        modalItem.selected = !modalItem.selected;
+                        if ($scope.singleSelect) {
+                            $scope.optionalText = '';
+                        }
+                    } else if ($scope.singleSelect && $scope.modalItems[i].selected) {
+                        $scope.modalItems[i].selected = false;
                     }
                 }
-            }
-        };
-
-        $scope.setReferences = function() {
-            $scope.itemRef = null;
-            if ($scope.panelItems.length > 0) {
-                if ($scope.singleSelect) {
-                    if ($scope.panelItems[0].id != undefined) {
-                        $scope.itemRef = { 'idRef': $scope.panelItems[0].id };
-                    } else {
-                        $scope.itemRef = { 'text': $scope.panelItems[0].title };
+            },
+            saveModalItems: function() {
+                var newPanelItems = new Array();
+                var length = $scope.modalItems.length;
+                for (var i = 0; i < length; i++) {
+                    if ($scope.modalItems[i].selected) {
+                        newPanelItems.push($scope.modalItems[i]); 
                     }
-                } else {
-                    // TODO: Handle multiple references
                 }
-            }
+                if ($scope.optionalText !== '') {
+                    newPanelItems.push($scope.createTextItem($scope.optionalText));
+                }
+                $scope.panelItems = newPanelItems;
+                $scope.inputTransform.toItem();
+            },
+            removeItemConfirm: function() {
+                var modalScope = $scope.$new();
+                modalScope.remove = $scope.remove;
+                var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: modalScope});
+                modalPromise.$promise.then(modalPromise.show);
+            },
         };
 
         $scope.createIdItem = function(resource) {
-            return $scope.resourceData(resource);
+            return $scope.resourceToItem(resource);
         };
         $scope.createTextItem = function(title) {
             return { 'title': title };
         };
     }
 
-    var locationRefInputController = ['$scope', '$q', '$modal', 'locationResource', function($scope, $q, $modal, locationResource) {
-        angular.extend(this,
-                new AbstractModalController($scope, $q, $modal, 'modules/baseUI/html/modalTextList.html', locationResource));
+    var referenceInputController = ['$injector', '$scope', function($injector, $scope) {
+        if ($scope.refType == undefined) {
+            var uploadService = $injector.get('uploadResource');
+            angular.extend(this,
+                    new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalImageList.html',
+                            uploadService, { folderName: $scope.uploadFolderName }));
 
-        $scope.refType = 'location';
-        $scope.modalTitle = 'location';
-        $scope.singleSelect = true;
-        $scope.allowOptionalText = true;
+            $scope.refType = 'upload';
+            $scope.modalTitle = 'image';
+            $scope.singleSelect = true;
+        } else {
+            var refResourceService = $injector.get($scope.refType + 'Resource');
+            angular.extend(this,
+                    new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
+                            refResourceService));
 
-        $scope.resourceData = function(resource) {
-            return { 'id': resource.id, 'title': resource.name };
-        };
-        $scope.loadReferences();
-    }];
+            $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.' + $scope.refType };
+            $scope.singleSelect = true;
+            $scope.allowOptionalText = false;
+        }
 
-    var resourceRefInputController = ['$injector', '$scope', '$q', '$modal', function($injector, $scope, $q, $modal) {
-        var resourceService = $injector.get($scope.resourceType + "Resource");
-        angular.extend(this,
-                new AbstractModalController($scope, $q, $modal, 'modules/baseUI/html/modalTextList.html', resourceService));
-
-//        $scope.refType = $scope.resourceType;
-        $scope.labels = { inputTitle: 'formLabel.' + $scope.resourceType, modalTitle: 'modalLabel.' + $scope.resourceType };
-        $scope.singleSelect = true;
-        $scope.allowOptionalText = false;
-
-        $scope.resourceData = function(resource) {
-            switch ($scope.resourceType) {
+        $scope.resourceToItem = function(resource) {
+            switch ($scope.refType) {
                 case 'group':
                     return { 'id': resource.id, 'title': resource.name };
                 case 'user':
                     return { 'id': resource.id, 'title': resource.firstName + ' ' + resource.lastName };
-                    
+                case 'upload':
+                    return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
                 default:
                     return { 'id': resource.id, 'title': resource.name };
             }
         };
-        $scope.loadReferences();
-        
-        $scope.setReferences = function() {
-            $scope.itemRef = null;
-            if ($scope.panelItems.length > 0) {
-                if ($scope.singleSelect) {
-                    $scope.itemRef = { idRef: $scope.panelItems[0].id };
-                } else {
-                    // TODO: Handle multiple references
+
+        $scope.inputTransform = {
+            fromItem: function() {
+                var ref = $scope.refItem;
+                if (ref != null) {
+                    if (Array.isArray(ref)) {
+                        // TODO: Handle multiple references
+                    } else {
+                        if (ref.referredObject != null) {
+                            $scope.panelItems.push($scope.createIdItem(ref.referredObject));
+                        } else if (ref.text != null) {
+                            $scope.panelItems.push($scope.createTextItem(ref.text));
+                        } else {
+                            $scope.panelItems.push($scope.createIdItem(ref));
+                        }
+                    }
+                }
+            },
+            toItem: function() {
+                $scope.refItem = null;
+                if ($scope.panelItems.length > 0) {
+                    if ($scope.singleSelect) {
+                        if ($scope.panelItems[0].id != undefined) {
+                            $scope.refItem = { 'idRef': $scope.panelItems[0].id };
+                        } else {
+                            $scope.refItem = { 'text': $scope.panelItems[0].title };
+                        }
+                    } else {
+                        // TODO: Handle multiple references
+                    }
                 }
             }
         };
+        
+        $scope.inputTransform.fromItem();
     }];
 
-    var imageRefInputController = ['$scope', '$q', '$modal', 'uploadResource', function($scope, $q, $modal, uploadResource) {
-        angular.extend(this,
-                new AbstractModalController($scope, $q, $modal, 'modules/baseUI/html/modalImageList.html',
-                                            uploadResource, { folderName: $scope.uploadFolderName }));
+    
+    var eventResourceInputController = ['$injector', '$scope', function($injector, $scope) {
+        var resourceTypeItem = $scope.resource.resourceType.referredObject;
+        $scope.resourceType = resourceTypeItem.type;
+        $scope.refType = resourceTypeItem.type;
+        switch ($scope.resourceType) {
+            case 'user':
+                var userResourceService = $injector.get('userResource');
+                angular.extend(this,
+                        new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
+                                userResourceService, { groupId: resourceTypeItem.group.idRef }));
+                $scope.labels = { inputTitle: resourceTypeItem.name, modalTitle: 'modalLabel.userResource' };
+                break;
+            case 'upload':
+                var uploadResourceService = $injector.get('uploadResource');
+                angular.extend(this,
+                        new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
+                                uploadResourceService, { folderName: resourceTypeItem.folderName }));
+                $scope.labels = { inputTitle: resourceTypeItem.name, modalTitle: 'modalLabel.uploadResource' };
+                break;
+        }
 
-        $scope.refType = 'upload';
-        $scope.modalTitle = 'image';
+
         $scope.singleSelect = true;
+        $scope.allowOptionalText = false;
 
-        $scope.resourceData = function(resource) {
-            return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
+        $scope.resourceToItem = function(resource) {
+            switch ($scope.resourceType) {
+                case 'user':
+                    return { 'id': resource.id, 'title': resource.fullName };
+                case 'upload':
+                    return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
+            }
         };
-        $scope.loadReferences();
-    }];
 
-    var textRefViewController = ['$scope', function($scope) {
-        $scope.reference = referenceToText($scope.itemRef, $scope.refType);
-    }];
+        $scope.inputTransform = {
+            fromItem: function() {
+                var resource = $scope.resource;
+                if (resource.type == 'user') {
+                    $scope.singleSelect = !resource.multiSelect;
+                    $scope.allowOptionalText = resource.allowText;
+                    if (resource.users) {
+                        angular.forEach(resource.users.refs, function(user) {
+                            $scope.panelItems.push($scope.createIdItem(user.referredObject));
+                        });
+                        if (resource.users.text) {
+                            $scope.panelItems.push($scope.createTextItem(ref.text));
+                        }
+                    }
+                } else if (resource.type == 'upload') {
+                    $scope.singleSelect = !resource.multiSelect;
+                    if (resource.uploads) {
+                        angular.forEach(resource.uploads, function(upload) {
+                            $scope.panelItems.push($scope.createIdItem(upload.referredObject));
+                        });
+                    }
+                }
+            },
+            toItem: function() {
+                var resource = $scope.resource;
+                if (resource.type == 'user') {
+                    resource.users = { refs: [] };
+                    angular.forEach($scope.panelItems, function(panelItem) {
+                        resource.users.refs.push({ 'idRef': panelItem.id });
+                    });
+                    // TODO: Set resource.users.text = ...
+                } else if (resource.type == 'upload') {
+                    resource.uploads = [];
+                    angular.forEach($scope.panelItems, function(panelItem) {
+                        resource.uploads.push({ 'idRef': panelItem.id });
+                    });
+                }
+            }
+        };
 
-    var objectRefViewController = ['$scope', function($scope) {
-        $scope.reference = referenceToObject($scope.itemRef);
+        $scope.remove = function() {
+            $scope.onRemove();
+        };
+        
+        $scope.inputTransform.fromItem();
     }];
-
-    thisModule.controller('locationRefInputController', locationRefInputController);
-    thisModule.controller('resourceRefInputController', resourceRefInputController);
-    thisModule.controller('imageRefInputController', imageRefInputController);
-    thisModule.controller('textRefViewController', textRefViewController);
-    thisModule.controller('objectRefViewController', objectRefViewController);
+    
+    
+    thisModule.controller('referenceInputController', referenceInputController);
+    thisModule.controller('eventResourceInputController', eventResourceInputController);
 
     
     /* Directives */
 
-    thisModule.directive("locationrefinput", function () {
+    thisModule.directive("refInput", function () {
         return {
             restrict: 'E',
             replace: true,
             transclude: false,
-            scope: { itemRef: '=' },
-            controller: 'locationRefInputController',
+            scope: {
+                refItem: '=',
+                refType: '@',
+            },
+            controller: 'referenceInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'
         };
     });
 
-    thisModule.directive("resourcerefinput", function () {
+    thisModule.directive("imageRefInput", function () {
         return {
             restrict: 'E',
             replace: true,
             transclude: false,
-            scope: { itemRef: '=', resourceType: '@' },
-            controller: 'resourceRefInputController',
-            templateUrl: 'modules/baseUI/html/panelTextList.html'
-        };
-    });
-
-    thisModule.directive("imagerefinput", function () {
-        return {
-            restrict: 'E',
-            replace: true,
-            transclude: false,
-            scope: { itemRef: '=', uploadFolderName: '@' },
-            controller: 'imageRefInputController',
+            scope: {
+                refItem: '=',
+                uploadFolderName: '@'
+            },
+            controller: 'referenceInputController',
             templateUrl: 'modules/baseUI/html/panelImageList.html'
         };
     });
 
-    thisModule.directive("imagerefview", function () {
+    thisModule.directive("refView", function () {
         return {
             restrict: 'E',
             replace: true,
             transclude: false,
-            scope: { itemRef: '=' },
-            controller: 'objectRefViewController',
+            scope: {
+                refItem: '=',
+                refType: '@'
+            },
+            controller: ['$scope', function($scope) {
+                $scope.refText = referenceToText($scope.refItem, $scope.refType);
+            }],
+            template: function(tElement, tAttrs) {
+                return '' +
+                '<div class="form-group">' +
+                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.refType + '\' | t }}</label>' +
+                    '<div class="col-xs-8 col-sm-6">' +
+                        '<p class="form-control-static">{{ refText }}</p>' +
+                    '</div>' +
+                '</div>';
+            }
+        };
+    });
+
+    thisModule.directive("imageRefView", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: { refItem: '=' },
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
@@ -246,9 +317,9 @@
                     '<div class="col-xs-8 col-sm-6">' +
                         '<div class="panel panel-default">' +
                             '<div class="panel-heading">' +
-                                '<h3 class="panel-title">{{ reference.fileName }}</h3>' +
+                                '<h3 class="panel-title">{{ refItem.referredObject.fileName }}</h3>' +
                             '</div>' +
-                            '<img class="img-responsive" ng-src="{{ reference.fileUrl }}">' +
+                            '<img class="img-responsive" ng-src="{{ refItem.referredObject.fileUrl }}">' +
                         '</div>' +
                     '</div>' +
                 '</div>';
@@ -256,24 +327,51 @@
         };
     });
 
-    thisModule.directive("textrefview", function () {
+    thisModule.directive("eventResourceInput", function () {
         return {
-            restrict:'E',
-            replace:true,
-            transclude:false,
-            scope: { itemRef: '=', refType: '@' },
-            controller: 'textRefViewController',
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: {
+                resource: '=',
+                onRemove: '&'
+            },
+            controller: 'eventResourceInputController',
+            templateUrl: 'modules/baseUI/html/panelTextList.html'
+        };
+    });
+
+
+    thisModule.directive("eventResourceView", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            scope: {
+                resource: '='
+            },
+            controller: ['$scope', function($scope) {
+                var type = $scope.resource.resourceType.referredObject.type;
+                if (type == 'user' && $scope.resource.users != null) {
+                    $scope.value = $scope.resource.users.refs.map(function(user) {
+                        return user.referredObject.fullName;
+                    }).join(', ');
+                } else if (type == 'upload' && $scope.resource.uploads != null) {
+                    $scope.value = $scope.resource.uploads.map(function(upload) {
+                        return upload.referredObject.fileName;
+                    }).join(', ');
+                }
+            }],
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.\' + refType | t }}</label>' +
-                    '<div class="col-xs-8 col-sm-6">' +
-                        '<p class="form-control-static">{{ reference }}</p>' +
+                    '<label class="col-xs-4 col-sm-2 control-label">{{ resource.resourceType.referredObject.name }}</label>' +
+                    '<div class="col-xs-8 col-sm-10">' +
+                        '<p class="form-control-static">{{ value }}</p>' +
                     '</div>' +
                 '</div>';
             }
         };
     });
-
 
 }());

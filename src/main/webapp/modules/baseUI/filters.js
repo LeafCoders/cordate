@@ -16,7 +16,7 @@
         };
     });
 
-    thisModule.filter('dateRange', ['$filter', function(filter) {
+    thisModule.filter('cordateDateRange', ['$filter', function(filter) {
         return function(text) {
             var sinceDayNumber = parseInt(text.substring(8, 10), 10);
             var sinceMonthNumber = parseInt(text.substring(5, 7), 10);
@@ -29,41 +29,41 @@
             var range = sinceDayNumber;
             if (sinceYearNumber != untilYearNumber ||
                 (sinceYearNumber == untilYearNumber && sinceMonthNumber != untilMonthNumber)) {
-                range += " " + filter('lowercase')(filter('t')(filter('monthName')(sinceMonthNumber)));
+                range += " " + filter('lowercase')(filter('t')(filter('cordateMonthName')(sinceMonthNumber)));
             }
             if (sinceYearNumber != untilYearNumber) {
                 range += " " + sinceYearNumber;
             }
             range += " - ";
             range += untilDayNumber;
-            range += " " + filter('lowercase')(filter('t')(filter('monthName')(untilMonthNumber)));
+            range += " " + filter('lowercase')(filter('t')(filter('cordateMonthName')(untilMonthNumber)));
             range += " " + untilYearNumber;
     
             return range;
         };
     }]);
 
-    thisModule.filter('monthName', function() {
+    thisModule.filter('cordateMonthName', function() {
         return function(monthNumber) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             return months[monthNumber - 1];
         };
     });
 
-    thisModule.filter('dayName', function() {
+    thisModule.filter('cordateDayName', function() {
         return function(dayNumber) {
             var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             return weekdays[dayNumber - 1];
         };
     });
 
-    thisModule.filter('dayNumber', function() {
+    thisModule.filter('cordateDayNumber', function() {
         return function(text) {
             return parseInt(text.substring(8, 10), 10);
         };
     });
 
-    thisModule.filter('time', function() {
+    thisModule.filter('cordateTime', function() {
         return function(text) {
             var time = null;
             if (text && text.length >= 16) {
@@ -73,7 +73,7 @@
         };
     });
 
-    thisModule.filter('date', function() {
+    thisModule.filter('cordateDate', function() {
         return function(text) {
             var date = null;
             if (text && text.length >= 10) {
@@ -87,7 +87,7 @@
         return function(input, values) {
             var translation = translationMap[input];
             if (translation == undefined) {
-                return "{" + input + "}";
+                return input;
             } else if (values != null) {
                 // Handles the following format: {{ 'Show person: {{title}}' | t: {title: 'Kalle'} }}
                 return translation.replace(/{{\S*}}/g, function(m,key) {

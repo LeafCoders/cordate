@@ -2,7 +2,7 @@
 <h1 ng-show="item.id == null">{{ type + 'Editor.label.newTitle' | t}}</h1>
 
 <form role="form" class="form form-horizontal">
-	<div ng-transclude></div>
+	<div item-transclude></div>
 
     <div class="form-actions">
         <a class="btn btn-primary" ng-click="save()">{{ 'itemEditor.action.save' | t }}</a>
