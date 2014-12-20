@@ -59,7 +59,7 @@ public class CordateRealm extends AuthorizingRealm {
 
 				HttpResponse response = httpClient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_UNAUTHORIZED) {
-                    throw new AuthenticationException("The username or password you entered is incorrect.");
+                    throw new AuthenticationException("Användarnamnet eller lösenordet är felaktigt.");
 				} else {
 					simpleAuthenticationInfo = new SimpleAuthenticationInfo(providedUsername, providedPassword, "cordateRealm");
 				}
@@ -70,12 +70,12 @@ public class CordateRealm extends AuthorizingRealm {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-                throw new AuthenticationException("Oops! The server is not responding at the moment.");
+                throw new AuthenticationException("Oops! Servern verkar inte vara tillgänglig just nu.");
 			}
 
 			return simpleAuthenticationInfo;
 		} else {
-			throw new AuthenticationException("The username or password you entered is incorrect.");
+			throw new AuthenticationException("Användarnamnet eller lösenordet är felaktigt.");
 		}
 	}
 }

@@ -4,14 +4,6 @@
 
     var thisModule = angular.module('baseUI');
 
-    thisModule.directive("items", function () {
-        return {
-            restrict:'E',
-            transclude:true,
-            templateUrl:'modules/baseUI/html/items.html'
-        };
-    });
-
     // Use item-transclude instead of ng-transclude to access directive scope 
     thisModule.directive('itemTransclude', function () {
         return function (scope, element, attrs, ctrl, $transclude) {
@@ -21,6 +13,14 @@
         };
     });    
     
+    thisModule.directive("itemsHeader", function () {
+        return {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'modules/baseUI/html/itemsHeader.html'
+        };
+    });
+
     thisModule.directive("itemstable", function () {
         return {
             restrict:'E',
@@ -217,5 +217,16 @@
             }
         };
     });
+
+    thisModule.directive("permission", ['permissionService', function (permissionService) {
+        return {
+            restrict: 'A',
+            link: function ($scope, element, attrs) {
+                if (!permissionService.hasPermission(attrs.permission)) {
+                    element.remove();
+                }
+            }
+        };
+    }]);
 
 }());

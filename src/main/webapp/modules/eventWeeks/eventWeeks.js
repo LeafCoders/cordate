@@ -11,6 +11,7 @@
         utils.extendItemsController(this, $injector, $scope, item);
 
         $scope.type = 'event';
+        $scope.types = 'events';
         $scope.backPage = "eventWeeks/current";
         $scope.item = item;
         

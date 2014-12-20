@@ -36,18 +36,16 @@
         $scope.item.patterns = $scope.item.patterns ? $scope.item.patterns.join('\n') : "";
         
         $scope.beforeSave = function(item) {
-            if ($scope.formHelper.permissionType == "everyone") {
+            if ($scope.formHelper.permissionType === "everyone") {
                 item.everyone = true;
-                delete item.user;
+            } else {
+                delete item.everyone;
+            }
+            if ($scope.formHelper.permissionType !== "group") {
                 delete item.group;
-            } else if ($scope.formHelper.permissionType == "group") {
-                item.everyone = false;
+            }
+            if ($scope.formHelper.permissionType !== "user") {
                 delete item.user;
-                item.group.idRef = $scope.formHelper.permissionId;
-            } else if ($scope.formHelper.permissionType == "user") {
-                item.everyone = false;
-                item.user.idRef = $scope.formHelper.permissionId;
-                delete item.group;
             }
 
             item.patterns = item.patterns.split('\n');

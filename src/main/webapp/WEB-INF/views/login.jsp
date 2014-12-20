@@ -41,7 +41,7 @@
         .form-signin .form-control:focus {
             z-index: 2;
         }
-        .form-signin input[type="email"] {
+        .form-signin input[type="text"] {
             margin-bottom: -1px;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
@@ -83,7 +83,7 @@
     <div id="alerts">
         <c:if test="${loginFailed}">
         <div class="alert alert-danger">
-            <strong>Authentication failed</strong>
+            <strong>Misslyckad inloggning</strong>
             <br/>
             ${errorMessage}
         </div>
@@ -92,10 +92,9 @@
 
     <div id="content">
       <form method="post" action="sessions" class="form-signin">
-          <h2 class="form-signin-heading">Please sign in</h2>
-          <input id="username" type="email" value="${username}" name="username" class="form-control" placeholder="Email" autofocus>
-          <input id="password" type="password" name="password" class="form-control" placeholder="Password">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          <input id="username" type="text" value="${username}" name="username" class="form-control" placeholder="Användarnamn" autofocus>
+          <input id="password" type="password" name="password" class="form-control" placeholder="Lösenord">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Logga in</button>
       </form>
     </div>
 </div>

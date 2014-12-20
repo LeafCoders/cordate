@@ -34,7 +34,8 @@ var utils = utils || {};
     function ItemsController($scope, $location, $filter, $modal, $q, $route, flash, items) {
         $scope.items = items;
         $scope.type = getCurrentItemType($location);
-        $scope.backPage = $scope.type + 's';
+        $scope.types = $scope.type + 's'; 
+        $scope.backPage = $scope.types;
         $scope.allowEditItem = true;
         $scope.allowImport = false;
 
@@ -42,15 +43,15 @@ var utils = utils || {};
         };
 
         $scope.showDetails = function(id) {
-            $location.path('/' + $scope.type + 's/' + id);
+            $location.path('/' + $scope.types + '/' + id);
         };
 
         $scope.createNew = function() {
-            $location.path('/' + $scope.type + 's/new');
+            $location.path('/' + $scope.types + '/new');
         };
 
         $scope.import = function() {
-            $location.path('/' + $scope.type + 's/import');
+            $location.path('/' + $scope.types + '/import');
         };
 
         $scope.removeConfirm = function(item) {
@@ -85,7 +86,8 @@ var utils = utils || {};
     function ItemController($scope, $location, $filter, $modal, $q, flash, item) {
         $scope.item = item;
         $scope.type = getCurrentItemType($location);
-        $scope.backPage = $scope.type + 's';
+        $scope.types = $scope.type + 's'; 
+        $scope.backPage = $scope.types;
         $scope.allowEditItem = true;
 
         $scope.removeConfirm = function() {
@@ -96,7 +98,7 @@ var utils = utils || {};
         $scope.remove = function(item) {
             item.$remove(function() {
                 flash.addAlert({ type: 'success', text: $scope.type + 'Item.alert.itemWasDeleted'});
-                $location.path('/' + $scope.type + 's');
+                $location.path('/' + $scope.types);
             });
         };
     }
@@ -118,7 +120,7 @@ var utils = utils || {};
                 if (item.id == undefined) {
                     itemService.getQuery().save(item, function (data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasCreated'});
-                        $location.path('/' + $scope.type + 's/' + data.id);
+                        $location.path('/' + $scope.types + '/' + data.id);
                     }, function(response) {
                         var property = response.data[0].property;
                         var text = response.data[0].message;
@@ -134,7 +136,7 @@ var utils = utils || {};
                 } else {
                     item.$update(function(data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
-                        $location.path('/' + $scope.type + 's/' + data.id);
+                        $location.path('/' + $scope.types + '/' + data.id);
                     }, function(response) {
                         var property = response.data[0].property;
                         var text = response.data[0].message;
@@ -169,7 +171,7 @@ var utils = utils || {};
     
             // Calls new url, with params from selected item, when user clicks an item
             create : function(item) {
-                $location.url('/' + $scope.type + 's/new?' + item.params);
+                $location.url('/' + $scope.types + '/new?' + item.params);
             }
         };
     }

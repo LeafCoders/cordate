@@ -2,13 +2,12 @@ package se.ryttargardskyrkan.cordate.controller;
 
 import java.io.IOException;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
-
 import se.ryttargardskyrkan.cordate.model.UserSession;
 
 @Controller
@@ -32,10 +30,7 @@ public class SessionController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getIndex() {
         ModelAndView modelAndView = new ModelAndView("index");
-
-        String principal = (String)SecurityUtils.getSubject().getPrincipal();
-        modelAndView.addObject("username", principal);
-
+        modelAndView.addObject("username", (String)SecurityUtils.getSubject().getPrincipal());
         return modelAndView;
 	}
 	

@@ -1,26 +1,23 @@
-<button class="btn btn-primary pull-right" ng-click="createNew()">{{ type + 'Items.action.new' | t}}</button>
-<button ng-show="allowImport" class="btn btn-default pull-right" style="margin-right: 3px;" ng-click="import()">{{ type + 'Items.action.import' | t}}</button>
-<h1>{{ type + 'Items.label.title' | t}}</h1>
-
-<div ng-if="tableHeaderUrl" ng-include="tableHeaderUrl"/>
-<div class="row"><div class="col-md-12">
+<div ng-if="tableHeaderUrl" ng-include="tableHeaderUrl"></div>
+<div class="row">
+<div class="col-md-12">
 <table class="table table-hover">
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items">
         <td ng-click="showDetails(item.id)" item-transclude></td>
         <td width="46">
-            <div class="btn-group pull-right">
+            <div permission="update:{{types}}:{{item.id}},delete:{{types}}:{{item.id}}" class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li ng-show="allowEditItem"><a href="#/{{type}}s/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                    <li ng-show="allowEditItem" class="divider"></li>
-                    <li><a href="#" ng-click="removeConfirm(item)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                    <li permission="update:{{types}}:{{item.id}}" ng-show="allowEditItem"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                    <li permission="delete:{{types}}:{{item.id}}" ><a href="#" ng-click="removeConfirm(item)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
-</div></div>
+</div>
+</div>

@@ -1,8 +1,8 @@
 <div item-transclude></div>
 
 <div class="form-actions">
-    <a ng-show="allowEditItem" href="#/{{type}}s/{{item.id}}/edit" class="btn btn-primary">{{ 'item.action.edit' | t }}</a>
-    <button type="button" class="btn btn-danger pull-right" ng-click="removeConfirm()">{{ 'item.action.delete' | t }}</button>
+    <a permission="update:{{types}}:{{item.id}}" ng-show="allowEditItem" href="#/{{types}}/{{item.id}}/edit" class="btn btn-primary">{{ 'item.action.edit' | t }}</a>
+    <button permission="delete:{{types}}:{{item.id}}" type="button" class="btn btn-danger pull-right" ng-click="removeConfirm()">{{ 'item.action.delete' | t }}</button>
 </div>
 
 <div class="form-extra-actions">

@@ -14,10 +14,14 @@
     var app = angular.module('myApp', dependencies);
 
 
-    var mainController = ['$scope', 'flash', function($scope, flash) {
+    var mainController = ['$scope', 'flash', 'permissionService', function($scope, flash, permissionService) {
         $scope.closeAlert = function(index) {
             flash.clearAlerts();
         };
+
+        permissionService.init(function (resultStatus) {
+            $scope.hasLoadedApp = resultStatus;
+        });
     }];
 
 

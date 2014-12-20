@@ -65,7 +65,8 @@
     var bookingsImportEditorController = ['$scope', '$location', '$filter', 'flash', 'bookingResource', 'locations',
                                           function($scope, $location, $filter, flash, bookingResource, locations) {
         $scope.type = 'booking';
-        $scope.backPage = $scope.type + 's';
+        $scope.types = 'bookings'; 
+        $scope.backPage = $scope.types;
         $scope.importStage = 0;
         $scope.contentErrors = [];
         $scope.contentSuccess = [];
