@@ -184,6 +184,22 @@
         };
     });
 
+    thisModule.directive("checkboxview", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            template: function(tElement, tAttrs) {
+                var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
+                return '' +
+                '<div class="form-group">' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<div class="col-xs-8 col-sm-6"><input type="checkbox" disabled class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
+                '</div>';
+            }
+        };
+    });
+
     thisModule.directive("timeinput", function () {
         return {
             restrict: 'E',

@@ -93,6 +93,7 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.patterns" : "Behörigheter",
         "formLabel.multiSelect" : "Flerval",
         "formLabel.allowText" : "Tillåt text",
+        "formLabel.showOnPalmate" : "Visa på hemsidan",
         
         "modalLabel.location" : "Välj lokal",
         "modalLabel.image" : "Välj bild",

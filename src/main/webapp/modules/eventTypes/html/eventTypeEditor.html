@@ -1,6 +1,10 @@
 <itemEditor>
+    <textInput ng-if="isCreate" item-name="key"></textInput>
+    <textView ng-if="!isCreate" item-name="key"></textView>
+
     <textInput item-name="name"></textInput>
     <textAreaInput item-name="description"></textAreaInput>
+    <checkboxInput item-name="showOnPalmate"></checkboxInput>
 
     <hr>
 

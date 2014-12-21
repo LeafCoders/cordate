@@ -10,6 +10,7 @@ eventsUtils.createEventFromEventType = function (eventType) {
             startTime: '2014-01-01 11:00 Europe/Stockholm',
             endTime: '2014-01-01 12:00 Europe/Stockholm',
             location: null,
+            showOnPalmate: eventType.showOnPalmate,
             resources: []
     };
     
