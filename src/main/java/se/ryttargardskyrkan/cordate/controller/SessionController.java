@@ -4,14 +4,20 @@ import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +32,13 @@ public class SessionController {
 	
 	@Autowired
 	private UserSession userSession;
-	
+
+	@Value("${cordate.rosetteBaseUrl}")
+	private String rosetteBaseUrl;
+
+	@Value("${cordate.rosetteApiVersion}")
+	private String rosetteApiVersion;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getIndex() {
         ModelAndView modelAndView = new ModelAndView("index");
@@ -76,6 +88,7 @@ public class SessionController {
         if (map != null) {
         	modelAndView.addObject("loginFailed", map.get("loginFailed"));
             modelAndView.addObject("errorMessage", map.get("errorMessage"));
+            modelAndView.addObject("successMessage", map.get("successMessage"));
         	modelAndView.addObject("username", map.get("username"));
         }
 		
@@ -86,5 +99,41 @@ public class SessionController {
 	public String getLogout() {
 		SecurityUtils.getSubject().logout();
 		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public ModelAndView getSignup(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("signup");
+		Map<String, ?> map = RequestContextUtils.getInputFlashMap(request); 
+        if (map != null) {
+            modelAndView.addObject("errorMessage", map.get("errorMessage"));
+            modelAndView.addObject("successMessage", map.get("successMessage"));
+        }
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String postSignup(@RequestParam String username, @RequestParam String firstName, @RequestParam String lastName,@RequestParam String email, @RequestParam String password, @RequestParam String permissions,
+			RedirectAttributes redirectAttributes) throws ClientProtocolException, IOException {
+
+		String requestBody = "{" + 
+				"\"username\" : \"" + username + "\", " + 
+				"\"firstName\" : \"" + firstName + "\", " + 
+				"\"lastName\" : \"" + lastName + "\", " + 
+				"\"email\" : \"" + email + "\", " + 
+				"\"password\" : \"" + password + "\", " + 
+				"\"permissions\" : \"" + permissions + "\" }"; 
+
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/signupUsers");
+		httpPost.setEntity(new StringEntity(requestBody, "application/json", "UTF-8"));
+        HttpResponse remoteResponse = httpClient.execute(httpPost);
+
+        if (remoteResponse.getStatusLine().getStatusCode() == HttpServletResponse.SC_CREATED) {
+        	redirectAttributes.addFlashAttribute("successMessage", "Välkommen " + firstName + " " + lastName + "! Du kommer att få ett epostmeddelande när din användare har aktiverats. Det kan ta upp till en dag. <b>Tills dess kommer du inte att kunna logga in med din användare</b>.");
+        } else {
+        	redirectAttributes.addFlashAttribute("errorMessage", "Misslyckades att registrera användaren! Försök igen.");
+        }
+		return "redirect:/signup";
 	}
 }

@@ -8,13 +8,15 @@
                         'myApp.translation_sv_SE',
                         'bookings', 'events', 'eventTypes', 'eventWeeks',
                         'groups', 'groupMemberships', 'locations', 'permissions', 'posters',
-                        'uploads', 'users', 'resourceTypes'
+                        'uploads', 'users', 'signupUsers', 'resourceTypes'
                         ];
 
     var app = angular.module('myApp', dependencies);
 
 
     var mainController = ['$scope', 'flash', 'permissionService', function($scope, flash, permissionService) {
+        $scope.hasLoadedApp = false;
+
         $scope.closeAlert = function(index) {
             flash.clearAlerts();
         };

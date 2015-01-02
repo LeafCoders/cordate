@@ -60,7 +60,7 @@
     <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
 </head>
   
-    <script type="text/javascript">
+<script type="text/javascript">
     function focus() {
     	document.getElementById("username").focus();
 		<c:if test="${loginFailed == true}">
@@ -81,12 +81,19 @@
 
 <div class="container">
     <div id="alerts">
-        <c:if test="${loginFailed}">
-        <div class="alert alert-danger">
-            <strong>Misslyckad inloggning</strong>
-            <br/>
-            ${errorMessage}
-        </div>
+        <c:if test="${errorMessage != null}">
+            <div class="alert alert-danger">
+                <c:if test="${loginFailed}">
+                    <strong>Misslyckad inloggning</strong>
+                    <br/>
+                </c:if>
+                ${errorMessage}
+            </div>
+        </c:if>
+        <c:if test="${successMessage != null}">
+            <div class="alert alert-success">
+                ${successMessage}
+            </div>
         </c:if>
     </div>
 
@@ -96,6 +103,9 @@
           <input id="password" type="password" name="password" class="form-control" placeholder="Lösenord">
           <button class="btn btn-lg btn-primary btn-block" type="submit">Logga in</button>
       </form>
+      <p class="text-center">
+          <a href="signup">Ny användare?</a>
+      </p>
     </div>
 </div>
 </body>

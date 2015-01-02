@@ -36,6 +36,7 @@ var utils = utils || {};
         $scope.type = getCurrentItemType($location);
         $scope.types = $scope.type + 's'; 
         $scope.backPage = $scope.types;
+        $scope.allowCreateItem = true;
         $scope.allowEditItem = true;
         $scope.allowImport = false;
 

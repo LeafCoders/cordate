@@ -117,10 +117,11 @@
             transclude: false,
             template: function(tElement, tAttrs) {
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
+                var inputType = tAttrs.type != undefined ? tAttrs.type : "text";
                 return '' +
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
                   '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
-                  '<div class="col-xs-8 col-sm-6"><input type="text" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
+                  '<div class="col-xs-8 col-sm-6"><input type="' + inputType + '" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
                 '</div>';
             }
         };

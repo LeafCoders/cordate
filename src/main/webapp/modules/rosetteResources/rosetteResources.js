@@ -126,6 +126,9 @@
         };
         return BasicResource($route, BasicQuery($resource, 'resourceTypes'), newModelFn);
     }];
+    var signupUserResource = ['$route', '$resource', function($route, $resource) {
+        return BasicResource($route, BasicQuery($resource, 'signupUsers'));
+    }];
     var userResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'users'));
     }];
@@ -144,6 +147,7 @@
     thisModule.factory('uploadResource', uploadResource);
     thisModule.factory('uploadFolderResource', uploadFolderResource);
     thisModule.factory('resourceTypeResource', resourceTypeResource);
+    thisModule.factory('signupUserResource', signupUserResource);
     thisModule.factory('userResource', userResource);
 
 }());

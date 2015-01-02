@@ -1,0 +1,12 @@
+<item>
+    <button permission="create:user" class="btn btn-primary pull-right" ng-click="transformToUser()">{{ 'signupUserItems.action.transform' | t }}</button>
+    <h1><span class="glyphicon glyphicon-user"></span> {{ 'signupUser' | t }}</h1>
+    <form class="form-horizontal" role="form">
+        <timeview item-name="createdTime"></timeview>
+        <textview item-name="username"></textview>
+        <textview item-name="firstName"></textview>
+        <textview item-name="lastName"></textview>
+        <textview item-name="email"></textview>
+        <textview item-name="permissions"></textview>
+    </form>
+</item>

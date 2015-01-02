@@ -8,6 +8,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.bookings" : "Bokningar",
         "navbar.label.uploads" : "Filer",
         "navbar.label.admin" : "Admin",
+        "navbar.label.signupUsers" : "Användarförfrågningar",
         "navbar.label.users" : "Användare",
         "navbar.label.groups" : "Grupper",
         "navbar.label.groupMemberships" : "Gruppmedlemskap",
@@ -72,6 +73,7 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.lastName" : "Efternamn",
         "formLabel.password" : "Lösenord",
         "formLabel.reenterPassword" : "Repetera lösenord",
+        "formLabel.email" : "Epost",
         "formLabel.type" : "Typ",
         "formLabel.key" : "Nyckelvärde",
         "formLabel.section" : "Sektion",
@@ -90,10 +92,12 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.width" : "Bredd",
         "formLabel.height" : "Höjd",
         "formLabel.permissionFor" : "Behörighet för",
+        "formLabel.permissions" : "Rättigheter",
         "formLabel.patterns" : "Behörigheter",
         "formLabel.multiSelect" : "Flerval",
         "formLabel.allowText" : "Tillåt text",
         "formLabel.showOnPalmate" : "Visa på hemsidan",
+        "formLabel.createdTime" : "Skapad",
         
         "modalLabel.location" : "Välj lokal",
         "modalLabel.image" : "Välj bild",
@@ -144,6 +148,19 @@ angular.module('myApp.translation_sv_SE', []).
 
         "event.modalTitle.create" : "Välj händelsetyp",
         
+        "signupUser" : "Användarförfrågan",
+        "signupUserItems.label.title" : "Användarförfrågningar",
+        "signupUserItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera användarförfrågan?",
+        "signupUserItems.alert.itemWasDeleted" : "Användarförfrågan raderades!",
+
+        "signupUserItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera användarförfrågan?",
+        "signupUserItem.alert.itemWasDeleted" : "Användarförfrågan raderades!",
+        "signupUserItem.label.backToItems" : "« Tillbaka till användarförfrågningar",
+        "signupUserItems.action.transform" : "Omvandla till användare",
+
+        "signupUserEditor.label.editTitle" : "Redigera användarförfrågan",
+        "signupUserEditor.alert.itemWasUpdated" : "Användarförfrågan uppdaterades!",
+
         "user" : "Användare",
         "userItems.label.title" : "Användare",
         "userItems.action.new" : "Ny användare",
@@ -159,8 +176,11 @@ angular.module('myApp.translation_sv_SE', []).
         "userEditor.alert.itemWasCreated" : "Användaren skapades!",
         "userEditor.alert.itemWasUpdated" : "Användaren uppdaterades!",
         "userEditor.alert.passwordsNotMatching" : "Lösenorden matchar inte",
-        "user.username.notEmpty":"Användarnamn saknas",
+        "user.username.notEmpty" : "Användarnamn saknas",
         "user.username.duplicatedUsernameNotAllowed" : "Användarnamnet är upptaget",
+        "user.firstName.notEmpty" : "Förnamn saknas",
+        "user.lastName.notEmpty" : "Efternamn saknas",
+        "user.email.notEmpty" : "Epost saknas",
 
         "group" : "Grupp",
         "groupItems.label.title" : "Grupper",
