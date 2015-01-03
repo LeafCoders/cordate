@@ -6,7 +6,7 @@
     var dependencies = ['ngResource', 'ngRoute', 'ngAnimate',
                         'mgcrea.ngStrap.tooltip', 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStrap.timepicker',
                         'myApp.translation_sv_SE',
-                        'bookings', 'events', 'eventTypes', 'eventWeeks',
+                        'bookings', 'events', 'eventTypes', 'eventWeeks', 'eventSemesters',
                         'groups', 'groupMemberships', 'locations', 'permissions', 'posters',
                         'uploads', 'users', 'signupUsers', 'resourceTypes'
                         ];

@@ -161,3 +161,12 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
 .timepicker.dropdown-menu tbody button {
     padding: 6px
 }
+
+
+.margin-t {
+    margin-top: 20px;
+}
+
+.margin-b {
+    margin-bottom: 20px;
+}

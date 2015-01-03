@@ -107,6 +107,7 @@ angular.module('myApp.translation_sv_SE', []).
         "event" : "Händelse",
         "eventItems.label.title" : "Händelser",
         "eventItems.label.week" : "Vecka",
+        "eventItems.label.semester" : "Termin",
         "eventItems.label.today" : "Idag",
         "eventItems.label.Monday" : "Måndag",
         "eventItems.label.Tuesday" : "Tisdag",
