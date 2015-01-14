@@ -28,8 +28,8 @@
     
     /* Controllers */
 
-    var eventSemesterController = ['$injector', '$scope', '$filter', '$route', 'flash', 'eventResource', 'eventTypes', 'items',
-                               function($injector, $scope, $filter, $route, flash, eventResource, eventTypes, items) {
+    var eventSemesterController = ['$injector', '$scope', '$filter', '$route', 'flash', 'permissionService', 'eventResource', 'eventTypes', 'items',
+                               function($injector, $scope, $filter, $route, flash, permissionService, eventResource, eventTypes, items) {
         utils.extendItemsController(this, $injector, $scope, items);
 
         $scope.type = 'event';
@@ -55,6 +55,10 @@
                 flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted' });
                 $route.reload();
             });
+        };
+        
+        $scope.allowAssign = function(resource) {
+            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.referredObject.key);
         };
     }];
 

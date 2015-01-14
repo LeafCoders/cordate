@@ -4,21 +4,19 @@
 
     var thisModule = angular.module('baseUI');
 
-    var cordateApiPath = '/cordate/api/v1-snapshot';
-    
-    var permissionService = ['$http', function($http) {
+    var permissionService = ['permissionResource', function(permissionResource) {
         var userPermissions = [];
         var testedPermissions = {};
 
         this.init = function(callbackFn) {
-            $http.get(cordateApiPath + '/permissionsForUser').
-            success(function(data, status, headers, config) {
-                userPermissions = data;
-                callbackFn(true);
-            }).
-            error(function(data, status, headers, config) {
-                callbackFn(false);
-            });            
+            permissionResource.permissionsForUser().
+                success(function(data) {
+                    userPermissions = data;
+                    callbackFn(true);
+                }).
+                error(function(data) {
+                    callbackFn(false);
+                });            
         };
  
         this.hasPermission = function(permissionsToTest) {

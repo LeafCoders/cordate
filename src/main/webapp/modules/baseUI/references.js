@@ -16,9 +16,12 @@
         $scope.singleSelect = true;
         $scope.allowOptionalText = false;
         $scope.panelItems = new Array();
+        $scope.errors = {};
 
         $scope.inputModal = {
             showModal: function() {
+                $scope.errors = {};
+
                 // Load resources
                 $q.when(resource.getQuery().query(resourceQuery).$promise).then(function(resources) {
                     // Convert resources to objects with 'id' and 'title' values
@@ -74,8 +77,7 @@
                 if ($scope.optionalText !== '') {
                     newPanelItems.push($scope.createTextItem($scope.optionalText));
                 }
-                $scope.panelItems = newPanelItems;
-                $scope.inputTransform.toItem();
+                $scope.inputTransform.toItem(newPanelItems);
             },
             removeItemConfirm: function() {
                 var modalScope = $scope.$new();
@@ -144,7 +146,8 @@
                     }
                 }
             },
-            toItem: function() {
+            toItem: function(newPanelItems) {
+                $scope.panelItems = newPanelItems;
                 $scope.refItem = null;
                 if ($scope.panelItems.length > 0) {
                     if ($scope.singleSelect) {
@@ -164,10 +167,11 @@
     }];
 
     
-    var eventResourceInputController = ['$injector', '$scope', function($injector, $scope) {
+    var eventResourceInputController = ['$injector', '$scope', 'eventResource', function($injector, $scope, eventResource) {
         var resourceTypeItem = $scope.resource.resourceType.referredObject;
         $scope.resourceType = resourceTypeItem.type;
         $scope.refType = resourceTypeItem.type;
+
         switch ($scope.resourceType) {
             case 'user':
                 var userResourceService = $injector.get('userResource');
@@ -221,19 +225,36 @@
                     }
                 }
             },
-            toItem: function() {
-                var resource = $scope.resource;
-                if (resource.type == 'user') {
-                    resource.users = { refs: [] };
-                    angular.forEach($scope.panelItems, function(panelItem) {
-                        resource.users.refs.push({ 'idRef': panelItem.id });
+            toItem: function(newPanelItems) {
+                var update = {};
+                
+                if ($scope.resource.type == 'user') {
+                    update.users = { refs: [] };
+                    angular.forEach(newPanelItems, function(panelItem) {
+                        update.users.refs.push({ 'idRef': panelItem.id });
                     });
                     // TODO: Set resource.users.text = ...
-                } else if (resource.type == 'upload') {
-                    resource.uploads = [];
-                    angular.forEach($scope.panelItems, function(panelItem) {
-                        resource.uploads.push({ 'idRef': panelItem.id });
+                } else if ($scope.resource.type == 'upload') {
+                    update.uploads = [];
+                    angular.forEach(newPanelItems, function(panelItem) {
+                        update.uploads.push({ 'idRef': panelItem.id });
                     });
+                }
+
+                if ($scope.assignDirectly) {
+                    var sendResource = angular.copy($scope.resource);
+                    angular.extend(sendResource, update);
+                    eventResource.assignResource($scope.eventId, resourceTypeItem.id, sendResource).
+                        success(function(data, status, headers, config) {
+                            $scope.panelItems = newPanelItems;
+                            angular.extend($scope.resource, update);
+                        }).
+                        error(function(data, status, headers, config) {
+                            $scope.errors[$scope.refType] = "has-error";
+                        });
+                } else {
+                    $scope.panelItems = newPanelItems;
+                    angular.extend($scope.resource, update);
                 }
             }
         };
@@ -333,8 +354,11 @@
             replace: true,
             transclude: false,
             scope: {
+                eventId: '@',
                 resource: '=',
-                onRemove: '&'
+                showRemove: '@',
+                onRemove: '&',
+                assignDirectly: '@'
             },
             controller: 'eventResourceInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'

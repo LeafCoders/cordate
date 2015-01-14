@@ -10,6 +10,6 @@
     <hr>
 
     <div ng-repeat="resource in item.resources">
-        <event-resource-input resource="resource" on-remove="removeResource(resource)"></event-resource-input>
+        <event-resource-input eventId="{{ item.id }}" resource="resource" show-remove="true" on-remove="removeResource(resource)"></event-resource-input>
     </div>
 </itemEditor>

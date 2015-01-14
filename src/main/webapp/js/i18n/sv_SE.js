@@ -51,6 +51,7 @@ angular.module('myApp.translation_sv_SE', []).
         "itemEditor.action.prev" : "Föregående",
         "itemEditor.action.next" : "Nästa",
         "itemEditor.action.select" : "Välj",
+        "itemEditor.action.assign" : "Tilldela",
         "itemEditor.action.ok" : "Ok",
         "itemEditor.action.import" : "Importera",
 

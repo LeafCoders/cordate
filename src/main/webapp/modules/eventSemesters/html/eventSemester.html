@@ -67,8 +67,13 @@
     <h4>{{ item.title }}</h4>
     <form class="form-horizontal" role="form">
         <textview item-name="description"></textview>
-        <div ng-repeat="resource in item.resources">
-            <event-resource-view resource="resource"></event-resource-view>
+        <div ng-repeat="resource in item.resources" ng-switch="allowAssign(resource)">
+            <div ng-switch-when="false">
+                <event-resource-view resource="resource"></event-resource-view>
+            </div>
+            <div ng-switch-when="true">
+                <event-resource-input event-id="{{ item.id }}" resource="resource" assign-directly="true"></event-resource-input>
+            </div>
         </div>
     </form>
 </div>

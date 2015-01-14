@@ -11,28 +11,28 @@
         $scope.allowCreateItem = false;
     }];
 
-    var signupUserController = ['$injector', '$scope', '$http', '$location', 'flash', 'item', function($injector, $scope, $http, $location, flash, item) {
+    var signupUserController = ['$injector', '$scope', '$location', 'flash', 'signupUserResource', 'item',
+                                function($injector, $scope, $location, flash, signupUserResource, item) {
         utils.extendItemController(this, $injector, $scope, item);
-        
+
         $scope.transformToUser = function () {
-            var cordateApiPath = '/cordate/api/v1-snapshot';
-            $http.post(cordateApiPath + '/signupUsersTransform/' + item.id).
-            success(function(data, status, headers, config) {
-                flash.addAlert({ type: 'success', text: 'userEditor.alert.itemWasCreated'});
-                $location.path('/signupUsers');
-            }).
-            error(function(data, status, headers, config) {
-                var property = data[0].property;
-                var text = data[0].message;
+            signupUserResource.transformToUser(item.id).
+                success(function(data) {
+                    flash.addAlert({ type: 'success', text: 'userEditor.alert.itemWasCreated'});
+                    $location.path('/signupUsers');
+                }).
+                error(function(data) {
+                    var property = data[0].property;
+                    var text = data[0].message;
 
-                if (property != undefined) {
-                    flash.addAlert({ type: 'danger', text: text});
-                    flash.showAlerts();
-                    flash.clearAlerts();
-                }
+                    if (property != undefined) {
+                        flash.addAlert({ type: 'danger', text: text});
+                        flash.showAlerts();
+                        flash.clearAlerts();
+                    }
 
-                $scope.errors[property] = "has-error";
-            });            
+                    $scope.errors[property] = "has-error";
+                });            
         };
     }];
 

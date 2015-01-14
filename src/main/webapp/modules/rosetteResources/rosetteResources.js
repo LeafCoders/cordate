@@ -5,7 +5,6 @@
     var thisModule = angular.module('rosetteResources', ['ngRoute', 'ngResource']);
 
     var cordateApiPath = '/cordate/api/v1-snapshot';
-//    thisModule.value('cordateApiPath', cordateApiPath);
 
     /* Helper methods */
 
@@ -69,20 +68,30 @@
     var bookingResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'bookings'));
     }];
-    var eventResource = ['$route', '$resource', function($route, $resource) {
+
+    var eventResource = ['$route', '$http', '$resource', function($route, $http, $resource) {
         var newModelFn = function(params) {
             var newModel = {};
             setStartAndEndTimes(newModel, 'startTime', '11:00', 'endTime', '12:00');
             return newModel;
         };
-        return BasicResource($route, BasicQuery($resource, 'events'), newModelFn);
+        var resourceMethods = BasicResource($route, BasicQuery($resource, 'events'), newModelFn);
+
+        resourceMethods.assignResource = function(eventId, resourceTypeId, resourceData) {
+            return $http.put(cordateApiPath + '/events/' + eventId + '/resources/' + resourceTypeId, resourceData);
+        };
+
+        return resourceMethods;
     }];
+
     var eventWeekResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'eventWeeks'));
     }];
+
     var eventTypeResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'eventTypes'));
     }];
+
     var groupMembershipResource = ['$route', '$resource', function($route, $resource) {
         var query = function() {
             return $resource(cordateApiPath + '/groupMemberships/:id', { id: '@id' }, {
@@ -92,15 +101,25 @@
         };
         return BasicResource($route, query);
     }];
+
     var groupResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'groups'));
     }];
+
     var locationResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'locations'));
     }];
-    var permissionResource = ['$route', '$resource', function($route, $resource) {
-        return BasicResource($route, BasicQuery($resource, 'permissions'));
+
+    var permissionResource = ['$route', '$http', '$resource', function($route, $http, $resource) {
+        var resourceMethods = BasicResource($route, BasicQuery($resource, 'permissions'));
+
+        resourceMethods.permissionsForUser = function () {
+            return $http.get(cordateApiPath + '/permissionsForUser');
+        };
+
+        return resourceMethods; 
     }];
+
     var posterResource = ['$route', '$resource', function($route, $resource) {
         var newModelFn = function(params) {
             var newModel = {};
@@ -110,6 +129,7 @@
         };
         return BasicResource($route, BasicQuery($resource, 'posters'), newModelFn);
     }];
+
     var uploadResource = ['$route', '$resource', function($route, $resource) {
         var query = function() {
             return $resource(cordateApiPath + '/uploads/:folderName/:id',
@@ -117,21 +137,32 @@
         };
         return BasicResource($route, query);
     }];
+
     var uploadFolderResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'uploadFolders'));
     }];
+
     var resourceTypeResource = ['$route', '$resource', function($route, $resource) {
         var newModelFn = function(params) {
             return { type: params.type };
         };
         return BasicResource($route, BasicQuery($resource, 'resourceTypes'), newModelFn);
     }];
-    var signupUserResource = ['$route', '$resource', function($route, $resource) {
-        return BasicResource($route, BasicQuery($resource, 'signupUsers'));
+
+    var signupUserResource = ['$route', '$http', '$resource', function($route, $http, $resource) {
+        var resourceMethods = BasicResource($route, BasicQuery($resource, 'signupUsers'));
+
+        resourceMethods.transformToUser = function (signupUserId) {
+            return $http.post(cordateApiPath + '/signupUsersTransform/' + signupUserId);
+        };
+
+        return resourceMethods; 
     }];
+
     var userResource = ['$route', '$resource', function($route, $resource) {
         return BasicResource($route, BasicQuery($resource, 'users'));
     }];
+    
 
     /* Resource services */
 
