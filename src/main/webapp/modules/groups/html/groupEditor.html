@@ -1,3 +1,7 @@
 <itemeditor>
+    <textInput ng-if="isCreate" item-name="id"></textInput>
+    <textView ng-if="!isCreate" item-name="id"></textView>
+
 	<textinput item-name="name" autofocus></textinput>
+    <textAreaInput item-name="description"></textAreaInput>
 </itemeditor>

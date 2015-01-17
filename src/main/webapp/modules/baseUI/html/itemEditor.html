@@ -1,5 +1,5 @@
-<h1 ng-show="item.id != null">{{ type + 'Editor.label.editTitle' | t}}</h1>
-<h1 ng-show="item.id == null">{{ type + 'Editor.label.newTitle' | t}}</h1>
+<h1 ng-show="isCreate">{{ type + 'Editor.label.newTitle' | t }}</h1>
+<h1 ng-hide="isCreate">{{ type + 'Editor.label.editTitle' | t }}</h1>
 
 <form role="form" class="form form-horizontal">
 	<div item-transclude></div>

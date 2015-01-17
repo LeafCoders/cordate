@@ -55,11 +55,14 @@ angular.module('myApp.translation_sv_SE', []).
         "itemEditor.action.ok" : "Ok",
         "itemEditor.action.import" : "Importera",
 
-        "error.badRequest" : "Sorry, ogiltigt anrop",
-        "error.permissionDenied" : "Behörighet saknas",
+        "error.badRequest" : "Sorry, ogiltigt anrop.",
+        "error.permissionDenied" : "Behörighet saknas.",
         "error.unknownError" : "Oops! Något gick snett. Försök igen.",
         "error.hasIdOrText.oneMustBeSet" : "Id eller text måste sättas.",
+        "error.id.mustBeUnique" : "Ej unikt id! Id som du angett finns redan.",
+        "error.id.notValidFormat" : "Fel format! Id måste börja med liten bokstav och får bara innehålla a-z, A-Z och 0-9.",
 
+        "formLabel.id" : "Id",
         "formLabel.startTime" : "Börjar",
         "formLabel.endTime" : "Slutar",
         "formLabel.title" : "Titel",

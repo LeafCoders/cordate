@@ -10,7 +10,10 @@
 
     function BasicQuery($resource, resourceName) {
         return function() {
-            return $resource(cordateApiPath + '/' + resourceName + '/:id', { id: '@id' }, { update: { method: 'PUT' } });
+            return $resource(cordateApiPath + '/' + resourceName + '/:id', { id: '@id' }, {
+                create: { method: 'POST', params: { id: null } },
+                update: { method: 'PUT' }
+            });
         };
     };
     
@@ -93,13 +96,7 @@
     }];
 
     var groupMembershipResource = ['$route', '$resource', function($route, $resource) {
-        var query = function() {
-            return $resource(cordateApiPath + '/groupMemberships/:id', { id: '@id' }, {
-                update: { method: 'PUT' },
-                findByGroupId: { method: 'GET', params: { groupId: '@groupId' }, isArray: true }
-            });
-        };
-        return BasicResource($route, query);
+        return BasicResource($route, BasicQuery($resource, 'groupMemberships'));
     }];
 
     var groupResource = ['$route', '$resource', function($route, $resource) {

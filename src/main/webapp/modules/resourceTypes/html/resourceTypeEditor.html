@@ -4,8 +4,8 @@
     <div ng-if="item.type === 'user' || item.type === 'upload'">
         <textInput item-name="section" autofocus></textInput>
 
-        <textInput ng-if="isCreate" item-name="key"></textInput>
-        <textView ng-if="!isCreate" item-name="key"></textView>
+        <textInput ng-if="isCreate" item-name="id"></textInput>
+        <textView ng-if="!isCreate" item-name="id"></textView>
 
     	<textInput item-name="name"></textInput>
         <textAreaInput item-name="description"></textAreaInput>

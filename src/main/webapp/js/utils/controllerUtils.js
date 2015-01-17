@@ -118,8 +118,8 @@ var utils = utils || {};
             item = $scope.beforeSave(item);
 
             if (item) {
-                if (item.id == undefined) {
-                    itemService.getQuery().save(item, function (data, headers) {
+                if ($scope.isCreate) {
+                    itemService.getQuery().create(item, function (data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasCreated'});
                         $location.path('/' + $scope.types + '/' + data.id);
                     }, function(response) {
@@ -134,7 +134,7 @@ var utils = utils || {};
 
                         $scope.errors[property] = "has-error";
                     });
-                } else {
+                } else if (item.id != undefined) {
                     item.$update(function(data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
                         $location.path('/' + $scope.types + '/' + data.id);
