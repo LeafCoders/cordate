@@ -1,10 +1,24 @@
 <item>
-	<h1 ng-show="item.everyone">{{ 'permissionItem.label.permissionsForEveryone' | t }}</h1>
-	<h1 ng-show="item.group">{{item.group.referredObject.name}}</h1>
-	<h1 ng-show="item.user"><span class="glyphicon glyphicon-user"></span> {{item.user.referredObject.username}}</h1>
+    <form class="form-horizontal" role="form">
+        <div ng-show="item.everyone" class="form-group">
+            <label class="col-xs-4 col-sm-3 control-label"></label>
+            <div class="col-xs-8 col-sm-6">
+                <p class="form-control-static">{{ 'permissionItem.label.permissionsForEveryone' | t }}</p>
+            </div>
+        </div>
 
-    <label>{{ 'permissionItem.label.permissions' | t }}</label>
-    <div ng-repeat="pattern in item.patterns">
-        <span class="label label-default">{{ pattern }}</span>
-    </div>
+        <ref-view ng-show="item.group" ref-item="item.group" ref-type="group"></ref-view>
+        <ref-view ng-show="item.user" ref-item="item.user" ref-type="user"></ref-view>
+
+        <div class="form-group">
+            <label class="col-xs-4 col-sm-3 control-label">{{ 'permissionItem.label.permissions' | t }}</label>
+            <div class="col-xs-8 col-sm-6">
+                <p class="form-control-static">
+                    <div ng-repeat="pattern in item.patterns">
+                        <span class="label label-default">{{ pattern }}</span>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </form>
 </item>

@@ -24,7 +24,7 @@
 
                 // Load resources
                 $q.when(resource.getQuery().query(resourceQuery).$promise).then(function(resources) {
-                    // Convert resources to objects with 'id' and 'title' values
+                    // Convert resources to objects with 'id' and 'text' values
                     var items = new Array();
                     var lenRes = resources.length;
                     for (var r = 0; r < lenRes; r++) {
@@ -33,12 +33,12 @@
                     $scope.modalItems = items;
     
                     // Select items and set optional text
-                    $scope.optionalText = '';
+                    $scope.optionalText = {};
                     var lenPanel = $scope.panelItems.length;
                     var lenModal = $scope.modalItems.length;
                     for (var p = 0; p < lenPanel; p++) {
                         if ($scope.panelItems[p].id === undefined) {
-                            $scope.optionalText = $scope.panelItems[p].title; 
+                            $scope.optionalText = { text: $scope.panelItems[p].text }; 
                         } else {
                             for (var m = 0; m < lenModal; m++) {
                                 if ($scope.panelItems[p].id === $scope.modalItems[m].id) {
@@ -53,17 +53,20 @@
                 var modalPromise = $modal({template: modalTemplate, persist: true, show: false, backdrop: 'static', scope: $scope});
                 modalPromise.$promise.then(modalPromise.show);
             },
-            toggleModalItem: function(modalItem) {
+            toggleModalItem: function(modalItem, optionalText) {
                 var length = $scope.modalItems.length;
                 for (var i = 0; i < length; i++) {
                     if ($scope.modalItems[i] === modalItem) {
                         modalItem.selected = !modalItem.selected;
                         if ($scope.singleSelect) {
-                            $scope.optionalText = '';
+                            $scope.optionalText = {};
                         }
                     } else if ($scope.singleSelect && $scope.modalItems[i].selected) {
                         $scope.modalItems[i].selected = false;
                     }
+                }
+                if (modalItem == null) {
+                    $scope.optionalText = optionalText ? { text: optionalText } : {};
                 }
             },
             saveModalItems: function() {
@@ -74,8 +77,8 @@
                         newPanelItems.push($scope.modalItems[i]); 
                     }
                 }
-                if ($scope.optionalText !== '') {
-                    newPanelItems.push($scope.createTextItem($scope.optionalText));
+                if ($scope.optionalText.text !== undefined) {
+                    newPanelItems.push($scope.createTextItem($scope.optionalText.text));
                 }
                 $scope.inputTransform.toItem(newPanelItems);
             },
@@ -90,8 +93,8 @@
         $scope.createIdItem = function(resource) {
             return $scope.resourceToItem(resource);
         };
-        $scope.createTextItem = function(title) {
-            return { 'title': title };
+        $scope.createTextItem = function(text) {
+            return { 'text': text };
         };
     }
 
@@ -103,7 +106,7 @@
                             uploadService, { folderName: $scope.uploadFolderName }));
 
             $scope.refType = 'upload';
-            $scope.modalTitle = 'image';
+            $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.image' };
             $scope.singleSelect = true;
         } else {
             var refResourceService = $injector.get($scope.refType + 'Resource');
@@ -113,19 +116,18 @@
 
             $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.' + $scope.refType };
             $scope.singleSelect = true;
-            $scope.allowOptionalText = false;
         }
 
         $scope.resourceToItem = function(resource) {
             switch ($scope.refType) {
                 case 'group':
-                    return { 'id': resource.id, 'title': resource.name };
+                    return { 'id': resource.id, 'text': resource.name };
                 case 'user':
-                    return { 'id': resource.id, 'title': resource.firstName + ' ' + resource.lastName };
+                    return { 'id': resource.id, 'text': resource.firstName + ' ' + resource.lastName };
                 case 'upload':
-                    return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
+                    return { 'id': resource.id, 'text': resource.fileName, 'fileUrl': resource.fileUrl };
                 default:
-                    return { 'id': resource.id, 'title': resource.name };
+                    return { 'id': resource.id, 'text': resource.name };
             }
         };
 
@@ -154,7 +156,7 @@
                         if ($scope.panelItems[0].id != undefined) {
                             $scope.refItem = { 'idRef': $scope.panelItems[0].id };
                         } else {
-                            $scope.refItem = { 'text': $scope.panelItems[0].title };
+                            $scope.refItem = { 'text': $scope.panelItems[0].text };
                         }
                     } else {
                         // TODO: Handle multiple references
@@ -196,28 +198,29 @@
         $scope.resourceToItem = function(resource) {
             switch ($scope.resourceType) {
                 case 'user':
-                    return { 'id': resource.id, 'title': resource.fullName };
+                    return { 'id': resource.id, 'text': resource.fullName };
                 case 'upload':
-                    return { 'id': resource.id, 'title': resource.fileName, 'fileUrl': resource.fileUrl };
+                    return { 'id': resource.id, 'text': resource.fileName, 'fileUrl': resource.fileUrl };
             }
         };
 
         $scope.inputTransform = {
             fromItem: function() {
                 var resource = $scope.resource;
+                var resourceType = resource.resourceType.referredObject;
                 if (resource.type == 'user') {
-                    $scope.singleSelect = !resource.multiSelect;
-                    $scope.allowOptionalText = resource.allowText;
+                    $scope.singleSelect = !resourceType.multiSelect;
+                    $scope.allowOptionalText = resourceType.allowText;
                     if (resource.users) {
                         angular.forEach(resource.users.refs, function(user) {
                             $scope.panelItems.push($scope.createIdItem(user.referredObject));
                         });
                         if (resource.users.text) {
-                            $scope.panelItems.push($scope.createTextItem(ref.text));
+                            $scope.panelItems.push($scope.createTextItem(resource.users.text));
                         }
                     }
                 } else if (resource.type == 'upload') {
-                    $scope.singleSelect = !resource.multiSelect;
+                    $scope.singleSelect = !resourceType.multiSelect;
                     if (resource.uploads) {
                         angular.forEach(resource.uploads, function(upload) {
                             $scope.panelItems.push($scope.createIdItem(upload.referredObject));
@@ -231,9 +234,12 @@
                 if ($scope.resource.type == 'user') {
                     update.users = { refs: [] };
                     angular.forEach(newPanelItems, function(panelItem) {
-                        update.users.refs.push({ 'idRef': panelItem.id });
+                        if (panelItem.id != undefined) {
+                            update.users.refs.push({ 'idRef': panelItem.id });
+                        } else {
+                            update.users.text = panelItem.text;
+                        }
                     });
-                    // TODO: Set resource.users.text = ...
                 } else if ($scope.resource.type == 'upload') {
                     update.uploads = [];
                     angular.forEach(newPanelItems, function(panelItem) {
@@ -281,6 +287,7 @@
             scope: {
                 refItem: '=',
                 refType: '@',
+                allowOptionalText: '@'
             },
             controller: 'referenceInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'
@@ -316,7 +323,7 @@
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.refType + '\' | t }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.refType + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                         '<p class="form-control-static">{{ refText }}</p>' +
                     '</div>' +
@@ -334,7 +341,7 @@
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.image\' | t }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.image\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                         '<div class="panel panel-default">' +
                             '<div class="panel-heading">' +
@@ -389,7 +396,7 @@
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ resource.resourceType.referredObject.name }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ resource.resourceType.referredObject.name }}</label>' +
                     '<div class="col-xs-8 col-sm-10">' +
                         '<p class="form-control-static">{{ value }}</p>' +
                     '</div>' +

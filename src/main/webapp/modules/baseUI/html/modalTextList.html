@@ -7,9 +7,9 @@
     		</div>
     		<div class="modal-body">
     			<div class="list-group">
-    				<a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" ng-repeat="item in modalItems" class="list-group-item">{{ item.title }}</a>
-    				<a href="" class="list-group-item" ng-class="{active: optionalText}" ng-show="allowOptionalText">
-    					<input type="text" class="form-control" id="optionalText" ng-model="optionalText" ng-change="toggleModalItem(null)" placeholder="Ange namn här om det saknas i listan">
+    				<a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" ng-repeat="item in modalItems" class="list-group-item">{{ item.text }}</a>
+    				<a href="" class="list-group-item" ng-class="{active: optionalText.text}" ng-if="allowOptionalText">
+    					<input type="text" class="form-control" ng-model="optionalText.text" ng-change="inputModal.toggleModalItem(null, optionalText.text)" placeholder="Ange namn här om det saknas i listan">
     				</a>
     			</div>
     		</div>

@@ -33,7 +33,7 @@
         item.folderName = item.folderName || currentFolder.name;
 
         utils.extendItemEditorController(this, $injector, $scope, uploadResource, item);
-        $scope.uploadIsSupported = window.FileReader;
+        $scope.uploadIsSupported = !!window.FileReader;
 
         $scope.onFileSelect = function(files) {
             flash.clearAlerts();

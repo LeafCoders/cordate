@@ -1,9 +1,9 @@
 <div class="form-group" ng-class="errors.{{ refType }}">
-	<label class="col-xs-4 col-sm-2 control-label">{{ labels.inputTitle | t }}</label>
+	<label class="col-xs-4 col-sm-3 control-label">{{ labels.inputTitle | t }}</label>
 	<div class="col-xs-8 col-sm-6">
 		<div class="panel panel-default">
 			<div class="panel-heading" ng-if="panelTitle"><h3 class="panel-title">{{ 'formLabel.' + panelTitle | t }}</h3></div>
-			<ul class="list-group"><li class="list-group-item" ng-repeat="pi in panelItems">{{ pi.title }}</li></ul>
+			<ul class="list-group"><li class="list-group-item" ng-repeat="pi in panelItems">{{ pi.text }}</li></ul>
 			<div class="panel-footer">
 				<button type="button" class="btn btn-primary btn-sm" ng-click="inputModal.showModal()">{{ assignDirectly ? 'itemEditor.action.assign' : 'itemEditor.action.select' | t }}</button>
                 <button type="button" class="btn btn-danger btn-sm pull-right" ng-show="showRemove" ng-click="inputModal.removeItemConfirm()">{{ 'itemEditor.action.delete' | t }}</button>

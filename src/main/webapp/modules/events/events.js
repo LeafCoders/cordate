@@ -6,9 +6,14 @@
 
     /* Controllers */
 
-    var eventController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
+    var eventController = ['$injector', '$scope', 'permissionService', 'item',
+                           function($injector, $scope, permissionService, item) {
         utils.extendItemController(this, $injector, $scope, item);
         $scope.backPage = 'eventWeeks/current';
+
+        $scope.allowAssign = function(resource) {
+            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.referredObject.id);
+        };
     }];
 
     var eventEditorController = ['$injector', '$scope', '$filter', 'eventResource', 'eventType', 'item',

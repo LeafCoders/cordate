@@ -16,6 +16,8 @@ function referenceToText(ref, refType) {
 		} else {
 			if (ref.referredObject != null) {
 				switch (refType) {
+				    case 'user': return ref.referredObject.fullName + " (" + ref.referredObject.username + ")"; break;
+				    case 'group': return ref.referredObject.name; break;
 					case 'location': return ref.referredObject.name; break;
                     case 'eventType': return ref.referredObject.name; break;
                     default: return ref.referredObject.name; break;

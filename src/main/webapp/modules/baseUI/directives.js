@@ -101,7 +101,7 @@
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.label + '\' | t }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.label + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                         '<div item-transclude></div>' +
                     '</div>' +
@@ -120,7 +120,7 @@
                 var inputType = tAttrs.type != undefined ? tAttrs.type : "text";
                 return '' +
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
-                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                   '<div class="col-xs-8 col-sm-6"><input type="' + inputType + '" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
                 '</div>';
             }
@@ -136,7 +136,7 @@
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
                 return '' +
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
-                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                   '<div class="col-xs-8 col-sm-6"><textarea class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
                 '</div>';
             }
@@ -160,7 +160,7 @@
                 var value = tAttrs.msgPrefix != null ? '\'' + tAttrs.msgPrefix + '.\' + item.' + tAttrs.itemName + ' | t' : 'item.' + tAttrs.itemName;
                 return '' +
                 '<div class="form-group"' + ifExist + '>' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ ' + formLabel + ' | t }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ ' + formLabel + ' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                         '<p class="form-control-static">{{ ' + value + ' }} <span item-transclude></span></p>' +
                     '</div>' +
@@ -178,7 +178,7 @@
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
                 return '' +
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
-                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                   '<div class="col-xs-8 col-sm-6"><input type="checkbox" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
                 '</div>';
             }
@@ -191,11 +191,12 @@
             replace: true,
             transclude: false,
             template: function(tElement, tAttrs) {
-                var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
                 return '' +
                 '<div class="form-group">' +
-                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
-                  '<div class="col-xs-8 col-sm-6"><input type="checkbox" disabled class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
+                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<div class="col-xs-8 col-sm-6">' +
+                    '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' | cordateBool }}</p>' +
+                  '</div>' +
                 '</div>';
             }
         };
@@ -210,7 +211,7 @@
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
                 return '' +
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
-                    '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                    '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                     '<div class="col-xs-5 col-sm-3"><input type="text" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="formHelper.' + tAttrs.itemName + 'PartDate" bs-datepicker data-start-week="1" data-date-type="string" data-date-format="yyyy-MM-dd" data-autoclose="true" data-use-native="true" ' + autofocus + '></div>' +
                     '<div class="col-xs-3 col-sm-2"><input type="text" class="form-control" ng-model="formHelper.' + tAttrs.itemName + 'PartTime" bs-timepicker data-time-type="string" data-time-format="HH:mm" data-use-native="true"></div>' +
                 '</div>';
@@ -226,7 +227,7 @@
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-2 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                     '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' | cordateDate }} {{ item.' + tAttrs.itemName + ' | cordateTime }}</p>' +
                     '</div>' +

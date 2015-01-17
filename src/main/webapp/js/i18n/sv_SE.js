@@ -204,6 +204,7 @@ angular.module('myApp.translation_sv_SE', []).
         "groupEditor.alert.itemWasUpdated" : "Gruppen uppdaterades!",
         "group.name.notNull":"Namn saknas",
 
+        "groupMembership" : "Gruppmedlemskap",
         "groupMembershipItems.label.title" : "Gruppmedlemskap",
         "groupMembershipItems.action.new" : "Nytt gruppmedlemskap",
         "groupMembershipItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera gruppmedlemskapet?",
@@ -228,6 +229,7 @@ angular.module('myApp.translation_sv_SE', []).
         "groupMembership.userId.notNull" : "Användare saknas",
         "groupMembership.alreadyExists" : "Gruppmedlemskapet finns redan",
 
+        "permission" : "Behörighet",
         "permissionItems.label.title" : "Behörigheter",
         "permissionItems.action.new" : "Ny behörighet",
         "permissionItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera behörigheten?",
@@ -237,7 +239,7 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionItems.label.permissionsForUsers" : "Användare",
         "permissionItems.label.everyone" : "Alla",
 
-        "permissionItem.label.permissionsForEveryone" : "Alla",
+        "permissionItem.label.permissionsForEveryone" : "Behärigheter för alla",
         "permissionItem.label.permissions" : "Behörigheter",
         "permissionItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera behörigheten?",
         "permissionItem.alert.itemWasDeleted" : "Behörigheten raderades!",
@@ -321,6 +323,7 @@ angular.module('myApp.translation_sv_SE', []).
         "poster.endTime.notNull" : "Sluttid saknas.",
         "poster.startBeforeEndTime" : "Starttiden måste vara före sluttiden.",
         "poster.duration.tooShort" : "Visningstiden är för kort.",
+        "poster.image.mustBeSet" : "En bild måste anges",
 
         "posterItems.label.title" : "Affischer",
         "posterItems.action.new" : "Ny affisch",

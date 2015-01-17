@@ -2,13 +2,15 @@
 	<timeinput item-name="startTime"></timeinput>
 	<timeinput item-name="endTime"></timeinput>
 	<textinput item-name="title" autofocus></textinput>
-    <image-ref-input ref-item="item.image" upload-folder-name="posters"></image-ref-input>
 
     <div class="form-group">
-        <label for="form-duration" class="control-label">{{ 'posterEditor.formLabel.duration' | t }}</label>
-        <div>
-            <div class="pull-left spacer"><select class="form-control" id="form-duration" ng-model="formHelper.duration" ng-options="duration.value as duration.text for duration in formHelper.durations"/></div>
-            <div class="clearfix"></div>
+        <label class="col-xs-4 col-sm-3 control-label">{{ 'posterEditor.formLabel.duration' | t }}</label>
+        <div class="col-xs-2 col-sm-2">
+            <p class="form-control-static">
+                <select class="form-control" id="form-duration" ng-model="formHelper.duration" ng-options="duration.value as duration.text for duration in formHelper.durations"/>
+            </p>
         </div>
     </div>
+
+    <image-ref-input ref-item="item.image" upload-folder-name="posters"></image-ref-input>
 </itemeditor>

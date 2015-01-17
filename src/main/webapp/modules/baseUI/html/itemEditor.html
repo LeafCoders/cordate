@@ -1,11 +1,11 @@
-<h1 ng-show="isCreate">{{ type + 'Editor.label.newTitle' | t }}</h1>
-<h1 ng-hide="isCreate">{{ type + 'Editor.label.editTitle' | t }}</h1>
+<h2 class="col-sm-offset-3" ng-show="isCreate">{{ type + 'Editor.label.newTitle' | t }}</h2>
+<h2 class="col-sm-offset-3" ng-hide="isCreate">{{ type + 'Editor.label.editTitle' | t }}</h2>
 
 <form role="form" class="form form-horizontal">
 	<div item-transclude></div>
-
+    <hr>
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-offset-3 col-sm-9">
             <a class="btn btn-primary" ng-click="save()">{{ 'itemEditor.action.save' | t }}</a>
             <a href="#/{{backPage}}" class="btn btn-default">{{ 'itemEditor.action.cancel' | t }}</a>
         </div>

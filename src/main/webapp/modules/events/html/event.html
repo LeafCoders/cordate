@@ -1,5 +1,4 @@
 <item>
-	<h1>{{ 'event' | t }}</h1>
 	<form class="form-horizontal" role="form">
         <ref-view ref-item="item.eventType" ref-type="eventType"></ref-view>
 	 	<textview item-name="title"></textview>
@@ -11,8 +10,13 @@
 
         <hr>
 
-        <div ng-repeat="resource in item.resources">
-            <event-resource-view resource="resource"></event-resource-view>
+        <div ng-repeat="resource in item.resources" ng-switch="allowAssign(resource)">
+            <div ng-switch-when="false">
+                <event-resource-view resource="resource"></event-resource-view>
+            </div>
+            <div ng-switch-when="true">
+                <event-resource-input event-id="{{ item.id }}" resource="resource" assign-directly="true"></event-resource-input>
+            </div>
         </div>
-    </form>
+     </form>
 </item>

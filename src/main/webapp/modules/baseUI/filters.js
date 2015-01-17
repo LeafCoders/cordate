@@ -16,7 +16,7 @@
         };
     });
 
-    thisModule.filter('cordateDateRange', ['$filter', function(filter) {
+    thisModule.filter('cordateDateRange', ['$filter', function($filter) {
         return function(text) {
             var sinceDayNumber = parseInt(text.substring(8, 10), 10);
             var sinceMonthNumber = parseInt(text.substring(5, 7), 10);
@@ -29,14 +29,14 @@
             var range = sinceDayNumber;
             if (sinceYearNumber != untilYearNumber ||
                 (sinceYearNumber == untilYearNumber && sinceMonthNumber != untilMonthNumber)) {
-                range += " " + filter('lowercase')(filter('t')(filter('cordateMonthName')(sinceMonthNumber)));
+                range += " " + $filter('lowercase')($filter('t')($filter('cordateMonthName')(sinceMonthNumber)));
             }
             if (sinceYearNumber != untilYearNumber) {
                 range += " " + sinceYearNumber;
             }
             range += " - ";
             range += untilDayNumber;
-            range += " " + filter('lowercase')(filter('t')(filter('cordateMonthName')(untilMonthNumber)));
+            range += " " + $filter('lowercase')($filter('t')($filter('cordateMonthName')(untilMonthNumber)));
             range += " " + untilYearNumber;
     
             return range;
@@ -82,6 +82,12 @@
             return date;
         };
     });
+
+    thisModule.filter('cordateBool', ['$filter', function($filter) {
+        return function(boolValue) {
+            return $filter('t')(!!boolValue ? 'yes' : 'no');
+        };
+    }]);
 
     thisModule.filter('t', ['translationMap', '$parse', function(translationMap, parse) {
         return function(input, values) {

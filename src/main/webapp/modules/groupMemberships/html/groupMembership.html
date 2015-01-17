@@ -1,5 +1,6 @@
 <item>
-    <h1>{{ 'groupMembershipItem.label.title' | t}}</h1>
-    <p>{{item.group.referredObject.name}}</p>
-    <p><span class="glyphicon glyphicon-user"></span> {{item.user.referredObject.username}}</p>
+    <form class="form-horizontal" role="form">
+        <ref-view ref-item="item.group" ref-type="group"></ref-view>
+        <ref-view ref-item="item.user" ref-type="user"></ref-view>
+    </form>
 </item>

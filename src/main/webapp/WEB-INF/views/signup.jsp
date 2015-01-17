@@ -136,38 +136,38 @@
             <div id="content">
                 <form method="post" action="signup" class="form-horizontal" role="form" onsubmit="return validateForm();">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="username">Användarnamn</label>
+                        <label class="col-sm-3 control-label" for="username">Användarnamn</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="text" id="username" name="username">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="firstName">Förnamn</label>
+                        <label class="col-sm-3 control-label" for="firstName">Förnamn</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="text" id="firstName" name="firstName">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="lastName">Efternamn</label>
+                        <label class="col-sm-3 control-label" for="lastName">Efternamn</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="text" id="lastName" name="lastName">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="email">Epost</label>
+                        <label class="col-sm-3 control-label" for="email">Epost</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="email" id="email" name="email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="password">Lösenord</label>
+                        <label class="col-sm-3 control-label" for="password">Lösenord</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="password" id="password" name="password">
                             <span class="hidden help-block">Lösenordet måste innehålla minst 8 tecken varav minst en stor bokstav, en liten bokstav och en siffra.</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="passwordAgain">Repetera lösenord</label>
+                        <label class="col-sm-3 control-label" for="passwordAgain">Repetera lösenord</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="password" id="passwordAgain" name="passwordAgain">
                             <span class="hidden help-block">Lösenorden är olika. Skriv in igen.</span>
@@ -175,14 +175,14 @@
                     </div>
                     <hr>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="permissions">Önskade rättigheter</label>
+                        <label class="col-sm-3 control-label" for="permissions">Önskade rättigheter</label>
                         <div class="col-sm-6">
                             <textarea class="form-control" id="permissions" name="permissions"></textarea>
                             <span class="help-block">Ange vilka grupper som du ingår i. T.ex. mötesledare, tolkar, löfteslandet.</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
+                        <div class="col-sm-offset-3 col-sm-9">
                             <button class="btn btn-primary" type="submit">Skapa användare</button>
                         </div>
                     </div>
