@@ -52,6 +52,36 @@
             return item;
         };
 
+        $scope.selectModal = utils.createSelectModal($injector, 
+            'modules/baseUI/html/modalCreateFromList.html',
+            'resourceType.modalTitle.create',
+            function createModalItems() {
+                var items = [];
+                $injector.get('resourceTypeResource').getAll().then(function(data) {
+                    angular.forEach(data, function(resourceType) {
+                        var alreadyAdded = false;
+                        angular.forEach($scope.item.resources, function(existingResourceType) {
+                            alreadyAdded |= existingResourceType.resourceType.referredObject.name == resourceType.name;
+                        });
+                        if (!alreadyAdded) {
+                            items.push({ title: resourceType.name, resourceType: resourceType });
+                        }
+                    });                    
+                }, function(error) {
+                    items.push({ title: 'Error' });
+                });
+                return items;
+            },
+            function onOk(selectedItem) {
+                $scope.item.resources.push({
+                    type: selectedItem.resourceType.type,
+                    resourceType: {
+                        idRef: selectedItem.resourceType.id,
+                        referredObject: selectedItem.resourceType
+                    }
+                });
+            }
+        );
     }];
 
 

@@ -15,16 +15,14 @@
         $scope.backPage = "eventWeeks/current";
         $scope.item = item;
         
-        utils.extendCreateWithModal(this, $injector, $scope,
-                'modules/baseUI/html/modalCreateFromList.html',
-                'event.modalTitle.create',
-                function () {
-                    var items = [];
-                    angular.forEach(eventTypes, function (type) {
-                        items.push({ title: type.name, params: 'eventTypeId=' + type.id });
-                    });
-                    return items;
-                }
+        utils.extendCreateWithModal($injector, $scope, 'event.modalTitle.create',
+            function createItems() {
+                var items = [];
+                angular.forEach(eventTypes, function (type) {
+                    items.push({ title: type.name, url: '/' + $scope.types + '/new?eventTypeId=' + type.id });
+                });
+                return items;
+            }
         );
 
         $scope.remove = function(item) {

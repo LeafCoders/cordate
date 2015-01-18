@@ -3,11 +3,12 @@
     	<div class="modal-content">
     		<div class="modal-header">
     		  <button type="button" class="close" ng-click="$hide()">×</button>
-    		  <h4>{{ createModal.modalTitle | t }}</h4>
+    		  <h4>{{ modalTitle | t }}</h4>
     		</div>
     		<div class="modal-body">
+                <spinner while="modalItems.length == 0"></spinner>
     			<div class="list-group">
-    				<a href="" ng-click="$hide();createModal.create(item)" ng-class="{active: item.selected}" ng-repeat="item in createModal.modalItems" class="list-group-item">{{ item.title | t }}</a>
+    				<a href="" ng-click="$hide();onOk(item)" ng-class="{active: item.selected}" ng-repeat="item in modalItems" class="list-group-item">{{ item.title | t }}</a>
     			</div>
     		</div>
     	</div>

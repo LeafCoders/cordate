@@ -17,18 +17,35 @@ var utils = utils || {};
         angular.extend(base, injector.invoke(ItemEditorController, base, { $scope: scope, itemService: itemService, item: item }));
     };
 
-    utils.extendCreateWithModal = function(base, injector, scope, modalTemplate, title, items) {
-        angular.extend(base, injector.invoke(CreateWithModal, base, {
-            $scope: scope,
-            modalTemplate: modalTemplate,
-            title: title,
-            items: angular.isFunction(items) ? items() : items
+    // items objects shall contain 'title' and 'url' properties
+    utils.extendCreateWithModal = function(injector, scope, modalTitle, modalItems) {
+        var newModalObj = {};
+        var callbackFn = function(selectedItem) {
+            injector.get('$location').url(selectedItem.url);
+        };
+
+        angular.extend(newModalObj, injector.invoke(selectModal, newModalObj, {
+            modalTemplate: 'modules/baseUI/html/modalCreateFromList.html',
+            modalTitle: modalTitle,
+            modalItems: modalItems,
+            callbackFn: callbackFn
         }));
 
-        // Override default behaviour of "Create new". Shows a model instead 
+        // Override default behaviour of "Create new". Shows a modal instead 
         scope.createNew = function() {
-            scope.createModal.showModal();
+            newModalObj.showModal();
         };
+    };
+
+    utils.createSelectModal = function(injector, modalTemplate, modalTitle, modalItems, callbackFn) {
+        var newModalObj = {};
+        angular.extend(newModalObj, injector.invoke(selectModal, newModalObj, {
+            modalTemplate: modalTemplate,
+            modalTitle: modalTitle,
+            modalItems: modalItems,
+            callbackFn: callbackFn
+        }));
+        return newModalObj;
     };
 
     function ItemsController($scope, $location, $filter, $modal, $q, $route, flash, items) {
@@ -157,27 +174,26 @@ var utils = utils || {};
     }
 
     /**
-     * Shows a modal dialog with content from a template.
-     * All items in 'items' must contain a 'params' property like { ..., params: 'type=user&age=12&name=Kalle' }
+     * Creates a modal dialog with content from a template.
      */
-    function CreateWithModal($scope, $location, $modal, modalTemplate, title, items) {
-        $scope.createModal = {
-            modalTitle: title,
-            modalItems : items,
+    var selectModal = ['$rootScope', '$modal', 'modalTemplate', 'modalTitle', 'modalItems', 'callbackFn',
+                       function($rootScope, $modal, modalTemplate, modalTitle, modalItems, callbackFn) {
+        var modalScope = $rootScope.$new();
+        modalScope.modalTitle = modalTitle;
+        modalScope.onOk = function(selectedItem) {
+            callbackFn(selectedItem);
+        };
 
+        return {
             // Show modal dialog
             showModal : function() {
-                var modalPromise = $modal({template: modalTemplate, show: false, backdrop: 'static', scope: $scope});
+                modalScope.modalItems = angular.isFunction(modalItems) ? modalItems() : modalItems;
+                var modalPromise = $modal({ template: modalTemplate, show: false, backdrop: 'static', scope: modalScope });
                 modalPromise.$promise.then(modalPromise.show);
-            },
-    
-            // Calls new url, with params from selected item, when user clicks an item
-            create : function(item) {
-                $location.url('/' + $scope.types + '/new?' + item.params);
             }
         };
-    }
-    
+    }];
+
     function getCurrentItemType(location) {
         var pattern = /\/\w+/;
         var matches = pattern.exec(location.$$path);

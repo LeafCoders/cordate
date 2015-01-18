@@ -1,39 +1,3 @@
-<style>
-    .calendarDay {
-        margin-bottom: 10px;
-    }
-
-    .calendarDate {
-        float: left;
-        width: 80px;
-        text-align: center;
-        background: #eee;
-        margin-right: 10px;
-        padding: 5px;
-        border-radius: 5px;
-    }
-
-    .calendarDayNr h3 {
-        margin: 0;
-    }
-
-    .calendarInfo {
-        margin-left: 90px;
-    }
-
-	.weekHeader {
-		margin-bottom: 0;
-        margin-top: 0;
-		color: #333;
-	}
-	
-	.dateRange {
-		margin-top: 0;
-		margin-bottom: 25px;
-		color: #888;
-	}
-</style>
-
 <items-header></items-header>
     
 <ul class="nav nav-tabs margin-b">
@@ -63,8 +27,10 @@
 
 <div ng-repeat="item in items">
     <hr>
-    <h5>{{ item.startTime | cordateDate }} | {{ item.eventType.referredObject.name }}</h5>
-    <h4>{{ item.title }}</h4>
+    <div class="col-sm-offset-3">
+        <h5>{{ item.startTime | cordateDate }} {{ item.startTime | cordateTime }} | {{ item.eventType.referredObject.name }}</h5>
+        <h3>{{ item.title }}</h3>
+    </div>
     <form class="form-horizontal" role="form">
         <textview item-name="description"></textview>
         <div ng-repeat="resource in item.resources" ng-switch="allowAssign(resource)">

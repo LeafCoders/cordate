@@ -179,7 +179,9 @@
                 return '' +
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
                   '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
-                  '<div class="col-xs-8 col-sm-6"><input type="checkbox" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
+                  '<div class="col-xs-8 col-sm-6">' +
+                    '<div class="checkbox"><label><input type="checkbox" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></label></div>' +
+                  '</div>' +
                 '</div>';
             }
         };
@@ -243,6 +245,39 @@
                 if (!permissionService.hasPermission(attrs.permission)) {
                     element.remove();
                 }
+            }
+        };
+    }]);
+
+    thisModule.directive("spinner", ['$timeout', function($timeout) {
+        return {
+            restrict : 'E',
+            template : '<span class="label label-primary">Laddar...</span>',
+            scope : {
+                'while' : '=',
+            },
+            link : function(scope, elem, attrs) {
+                var showTimer;
+                scope.$watch('while', function(newVal) {
+                    newVal ? showSpinner() : hideSpinner();
+                });
+
+                function showSpinner() {
+                    if (showTimer) return;
+                    showTimer = $timeout(showElement.bind(this, true), 1500);
+                }
+
+                function hideSpinner() {
+                    if (showTimer) $timeout.cancel(showTimer);
+                    showTimer = null;
+                    showElement(false);
+                }
+
+                function showElement(show) {
+                    show ? elem.css({ display : '' }) : elem.css({ display : 'none' });
+                }
+
+                showElement(false);
             }
         };
     }]);

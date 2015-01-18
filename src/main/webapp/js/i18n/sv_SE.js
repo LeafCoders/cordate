@@ -54,6 +54,7 @@ angular.module('myApp.translation_sv_SE', []).
         "itemEditor.action.assign" : "Tilldela",
         "itemEditor.action.ok" : "Ok",
         "itemEditor.action.import" : "Importera",
+        "itemEditor.action.addResource" : "Lägg till resurs",
 
         "error.badRequest" : "Sorry, ogiltigt anrop.",
         "error.permissionDenied" : "Behörighet saknas.",
@@ -139,12 +140,7 @@ angular.module('myApp.translation_sv_SE', []).
         "eventEditor.formLabel.startTime" : "Börjar",
         "eventEditor.formLabel.endTime" : "Slutar",
         "eventEditor.formLabel.eventType" : "Typ",
-        "eventEditor.formLabel.chooseEventType" : "Välj...",
-        "eventEditor.formLabel.location" : "Lokal",
-        "eventEditor.formLabel.chooseLocation" : "Välj...",
 
-        "eventEditor.formLabel.deleteUser" : "Ta bort",
-        "eventEditor.formLabel.addUser" : "Lägg till...",
         "eventEditor.alert.itemWasCreated" : "Händelsen skapades!",
         "eventEditor.alert.itemWasUpdated" : "Händelsen uppdaterades!",
         "event.title.notEmpty" : "Titel saknas",

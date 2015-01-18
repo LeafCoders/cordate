@@ -9,6 +9,11 @@
 
     <hr>
 
+    <div class="form-group">
+        <div class="col-xs-offset-4 col-xs-8 col-sm-offset-3 col-sm-6">
+            <button class="btn btn-primary" ng-click="selectModal.showModal()">{{ 'itemEditor.action.addResource' | t }}</button>
+        </div>
+    </div>
     <div ng-repeat="resource in item.resources">
         <event-resource-input eventId="{{ item.id }}" resource="resource" show-remove="true" on-remove="removeResource(resource)"></event-resource-input>
     </div>
