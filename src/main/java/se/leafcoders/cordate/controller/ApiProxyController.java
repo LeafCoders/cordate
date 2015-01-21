@@ -1,4 +1,4 @@
-package se.ryttargardskyrkan.cordate.controller;
+package se.leafcoders.cordate.controller;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import se.ryttargardskyrkan.cordate.model.UserSession;
+import se.leafcoders.cordate.model.UserSession;
 
 @Controller
 public class ApiProxyController {	

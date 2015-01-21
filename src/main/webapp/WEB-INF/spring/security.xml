@@ -48,6 +48,6 @@
     	<property name="loginUrl" value="/login"/>
 	</bean>
 	
-	<context:component-scan base-package="se.ryttargardskyrkan.cordate.security" />
+	<context:component-scan base-package="se.leafcoders.cordate.security" />
 
 </beans>

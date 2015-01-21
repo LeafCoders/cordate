@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="se.ryttargardskyrkan.cordate">
+	<logger name="se.leafcoders.cordate">
 		<level value="info" />
 	</logger>
 	

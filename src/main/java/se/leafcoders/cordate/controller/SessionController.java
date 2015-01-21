@@ -1,4 +1,4 @@
-package se.ryttargardskyrkan.cordate.controller;
+package se.leafcoders.cordate.controller;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
-import se.ryttargardskyrkan.cordate.model.UserSession;
+import se.leafcoders.cordate.model.UserSession;
 
 @Controller
 public class SessionController {

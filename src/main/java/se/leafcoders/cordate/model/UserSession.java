@@ -1,4 +1,4 @@
-package se.ryttargardskyrkan.cordate.model;
+package se.leafcoders.cordate.model;
 
 public interface UserSession {
 	public String getUsername();

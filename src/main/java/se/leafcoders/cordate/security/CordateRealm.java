@@ -1,4 +1,4 @@
-package se.ryttargardskyrkan.cordate.security;
+package se.leafcoders.cordate.security;
 
 import java.io.IOException;
 

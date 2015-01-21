@@ -32,8 +32,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="se.ryttargardskyrkan.cordate.model" scoped-proxy="targetClass" />
-	<context:component-scan base-package="se.ryttargardskyrkan.cordate.controller" scoped-proxy="targetClass" />
+	<context:component-scan base-package="se.leafcoders.cordate.model" scoped-proxy="targetClass" />
+	<context:component-scan base-package="se.leafcoders.cordate.controller" scoped-proxy="targetClass" />
 	
 	<context:property-placeholder location="classpath*:*.properties" />
 
