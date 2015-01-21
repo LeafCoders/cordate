@@ -56,7 +56,7 @@
         };
         
         $scope.allowAssign = function(resource) {
-            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.referredObject.id);
+            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.id);
         };
     }];
 

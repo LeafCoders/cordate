@@ -73,6 +73,7 @@
         $scope.isValid = false;
         $scope.importErrors = [];
         $scope.importSuccess = [];
+        $scope.numSuccess = 0;
 
         var bookingFormat = [
             { text: "Kund:",      value: "customerName" },
@@ -163,11 +164,11 @@
                 if ($scope.isIgnore(booking)) {
                     importNext(index + 1);
                 } else {
-                    var toImport = {customerName: booking.customerName};
+                    var toImport = { customerName: booking.customerName };
                     toImport.startTime = booking.startTime + " Europe/Stockholm";
                     toImport.endTime = booking.endTime + " Europe/Stockholm";
                     toImport.location = nextLocation(booking);
-                    
+
                     // Send booking to server
                     bookingResource.getQuery().save(toImport, function (data, headers) {
                         $scope.importSuccess.push(toImport.customerName);
@@ -186,10 +187,10 @@
             while (location.ignore) { location = booking.locations.shift(); }
             for (var i = 0; i < locations.length; i++) {
                 if (locations[i].name == location.name) {
-                    return { idRef: locations[i].id };
+                    return { 'ref' : { 'id' : locations[i].id } };
                 }
             }
-            return { text: location.name };
+            return { 'text': location.name };
         };
         
         var combineBookingsWithSameTime = function(bookings) {

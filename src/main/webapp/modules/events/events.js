@@ -12,7 +12,7 @@
         $scope.backPage = 'eventWeeks/current';
 
         $scope.allowAssign = function(resource) {
-            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.referredObject.id);
+            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.id);
         };
     }];
 
@@ -61,7 +61,7 @@
                     angular.forEach(data, function(resourceType) {
                         var alreadyAdded = false;
                         angular.forEach($scope.item.resources, function(existingResourceType) {
-                            alreadyAdded |= existingResourceType.resourceType.referredObject.name == resourceType.name;
+                            alreadyAdded |= existingResourceType.resourceType.name == resourceType.name;
                         });
                         if (!alreadyAdded) {
                             items.push({ title: resourceType.name, resourceType: resourceType });
@@ -75,10 +75,7 @@
             function onOk(selectedItem) {
                 $scope.item.resources.push({
                     type: selectedItem.resourceType.type,
-                    resourceType: {
-                        idRef: selectedItem.resourceType.id,
-                        referredObject: selectedItem.resourceType
-                    }
+                    resourceType: selectedItem.resourceType
                 });
             }
         );

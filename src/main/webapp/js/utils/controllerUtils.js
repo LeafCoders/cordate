@@ -86,18 +86,9 @@ var utils = utils || {};
             });
         };
 
-        // Get reference(s) as text or array of texts
-        $scope.getTextOfReference = function(ref, refType) {
-            return referenceToText(ref, refType);
-        };
-
-        // Get reference object
-        $scope.getReference = function(item, param) {
-            var ref = referenceToObject(item);
-            if (ref != null) {
-                return ref[param];
-            }
-            return null;
+        // Get text from object that contains either 'text' or 'ref' property
+        $scope.textOfRefOrText = function(ref, refType) {
+            return refOrTextToText(ref, refType);
         };
     }
 

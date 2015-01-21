@@ -37,7 +37,7 @@
     </thead>
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query | groupPermissions">
-        <td width="40%" ng-click="showDetails(item.id)">{{item.group.referredObject.name}}</td>
+        <td width="40%" ng-click="showDetails(item.id)">{{item.group.name}}</td>
         <td ng-click="showDetails(item.id)">
             <span ng-repeat="pattern in item.patterns">
                 <span class="label label-default">{{ pattern }}</span>
@@ -66,7 +66,7 @@
     </thead>
     <tbody>
     <tr id="{{item.id}}" ng-repeat="item in items | filter:searchFormHelper.query | userPermissions">
-        <td width="40%" ng-click="showDetails(item.id)"><span class="glyphicon glyphicon-user"></span> {{item.user.referredObject.username}}</td>
+        <td width="40%" ng-click="showDetails(item.id)"><span class="glyphicon glyphicon-user"></span> {{ item.user.fullName }} ({{ item.user.username }})</td>
         <td ng-click="showDetails(item.id)">
             <span ng-repeat="pattern in item.patterns">
                 <span class="label label-default">{{ pattern }}</span>

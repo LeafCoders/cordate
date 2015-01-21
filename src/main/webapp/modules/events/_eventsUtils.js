@@ -6,7 +6,7 @@ eventsUtils.createEventFromEventType = function (eventType) {
     var event = {
             title: eventType.name,
             description: null,
-            eventType: { idRef: eventType.id, referredObject: eventType },
+            eventType: eventType,
             startTime: '2014-01-01 11:00 Europe/Stockholm',
             endTime: '2014-01-01 12:00 Europe/Stockholm',
             location: null,
@@ -15,13 +15,12 @@ eventsUtils.createEventFromEventType = function (eventType) {
     };
     
     angular.forEach(eventType.resourceTypes, function (resourceTypeRef) {
-        var resourceType = resourceTypeRef.referredObject;
-        switch (resourceType.type) {
+        switch (resourceTypeRef.type) {
             case 'user':
-                event.resources.push(eventsUtils.createResourceTypeUser(resourceType));
+                event.resources.push(eventsUtils.createResourceTypeUser(resourceTypeRef));
                 break;
             case 'upload':
-                event.resources.push(eventsUtils.createResourceTypeUpload(resourceType));
+                event.resources.push(eventsUtils.createResourceTypeUpload(resourceTypeRef));
                 break;
         }
     });
@@ -32,7 +31,7 @@ eventsUtils.createEventFromEventType = function (eventType) {
 eventsUtils.createResourceTypeUser = function (resourceType) {
     return {
         type: 'user',
-        resourceType: { idRef: resourceType.id, referredObject: resourceType },
+        resourceType: resourceType,
         users: null
     };
 };
@@ -40,7 +39,7 @@ eventsUtils.createResourceTypeUser = function (resourceType) {
 eventsUtils.createResourceTypeUpload = function (resourceType) {
     return {
         type: 'upload',
-        resourceType: { idRef: resourceType.id, referredObject: resourceType },
+        resourceType: resourceType,
         uploads: null
     };
 };

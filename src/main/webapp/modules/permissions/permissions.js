@@ -22,10 +22,10 @@
         var permissionId = null;
         if ($scope.item.group) {
             permissionType = "group";
-            permissionId = $scope.item.group.idRef;
+            permissionId = $scope.item.group.id;
         } else if ($scope.item.user) {
             permissionType = "user";
-            permissionId = $scope.item.user.idRef;
+            permissionId = $scope.item.user.id;
         }
 
         $scope.formHelper = {

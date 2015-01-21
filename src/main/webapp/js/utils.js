@@ -9,33 +9,33 @@ function stringToTime(rosetteDate) {
     return new Date(yearNumber, monthNumber, dayNumber);
 }
 
-function referenceToText(ref, refType) {
+function refToText(ref, refType) {
 	if (ref != null) {
 		if (Array.isArray(ref)) {
 			// TODO: Handle multiple references
 		} else {
-			if (ref.referredObject != null) {
-				switch (refType) {
-				    case 'user': return ref.referredObject.fullName + " (" + ref.referredObject.username + ")"; break;
-				    case 'group': return ref.referredObject.name; break;
-					case 'location': return ref.referredObject.name; break;
-                    case 'eventType': return ref.referredObject.name; break;
-                    default: return ref.referredObject.name; break;
-				}
-			} else if (ref.text != null) {
-				return ref.text;
+			switch (refType) {
+			    case 'user': return ref.fullName + " (" + ref.username + ")"; break;
+			    case 'group': return ref.name; break;
+				case 'location': return ref.name; break;
+                case 'eventType': return ref.name; break;
+                default: return ref.name; break;
 			}
 		}
 	}
 	return null;
 }
 
-function referenceToObject(ref) {
-    if (ref != null) {
-        if (Array.isArray(ref)) {
+function refOrTextToText(refOrText, refType) {
+    if (refOrText != null) {
+        if (Array.isArray(refOrText)) {
             // TODO: Handle multiple references
         } else {
-             return ref.referredObject;
+            if (refOrText.ref != null) {
+                return refToText(refOrText.ref);
+            } else if (refOrText.text != null) {
+                return refOrText.text;
+            }
         }
     }
     return null;

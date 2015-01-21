@@ -7,8 +7,8 @@
             </div>
         </div>
 
-        <ref-view ng-show="item.group" ref-item="item.group" ref-type="group"></ref-view>
-        <ref-view ng-show="item.user" ref-item="item.user" ref-type="user"></ref-view>
+        <ref-view ng-if="item.group" ref-item="item.group" ref-type="group"></ref-view>
+        <ref-view ng-if="item.user" ref-item="item.user" ref-type="user"></ref-view>
 
         <div class="form-group">
             <label class="col-xs-4 col-sm-3 control-label">{{ 'permissionItem.label.permissions' | t }}</label>

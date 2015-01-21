@@ -28,7 +28,7 @@
 <div ng-repeat="item in items">
     <hr>
     <div class="col-sm-offset-3">
-        <h5>{{ item.startTime | cordateDate }} {{ item.startTime | cordateTime }} | {{ item.eventType.referredObject.name }}</h5>
+        <h5>{{ item.startTime | cordateDate }} {{ item.startTime | cordateTime }} | {{ item.eventType.name }}</h5>
         <h3>{{ item.title }}</h3>
     </div>
     <form class="form-horizontal" role="form">

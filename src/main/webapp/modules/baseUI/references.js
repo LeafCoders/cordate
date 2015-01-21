@@ -98,7 +98,7 @@
         };
     }
 
-    var referenceInputController = ['$injector', '$scope', function($injector, $scope) {
+    function BaseRefInputController($injector, $scope) {
         if ($scope.refType == undefined) {
             var uploadService = $injector.get('uploadResource');
             angular.extend(this,
@@ -130,6 +130,10 @@
                     return { 'id': resource.id, 'text': resource.name };
             }
         };
+    };
+
+    var refInputController = ['$injector', '$scope', function($injector, $scope) {
+        angular.extend(this, new BaseRefInputController($injector, $scope));
 
         $scope.inputTransform = {
             fromItem: function() {
@@ -138,12 +142,41 @@
                     if (Array.isArray(ref)) {
                         // TODO: Handle multiple references
                     } else {
-                        if (ref.referredObject != null) {
-                            $scope.panelItems.push($scope.createIdItem(ref.referredObject));
-                        } else if (ref.text != null) {
-                            $scope.panelItems.push($scope.createTextItem(ref.text));
-                        } else {
-                            $scope.panelItems.push($scope.createIdItem(ref));
+                        $scope.panelItems.push($scope.createIdItem(ref));
+                    }
+                }
+            },
+            toItem: function(newPanelItems) {
+                $scope.panelItems = newPanelItems;
+                $scope.refItem = null;
+                if ($scope.panelItems.length > 0) {
+                    if ($scope.singleSelect) {
+                        $scope.refItem = { 'id' : $scope.panelItems[0].id };
+                    } else {
+                        // TODO: Handle multiple references
+                    }
+                }
+            }
+        };
+        
+        $scope.inputTransform.fromItem();
+    }];
+
+    var refOrTextInputController = ['$injector', '$scope', function($injector, $scope) {
+        angular.extend(this, new BaseRefInputController($injector, $scope));
+        $scope.allowOptionalText = true;
+
+        $scope.inputTransform = {
+            fromItem: function() {
+                var refOrText = $scope.refItem;
+                if (refOrText != null) {
+                    if (Array.isArray(refOrText)) {
+                        // TODO: Handle multiple references
+                    } else {
+                        if (refOrText.ref != null) {
+                            $scope.panelItems.push($scope.createIdItem(refOrText.ref));
+                        } else if (refOrText.text != null) {
+                            $scope.panelItems.push($scope.createTextItem(refOrText.text));
                         }
                     }
                 }
@@ -154,7 +187,7 @@
                 if ($scope.panelItems.length > 0) {
                     if ($scope.singleSelect) {
                         if ($scope.panelItems[0].id != undefined) {
-                            $scope.refItem = { 'idRef': $scope.panelItems[0].id };
+                            $scope.refItem = { 'ref': { 'id' : $scope.panelItems[0].id } };
                         } else {
                             $scope.refItem = { 'text': $scope.panelItems[0].text };
                         }
@@ -168,9 +201,8 @@
         $scope.inputTransform.fromItem();
     }];
 
-    
     var eventResourceInputController = ['$injector', '$scope', 'eventResource', function($injector, $scope, eventResource) {
-        var resourceTypeItem = $scope.resource.resourceType.referredObject;
+        var resourceTypeItem = $scope.resource.resourceType;
         $scope.resourceType = resourceTypeItem.type;
         $scope.refType = resourceTypeItem.type;
 
@@ -179,7 +211,7 @@
                 var userResourceService = $injector.get('userResource');
                 angular.extend(this,
                         new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
-                                userResourceService, { groupId: resourceTypeItem.group.idRef }));
+                                userResourceService, { groupId: resourceTypeItem.group.id }));
                 $scope.labels = { inputTitle: resourceTypeItem.name, modalTitle: 'modalLabel.userResource' };
                 break;
             case 'upload':
@@ -207,13 +239,13 @@
         $scope.inputTransform = {
             fromItem: function() {
                 var resource = $scope.resource;
-                var resourceType = resource.resourceType.referredObject;
+                var resourceType = resource.resourceType;
                 if (resource.type == 'user') {
                     $scope.singleSelect = !resourceType.multiSelect;
                     $scope.allowOptionalText = resourceType.allowText;
                     if (resource.users) {
                         angular.forEach(resource.users.refs, function(user) {
-                            $scope.panelItems.push($scope.createIdItem(user.referredObject));
+                            $scope.panelItems.push($scope.createIdItem(user));
                         });
                         if (resource.users.text) {
                             $scope.panelItems.push($scope.createTextItem(resource.users.text));
@@ -223,7 +255,7 @@
                     $scope.singleSelect = !resourceType.multiSelect;
                     if (resource.uploads) {
                         angular.forEach(resource.uploads, function(upload) {
-                            $scope.panelItems.push($scope.createIdItem(upload.referredObject));
+                            $scope.panelItems.push($scope.createIdItem(upload));
                         });
                     }
                 }
@@ -235,7 +267,7 @@
                     update.users = { refs: [] };
                     angular.forEach(newPanelItems, function(panelItem) {
                         if (panelItem.id != undefined) {
-                            update.users.refs.push({ 'idRef': panelItem.id });
+                            update.users.refs.push({ 'id': panelItem.id });
                         } else {
                             update.users.text = panelItem.text;
                         }
@@ -243,7 +275,7 @@
                 } else if ($scope.resource.type == 'upload') {
                     update.uploads = [];
                     angular.forEach(newPanelItems, function(panelItem) {
-                        update.uploads.push({ 'idRef': panelItem.id });
+                        update.uploads.push({ 'id': panelItem.id });
                     });
                 }
 
@@ -273,7 +305,8 @@
     }];
     
     
-    thisModule.controller('referenceInputController', referenceInputController);
+    thisModule.controller('refInputController', refInputController);
+    thisModule.controller('refOrTextInputController', refOrTextInputController);
     thisModule.controller('eventResourceInputController', eventResourceInputController);
 
     
@@ -286,14 +319,27 @@
             transclude: false,
             scope: {
                 refItem: '=',
-                refType: '@',
-                allowOptionalText: '@'
+                refType: '@'
             },
-            controller: 'referenceInputController',
+            controller: 'refInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'
         };
     });
 
+    thisModule.directive("refOrTextInput", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: {
+                refItem: '=',
+                refType: '@'
+            },
+            controller: 'refOrTextInputController',
+            templateUrl: 'modules/baseUI/html/panelTextList.html'
+        };
+    });
+    
     thisModule.directive("imageRefInput", function () {
         return {
             restrict: 'E',
@@ -303,7 +349,7 @@
                 refItem: '=',
                 uploadFolderName: '@'
             },
-            controller: 'referenceInputController',
+            controller: 'refInputController',
             templateUrl: 'modules/baseUI/html/panelImageList.html'
         };
     });
@@ -318,7 +364,31 @@
                 refType: '@'
             },
             controller: ['$scope', function($scope) {
-                $scope.refText = referenceToText($scope.refItem, $scope.refType);
+                $scope.refText = refToText($scope.refItem, $scope.refType);
+            }],
+            template: function(tElement, tAttrs) {
+                return '' +
+                '<div class="form-group">' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.refType + '\' | t }}</label>' +
+                    '<div class="col-xs-8 col-sm-6">' +
+                        '<p class="form-control-static">{{ refText }}</p>' +
+                    '</div>' +
+                '</div>';
+            }
+        };
+    });
+
+    thisModule.directive("refOrTextView", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: {
+                refItem: '=',
+                refType: '@'
+            },
+            controller: ['$scope', function($scope) {
+                $scope.refText = refOrTextToText($scope.refItem, $scope.refType);
             }],
             template: function(tElement, tAttrs) {
                 return '' +
@@ -345,9 +415,9 @@
                     '<div class="col-xs-8 col-sm-6">' +
                         '<div class="panel panel-default">' +
                             '<div class="panel-heading">' +
-                                '<h3 class="panel-title">{{ refItem.referredObject.fileName }}</h3>' +
+                                '<h3 class="panel-title">{{ refItem.fileName }}</h3>' +
                             '</div>' +
-                            '<img class="img-responsive" ng-src="{{ refItem.referredObject.fileUrl }}">' +
+                            '<img class="img-responsive" ng-src="{{ refItem.fileUrl }}">' +
                         '</div>' +
                     '</div>' +
                 '</div>';
@@ -385,18 +455,18 @@
                 var type = $scope.resource.resourceType.referredObject.type;
                 if (type == 'user' && $scope.resource.users != null) {
                     $scope.value = $scope.resource.users.refs.map(function(user) {
-                        return user.referredObject.fullName;
+                        return user.fullName;
                     }).join(', ');
                 } else if (type == 'upload' && $scope.resource.uploads != null) {
                     $scope.value = $scope.resource.uploads.map(function(upload) {
-                        return upload.referredObject.fileName;
+                        return upload.fileName;
                     }).join(', ');
                 }
             }],
             template: function(tElement, tAttrs) {
                 return '' +
                 '<div class="form-group">' +
-                    '<label class="col-xs-4 col-sm-3 control-label">{{ resource.resourceType.referredObject.name }}</label>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ resource.resourceType.name }}</label>' +
                     '<div class="col-xs-8 col-sm-10">' +
                         '<p class="form-control-static">{{ value }}</p>' +
                     '</div>' +

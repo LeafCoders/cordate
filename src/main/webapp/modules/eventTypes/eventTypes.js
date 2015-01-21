@@ -22,8 +22,8 @@
         $scope.availableResourceTypes = resourceTypes.filter(function(allResourceType) {
             var found = false;
             if (item.resourceTypes) {
-                item.resourceTypes.some(function(itemResourceTypeRef) {
-                    if (allResourceType.id == itemResourceTypeRef.idRef) {
+                item.resourceTypes.some(function(resourceType) {
+                    if (allResourceType.id == resourceType.id) {
                         found = true;
                     }
                     return found;
@@ -70,7 +70,7 @@
         var sections = [];
         if (resourceTypeRefs) {
             resourceTypeRefs.forEach(function(rtRef) {
-                addResourceTypeToSections(rtRef.referredObject, sections);
+                addResourceTypeToSections(rtRef, sections);
             });
         }
         return sections;
@@ -112,7 +112,7 @@
         var refs = [];
         sections.forEach(function(section) {
             section.resourceTypes.forEach(function(resourceType) {
-                refs.push({ idRef: resourceType.id });
+                refs.push(resourceType);
             });
         });
         return refs;
