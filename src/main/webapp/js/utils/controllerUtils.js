@@ -114,8 +114,8 @@ var utils = utils || {};
 
     function ItemEditorController($scope, $location, $filter, flash, itemService, item) {
         $scope.errors = {};
-        $scope.backPage = $scope.types + '/' + item.id;
         $scope.isCreate = $location.path().endsWith('/new');
+        $scope.backPage = $scope.types + ($scope.isCreate ? '' : '/' + item.id);
 
         $scope.beforeSave = function(item) {
             return item;
