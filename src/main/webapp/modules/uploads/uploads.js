@@ -4,23 +4,32 @@
 
     var thisModule = angular.module('uploads', ['ngRoute', 'ngResource', 'rosetteResources', 'baseUI']);
 
-    var currentFolder = { name: 'posters' }; // The currently selected upload folder object
-
+    var lastSelectedFolder = null;
     
     /* Controllers */
 
-    var uploadsController = ['$injector', '$scope', '$location', 'items', 'uploadFolders',
-                             function($injector, $scope, $location, items, uploadFolders) {
-        utils.extendItemsController(this, $injector, $scope, items);
+    var uploadsController = ['$injector', '$scope', '$location', 'uploadResource', 'uploadFolders',
+                             function($injector, $scope, $location, uploadResource, uploadFolders) {
+        utils.extendItemsController(this, $injector, $scope, []);
 
         $scope.tableHeaderUrl = 'modules/uploads/html/uploadsHeader.html';
-        $scope.selectedFolder = currentFolder;
         $scope.folders = uploadFolders;
-
+        $scope.selectedFolder = uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null;
+        $scope.allowCreateItem = uploadFolders.length > 0 ? $scope.allowCreateItem : false; 
+        
         $scope.changeFolder = function(folder) {
-            currentFolder = folder;
-            $location.path('/uploads/');
+            $scope.selectedFolder = folder;
+            lastSelectedFolder = folder;
+            uploadResource.getAll({ folderName: $scope.selectedFolder.name }).then(function(data) {
+                $scope.items = data;
+            });
         };
+        
+        if ($scope.selectedFolder != null) {
+            uploadResource.getAll({ folderName: $scope.selectedFolder.name }).then(function(data) {
+                $scope.items = data;
+            });
+        }
     }];
 
     var uploadController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
@@ -79,9 +88,6 @@
     var uploadsConfig = ['$routeProvider', function($routeProvider) {
         var uploadsPath = 'uploads';
 
-        var getAllUploads = ['uploadResource', function(uploadResource) {
-            return uploadResource.getAll({ folderName: currentFolder.name });
-        }];
         var getOneUpload = ['uploadResource', function(uploadResource) {
             return uploadResource.getOne({ folderName: currentFolder.name });
         }];
@@ -89,7 +95,7 @@
             return uploadFolderResource.getAll();
         }];
 
-        utils.createBasicAllRoute($routeProvider, uploadsPath, { items: getAllUploads, uploadFolders: getUploadFolders });
+        utils.createBasicAllRoute($routeProvider, uploadsPath, { uploadFolders: getUploadFolders });
         utils.createBasicOneRoute($routeProvider, uploadsPath, { item: getOneUpload });
     }];
 

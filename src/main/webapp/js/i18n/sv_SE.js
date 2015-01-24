@@ -385,6 +385,7 @@ angular.module('myApp.translation_sv_SE', []).
         "uploadItems.action.new" : "Ny fil",
         "uploadItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera filen?",
         "uploadItems.alert.itemWasDeleted" : "Filen raderades!",
+        "uploadItems.noFolderToShow" : "Det finns ingen katalog med filer att visa.",
 
         "uploadItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera filen?",
         "uploadItem.alert.itemWasDeleted" : "Filen raderades!",
