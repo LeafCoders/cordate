@@ -58,7 +58,8 @@ angular.module('myApp.translation_sv_SE', []).
 
         "error.badRequest" : "Sorry, ogiltigt anrop.",
         "error.permissionDenied" : "Behörighet saknas.",
-        "error.unknownError" : "Oops! Något gick snett. Försök igen.",
+        "error.notFound" : "Resursen kunde inte hittas.",
+        "error.unknownError" : "Oops! Något gick snett. Försök igen eller kontakta webbansvarig.",
         "error.hasIdOrText.oneMustBeSet" : "Id eller text måste sättas.",
         "error.id.mustBeUnique" : "Ej unikt id! Id som du angett finns redan.",
         "error.id.notValidFormat" : "Fel format! Id måste börja med liten bokstav och får bara innehålla a-z, A-Z och 0-9.",
