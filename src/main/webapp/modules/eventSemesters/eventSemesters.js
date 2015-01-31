@@ -36,6 +36,7 @@
         $scope.types = 'events';
         $scope.backPage = "eventSemesters/current";
         $scope.items = items;
+        $scope.allowImport = true;
         $scope.currentSemester = currentSemester;
 
         utils.extendCreateWithModal($injector, $scope, 'event.modalTitle.create',

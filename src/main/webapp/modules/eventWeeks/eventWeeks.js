@@ -14,7 +14,8 @@
         $scope.types = 'events';
         $scope.backPage = "eventWeeks/current";
         $scope.item = item;
-        
+        $scope.allowImport = true;
+
         utils.extendCreateWithModal($injector, $scope, 'event.modalTitle.create',
             function createItems() {
                 var items = [];

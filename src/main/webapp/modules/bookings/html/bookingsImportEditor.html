@@ -2,6 +2,7 @@
     <h2>{{ 'bookingImport.label.title' | t }}</h2>
 
     <div ng-show="importStage == 0">
+        <ol><li ng-repeat="f in bookingFormat" ng-class="{'text-muted': f.optional}"><b>{{ f.text }}</b> {{ f.description }}</li></ol>
         <textarea rows="15" style="min-width: 100%; margin-bottom: 5px;" ng-model="content" ng-change="contentChanged()"></textarea>
         <div ng-show="contentErrors.length > 0" class="alert alert-danger">{{ 'bookingImport.content.invalid' | t }}
             <ul>

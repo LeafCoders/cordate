@@ -123,6 +123,7 @@ angular.module('myApp.translation_sv_SE', []).
         "eventItems.label.Saturday" : "Lördag",
         "eventItems.label.Sunday" : "Söndag",
         "eventItems.action.new" : "Ny händelse",
+        "eventItems.action.import" : "Importera",
         "eventItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera händelsen?",
         "eventItems.alert.itemWasDeleted" : "Händelsen raderades!",
 
@@ -149,7 +150,15 @@ angular.module('myApp.translation_sv_SE', []).
         "event.startBeforeEndTime" : "Händelsen får inte sluta innan den har börjat",
 
         "event.modalTitle.create" : "Välj händelsetyp",
-        
+
+        "eventImport.label.title" : "Importera händelser",
+        "eventImport.content.invalid" : "Texten innehåller fel eller är felaktigt formaterad på följande rader:",
+        "eventImport.content.foundCount" : "{{count}} händelser hittades i texten.",
+        "eventImport.content.foundItems" : "Dessa händelser hittades i texten och kommer att importeras.",
+        "eventImport.alert.numItemsImported" : "{{count}} av {{total}} händelser importerades!",
+        "eventImport.alert.numItemsFailed" : "{{count}} av {{total}} händelser kunde inte importeras! Händelsen har titel och starttid: {{titles}}",
+        "eventImport.progress.importing" : "Importerar händelser...",
+
         "signupUser" : "Användarförfrågan",
         "signupUserItems.label.title" : "Användarförfrågningar",
         "signupUserItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera användarförfrågan?",

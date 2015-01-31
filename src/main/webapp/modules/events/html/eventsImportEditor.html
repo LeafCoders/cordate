@@ -1,0 +1,51 @@
+<form role="form" class="form form-horizontal">
+    <h2>{{ 'eventImport.label.title' | t }}</h2>
+
+    <div ng-show="importStage == 0">
+        <ol><li ng-repeat="f in eventFormat" ng-class="{'text-muted': f.optional}"><b>{{ f.text }}</b> {{ f.description }}</li></ol>
+        <textarea rows="15" style="min-width: 100%; margin-bottom: 5px;" ng-model="content"
+                  ng-change="contentChanged()"></textarea>
+        <div ng-show="contentErrors.length > 0" class="alert alert-danger">{{ 'eventImport.content.invalid' | t }}
+            <ul>
+                <li ng-repeat="err in contentErrors">{{ err.row + 1 }} - "{{ err.errorText }}"</li>
+            </ul>
+        </div>
+        <p>{{ 'eventImport.content.foundCount' | t : { count: numSuccess } }}</p>
+    </div>
+    
+    <div ng-show="importStage == 1">
+        <p>{{ 'eventImport.content.foundItems' | t }}</p>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ 'formLabel.eventType' | t }}</th>
+                        <th>{{ 'formLabel.title' | t }}</th>
+                        <th>{{ 'formLabel.description' | t }}</th>
+                        <th>{{ 'formLabel.startTime' | t }}</th>
+                        <th>{{ 'formLabel.endTime' | t }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="event in contentSuccess">
+                        <td>{{ event.eventTypeName }}</td>
+                        <td>{{ event.title }}</td>
+                        <td>{{ event.description }}</td>
+                        <td>{{ event.startTime }}</td>
+                        <td>{{ event.endTime }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-show="importStage == 2">
+        {{ 'eventImport.progress.importing' | t }}
+    </div>
+    
+    <div class="form-actions">
+        <a ng-class="{disabled: importStage != 1}" ng-show="importStage < 2" class="btn btn-default" ng-click="prevStage()">{{ 'itemEditor.action.prev' | t }}</a>
+        <a ng-show="importStage == 0" ng-class="{disabled: !isValid}" class="btn btn-primary" ng-click="nextStage()">{{ 'itemEditor.action.next' | t }}</a>
+        <a ng-show="importStage == 1" class="btn btn-primary" ng-click="import()">{{ 'itemEditor.action.import' | t }}</a>
+        <a ng-show="importStage < 2" href="#/{{backPage}}" class="btn btn-default">{{ 'itemEditor.action.cancel' | t }}</a>
+    </div>
+</form>

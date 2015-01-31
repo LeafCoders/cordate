@@ -75,12 +75,12 @@
         $scope.importSuccess = [];
         $scope.numSuccess = 0;
 
-        var bookingFormat = [
-            { text: "Kund:",      value: "customerName" },
-            { text: "Kundgrupp:", value: "customerGroup" },
-            { text: "Starttid:",  value: "startTime" },
-            { text: "Sluttid:",   value: "endTime" },
-            { text: "Lokal:",     value: "location" }
+        $scope.bookingFormat = [
+            { text: "Kund:", value: "customerName", description: 'Text' },
+            { text: "Kundgrupp:", value: "customerGroup", description: 'Text' },
+            { text: "Starttid:", value: "startTime", dataType: 'time', description: 'YYYY-MM-DD HH:MM' },
+            { text: "Sluttid:", value: "endTime", dataType: 'time', description: 'YYYY-MM-DD HH:MM' },
+            { text: "Lokal:", value: "location", description: 'Text' }
         ];
 
         $scope.prevStage = function() { $scope.importStage = Math.max(0, $scope.importStage - 1); };
@@ -88,7 +88,7 @@
 
         $scope.contentChanged = function() {
             if ($scope.importStage == 0) {
-                var objects = parseVerticalTextByFormat($scope.content, bookingFormat);
+                var objects = parseVerticalTextByFormat($scope.content, $scope.bookingFormat);
                 $scope.contentErrors = objects.errors;
                 $scope.contentSuccess = combineBookingsWithSameTime(objects.success);
                 $scope.numSuccess = objects.success.length;

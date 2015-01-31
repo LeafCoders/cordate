@@ -14,7 +14,7 @@
 
     <title>Cordate</title>
 
-    <jwr:style src="/bundles/bootstrap.css" />
+    <jwr:style src="/bundles/all.css"/> 
 
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">

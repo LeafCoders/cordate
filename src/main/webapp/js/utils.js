@@ -49,18 +49,39 @@ function refOrTextToText(refOrText, refType) {
  */
 function parseVerticalTextByFormat(text, format) {
 
-    var parseRow = function(expectedType, row) {
-        if (row.trim().indexOf(expectedType) == 0) {
+    var parseRowValue = function(expectedType, row) {
+        if (row != null && row.trim().indexOf(expectedType) == 0) {
             return row.substr(expectedType.length).trim();
         }
         return null;
     };
+
+    var rowsToFormat = function(rows, format, startRowIndex, numRows) {
+        var data = { items: {}, numItems: 0, errors: [] };
+        angular.forEach(format, function(formatItem) {
+            var currentRow = startRowIndex + data.numItems;
+            if (currentRow < numRows) {
+                var value = parseRowValue(formatItem.text, rows[currentRow]);
+                data.items[formatItem.value] = value;
     
-    var rowsToFormat = function(rows, format, startRowIndex) {
-        var data = {};
-        for (var i = 0; i < format.length; i++) {
-            data[format[i].value] = parseRow(format[i].text, rows[startRowIndex + i]);
-        }
+                if (value != null) {
+                    if (formatItem.inList && formatItem.inList.indexOf(value) < 0) {
+                        data.errors.push({ row: currentRow, errorText: '\"' + value + '\" != ' + formatItem.inList.join(', ') });
+                    }
+                    if (formatItem.dataType == 'time') {
+                        if (/(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/.test(value) == false) {
+                            data.errors.push({ row: currentRow, errorText: '\"' + value + '\" != YYYY-MM-DD HH:MM' });
+                        }
+                    }
+
+                    data.numItems++;
+                } else if (!formatItem.optional) {
+                    data.errors.push({ row: currentRow, errorText: rows[currentRow].replace(/\t/g, ' ') });
+                }
+            } else if (!formatItem.optional) {
+                data.errors.push({ row: currentRow, errorText: formatItem.text });
+            }
+        });
         return data;
     };
 
@@ -70,19 +91,14 @@ function parseVerticalTextByFormat(text, format) {
     for (i = 0; i < numRows; i++) {
         if (rows[i].trim().indexOf(startText) >= 0) {
             // Read data from rows
-            var data = rowsToFormat(rows, format, i);
+            var data = rowsToFormat(rows, format, i, numRows);
 
-            // Validate that all members are set
-            var allIsSet = true;
-            for (var member in data) {
-                allIsSet &= (data[member] != null);
-            }        
-            if (allIsSet) {
-                dataList.success.push(data);
-                i += format.length - 1;
-            } else {
-                dataList.errors.push({ row : i, errorText : rows[i].replace(/\t/g, ' ') });
+            if (data.errors.length > 0) {
+                dataList.errors.push.apply(dataList.errors, data.errors);
+            } else if (data.numItems > 0) {
+                dataList.success.push(data.items);
             }
+            i += data.numItems - 1;
         } else if (rows[i].trim() != '') {
             dataList.errors.push({ row : i, errorText : rows[i].replace(/\t/g, ' ') });
         }
