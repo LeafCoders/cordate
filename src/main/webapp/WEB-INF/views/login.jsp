@@ -99,7 +99,7 @@
 
     <div id="content">
       <form method="post" action="sessions" class="form-signin">
-          <input id="username" type="text" value="${username}" name="username" class="form-control" placeholder="Användarnamn" autofocus>
+          <input id="username" type="email" value="${username}" name="username" class="form-control" placeholder="E-postadress" autofocus>
           <input id="password" type="password" name="password" class="form-control" placeholder="Lösenord">
           <button class="btn btn-lg btn-primary btn-block" type="submit">Logga in</button>
       </form>

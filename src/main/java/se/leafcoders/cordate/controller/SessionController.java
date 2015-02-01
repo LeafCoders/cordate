@@ -113,14 +113,13 @@ public class SessionController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String postSignup(@RequestParam String username, @RequestParam String firstName, @RequestParam String lastName,@RequestParam String email, @RequestParam String password, @RequestParam String permissions,
+	public String postSignup(@RequestParam String email, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String permissions,
 			RedirectAttributes redirectAttributes) throws ClientProtocolException, IOException {
 
 		String requestBody = "{" + 
-				"\"username\" : \"" + username + "\", " + 
+				"\"email\" : \"" + email + "\", " + 
 				"\"firstName\" : \"" + firstName + "\", " + 
 				"\"lastName\" : \"" + lastName + "\", " + 
-				"\"email\" : \"" + email + "\", " + 
 				"\"password\" : \"" + password + "\", " + 
 				"\"permissions\" : \"" + permissions + "\" }"; 
 
@@ -130,7 +129,7 @@ public class SessionController {
         HttpResponse remoteResponse = httpClient.execute(httpPost);
 
         if (remoteResponse.getStatusLine().getStatusCode() == HttpServletResponse.SC_CREATED) {
-        	redirectAttributes.addFlashAttribute("successMessage", "Välkommen " + firstName + " " + lastName + "! Du kommer att få ett epostmeddelande när din användare har aktiverats. Det kan ta upp till en dag. <b>Tills dess kommer du inte att kunna logga in med din användare</b>.");
+        	redirectAttributes.addFlashAttribute("successMessage", "Välkommen " + firstName + " " + lastName + "! Du kommer att få ett e-postmeddelande när din användare har aktiverats. Det kan ta upp till en dag. <b>Tills dess kommer du inte att kunna logga in med din användare</b>.");
         } else {
         	redirectAttributes.addFlashAttribute("errorMessage", "Misslyckades att registrera användaren! Försök igen.");
         }

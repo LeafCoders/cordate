@@ -53,20 +53,19 @@
         function validateForm()
         {
             var isValid = true;
-            var username = document.getElementById('username');
+            var email = document.getElementById('email');
             var firstName = document.getElementById('firstName');
             var lastName = document.getElementById('lastName');
-            var email = document.getElementById('email');
             var password = document.getElementById('password');
             var passwordAgain = document.getElementById('passwordAgain');
             var permissions = document.getElementById('permissions');
             
-            username.parentNode.parentNode.removeClassName('has-error');
-            if (username.value == "") {
-                username.parentNode.parentNode.addClassName('has-error');
+            email.parentNode.parentNode.removeClassName('has-error');
+            if (!validateEmail(email.value)) {
+                email.parentNode.parentNode.addClassName('has-error');
                 isValid = false;
             }
-            
+
             firstName.parentNode.parentNode.removeClassName('has-error');
             if (firstName.value == "") {
                 firstName.parentNode.parentNode.addClassName('has-error');
@@ -76,12 +75,6 @@
             lastName.parentNode.parentNode.removeClassName('has-error');
             if (lastName.value == "") {
                 lastName.parentNode.parentNode.addClassName('has-error');
-                isValid = false;
-            }
-
-            email.parentNode.parentNode.removeClassName('has-error');
-            if (!validateEmail(email.value)) {
-                email.parentNode.parentNode.addClassName('has-error');
                 isValid = false;
             }
 
@@ -136,9 +129,9 @@
             <div id="content">
                 <form method="post" action="signup" class="form-horizontal" role="form" onsubmit="return validateForm();">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="username">Användarnamn</label>
+                        <label class="col-sm-3 control-label" for="email">E-post</label>
                         <div class="col-sm-6">
-                            <input class="form-control" type="text" id="username" name="username">
+                            <input class="form-control" type="email" id="email" name="email">
                         </div>
                     </div>
                     <div class="form-group">
@@ -151,12 +144,6 @@
                         <label class="col-sm-3 control-label" for="lastName">Efternamn</label>
                         <div class="col-sm-6">
                             <input class="form-control" type="text" id="lastName" name="lastName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="email">Epost</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" type="email" id="email" name="email">
                         </div>
                     </div>
                     <div class="form-group">

@@ -59,7 +59,7 @@ public class CordateRealm extends AuthorizingRealm {
 
 				HttpResponse response = httpClient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_UNAUTHORIZED) {
-                    throw new AuthenticationException("Användarnamnet eller lösenordet är felaktigt.");
+                    throw new AuthenticationException("E-postadressen eller lösenordet är felaktigt.");
 				} else {
 					simpleAuthenticationInfo = new SimpleAuthenticationInfo(providedUsername, providedPassword, "cordateRealm");
 				}

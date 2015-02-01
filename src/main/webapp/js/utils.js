@@ -15,7 +15,7 @@ function refToText(ref, refType) {
 			// TODO: Handle multiple references
 		} else {
 			switch (refType) {
-			    case 'user': return ref.fullName + " (" + ref.username + ")"; break;
+			    case 'user': return ref.fullName; break;
 			    case 'group': return ref.name; break;
 				case 'location': return ref.name; break;
                 case 'eventType': return ref.name; break;
