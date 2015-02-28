@@ -215,7 +215,7 @@
                 '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
                     '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                     '<div class="col-xs-5 col-sm-3"><input type="text" class="form-control" id="form-' + tAttrs.itemName + '" ng-model="formHelper.' + tAttrs.itemName + 'PartDate" bs-datepicker data-start-week="1" data-date-type="string" data-date-format="yyyy-MM-dd" data-autoclose="true" data-use-native="true" ' + autofocus + '></div>' +
-                    '<div class="col-xs-3 col-sm-2"><input type="text" class="form-control" ng-model="formHelper.' + tAttrs.itemName + 'PartTime" bs-timepicker data-time-type="string" data-time-format="HH:mm" data-use-native="true"></div>' +
+                    '<div class="col-xs-3 col-sm-2"><input type="text" class="form-control" ng-model="formHelper.' + tAttrs.itemName + 'PartTime" bs-timepicker data-time-type="string" data-time-format="HH:mm" data-use-native="true" data-length="1" data-minute-step="10" data-arrow-behavior="picker"></div>' +
                 '</div>';
             }
         };
