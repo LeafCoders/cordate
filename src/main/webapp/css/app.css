@@ -170,3 +170,14 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
 .margin-b {
     margin-bottom: 20px;
 }
+
+.file-dropzone {
+    z-index: 1000;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 3px dashed #3A3;
+    background-color: rgba(120,200,120,0.8);
+}

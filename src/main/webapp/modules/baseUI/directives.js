@@ -69,7 +69,7 @@
         };
     });
 
-    thisModule.directive('fileselect', [ '$parse', '$timeout', function($parse, $timeout) {
+    thisModule.directive('fileSelect', [ '$parse', '$timeout', function($parse, $timeout) {
         return function(scope, elem, attr) {
             var fn = $parse(attr['fileselect']);
             elem.bind('change', function(evt) {
@@ -93,6 +93,46 @@
         };
     }]);
 
+    thisModule.directive('fileDropzone', ['$document', function($document) {
+        return {
+            restrict: 'E',
+            scope: {
+                onDrop: '&'
+            },
+            template: function(tElement, tAttrs) {
+                return '<div class="file-dropzone"></div>';
+            }, 
+            link: function(scope, element, attrs) {
+                var dropCallback = scope.onDrop();
+                var elementBody = angular.element($document[0].body);
+                element.css('display', 'none');
+
+                elementBody.on('dragenter', function(evt) {
+                    evt.stopPropagation();
+                    evt.preventDefault();
+                    element.css('display', 'block');
+                    return false;
+                });
+                element.on('dragover', function(evt) {
+                    evt.stopPropagation();
+                    evt.preventDefault();
+                    return false;
+                });
+                element.on('dragleave', function(evt) {
+                    element.css('display', 'none');
+                });
+                element.on('drop', function(evt) {
+                    evt.stopPropagation();
+                    evt.preventDefault();
+                    element.css('display', 'none');
+                    var files = evt.originalEvent ? evt.originalEvent.dataTransfer.files : evt.dataTransfer.files;
+                    dropCallback(files);
+                    return false;
+                });
+            }
+        };
+    }]);
+    
     thisModule.directive("formitem", function () {
         return {
             restrict: 'E',

@@ -16,6 +16,7 @@
         $scope.folders = uploadFolders;
         $scope.selectedFolder = uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null;
         $scope.allowCreateItem = uploadFolders.length > 0 ? $scope.allowCreateItem : false; 
+        $scope.allowEditItem = false;
         
         $scope.changeFolder = function(folder) {
             $scope.selectedFolder = folder;
@@ -30,6 +31,8 @@
                 $scope.items = data;
             });
         }
+        
+        lastSelectedFolder = $scope.selectedFolder;
     }];
 
     var uploadController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
@@ -39,7 +42,7 @@
 
     var uploadEditorController = ['$injector', '$scope', '$timeout', 'flash', 'uploadResource', 'item',
                                   function($injector, $scope, $timeout, flash, uploadResource, item) {
-        item.folderName = item.folderName || currentFolder.name;
+        item.folderName = item.folderName || lastSelectedFolder.name;
 
         utils.extendItemEditorController(this, $injector, $scope, uploadResource, item);
         $scope.uploadIsSupported = !!window.FileReader;
@@ -53,8 +56,8 @@
             if (files[0] != null) {
                 // Validate mime type
                 var allowed = false;
-                for (var i = 0; i < currentFolder.mimeTypes.length; ++i) {
-                    allowed |= files[0].type.indexOf(currentFolder.mimeTypes[i]) == 0;
+                for (var i = 0; i < lastSelectedFolder.mimeTypes.length; ++i) {
+                    allowed |= files[0].type.indexOf(lastSelectedFolder.mimeTypes[i]) == 0;
                 }
 
                 if (allowed && $scope.uploadIsSupported) {
@@ -89,7 +92,7 @@
         var uploadsPath = 'uploads';
 
         var getOneUpload = ['uploadResource', function(uploadResource) {
-            return uploadResource.getOne({ folderName: currentFolder.name });
+            return uploadResource.getOne({ folderName: lastSelectedFolder.name });
         }];
         var getUploadFolders = ['uploadFolderResource', function(uploadFolderResource) {
             return uploadFolderResource.getAll();

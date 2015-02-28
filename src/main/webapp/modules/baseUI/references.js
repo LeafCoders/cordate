@@ -418,6 +418,7 @@
                                 '<h3 class="panel-title">{{ refItem.fileName }}</h3>' +
                             '</div>' +
                             '<img class="img-responsive" ng-src="{{ refItem.fileUrl }}">' +
+                            '<div class="panel-footer">{{ refItem.fileUrl }}</div>' +
                         '</div>' +
                     '</div>' +
                 '</div>';

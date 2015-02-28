@@ -43,7 +43,7 @@
             endTimePartDate: $filter('cordateDate')(item.endTime),
             endTimePartTime: $filter('cordateTime')(item.endTime),
             duration: item.duration,
-            durations: [{ text: '10 s', value: 10}, { text: '15 s', value: 15 }]
+            durations: [{ text: '5 s', value: 5}, { text: '8 s', value: 8}, { text: '10 s', value: 10}, { text: '15 s', value: 15 }]
         };
 
         $scope.beforeSave = function(item) {

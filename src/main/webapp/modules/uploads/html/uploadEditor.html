@@ -1,10 +1,11 @@
 <itemeditor ng-show="{{uploadIsSupported}}">
     <form class="form-horizontal" role="form">
         <formitem label="file">
-            <input type="file" fileselect="onFileSelect($files)">
+            <input type="file" file-select="onFileSelect($files)">
         </formitem>
-        <textview item-name="fileName"></textview>
+        <textInput item-name="fileName"></textInput>
         <textview item-name="mimeType"></textview>
     </form>
+    <file-dropzone on-drop="onFileSelect"></file-dropzone>
 </itemeditor>
 <p ng-hide="{{uploadIsSupported}}">{{ 'upload.fileReader.notSupported' | t }}</p>
