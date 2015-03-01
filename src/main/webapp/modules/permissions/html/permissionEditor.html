@@ -1,6 +1,6 @@
-<itemeditor>
+<item-editor>
     <form class="form-horizontal" role="form">
-        <formitem label="permissionFor">
+        <form-item label="permissionFor">
             <div class="radio">
                 <label>
                     <input type="radio" ng-model="formHelper.permissionType" value="everyone">
@@ -19,7 +19,7 @@
                     {{ 'permissionEditor.formLabel.user' | t }}
                 </label>
             </div>
-        </formitem>
+        </form-item>
 
         <div ng-if="formHelper.permissionType == 'group'">
             <ref-input ref-item="item.group" ref-type="group"></ref-input>
@@ -29,6 +29,6 @@
             <ref-input ref-item="item.user" ref-type="user"></ref-input>
         </div>
 
-        <textareainput item-name="patterns" autofocus></textareainput>
+        <textarea-input item-name="patterns" autofocus></textarea-input>
     </form>
-</itemeditor>
+</item-editor>

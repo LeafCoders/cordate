@@ -1,23 +1,23 @@
-<itemEditor>
-    <textView item-name="type" msg-prefix="resourceType.type"></textView>
+<item-editor>
+    <text-view item-name="type" msg-prefix="resourceType.type"></text-view>
 
     <div ng-if="item.type === 'user' || item.type === 'upload'">
-        <textInput item-name="section" autofocus></textInput>
+        <text-input item-name="section" autofocus></text-input>
 
-        <textInput ng-if="isCreate" item-name="id"></textInput>
-        <textView ng-if="!isCreate" item-name="id"></textView>
+        <text-input ng-if="isCreate" item-name="id"></text-input>
+        <text-view ng-if="!isCreate" item-name="id"></text-view>
 
-    	<textInput item-name="name"></textInput>
-        <textAreaInput item-name="description"></textAreaInput>
+    	<text-input item-name="name"></text-input>
+        <textarea-input item-name="description"></textarea-input>
     
         <div ng-if="item.type == 'user'">
             <ref-input ref-item="item.group" ref-type="group"></ref-input>
-            <checkboxInput item-name="multiSelect"></checkboxInput>
-            <checkboxInput item-name="allowText"></checkboxInput>
+            <checkbox-input item-name="multiSelect"></checkbox-input>
+            <checkbox-input item-name="allowText"></checkbox-input>
         </div>
         <div ng-if="item.type == 'upload'">
-            <textInput item-name="folderName"></textInput>
-            <checkboxInput item-name="multiSelect"></checkboxInput>
+            <text-input item-name="folderName"></text-input>
+            <checkbox-input item-name="multiSelect"></checkbox-input>
         </div>
     </div>
-</itemEditor>
+</item-editor>

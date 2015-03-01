@@ -1,11 +1,11 @@
-<itemEditor>
-    <textView item-name="eventType.referredObject.name" form-label="eventType"></textView>
-    <timeInput item-name="startTime"></timeInput>
-    <timeInput item-name="endTime"></timeInput>
-	<textInput item-name="title" autofocus></textInput>
-	<textAreaInput item-name="description"></textAreaInput>
+<item-editor>
+    <text-view item-name="eventType.referredObject.name" form-label="eventType"></text-view>
+    <time-input item-name="startTime"></time-input>
+    <time-input item-name="endTime"></time-input>
+	<text-input item-name="title" autofocus></text-input>
+	<textarea-input item-name="description"></textarea-input>
     <ref-or-text-input ref-item="item.location" ref-type="location"></ref-or-text-input>
-    <checkboxInput item-name="showOnPalmate"></checkboxInput>
+    <checkbox-input item-name="showOnPalmate"></checkbox-input>
 
     <hr>
 
@@ -17,4 +17,4 @@
     <div ng-repeat="resource in item.resources">
         <event-resource-input eventId="{{ item.id }}" resource="resource" show-remove="true" on-remove="removeResource(resource)"></event-resource-input>
     </div>
-</itemEditor>
+</item-editor>

@@ -1,10 +1,10 @@
-<itemEditor>
-    <textInput ng-if="isCreate" item-name="id"></textInput>
-    <textView ng-if="!isCreate" item-name="id"></textView>
+<item-editor>
+    <text-input ng-if="isCreate" item-name="id"></text-input>
+    <text-view ng-if="!isCreate" item-name="id"></text-view>
 
-    <textInput item-name="name"></textInput>
-    <textAreaInput item-name="description"></textAreaInput>
-    <checkboxInput item-name="showOnPalmate"></checkboxInput>
+    <text-input item-name="name"></text-input>
+    <textarea-input item-name="description"></textarea-input>
+    <checkbox-input item-name="showOnPalmate"></checkbox-input>
 
     <hr>
 
@@ -48,4 +48,4 @@
         </div>
     </div>    
 
-</itemEditor>
+</item-editor>

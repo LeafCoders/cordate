@@ -32,7 +32,7 @@
         <h3>{{ item.title }}</h3>
     </div>
     <form class="form-horizontal" role="form">
-        <textview item-name="description"></textview>
+        <text-view item-name="description"></text-view>
         <div ng-repeat="resource in item.resources" ng-switch="allowAssign(resource)">
             <div ng-switch-when="false">
                 <event-resource-view resource="resource"></event-resource-view>

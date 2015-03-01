@@ -21,7 +21,7 @@
         };
     });
 
-    thisModule.directive("itemstable", function () {
+    thisModule.directive("itemsTable", function () {
         return {
             restrict:'E',
             transclude:true,
@@ -37,7 +37,7 @@
         };
     });
 
-    thisModule.directive("itemeditor", function () {
+    thisModule.directive("itemEditor", function () {
         return {
             restrict:'E',
             transclude:true,
@@ -69,27 +69,31 @@
         };
     });
 
-    thisModule.directive('fileSelect', [ '$parse', '$timeout', function($parse, $timeout) {
-        return function(scope, elem, attr) {
-            var fn = $parse(attr['fileselect']);
-            elem.bind('change', function(evt) {
-                var files = [], fileList, i;
-                fileList = evt.target.files;
-                if (fileList != null) {
-                    for (i = 0; i < fileList.length; i++) {
-                        files.push(fileList.item(i));
+    thisModule.directive('fileSelect', ['$parse', '$timeout', function($parse, $timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                fileSelect: '&'
+            },
+            link: function(scope, element, attrs) {
+                var selectCallback = scope.fileSelect();
+
+                element.bind('change', function(evt) {
+                    var files = [], fileList, i;
+                    fileList = evt.target.files;
+                    if (fileList != null) {
+                        for (i = 0; i < fileList.length; i++) {
+                            files.push(fileList.item(i));
+                        }
                     }
-                }
-                $timeout(function() {
-                    fn(scope, {
-                        $files : files,
-                        $event : evt
+                    $timeout(function() {
+                        selectCallback(files);
                     });
                 });
-            });
-            elem.bind('click', function(){
-                this.value = null;
-            });
+                element.bind('click', function(){
+                    this.value = null;
+                });
+            }
         };
     }]);
 
@@ -133,7 +137,7 @@
         };
     }]);
     
-    thisModule.directive("formitem", function () {
+    thisModule.directive("formItem", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -150,7 +154,7 @@
         };
     });
 
-    thisModule.directive("textinput", function () {
+    thisModule.directive("textInput", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -167,7 +171,7 @@
         };
     });
 
-    thisModule.directive("textareainput", function () {
+    thisModule.directive("textareaInput", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -186,10 +190,10 @@
     /**
      * item-name | Name of item to show data for
      * form-label | Text to use as label
-     * ifexist | Set to true if <textview> only shall be visible if date != null
+     * ifexist | Set to true if <text-view> only shall be visible if date != null
      * msgPrefix | Will use value of 'itemName' as lookup from text strings 
      */
-    thisModule.directive("textview", function () {
+    thisModule.directive("textView", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -209,7 +213,7 @@
         };
     });
 
-    thisModule.directive("checkboxinput", function () {
+    thisModule.directive("checkboxInput", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -227,7 +231,7 @@
         };
     });
 
-    thisModule.directive("checkboxview", function () {
+    thisModule.directive("checkboxView", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -244,7 +248,7 @@
         };
     });
 
-    thisModule.directive("timeinput", function () {
+    thisModule.directive("timeInput", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -261,7 +265,7 @@
         };
     });
 
-    thisModule.directive("timeview", function () {
+    thisModule.directive("timeView", function () {
         return {
             restrict:'E',
             replace:true,
