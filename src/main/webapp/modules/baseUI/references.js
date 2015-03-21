@@ -453,7 +453,7 @@
                 resource: '='
             },
             controller: ['$scope', function($scope) {
-                var type = $scope.resource.resourceType.referredObject.type;
+                var type = $scope.resource.resourceType.type;
                 if (type == 'user' && $scope.resource.users != null) {
                     $scope.value = $scope.resource.users.refs.map(function(user) {
                         return user.fullName;
