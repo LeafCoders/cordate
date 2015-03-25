@@ -12,7 +12,7 @@
         utils.extendCreateWithModal($injector, $scope, 'resourceType.modalTitle.create',
             [
                  { title: 'resourceType.type.user', url: '/' + $scope.types + '/new?type=user' },
-                 { title: 'resourceType.type.upload', url: '/' + $scope.types + '/new?type=user' },
+                 { title: 'resourceType.type.upload', url: '/' + $scope.types + '/new?type=upload' },
             ]
         );
     }];

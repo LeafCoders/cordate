@@ -2,20 +2,20 @@
     <text-view item-name="type" msg-prefix="resourceType.type"></text-view>
 
     <div ng-if="item.type === 'user' || item.type === 'upload'">
-        <text-input item-name="section" autofocus></text-input>
-
-        <text-input ng-if="isCreate" item-name="id"></text-input>
+        <text-input ng-if="isCreate" item-name="id" autofocus></text-input>
         <text-view ng-if="!isCreate" item-name="id"></text-view>
+
+        <text-input item-name="section"></text-input>
 
     	<text-input item-name="name"></text-input>
         <textarea-input item-name="description"></textarea-input>
     
-        <div ng-if="item.type == 'user'">
+        <div ng-if="item.type === 'user'">
             <ref-input ref-item="item.group" ref-type="group"></ref-input>
             <checkbox-input item-name="multiSelect"></checkbox-input>
             <checkbox-input item-name="allowText"></checkbox-input>
         </div>
-        <div ng-if="item.type == 'upload'">
+        <div ng-if="item.type === 'upload'">
             <text-input item-name="folderName"></text-input>
             <checkbox-input item-name="multiSelect"></checkbox-input>
         </div>
