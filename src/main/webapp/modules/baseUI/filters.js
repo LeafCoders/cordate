@@ -89,15 +89,20 @@
         };
     }]);
 
-    thisModule.filter('t', ['translationMap', '$parse', function(translationMap, parse) {
+    thisModule.filter('t', ['translationMap', '$parse', '$filter', function(translationMap, $parse, $filter) {
         return function(input, values) {
             var translation = translationMap[input];
             if (translation == undefined) {
                 return input;
             } else if (values != null) {
+                var tvalues = {};
+                angular.forEach(values, function(value, key) {
+                    tvalues[key] = $filter('t')(value);
+                });
+                
                 // Handles the following format: {{ 'Show person: {{title}}' | t: {title: 'Kalle'} }}
                 return translation.replace(/{{\S*}}/g, function(m,key) {
-                    return parse(m.replace(/[{} ]/g, ''))(values);
+                    return $parse(m.replace(/[{} ]/g, ''))(tvalues);
                 });
             }
             return translation;

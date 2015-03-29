@@ -4,10 +4,24 @@
 
     var thisModule = angular.module('groupMemberships', ['ngRoute', 'ngResource', 'rosetteResources', 'baseUI']);
 
+    var lastSortOrder = null;
+    
     /* Controllers */
 
     var groupMembershipsController = ['$injector', '$scope', 'items', function($injector, $scope, items) {
         utils.extendItemsController(this, $injector, $scope, items);
+
+        $scope.sortOrders = [
+            { text: 'formLabel.group', orderBy: ['group.name', 'user.fullName'] },
+            { text: 'formLabel.user', orderBy: ['user.fullName', 'group.name'] }
+        ];
+        
+        $scope.setSortOrder = function(sortOrder) {
+            $scope.currentSortOrder = sortOrder;
+            lastSortOrder = sortOrder;
+        };
+
+        $scope.setSortOrder(lastSortOrder || $scope.sortOrders[0]);
     }];
 
     var groupMembershipController = ['$injector', '$scope', 'item', function($injector, $scope, item) {

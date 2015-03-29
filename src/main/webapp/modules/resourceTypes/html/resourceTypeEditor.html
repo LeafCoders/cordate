@@ -16,7 +16,7 @@
             <checkbox-input item-name="allowText"></checkbox-input>
         </div>
         <div ng-if="item.type === 'upload'">
-            <text-input item-name="folderName"></text-input>
+            <ref-input ref-item="item.uploadFolder" ref-type="uploadFolder"></ref-input>
             <checkbox-input item-name="multiSelect"></checkbox-input>
         </div>
     </div>

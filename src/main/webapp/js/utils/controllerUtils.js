@@ -54,7 +54,8 @@ var utils = utils || {};
         $scope.types = $scope.type + 's'; 
         $scope.backPage = $scope.types;
         $scope.allowCreateItem = true;
-        $scope.allowEditItem = true;
+        $scope.allowEditItem = function() { return true; };
+        $scope.allowDeleteItem = function() { return true; };
         $scope.allowImport = false;
 
         $scope.searchFormHelper = {
@@ -72,7 +73,7 @@ var utils = utils || {};
             $location.path('/' + $scope.types + '/import');
         };
 
-        $scope.removeConfirm = function(item) {
+        $scope.deleteConfirm = function(item) {
             var modalScope = $scope.$new();
             modalScope.item = item;
             var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: modalScope });
@@ -97,9 +98,10 @@ var utils = utils || {};
         $scope.type = getCurrentItemType($location);
         $scope.types = $scope.type + 's'; 
         $scope.backPage = $scope.types;
-        $scope.allowEditItem = true;
+        $scope.allowEditItem = function() { return true; };
+        $scope.allowDeleteItem = function() { return true; };
 
-        $scope.removeConfirm = function() {
+        $scope.deleteConfirm = function() {
             var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: $scope });
             modalPromise.$promise.then(modalPromise.show);
         };

@@ -16,6 +16,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.locations" : "Lokaler",
         "navbar.label.resourceTypes" : "Resurser",
         "navbar.label.eventTypes" : "Händelsetyper",
+        "navbar.label.uploadFolders" : "Filkataloger",
         "navbar.label.logout" : "Logga ut",
 
         "January": "Januari",
@@ -57,8 +58,10 @@ angular.module('myApp.translation_sv_SE', []).
         "itemEditor.action.addResource" : "Lägg till resurs",
 
         "error.badRequest" : "Sorry, ogiltigt anrop.",
-        "error.permissionDenied" : "Behörighet saknas.",
+        "error.permissionDenied" : "Behörighet \"{{P0}}\" saknas.",
         "error.notFound" : "Resursen kunde inte hittas.",
+        "error.forbidden" : "Ej tillåtet.",
+        "error.referencedBy" : "Används av \"{{P0}}\".",
         "error.unknownError" : "Oops! Något gick snett. Försök igen eller kontakta webbansvarig.",
         "error.hasIdOrText.oneMustBeSet" : "Id eller text måste sättas.",
         "error.id.mustBeUnique" : "Ej unikt id! Id som du angett finns redan.",
@@ -88,12 +91,13 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.group" : "Grupp",
         "formLabel.content" : "Innehåll",
         "formLabel.folder" : "Katalog",
-        "formLabel.folderName" : "Katalognamn",
+        "formLabel.uploadFolder" : "Filkatalog",
         "formLabel.file" : "Fil",
         "formLabel.fileName" : "Filnamn",
         "formLabel.fileSize" : "Filstorlek",
         "formLabel.fileUrl" : "Länk",
         "formLabel.mimeType" : "Filtyp",
+        "formLabel.mimeTypes" : "Filtyper",
         "formLabel.width" : "Bredd",
         "formLabel.height" : "Höjd",
         "formLabel.permissionFor" : "Behörighet för",
@@ -103,6 +107,8 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.allowText" : "Tillåt text",
         "formLabel.showOnPalmate" : "Visa på hemsidan",
         "formLabel.createdTime" : "Skapad",
+        "formLabel.orderBy" : "Ordna efter",
+        "formLabel.isPublic" : "Publik",
         
         "modalLabel.location" : "Välj lokal",
         "modalLabel.image" : "Välj bild",
@@ -380,6 +386,27 @@ angular.module('myApp.translation_sv_SE', []).
         "bookingImport.prompt.deleteAllConfirmation" : "Vill du radera alla existerande bokningar innan importen startas?",
         "bookingImport.progress.importing" : "Importerar bokningar...",
 
+        "uploadFolder" : "Filkatalog",
+        "uploadFolder.mimeTypes.notEmpty" : "Filtyper saknas.",
+
+        "uploadFolderItems.label.title" : "Filkataloger",
+        "uploadFolderItems.action.new" : "Ny katalog",
+        "uploadFolderItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera katalogen?",
+        "uploadFolderItems.alert.itemWasDeleted" : "Katalogen raderades!",
+
+        "uploadFolderItem.label.mimeTypes" : "Filtyper",
+        "uploadFolderItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera katalogen?",
+        "uploadFolderItem.alert.itemWasDeleted" : "Katalogen raderades!",
+        "uploadFolderItem.label.backToItems" : "« Tillbaka till filkataloger",
+
+        "uploadFolderEditor.label.newTitle" : "Ny katalog",
+        "uploadFolderEditor.label.editTitle" : "Redigera katalog",
+        "uploadFolderEditor.alert.itemWasCreated" : "Katalogen skapades!",
+        "uploadFolderEditor.alert.itemWasUpdated" : "Katalogen updaterades!",
+
+        "uploadFolder.posters" : "Affischer",
+        "uploadFolder.locations" : "Lokaler",
+
         "upload" : "Fil",
         "upload.fileName.notNull" : "Filnamn saknas.",
         "upload.mimeType.notNull" : "Filtyp saknas.",
@@ -402,8 +429,5 @@ angular.module('myApp.translation_sv_SE', []).
 
         "uploadEditor.label.newTitle" : "Ny fil",
         "uploadEditor.label.editTitle" : "Redigera fil",
-        "uploadEditor.alert.itemWasCreated" : "Filen skapades!",
-        
-        "uploadFolder.posters" : "Affischer",
-        "uploadFolder.locations" : "Lokaler"
+        "uploadEditor.alert.itemWasCreated" : "Filen skapades!"
     });

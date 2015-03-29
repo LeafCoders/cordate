@@ -147,14 +147,14 @@
                     flash.addAlert({
                         type: 'danger',
                         text: $scope.type + 'Import.alert.numItemsFailed',
-                        values: { count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ') }
+                        textParams: { count: numErrors, total: numTotals, customers: $scope.importErrors.join(', ') }
                     });
                 }
                 if (numSuccess > 0) {
                     flash.addAlert({
                         type: 'success',
                         text: $scope.type + 'Import.alert.numItemsImported',
-                        values: { count: numSuccess, total: numTotals }
+                        textParams: { count: numSuccess, total: numTotals }
                     });
                 }
                 $location.path('/' + $scope.backPage);

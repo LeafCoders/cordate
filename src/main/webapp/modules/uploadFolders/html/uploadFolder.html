@@ -1,0 +1,18 @@
+<item>
+    <form class="form-horizontal" role="form">
+        <text-view item-name="id"></text-view>
+        <text-view item-name="name"></text-view>
+        <text-view item-name="description"></text-view>
+        
+        <div class="form-group">
+            <label class="col-xs-4 col-sm-3 control-label">{{ 'uploadFolderItem.label.mimeTypes' | t }}</label>
+            <div class="col-xs-8 col-sm-6">
+                <p class="form-control-static">
+                    <div ng-repeat="mimeType in item.mimeTypes">
+                        <span class="label label-default">{{ mimeType }}</span>
+                    </div>
+                </p>
+            </div>
+        </div>
+     </form>
+</item>

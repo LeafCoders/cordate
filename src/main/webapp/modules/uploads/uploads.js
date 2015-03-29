@@ -16,18 +16,18 @@
         $scope.folders = uploadFolders;
         $scope.selectedFolder = uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null;
         $scope.allowCreateItem = uploadFolders.length > 0 ? $scope.allowCreateItem : false; 
-        $scope.allowEditItem = false;
+        $scope.allowEditItem = function() { return false; };
         
         $scope.changeFolder = function(folder) {
             $scope.selectedFolder = folder;
             lastSelectedFolder = folder;
-            uploadResource.getAll({ folderName: $scope.selectedFolder.name }).then(function(data) {
+            uploadResource.getAll({ folderId: $scope.selectedFolder.id }).then(function(data) {
                 $scope.items = data;
             });
         };
         
         if ($scope.selectedFolder != null) {
-            uploadResource.getAll({ folderName: $scope.selectedFolder.name }).then(function(data) {
+            uploadResource.getAll({ folderId: $scope.selectedFolder.id }).then(function(data) {
                 $scope.items = data;
             });
         }
@@ -37,15 +37,16 @@
 
     var uploadController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
         utils.extendItemController(this, $injector, $scope, item);
-        $scope.allowEditItem = false;
+        $scope.allowEditItem = function() { return false; };
     }];
 
     var uploadEditorController = ['$injector', '$scope', '$timeout', 'flash', 'uploadResource', 'item',
                                   function($injector, $scope, $timeout, flash, uploadResource, item) {
-        item.folderName = item.folderName || lastSelectedFolder.name;
+        item.folderId = item.folderId || lastSelectedFolder.id;
 
         utils.extendItemEditorController(this, $injector, $scope, uploadResource, item);
         $scope.uploadIsSupported = !!window.FileReader;
+        $scope.uploadFolder = lastSelectedFolder;
 
         $scope.onFileSelect = function(files) {
             flash.clearAlerts();
@@ -92,7 +93,7 @@
         var uploadsPath = 'uploads';
 
         var getOneUpload = ['uploadResource', function(uploadResource) {
-            return uploadResource.getOne({ folderName: lastSelectedFolder.name });
+            return uploadResource.getOne({ folderId: lastSelectedFolder.id });
         }];
         var getUploadFolders = ['uploadFolderResource', function(uploadFolderResource) {
             return uploadFolderResource.getAll();

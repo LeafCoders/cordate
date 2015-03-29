@@ -103,7 +103,7 @@
             var uploadService = $injector.get('uploadResource');
             angular.extend(this,
                     new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalImageList.html',
-                            uploadService, { folderName: $scope.uploadFolderName }));
+                            uploadService, { folderId: $scope.uploadFolderId }));
 
             $scope.refType = 'upload';
             $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.image' };
@@ -126,6 +126,8 @@
                     return { 'id': resource.id, 'text': resource.firstName + ' ' + resource.lastName };
                 case 'upload':
                     return { 'id': resource.id, 'text': resource.fileName, 'fileUrl': resource.fileUrl };
+                case 'uploadFolder':
+                    return { 'id': resource.id, 'text': resource.name };
                 default:
                     return { 'id': resource.id, 'text': resource.name };
             }
@@ -218,7 +220,7 @@
                 var uploadResourceService = $injector.get('uploadResource');
                 angular.extend(this,
                         new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
-                                uploadResourceService, { folderName: resourceTypeItem.folderName }));
+                                uploadResourceService, { folderId: resourceTypeItem.uploadFolder.id }));
                 $scope.labels = { inputTitle: resourceTypeItem.name, modalTitle: 'modalLabel.uploadResource' };
                 break;
         }
@@ -347,7 +349,7 @@
             transclude: false,
             scope: {
                 refItem: '=',
-                uploadFolderName: '@'
+                uploadFolderId: '@'
             },
             controller: 'refInputController',
             templateUrl: 'modules/baseUI/html/panelImageList.html'

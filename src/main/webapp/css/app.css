@@ -13,9 +13,9 @@ body {
 }
 
 .navbar {
-    -webkit-user-select: none; /* Chrome/Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .navbar-brand {
@@ -27,8 +27,19 @@ body {
     margin-right:10px;
 }
 
-#alerts {
-    padding-top: 20px;
+.alert.ng-enter, .alert.ng-leave {
+    -webkit-transition: 1s linear all;
+    -moz-transition: 1s linear all;
+    transition: 1s linear all;
+}
+.alert.ng-enter {
+    opacity: 0;
+}
+.alert.ng-enter-active {
+    opacity: 1;
+}
+.alert.ng-leave, .alert.ng-leave-active {
+    display: none;
 }
 
 .form-actions {

@@ -1,17 +1,27 @@
 <items-header></items-header>
 
+<div class="btn-group" style="padding-bottom: 10px;">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+        {{ 'formLabel.orderBy' | t }}: {{ currentSortOrder.text | t }}
+        &nbsp;<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li ng-repeat="so in sortOrders"><a href="" ng-click="setSortOrder(so)">{{ so.text | t }}</a></li>
+    </ul>
+</div>
+
 <table class="table table-default table-hover">
     <thead>
     <tr>
-        <th>{{ 'groupMembershipItems.label.tableTitleGroup' | t }}</th>
-        <th>{{ 'groupMembershipItems.label.tableTitleUser' | t }}</th>
+        <th ng-click="setOrderBy(true)">{{ 'groupMembershipItems.label.tableTitleGroup' | t }}</th>
+        <th ng-click="setOrderBy(false)">{{ 'groupMembershipItems.label.tableTitleUser' | t }}</th>
         <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
-    <tr id="{{item.id}}" ng-repeat="item in items | orderBy:['group.name', 'user.fullName']">
+    <tr id="{{item.id}}" ng-repeat="item in items | orderBy: currentSortOrder.orderBy">
         <td ng-click="showDetails(item.id)">{{item.group.name}}</td>
-        <td ng-click="showDetails(item.id)"><span class="glyphicon glyphicon-user"></span> {{item.user.fullName}}</td>
+        <td ng-click="showDetails(item.id)">{{item.user.fullName}}</td>
         <td width="46">
             <div class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

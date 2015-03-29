@@ -62,8 +62,9 @@
                             <li permission="view:locations"><a href="#/locations">{{ 'navbar.label.locations' | t }}</a></li>
                             <li permission="view:resourceTypes"><a href="#/resourceTypes">{{ 'navbar.label.resourceTypes' | t }}</a></li>
                             <li permission="view:eventTypes"><a href="#/eventTypes">{{ 'navbar.label.eventTypes' | t }}</a></li>
+                            <li permission="view:uploadFolders"><a href="#/uploadFolders">{{ 'navbar.label.uploadFolders' | t }}</a></li>
         
-                            <li permission="view:locations,view:resourceTypes,view:eventTypes" class="divider"></li>
+                            <li permission="view:locations,view:resourceTypes,view:eventTypes,view:uploadFolders" class="divider"></li>
         
                             <li permission="view:signupUsers"><a href="#/signupUsers">{{ 'navbar.label.signupUsers' | t }}</a></li>
                             <li permission="view:users"><a href="#/users">{{ 'navbar.label.users' | t }}</a></li>
@@ -98,12 +99,11 @@
         
         <div class="container">
             <div id="alerts" ng-if="alerts">
-                <div ng-repeat="alert in alerts">
-                    <div class="alert alert-{{alert.type}}">
-                        <span ng-if="alert.type=='success'"class="glyphicon glyphicon-ok"></span>
-                        <span ng-if="alert.type=='danger'"class="glyphicon glyphicon-remove"></span>
-                        {{ alert.text | t: alert.values }}
-                    </div>
+                <div ng-repeat="alert in alerts" class="alert alert-{{ alert.type }}">
+                    <span ng-if="alert.type=='success'"class="glyphicon glyphicon-ok"></span>
+                    <span ng-if="alert.type=='danger'"class="glyphicon glyphicon-remove"></span>
+                    <span ng-if="alert.header"><b>{{ alert.header | t: alert.headerParams }}</b> </span>
+                    {{ alert.text | t: alert.textParams }}
                 </div>
             </div>
             <div id="content">

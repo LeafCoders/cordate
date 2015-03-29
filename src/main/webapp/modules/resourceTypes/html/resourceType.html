@@ -3,5 +3,15 @@
         <text-view item-name="id"></text-view>
         <text-view item-name="name"></text-view>
         <text-view item-name="description"></text-view>
+
+        <div ng-if="item.type === 'user'">
+            <ref-view ref-item="item.group" ref-type="group"></ref-view>
+            <checkbox-view item-name="multiSelect"></checkbox-view>
+            <checkbox-view item-name="allowText"></checkbox-view>
+        </div>
+        <div ng-if="item.type === 'upload'">
+            <ref-view ref-item="item.uploadFolder" ref-type="uploadFolder"></ref-view>
+            <checkbox-view item-name="multiSelect"></checkbox-view>
+        </div>
     </form>
 </item>

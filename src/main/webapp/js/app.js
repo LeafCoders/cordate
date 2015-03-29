@@ -8,7 +8,7 @@
                         'myApp.translation_sv_SE',
                         'bookings', 'events', 'eventTypes', 'eventWeeks', 'eventSemesters',
                         'groups', 'groupMemberships', 'locations', 'permissions', 'posters',
-                        'uploads', 'users', 'signupUsers', 'resourceTypes'
+                        'uploadFolders', 'uploads', 'users', 'signupUsers', 'resourceTypes'
                         ];
 
     var app = angular.module('myApp', dependencies);
@@ -75,21 +75,26 @@
                 return response;
             },
             responseError: function(response) {
-                flash.clearAlerts();
-
-                if (response.status == 400) {
-                    flash.addAlert({ type: 'danger', text: 'error.badRequest'});
-                    flash.showAlerts();
-                    flash.clearAlerts();
-                } else if (response.status == 403) {
-                    flash.addAlert({ type: 'danger', text: 'error.permissionDenied'});
-                    flash.showAlerts();
-                    flash.clearAlerts();
-                } else {
-                    flash.addAlert({ type: 'danger', text: 'error.unknownError'});
-                    flash.showAlerts();
-                    flash.clearAlerts();
+                var alertMessage = {
+                        type: 'danger',
+                        header: response.data.error,
+                        text: response.data.reason
+                };
+                if (response.data.reasonParams) {
+                    alertMessage.textParams = {};
+                    response.data.reasonParams.every(function(text, index) {
+                        alertMessage.textParams["P" + index] = text;
+                    });
                 }
+                
+                if (response.status != 400 && response.status != 403) {
+                    alertMessage.header = 'error.unknownError';
+                }
+
+                flash.clearAlerts();
+                flash.addAlert(alertMessage);
+                flash.showAlerts();
+                flash.clearAlerts();
 
                 return $q.reject(response);
             }

@@ -80,7 +80,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li permission="update:events:{{event.id}}"><a href="#/{{types}}/{{event.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                            <li permission="delete:events:{{event.id}}"><a href="#" ng-click="removeConfirm(event)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                            <li permission="delete:events:{{event.id}}"><a href="#" ng-click="deleteConfirm(event)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                         </ul>
                     </div>
                 </td>

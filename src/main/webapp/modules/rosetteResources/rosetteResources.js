@@ -129,8 +129,8 @@
 
     var uploadResource = ['$route', '$resource', function($route, $resource) {
         var query = function() {
-            return $resource(cordateApiPath + '/uploads/:folderName/:id',
-                    { folderName: '@folderName', id: '@id' },
+            return $resource(cordateApiPath + '/uploads/:folderId/:id',
+                    { folderId: '@folderId', id: '@id' },
                     { create: { method: 'POST' }, update: { method: 'PUT' } });
         };
         return BasicResource($route, query);
