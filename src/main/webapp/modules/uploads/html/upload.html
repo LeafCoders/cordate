@@ -1,10 +1,13 @@
 <item>
     <form class="form-horizontal" role="form">
         <text-view item-name="fileName"></text-view>
-        <form-item label="content">
+        <form-item label="content" ng-if="item.mimeType.indexOf('image/') == 0">
             <div class="panel panel-default">
                 <img class="img-responsive" ng-src="{{ item.fileUrl }}">
             </div>
+        </form-item>
+        <form-item label="content" ng-if="item.mimeType.indexOf('audio/') == 0">
+            <audio src="{{ item.fileUrl }}" controls></audio>
         </form-item>
         <text-view item-name="fileUrl"></text-view>
         <text-view item-name="fileSize"> bytes</text-view>

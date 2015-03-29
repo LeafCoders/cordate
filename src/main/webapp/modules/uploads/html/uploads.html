@@ -1,7 +1,7 @@
 <items-header></items-header>
 <items-table>
     <div class="media">
-        <div class="pull-left">
+        <div class="pull-left" ng-if="item.mimeType.indexOf('image/') == 0">
             <img style="min-width: 100px; max-width: 100px;" class="media-object" ng-src="{{item.fileUrl}}" alt="{{item.fileName}}">
         </div>
         <div class="media-body">

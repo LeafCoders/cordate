@@ -26,8 +26,8 @@
 
     <div ng-switch-when="false" style="text-align: center; padding: 20px;">Laddar...</div>
 
-    <div ng-switch-when="true" ng-cloak>
-        <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div ng-switch-when="true">
+        <div class="navbar navbar-default navbar-static-top" role="navigation" ng-cloak>
             <div class="container">
                 <div class="navbar-header hidden-xs">
                     <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
@@ -98,7 +98,7 @@
         </div>
         
         <div class="container">
-            <div id="alerts" ng-if="alerts">
+            <div id="alerts" ng-if="alerts" ng-cloak>
                 <div ng-repeat="alert in alerts" class="alert alert-{{ alert.type }}">
                     <span ng-if="alert.type=='success'"class="glyphicon glyphicon-ok"></span>
                     <span ng-if="alert.type=='danger'"class="glyphicon glyphicon-remove"></span>

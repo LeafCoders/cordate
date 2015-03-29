@@ -4,22 +4,14 @@
 
     var thisModule = angular.module('uploadFolders', ['ngRoute', 'ngResource', 'rosetteResources', 'baseUI']);
 
-    var staticFolders = ['posters', 'locations'];
-    
     /* Controllers */
 
     var uploadFoldersController = ['$injector', '$scope', 'items', function($injector, $scope, items) {
         utils.extendItemsController(this, $injector, $scope, items);
-
-        $scope.allowEditItem = function(folder) { return staticFolders.indexOf(folder.id) < 0; };
-        $scope.allowDeleteItem = function(folder) { return staticFolders.indexOf(folder.id) < 0; };
     }];
 
     var uploadFolderController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
         utils.extendItemController(this, $injector, $scope, item);
-        
-        $scope.allowEditItem = function(folder) { return staticFolders.indexOf(folder.id) < 0; };
-        $scope.allowDeleteItem = function(folder) { return staticFolders.indexOf(folder.id) < 0; };
     }];
 
     var uploadFolderEditorController = ['$injector', '$scope', 'uploadFolderResource', 'item', function($injector, $scope, uploadFolderResource, item) {

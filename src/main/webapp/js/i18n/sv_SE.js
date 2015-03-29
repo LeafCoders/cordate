@@ -58,7 +58,7 @@ angular.module('myApp.translation_sv_SE', []).
         "itemEditor.action.addResource" : "Lägg till resurs",
 
         "error.badRequest" : "Sorry, ogiltigt anrop.",
-        "error.permissionDenied" : "Behörighet \"{{P0}}\" saknas.",
+        "error.missingPermission" : "Behörighet \"{{P0}}\" saknas.",
         "error.notFound" : "Resursen kunde inte hittas.",
         "error.forbidden" : "Ej tillåtet.",
         "error.referencedBy" : "Används av \"{{P0}}\".",
@@ -110,9 +110,11 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.orderBy" : "Ordna efter",
         "formLabel.isPublic" : "Publik",
         
+        "modalLabel.user" : "Välj person",
+        "modalLabel.group" : "Välj grupp",
         "modalLabel.location" : "Välj lokal",
         "modalLabel.image" : "Välj bild",
-        "modalLabel.userResource" : "Välj användare",
+        "modalLabel.userResource" : "Välj person",
         "modalLabel.uploadResource" : "Välj fil",
         
         "event" : "Händelse",
