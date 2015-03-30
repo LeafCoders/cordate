@@ -37,8 +37,8 @@
 <items-header></items-header>
     
 <ul class="nav nav-tabs margin-b">
-  <li role="presentation" class="active"><a href="#/eventWeeks/current">Veckovis</a></li>
-  <li role="presentation"><a href="#/eventSemesters/current">Terminlista</a></li>
+  <li role="presentation" class="active"><a href="#/eventWeeks">{{ 'eventItems.label.week' | t }}</a></li>
+  <li role="presentation"><a href="#/eventSemesters">{{ 'eventItems.label.semester' | t }}</a></li>
 </ul>
 
 <div class="pull-left">
@@ -47,11 +47,11 @@
 
 <div class="btn-toolbar pull-right">
 	<div class="btn-group">
-		<a class="btn btn-default" href="#{{item.previous_page}}">
+		<a class="btn btn-default" href="#/eventWeeks/{{currentWeek.prevLink}}">
             <span class="glyphicon glyphicon-chevron-left"></span>
 		</a>
 		<a class="btn btn-default" href="#/eventWeeks/current">{{ 'eventItems.label.today' | t }}</a>
-		<a class="btn btn-default" href="#{{item.next_page}}">
+		<a class="btn btn-default" href="#/eventWeeks/{{currentWeek.nextLink}}">
             <span class="glyphicon glyphicon-chevron-right"></span>
 		</a>
 	</div>
@@ -59,19 +59,19 @@
 
 <div class="clearfix"></div>
 
-<h4 class="dateRange">{{item.since + '-' + item.until | cordateDateRange}}</h4>
+<h4 class="dateRange">{{ currentWeek.range | cordateDateRange }}</h4>
 
-<div class="calendarDay" ng-repeat="day in item.days">
+<div class="calendarDay" ng-repeat="day in currentWeek.days">
 	<div class="calendarDate">
 		<div class="calendarDayNr">
 			<h3>{{day.date | cordateDayNumber}}</h3>
 		</div>
-		<div class="calendarDayName">{{ 'eventItems.label.' + (day.dayNumber | cordateDayName) | t}}</div>
+		<div class="calendarDayName">{{ 'eventItems.label.' + (day.dayNumber + 1 | cordateDayName) | t}}</div>
 	</div>
 
-	<div class="calendarInfo" ng-show="day.events">
+	<div class="calendarInfo" ng-show="eventsPerDay[day.dayNumber]">
 		<table class="table table-hover">
-			<tr id="{{event.id}}" ng-repeat="event in day.events">
+			<tr id="{{event.id}}" ng-repeat="event in eventsPerDay[day.dayNumber]">
 				<td ng-click="showDetails(event.id)">{{event.startTime | cordateTime}} <strong>{{event.title}}</strong></td>
                 <td width="46">
                     <div permission="update:events:{{event.id}},delete:events:{{event.id}}" class="btn-group pull-right">

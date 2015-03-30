@@ -4,18 +4,54 @@
 
     var thisModule = angular.module('eventWeeks', ['ngRoute', 'ngResource', 'rosetteResources', 'baseUI']);
 
+    var currentWeek = { from: null, before: null, range: null, prevLink: null, nextLink: null };
+
+    function changeWeek(fromDateString) {
+        var now = new Date();
+        var from = fromDateString ? new Date(fromDateString) : new Date(now.setDate(now.getDate() - now.getDay() + 1));
+        var before = dayOffset(from, 7);
+        var including = dayOffset(from, 6);
+        var prevFromDate = dayOffset(from, -7);
+        currentWeek.from = from.yyyymmdd();
+        currentWeek.before = before.yyyymmdd();
+        currentWeek.range = from.yyyymmdd() + '-' + including.yyyymmdd();
+        currentWeek.prevLink = prevFromDate.yyyymmdd();
+        currentWeek.nextLink = currentWeek.before;
+        
+        currentWeek.days = [];
+        for (var i = 0; i < 7; i++) {
+            currentWeek.days[i] = { dayNumber: i, date: dayOffset(from, i).yyyymmdd() };
+        }
+    };
+
+    function dayOffset(fromDate, days) {
+        var date = new Date(fromDate);
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+    
     /* Controllers */
 
-    var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'flash', 'eventResource', 'eventTypes', 'item',
-                               function($injector, $scope, $filter, $route, flash, eventResource, eventTypes, item) {
-        utils.extendItemsController(this, $injector, $scope, item);
+    var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'flash', 'eventResource', 'eventTypes', 'items',
+                               function($injector, $scope, $filter, $route, flash, eventResource, eventTypes, items) {
+        utils.extendItemsController(this, $injector, $scope, items);
 
         $scope.type = 'event';
         $scope.types = 'events';
-        $scope.backPage = "eventWeeks/current";
-        $scope.item = item;
+        $scope.backPage = "eventWeeks";
+        $scope.items = items;
         $scope.allowImport = true;
+        $scope.currentWeek = currentWeek;
 
+        $scope.eventsPerDay = [[], [], [], [], [], [], []];
+        angular.forEach(currentWeek.days, function(day) {
+            angular.forEach(items, function(eventItem) {
+                if (eventItem.startTime && eventItem.startTime.indexOf(day.date) >= 0) {
+                    $scope.eventsPerDay[day.dayNumber].push(eventItem);
+                }
+            });
+        });
+        
         utils.extendCreateWithModal($injector, $scope, 'event.modalTitle.create',
             function createItems() {
                 var items = [];
@@ -40,52 +76,31 @@
     var eventWeeksConfig = ['$routeProvider', function($routeProvider) {
         var eventWeeksPath = 'eventWeeks';
 
-        var getOneWeek = ['$q', '$route', 'eventWeekResource', function($q, $route, eventWeekResource) {
-            var deferred = $q.defer();
-
-            var id = $route.current.pathParams.id;
-            if ($route.current.pathParams.id == undefined) {
-                id = "current";
+        var getOneWeek = ['$route', 'eventResource', function($route, eventResource) {
+            var fromDate = $route.current.pathParams.id;
+            var changeToDate = null;
+            if (fromDate === undefined) {
+                changeToDate = currentWeek.from;
+            } else if (fromDate !== 'current') {
+                changeToDate = fromDate;
             }
-            var item = eventWeekResource.getQuery().get({ id: id }, function(data, headers) {
-                var linkHeader = headers().link;
-                if (linkHeader.length == 0) {
-                    throw new Error("input must not be of zero length");
-                }
-                // Split parts by comma
-                var parts = linkHeader.split(',');
-                var links = {};
-                // Parse each part into a named link
-                angular.forEach(parts, function (p) {
-                    var section = p.split(';');
-                    if (section.length != 2) {
-                        throw new Error("section could not be split on ';'");
-                    }
-                    var url = section[0].replace(/<(.*)>/, '$1').trim();
-                    var name = section[1].replace(/rel="(.*)"/, '$1').trim();
-                    links[name] = url;
-                });
-                item.next_page = '/' + links['next'];
-                item.previous_page = '/' + links['previous'];
-
-                deferred.resolve(item);
-            });
-            return deferred.promise;
+            changeWeek(changeToDate);
+            return eventResource.getAll({ from: currentWeek.from, before: currentWeek.before });
         }];
 
         var getAllEventTypes = ['eventTypeResource', function(eventTypeResource) {
             return eventTypeResource.getAll();
         }];
         
-        $routeProvider.when('/eventWeeks/current', {
+        $routeProvider.when('/eventWeeks', {
             templateUrl: 'modules/eventWeeks/html/eventWeek.html',
             controller:  'eventWeekController',
-            resolve:     { item: getOneWeek, eventTypes: getAllEventTypes }
+            resolve:     { items: getOneWeek, eventTypes: getAllEventTypes }
         });
         $routeProvider.when('/eventWeeks/:id', {
             templateUrl: 'modules/eventWeeks/html/eventWeek.html',
             controller:  'eventWeekController',
-            resolve:     { item: getOneWeek, eventTypes: getAllEventTypes }
+            resolve:     { items: getOneWeek, eventTypes: getAllEventTypes }
         });
     }];
 

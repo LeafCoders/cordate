@@ -66,6 +66,7 @@ angular.module('myApp.translation_sv_SE', []).
         "error.hasIdOrText.oneMustBeSet" : "Id eller text måste sättas.",
         "error.id.mustBeUnique" : "Ej unikt id! Id som du angett finns redan.",
         "error.id.notValidFormat" : "Fel format! Id måste börja med liten bokstav och får bara innehålla a-z, A-Z och 0-9.",
+        "error.permssions.notValid" : "Fel format på behörigheten.",
 
         "formLabel.id" : "Id",
         "formLabel.startTime" : "Börjar",
@@ -252,7 +253,7 @@ angular.module('myApp.translation_sv_SE', []).
         "permissionItems.label.permissionsForUsers" : "Användare",
         "permissionItems.label.everyone" : "Alla",
 
-        "permissionItem.label.permissionsForEveryone" : "Behärigheter för alla",
+        "permissionItem.label.permissionsForEveryone" : "Behörigheter för alla",
         "permissionItem.label.permissions" : "Behörigheter",
         "permissionItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera behörigheten?",
         "permissionItem.alert.itemWasDeleted" : "Behörigheten raderades!",

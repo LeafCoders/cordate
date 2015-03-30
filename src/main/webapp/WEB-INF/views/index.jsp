@@ -33,7 +33,7 @@
                     <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
                 </div>
                 <ul class="main-menu nav navbar-nav">
-                    <li permission="view:events" class="hidden-xs"><a href="#/eventWeeks/current">{{ 'navbar.label.events' | t }}</a></li>
+                    <li permission="view:events" class="hidden-xs"><a href="#/eventWeeks">{{ 'navbar.label.events' | t }}</a></li>
                     <li permission="view:posters" class="hidden-xs"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
                     <li permission="view:bookings" class="hidden-xs"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
                     <li permission="view:uploads" class="hidden-xs"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>
@@ -52,7 +52,7 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu">
-                            <li permission="view:events" class="visible-xs"><a href="#/eventWeeks/current">{{ 'navbar.label.events' | t }}</a></li>
+                            <li permission="view:events" class="visible-xs"><a href="#/eventWeeks">{{ 'navbar.label.events' | t }}</a></li>
                             <li permission="view:posters" class="visible-xs"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
                             <li permission="view:bookings" class="visible-xs"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
                             <li permission="view:uploads" class="visible-xs"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>

@@ -9,7 +9,7 @@
     var eventController = ['$injector', '$scope', 'permissionService', 'item',
                            function($injector, $scope, permissionService, item) {
         utils.extendItemController(this, $injector, $scope, item);
-        $scope.backPage = 'eventWeeks/current';
+        $scope.backPage = 'eventWeeks';
 
         $scope.allowAssign = function(resource) {
             return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.id);
@@ -19,7 +19,7 @@
     var eventEditorController = ['$injector', '$scope', '$filter', 'eventResource', 'eventType', 'item',
                                  function($injector, $scope, $filter, eventResource, eventType, item) {
         utils.extendItemEditorController(this, $injector, $scope, eventResource, item);
-        $scope.backPage = 'eventWeeks/current';
+        $scope.backPage = 'eventWeeks';
 
         if (item.id == undefined) {
             $scope.item = eventsUtils.createEventFromEventType(eventType);
@@ -85,7 +85,7 @@
                                         function($scope, $location, $filter, flash, eventResource, eventTypes) {
         $scope.type = 'event';
         $scope.types = 'events';
-        $scope.backPage = 'eventWeeks/current';
+        $scope.backPage = 'eventWeeks';
         $scope.importStage = 0;
         $scope.contentErrors = [];
         $scope.contentSuccess = [];

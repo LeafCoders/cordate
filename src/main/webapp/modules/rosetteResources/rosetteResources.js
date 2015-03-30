@@ -121,7 +121,7 @@
         var newModelFn = function(params) {
             var newModel = {};
             setStartAndEndTimes(newModel, 'startTime', '07:00', 'endTime', '22:00');
-            newModel['duration'] = 15;
+            newModel['duration'] = 10;
             return newModel;
         };
         return BasicResource($route, BasicQuery($resource, 'posters'), newModelFn);

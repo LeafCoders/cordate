@@ -34,7 +34,7 @@
 
         $scope.type = 'event';
         $scope.types = 'events';
-        $scope.backPage = "eventSemesters/current";
+        $scope.backPage = "eventSemesters";
         $scope.items = items;
         $scope.allowImport = true;
         $scope.currentSemester = currentSemester;
@@ -69,11 +69,13 @@
 
         var getOneSemester = ['$route', 'eventResource', function($route, eventResource) {
             var fromDate = $route.current.pathParams.id;
-            if (fromDate === undefined || fromDate == 'current') {
-                changeSemester();
-            } else {
-                changeSemester(fromDate);
+            var changeToDate = null;
+            if (fromDate === undefined) {
+                changeToDate = currentSemester.from;
+            } else if (fromDate !== 'current') {
+                changeToDate = fromDate;
             }
+            changeSemester(changeToDate);
             return eventResource.getAll({ from: currentSemester.from, before: currentSemester.before });
         }];
 
@@ -81,7 +83,7 @@
             return eventTypeResource.getAll();
         }];
         
-        $routeProvider.when('/eventSemesters/current', {
+        $routeProvider.when('/eventSemesters', {
             templateUrl: 'modules/eventSemesters/html/eventSemester.html',
             controller:  'eventSemesterController',
             resolve:     { items: getOneSemester, eventTypes: getAllEventTypes }
