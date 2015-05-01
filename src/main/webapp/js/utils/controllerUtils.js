@@ -51,7 +51,8 @@ var utils = utils || {};
     function ItemsController($scope, $location, $filter, $modal, $q, $route, flash, items) {
         $scope.items = items;
         $scope.type = getCurrentItemType($location);
-        $scope.types = $scope.type + 's'; 
+        $scope.types = $scope.type + 's';
+        $scope.subTypePermission = '*';
         $scope.backPage = $scope.types;
         $scope.allowCreateItem = true;
         $scope.allowEditItem = function() { return true; };

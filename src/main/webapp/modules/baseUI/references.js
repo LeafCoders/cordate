@@ -470,7 +470,7 @@
                 return '' +
                 '<div class="form-group">' +
                     '<label class="col-xs-4 col-sm-3 control-label">{{ resource.resourceType.name }}</label>' +
-                    '<div class="col-xs-8 col-sm-10">' +
+                    '<div class="col-xs-8 col-sm-6">' +
                         '<p class="form-control-static">{{ value }}</p>' +
                     '</div>' +
                 '</div>';

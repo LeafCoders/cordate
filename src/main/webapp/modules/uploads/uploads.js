@@ -14,25 +14,21 @@
 
         $scope.tableHeaderUrl = 'modules/uploads/html/uploadsHeader.html';
         $scope.folders = uploadFolders;
-        $scope.selectedFolder = uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null;
         $scope.allowCreateItem = uploadFolders.length > 0 ? $scope.allowCreateItem : false; 
         $scope.allowEditItem = function() { return false; };
         
         $scope.changeFolder = function(folder) {
-            $scope.selectedFolder = folder;
-            lastSelectedFolder = folder;
-            uploadResource.getAll({ folderId: $scope.selectedFolder.id }).then(function(data) {
-                $scope.items = data;
-            });
+            if (folder) {
+                $scope.subTypePermission = folder.id;
+                $scope.selectedFolder = folder;
+                lastSelectedFolder = folder;
+                uploadResource.getAll({ folderId: $scope.selectedFolder.id }).then(function(data) {
+                    $scope.items = data;
+                });
+            }
         };
-        
-        if ($scope.selectedFolder != null) {
-            uploadResource.getAll({ folderId: $scope.selectedFolder.id }).then(function(data) {
-                $scope.items = data;
-            });
-        }
-        
-        lastSelectedFolder = $scope.selectedFolder;
+ 
+        $scope.changeFolder(uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null);
     }];
 
     var uploadController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
