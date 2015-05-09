@@ -15,13 +15,13 @@
             </span>
         </td>
         <td width="46">
-            <div permission="update:{{types}}:{{item.id}},delete:{{types}}:{{item.id}}" class="btn-group pull-right">
+            <div permission="{{types}}:update:{{item.id}},{{types}}:delete:{{item.id}}" class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li permission="update:{{types}}:{{item.id}}"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                    <li permission="delete:{{types}}:{{item.id}}" class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                    <li permission="{{types}}:update:{{item.id}}"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                    <li permission="{{types}}:delete:{{item.id}}" class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>
@@ -44,13 +44,13 @@
             </span>
         </td>
         <td width="46">
-            <div permission="update:{{types}}:{{item.id}},delete:{{types}}:{{item.id}}" class="btn-group pull-right">
+            <div permission="{{types}}:update:{{item.id}},{{types}}:delete:{{item.id}}" class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li permission="update:{{types}}:{{item.id}}"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                    <li permission="delete:{{types}}:{{item.id}}" class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                    <li permission="{{types}}:update:{{item.id}}"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                    <li permission="{{types}}:delete:{{item.id}}" class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>
@@ -73,13 +73,13 @@
             </span>
         </td>
         <td width="46">
-            <div permission="update:{{types}}:{{item.id}},delete:{{types}}:{{item.id}}" class="btn-group pull-right">
+            <div permission="{{types}}:update:{{item.id}},{{types}}:delete:{{item.id}}" class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li permission="update:{{types}}:{{item.id}}"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                    <li permission="delete:{{types}}:{{item.id}}" class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                    <li permission="{{types}}:update:{{item.id}}"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                    <li permission="{{types}}:delete:{{item.id}}" class="text-danger"><a href="" class="text-danger" ng-click="remove(item)"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>

@@ -33,7 +33,7 @@
     </div>
     <form class="form-horizontal" role="form">
         <text-view item-name="description"></text-view>
-        <div ng-repeat="resource in item.resources" ng-switch="allowAssign(resource)">
+        <div ng-repeat="resource in item.resources" ng-switch="allowAssignResourceType(resource)">
             <div ng-switch-when="false">
                 <event-resource-view resource="resource"></event-resource-view>
             </div>

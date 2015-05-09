@@ -21,12 +21,9 @@
         utils.extendItemController(this, $injector, $scope, item);
     }];
 
-    var resourceTypeEditorController = ['$injector', '$scope', 'resourceTypeResource', 'item', 'groups',
-                                        function($injector, $scope, resourceTypeResource, item, groups) {
+    var resourceTypeEditorController = ['$injector', '$scope', 'resourceTypeResource', 'item',
+                                        function($injector, $scope, resourceTypeResource, item) {
         utils.extendItemEditorController(this, $injector, $scope, resourceTypeResource, item);
-        $scope.formHelper = {
-            groups: groups
-        };
     }];
 
 
@@ -34,20 +31,15 @@
     var resourceTypesConfig = ['$routeProvider', function($routeProvider) {
         var resourceTypesPath = 'resourceTypes';
 
-        var getAllUserResourceTypes = ['resourceTypeResource', function(resourceTypeResource) {
+        var getAllResourceTypes = ['resourceTypeResource', function(resourceTypeResource) {
             return resourceTypeResource.getAll();
         }];
-        var getOneUserResourceType = ['resourceTypeResource', function(resourceTypeResource) {
+        var getOneResourceType = ['resourceTypeResource', function(resourceTypeResource) {
             return resourceTypeResource.getOne();
         }];
-        var getAllGroups = ['groupResource', function(groupResource) {
-            return groupResource.getAll();
-        }];
 
-        utils.createBasicAllRoute($routeProvider, resourceTypesPath, { items: getAllUserResourceTypes });
-        utils.createBasicOneRoute($routeProvider, resourceTypesPath,
-                { item: getOneUserResourceType },
-                { item: getOneUserResourceType, groups: getAllGroups });
+        utils.createBasicAllRoute($routeProvider, resourceTypesPath, { items: getAllResourceTypes });
+        utils.createBasicOneRoute($routeProvider, resourceTypesPath, { item: getOneResourceType });
     }];
 
 

@@ -10,7 +10,7 @@
 
         <hr>
 
-        <div ng-repeat="resource in item.resources" ng-switch="allowAssign(resource)">
+        <div ng-repeat="resource in item.resources" ng-switch="allowAssignResourceType(resource)">
             <div ng-switch-when="false">
                 <event-resource-view resource="resource"></event-resource-view>
             </div>

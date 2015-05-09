@@ -11,8 +11,8 @@
         utils.extendItemController(this, $injector, $scope, item);
         $scope.backPage = 'eventWeeks';
 
-        $scope.allowAssign = function(resource) {
-            return permissionService.hasPermission('assign:resourceType:' + resource.resourceType.id);
+        $scope.allowAssignResourceType = function(resource) {
+            return permissionService.hasPermission('events:resourceTypes:update:' + resource.resourceType.id);
         };
     }];
 
