@@ -12,7 +12,7 @@
         $scope.backPage = 'eventWeeks';
 
         $scope.allowAssignResourceType = function(resource) {
-            return permissionService.hasPermission('events:resourceTypes:update:' + resource.resourceType.id);
+            return permissionService.hasPermission('events:update:resourceTypes:' + resource.resourceType.id);
         };
     }];
 

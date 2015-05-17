@@ -67,6 +67,7 @@ angular.module('myApp.translation_sv_SE', []).
         "error.id.mustBeUnique" : "Ej unikt id! Id som du angett finns redan.",
         "error.id.notValidFormat" : "Fel format! Id måste börja med liten bokstav och får bara innehålla a-z, A-Z och 0-9.",
         "error.permssions.notValid" : "Fel format på behörigheten.",
+        "error.description.max200Chars" : "Beskrivningen får max innehålla 200 tecken.",
 
         "formLabel.id" : "Id",
         "formLabel.startTime" : "Börjar",
@@ -156,6 +157,8 @@ angular.module('myApp.translation_sv_SE', []).
         "event.title.notEmpty" : "Titel saknas",
         "event.startTime.notNull" : "Starttid saknas",
         "event.startBeforeEndTime" : "Händelsen får inte sluta innan den har börjat",
+        "event.eventType.notNull" : "Eventtyp saknas",
+        "event.eventType.notAllowedToChange" : "Ej tillåtet att ändra eventtyp",
 
         "event.modalTitle.create" : "Välj händelsetyp",
 
