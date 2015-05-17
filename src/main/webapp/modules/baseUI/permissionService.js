@@ -20,14 +20,15 @@
         };
  
         this.hasPermission = function(permissionsToTest) {
-            return permissionsToTest.split(',').some(function (testPermission, index, array) {
+            return permissionsToTest.split(';').some(function (testPermission, index, array) {
                 if (testedPermissions[testPermission] !== undefined) return testedPermissions[testPermission];
+
                 var testParts = testPermission.split(':');
                 var isPermitted = userPermissions.some(function (userPermission, index, array) {
                     var userParts = userPermission.split(':');
                     if (userParts.length > testParts.length) return false;
                     for (var i = 0; i < userParts.length; i++) {
-                        if (userParts[i] != '*' && userParts[i] != testParts[i]) return false; 
+                        if (!comparePermissionPart(userParts[i], testParts[i])) return false;
                     }
                     return true;
                 });
@@ -35,6 +36,18 @@
                     testedPermissions[testPermission] = isPermitted;
                 }
                 return isPermitted;
+            });
+        };
+
+        var comparePermissionPart = function (userPart, testPart) {
+            if (userPart == '*') {
+                return true;
+            }
+
+            return userPart.split(',').some(function (userPartPart) {
+                return testPart.split(',').some(function (testPartPart) {
+                    return userPartPart === testPartPart;
+                });
             });
         };
     }];

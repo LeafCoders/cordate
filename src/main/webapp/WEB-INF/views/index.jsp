@@ -39,7 +39,7 @@
                     <li permission="uploads:view" class="hidden-xs"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>
         
                     <li class="dropdown">
-                        <a permission="locations:view,resourceTypes:view,eventTypes:view,signupUsers:view,users:view,groups:view,groupMemberships:view,permissions:view"
+                        <a permission="locations:view;resourceTypes:view;eventTypes:view;signupUsers:view;users:view;groups:view;groupMemberships:view;permissions:view"
                            href="" class="hidden-xs dropdown-toggle top-header" data-toggle="dropdown">
                             {{ 'navbar.label.admin' | t }} <b class="caret"></b>
                         </a>
@@ -57,14 +57,14 @@
                             <li permission="bookings:view" class="visible-xs"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
                             <li permission="uploads:view" class="visible-xs"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>
         
-                            <li permission="events:view,posters:view,bookings:view,uploads:view" class="divider visible-xs"></li>
+                            <li permission="events:view;posters:view;bookings:view;uploads:view" class="divider visible-xs"></li>
         
                             <li permission="locations:view"><a href="#/locations">{{ 'navbar.label.locations' | t }}</a></li>
                             <li permission="resourceTypes:view"><a href="#/resourceTypes">{{ 'navbar.label.resourceTypes' | t }}</a></li>
                             <li permission="eventTypes:view"><a href="#/eventTypes">{{ 'navbar.label.eventTypes' | t }}</a></li>
                             <li permission="uploadFolders:view"><a href="#/uploadFolders">{{ 'navbar.label.uploadFolders' | t }}</a></li>
         
-                            <li permission="locations,resourceTypes:view,eventTypes:view,uploadFolders:view" class="divider"></li>
+                            <li permission="locations;resourceTypes:view;eventTypes:view;uploadFolders:view" class="divider"></li>
         
                             <li permission="signupUsers:view"><a href="#/signupUsers">{{ 'navbar.label.signupUsers' | t }}</a></li>
                             <li permission="users:view"><a href="#/users">{{ 'navbar.label.users' | t }}</a></li>
@@ -72,7 +72,7 @@
                             <li permission="groupMemberships:view"><a href="#/groupMemberships">{{ 'navbar.label.groupMemberships' | t }}</a></li>
                             <li permission="permissions:view"><a href="#/permissions">{{ 'navbar.label.permissions' | t }}</a></li>
         
-                            <li permission="signupUsers:view,users:view,groups:view,groupMemberships:view,permissions:view" class="divider visible-xs"></li>
+                            <li permission="signupUsers:view;users:view;groups:view;groupMemberships:view;permissions:view" class="divider visible-xs"></li>
         
                             <li class="dropdown-header visible-xs">${username}</li>
                             <li class="visible-xs">

@@ -6,7 +6,7 @@
     <tr id="{{item.id}}" ng-repeat="item in items">
         <td ng-click="showDetails(item.id)" item-transclude></td>
         <td width="46" height="46">
-            <div permission="{{types}}:update:{{item.id}},{{types}}:delete:{{item.id}}"
+            <div permission="{{types}}:update:{{item.id}};{{types}}:delete:{{item.id}}"
                  ng-show="allowEditItem(item) || allowDeleteItem(item)" class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="caret"></span>
