@@ -74,13 +74,14 @@
 			<tr id="{{event.id}}" ng-repeat="event in eventsPerDay[day.dayNumber]">
 				<td ng-click="showDetails(event.id)">{{event.startTime | cordateTime}} <strong>{{event.title}}</strong></td>
                 <td width="46">
-                    <div permission="events:update:{{event.id}};events:delete:{{event.id}}" class="btn-group pull-right">
+                    <div class="btn-group pull-right"
+                         permission="events:update:{{event.id}};events:update:eventTypes:{{event.eventType.id}};events:delete:{{event.id}};events:delete:eventTypes:{{event.eventType.id}}">
                         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li permission="events:update:{{event.id}}"><a href="#/{{types}}/{{event.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                            <li permission="events:delete:{{event.id}}"><a href="#" ng-click="deleteConfirm(event)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                            <li permission="events:update:{{event.id}};events:update:eventTypes:{{event.eventType.id}}"><a href="#/{{types}}/{{event.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                            <li permission="events:delete:{{event.id}};events:delete:eventTypes:{{event.eventType.id}}"><a href="#" ng-click="deleteConfirm(event)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                         </ul>
                     </div>
                 </td>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="jwr" uri="http://jawr.net/tags" %>
 
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="sv" ng-app="myApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">

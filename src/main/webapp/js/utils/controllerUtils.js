@@ -48,15 +48,14 @@ var utils = utils || {};
         return newModalObj;
     };
 
-    function ItemsController($scope, $location, $filter, $modal, $q, $route, flash, items) {
+    function ItemsController($scope, $location, $filter, $modal, $q, $route, permissionService, flash, items) {
         $scope.items = items;
         $scope.type = getCurrentItemType($location);
         $scope.types = $scope.type + 's';
-        $scope.subTypePermission = '*';
         $scope.backPage = $scope.types;
-        $scope.allowCreateItem = true;
-        $scope.allowEditItem = function() { return true; };
-        $scope.allowDeleteItem = function() { return true; };
+        $scope.allowCreateItem = function() { permissionService.hasPermission($scope.types + ':create'); };
+        $scope.allowEditItem = function(item) { return permissionService.hasPermission($scope.types + ':update:' + item.id); };
+        $scope.allowDeleteItem = function(item) { return permissionService.hasPermission($scope.types + ':delete:' + item.id); };
         $scope.allowImport = false;
 
         $scope.searchFormHelper = {
@@ -94,13 +93,13 @@ var utils = utils || {};
         };
     }
 
-    function ItemController($scope, $location, $filter, $modal, $q, flash, item) {
+    function ItemController($scope, $location, $filter, $modal, $q, permissionService, flash, item) {
         $scope.item = item;
         $scope.type = getCurrentItemType($location);
         $scope.types = $scope.type + 's'; 
         $scope.backPage = $scope.types;
-        $scope.allowEditItem = function() { return true; };
-        $scope.allowDeleteItem = function() { return true; };
+        $scope.allowEditItem = function() { return permissionService.hasPermission($scope.types + ':update:' + item.id); };
+        $scope.allowDeleteItem = function() { return permissionService.hasPermission($scope.types + ':delete:' + item.id); };
 
         $scope.deleteConfirm = function() {
             var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: $scope });

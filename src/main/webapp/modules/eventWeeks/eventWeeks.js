@@ -32,14 +32,15 @@
     
     /* Controllers */
 
-    var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'flash', 'eventResource', 'eventTypes', 'items',
-                               function($injector, $scope, $filter, $route, flash, eventResource, eventTypes, items) {
+    var eventWeekController = ['$injector', '$scope', '$filter', '$route', 'permissionService', 'flash', 'eventResource', 'eventTypes', 'items',
+                               function($injector, $scope, $filter, $route, permissionService, flash, eventResource, eventTypes, items) {
         utils.extendItemsController(this, $injector, $scope, items);
 
         $scope.type = 'event';
         $scope.types = 'events';
         $scope.backPage = "eventWeeks";
         $scope.items = items;
+        $scope.allowCreateItem = function() { return permissionService.hasPermission('events:create:eventTypes:*'); };
         $scope.allowImport = true;
         $scope.currentWeek = currentWeek;
 
@@ -56,7 +57,9 @@
             function createItems() {
                 var items = [];
                 angular.forEach(eventTypes, function (type) {
-                    items.push({ title: type.name, url: '/' + $scope.types + '/new?eventTypeId=' + type.id });
+                    if (permissionService.hasPermission('events:create:eventTypes:' + type.id)) {
+                        items.push({ title: type.name, url: '/' + $scope.types + '/new?eventTypeId=' + type.id });
+                    }
                 });
                 return items;
             }

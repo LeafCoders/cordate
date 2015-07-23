@@ -6,14 +6,13 @@
     <tr id="{{item.id}}" ng-repeat="item in items">
         <td ng-click="showDetails(item.id)" item-transclude></td>
         <td width="46" height="46">
-            <div permission="{{types}}:update:{{item.id}};{{types}}:delete:{{item.id}}"
-                 ng-show="allowEditItem(item) || allowDeleteItem(item)" class="btn-group pull-right">
+            <div ng-if="allowEditItem(item) || allowDeleteItem(item)" class="btn-group pull-right">
                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li permission="{{types}}:update:{{item.id}}" ng-show="allowEditItem(item)"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
-                    <li permission="{{types}}:delete:{{item.id}}" ng-show="allowDeleteItem(item)"><a href="#" ng-click="deleteConfirm(item)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
+                    <li ng-if="allowEditItem(item)"><a href="#/{{types}}/{{item.id}}/edit">{{ 'items.action.edit' | t }}</a></li>
+                    <li ng-if="allowDeleteItem(item)"><a href="#" ng-click="deleteConfirm(item)" onclick="return false"><span class="text-danger">{{ 'items.action.delete' | t }}</span></a></li>
                 </ul>
             </div>
         </td>

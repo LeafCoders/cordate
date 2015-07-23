@@ -36,6 +36,7 @@
         $scope.types = 'events';
         $scope.backPage = "eventSemesters";
         $scope.items = items;
+        $scope.allowCreateItem = function() { return permissionService.hasPermission('events:create'); };
         $scope.allowImport = true;
         $scope.currentSemester = currentSemester;
 
@@ -43,7 +44,9 @@
             function createItems() {
                 var items = [];
                 angular.forEach(eventTypes, function (type) {
-                    items.push({ title: type.name, url: '/' + $scope.types + '/new?eventTypeId=' + type.id });
+                    if (permissionService.hasPermission('events:create:eventTypes:' + type.id)) {
+                        items.push({ title: type.name, url: '/' + $scope.types + '/new?eventTypeId=' + type.id });
+                    }
                 });
                 return items;
             }

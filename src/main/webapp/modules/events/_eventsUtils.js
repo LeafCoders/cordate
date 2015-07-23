@@ -32,7 +32,7 @@ eventsUtils.createResourceTypeUser = function (resourceType) {
     return {
         type: 'user',
         resourceType: resourceType,
-        users: null
+        users: { "refs" : [] }
     };
 };
     
@@ -40,6 +40,6 @@ eventsUtils.createResourceTypeUpload = function (resourceType) {
     return {
         type: 'upload',
         resourceType: resourceType,
-        uploads: null
+        uploads: []
     };
 };

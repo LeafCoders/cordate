@@ -1,3 +1,5 @@
-<button permission="{{types}}:create:{{subTypePermission}}" ng-show="allowCreateItem" class="btn btn-primary pull-right" ng-click="createNew()">{{ type + 'Items.action.new' | t}}</button>
-<button permission="{{types}}:create:{{subTypePermission}}" ng-show="allowImport" class="btn btn-default pull-right" style="margin-right: 3px;" ng-click="import()">{{ type + 'Items.action.import' | t}}</button>
+<span ng-if="allowCreateItem()">
+    <button class="btn btn-primary pull-right" ng-click="createNew()">{{ type + 'Items.action.new' | t}}</button>
+    <button ng-if="allowImport" class="btn btn-default pull-right" style="margin-right: 3px;" ng-click="import()">{{ type + 'Items.action.import' | t}}</button>
+</span>
 <h2>{{ type + 'Items.label.title' | t}}</h2>

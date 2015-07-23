@@ -8,7 +8,7 @@
 
     var signupUsersController = ['$injector', '$scope', 'items', function($injector, $scope, items) {
         utils.extendItemsController(this, $injector, $scope, items);
-        $scope.allowCreateItem = false;
+        $scope.allowCreateItem = function() { return false; };
     }];
 
     var signupUserController = ['$injector', '$scope', '$location', 'flash', 'signupUserResource', 'item',

@@ -11,6 +11,14 @@
         utils.extendItemController(this, $injector, $scope, item);
         $scope.backPage = 'eventWeeks';
 
+        $scope.allowEditItem = function() {
+            return permissionService.hasPermission($scope.types + ':update:' + item.id) ||
+                permissionService.hasPermission($scope.types + ':update:eventTypes:' + item.eventType.id);
+        };
+        $scope.allowDeleteItem = function() {
+            return permissionService.hasPermission($scope.types + ':delete:' + item.id) ||
+            permissionService.hasPermission($scope.types + ':delete:eventTypes:' + item.eventType.id);
+        };
         $scope.allowAssignResourceType = function(resource) {
             return permissionService.hasPermission('events:update:resourceTypes:' + resource.resourceType.id);
         };

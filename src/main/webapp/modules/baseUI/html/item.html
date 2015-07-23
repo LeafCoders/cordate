@@ -6,7 +6,7 @@
         <a href="#/{{backPage}}">{{ type + 'Item.label.backToItems' | t }}</a>
     </div>
     <div class="col-sm-9">
-        <a permission="{{types}}:update:{{item.id}}" ng-show="allowEditItem(item)" href="#/{{types}}/{{item.id}}/edit" class="btn btn-primary">{{ 'item.action.edit' | t }}</a>
-        <button permission="{{types}}:delete:{{item.id}}" ng-show="allowDeleteItem(item)" type="button" class="btn btn-danger pull-right" ng-click="deleteConfirm()">{{ 'item.action.delete' | t }}</button>
+        <a ng-if="allowEditItem(item)" href="#/{{types}}/{{item.id}}/edit" class="btn btn-primary">{{ 'item.action.edit' | t }}</a>
+        <button ng-if="allowDeleteItem(item)" type="button" class="btn btn-danger pull-right" ng-click="deleteConfirm()">{{ 'item.action.delete' | t }}</button>
     </div>
 </div>

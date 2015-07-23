@@ -1,10 +1,8 @@
 package se.leafcoders.cordate.controller;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -16,12 +14,12 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import se.leafcoders.cordate.model.UserSession;
 
 @Controller
@@ -46,21 +44,21 @@ public class ApiProxyController {
         HttpResponse remoteResponse = null;
 		if ("GET".equals(request.getMethod())) {
 			HttpGet httpGet = new HttpGet(rosetteBaseUrl + requestURI);
-			httpGet.addHeader(new BasicScheme().authenticate(credentials, httpGet));
+			httpGet.addHeader(BasicScheme.authenticate(credentials, HTTP.UTF_8, false));
 			remoteResponse = httpClient.execute(httpGet);
 		} else if ("POST".equals(request.getMethod())) {
 			HttpPost httpPost = new HttpPost(rosetteBaseUrl + requestURI);
 			httpPost.setEntity(new StringEntity(requestBody, "application/json", "UTF-8"));
-			httpPost.addHeader(new BasicScheme().authenticate(credentials, httpPost));
+			httpPost.addHeader(BasicScheme.authenticate(credentials, HTTP.UTF_8, false));
 			remoteResponse = httpClient.execute(httpPost);
 		} else if ("PUT".equals(request.getMethod())) {
 			HttpPut httpPut = new HttpPut(rosetteBaseUrl + requestURI);
 			httpPut.setEntity(new StringEntity(requestBody, "application/json", "UTF-8"));
-			httpPut.addHeader(new BasicScheme().authenticate(credentials, httpPut));
+			httpPut.addHeader(BasicScheme.authenticate(credentials, HTTP.UTF_8, false));
 			remoteResponse = httpClient.execute(httpPut);
 		} else if ("DELETE".equals(request.getMethod())) {
 			HttpDelete httpDelete = new HttpDelete(rosetteBaseUrl + requestURI);
-			httpDelete.addHeader(new BasicScheme().authenticate(credentials, httpDelete));
+			httpDelete.addHeader(BasicScheme.authenticate(credentials, HTTP.UTF_8, false));
 			remoteResponse = httpClient.execute(httpDelete);
 		}
 						

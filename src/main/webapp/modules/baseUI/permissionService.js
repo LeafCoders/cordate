@@ -40,7 +40,7 @@
         };
 
         var comparePermissionPart = function (userPart, testPart) {
-            if (userPart == '*') {
+            if (userPart == '*' || testPart == '*') {
                 return true;
             }
 

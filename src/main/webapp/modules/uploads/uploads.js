@@ -8,13 +8,15 @@
     
     /* Controllers */
 
-    var uploadsController = ['$injector', '$scope', '$location', 'uploadResource', 'uploadFolders',
-                             function($injector, $scope, $location, uploadResource, uploadFolders) {
+    var uploadsController = ['$injector', '$scope', '$location', 'permissionService', 'uploadResource', 'uploadFolders',
+                             function($injector, $scope, $location, permissionService, uploadResource, uploadFolders) {
         utils.extendItemsController(this, $injector, $scope, []);
 
         $scope.tableHeaderUrl = 'modules/uploads/html/uploadsHeader.html';
         $scope.folders = uploadFolders;
-        $scope.allowCreateItem = uploadFolders.length > 0 ? $scope.allowCreateItem : false; 
+        $scope.allowCreateItem = function() {
+            return uploadFolders.length > 0 && $scope.selectedFolder ? permissionService.hasPermission('uploads:create:' + $scope.selectedFolder.id) : false;
+        };
         $scope.allowEditItem = function() { return false; };
         
         $scope.changeFolder = function(folder) {

@@ -1,10 +1,8 @@
 package se.leafcoders.cordate.security;
 
 import java.io.IOException;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
@@ -12,6 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -55,7 +54,7 @@ public class CordateRealm extends AuthorizingRealm {
 
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet httpGet = new HttpGet(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/authentication");
-				httpGet.addHeader(new BasicScheme().authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), httpGet));
+				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), HTTP.UTF_8, false));
 
 				HttpResponse response = httpClient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_UNAUTHORIZED) {
@@ -63,9 +62,6 @@ public class CordateRealm extends AuthorizingRealm {
 				} else {
 					simpleAuthenticationInfo = new SimpleAuthenticationInfo(providedUsername, providedPassword, "cordateRealm");
 				}
-			} catch (org.apache.http.auth.AuthenticationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
