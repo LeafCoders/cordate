@@ -3,6 +3,7 @@ package se.leafcoders.cordate.security;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.auth.params.AuthPNames;
@@ -22,7 +23,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import se.leafcoders.cordate.model.UserPrincipal;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service("cordateRealm")
 public class CordateRealm extends AuthorizingRealm {
@@ -61,10 +65,12 @@ public class CordateRealm extends AuthorizingRealm {
 				httpGet.addHeader(new BasicScheme().authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), httpRequest, null));
 
 				HttpResponse response = httpClient.execute(httpGet);
-				if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_UNAUTHORIZED) {
+				if (response.getStatusLine().getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
                     throw new AuthenticationException("E-postadressen eller lösenordet är felaktigt.");
 				} else {
-					simpleAuthenticationInfo = new SimpleAuthenticationInfo(providedUsername, providedPassword, "cordateRealm");
+					String responseBody = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+					UserPrincipal userPrincipal = new UserPrincipal(new ObjectMapper().readTree(responseBody));
+					simpleAuthenticationInfo = new SimpleAuthenticationInfo(userPrincipal, providedPassword, "cordateRealm");
 				}
 			} catch (org.apache.http.auth.AuthenticationException e) {
 				e.printStackTrace();

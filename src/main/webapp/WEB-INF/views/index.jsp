@@ -74,9 +74,12 @@
         
                             <li permission="signupUsers:view;users:view;groups:view;groupMemberships:view;permissions:view" class="divider visible-xs"></li>
         
-                            <li class="dropdown-header visible-xs">${username}</li>
+                            <li class="dropdown-header visible-xs">${ fullName }</li>
                             <li class="visible-xs">
-                                <a href="logout">{{'navbar.label.logout' | t}}</a>
+                                <a href="#users/${ userId }">{{ 'navbar.label.userDetails' | t }}</a>
+                            </li>
+                            <li class="visible-xs">
+                                <a href="logout">{{ 'navbar.label.logout' | t }}</a>
                             </li>
                         </ul>
                     </li>
@@ -88,9 +91,10 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="dropdown-header">${username}</li>
+                            <li class="dropdown-header">${ fullName }</li>
+                            <li><a href="#users/${ userId }">{{ 'navbar.label.userAccount' | t }}</a></li>
                             <li class="divider"></li>
-                            <li><a href="logout">{{'navbar.label.logout' | t}}</a></li>
+                            <li><a href="logout">{{ 'navbar.label.logout' | t }}</a></li>
                         </ul>
                     </li>
                 </ul>

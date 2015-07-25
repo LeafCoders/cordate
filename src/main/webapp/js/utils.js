@@ -6,7 +6,9 @@ function stringToTime(rosetteDate) {
     var yearNumber = parseInt(rosetteDate.substring(0, 4), 10);
     var monthNumber = parseInt(rosetteDate.substring(5, 7), 10) - 1;
     var dayNumber = parseInt(rosetteDate.substring(8, 10), 10);
-    return new Date(yearNumber, monthNumber, dayNumber);
+    var hour = parseInt(rosetteDate.substring(11, 13), 10);
+    var minute = parseInt(rosetteDate.substring(14, 16), 10);
+    return new Date(yearNumber, monthNumber, dayNumber, hour, minute);
 }
 
 function refToText(ref, refType) {

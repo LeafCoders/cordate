@@ -17,6 +17,7 @@ angular.module('myApp.translation_sv_SE', []).
         "navbar.label.resourceTypes" : "Resurser",
         "navbar.label.eventTypes" : "Händelsetyper",
         "navbar.label.uploadFolders" : "Filkataloger",
+        "navbar.label.userDetails" : "Användaruppgifter",
         "navbar.label.logout" : "Logga ut",
 
         "January": "Januari",

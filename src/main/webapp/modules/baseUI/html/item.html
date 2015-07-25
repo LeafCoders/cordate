@@ -3,7 +3,7 @@
 <hr>
 <div class="form-group clearfix">
     <div class="col-sm-3">
-        <a href="#/{{backPage}}">{{ type + 'Item.label.backToItems' | t }}</a>
+        <a permission="{{types}}:view" href="#/{{backPage}}">{{ type + 'Item.label.backToItems' | t }}</a>
     </div>
     <div class="col-sm-9">
         <a ng-if="allowEditItem(item)" href="#/{{types}}/{{item.id}}/edit" class="btn btn-primary">{{ 'item.action.edit' | t }}</a>

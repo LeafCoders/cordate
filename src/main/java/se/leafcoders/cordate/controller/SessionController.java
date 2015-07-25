@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import se.leafcoders.cordate.model.UserPrincipal;
 import se.leafcoders.cordate.model.UserSession;
 
 @Controller
@@ -42,8 +43,10 @@ public class SessionController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getIndex() {
+		UserPrincipal userPrincipal = (UserPrincipal)SecurityUtils.getSubject().getPrincipal();
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("username", (String)SecurityUtils.getSubject().getPrincipal());
+        modelAndView.addObject("userId", userPrincipal.getId());
+        modelAndView.addObject("fullName", userPrincipal.getFullName());
         return modelAndView;
 	}
 	

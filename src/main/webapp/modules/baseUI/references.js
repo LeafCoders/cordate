@@ -85,6 +85,7 @@
             removeItemConfirm: function() {
                 var modalScope = $scope.$new();
                 modalScope.remove = $scope.remove;
+                modalScope.type = 'resourceType'; 
                 var modalPromise = $modal({template: 'modules/baseUI/html/deleteModal.html', persist: true, show: false, backdrop: 'static', scope: modalScope});
                 modalPromise.$promise.then(modalPromise.show);
             },
