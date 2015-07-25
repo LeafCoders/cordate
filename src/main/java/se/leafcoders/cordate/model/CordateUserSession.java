@@ -9,6 +9,8 @@ import org.springframework.web.context.WebApplicationContext;
 @Component
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class CordateUserSession implements UserSession, Serializable {
+	private static final long serialVersionUID = -5273558910777019074L;
+
 	private String username;
 	private String password;
 	

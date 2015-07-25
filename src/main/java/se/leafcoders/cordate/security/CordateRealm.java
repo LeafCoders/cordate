@@ -5,12 +5,13 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.auth.params.AuthPNames;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHttpRequest;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -52,9 +53,12 @@ public class CordateRealm extends AuthorizingRealm {
 				String providedUsername = token.getUsername();
 				String providedPassword = new String(token.getPassword());
 
-				HttpClient httpClient = new DefaultHttpClient();
+				HttpClient httpClient = HttpClientBuilder.create().build();
 				HttpGet httpGet = new HttpGet(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/authentication");
-				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), HTTP.UTF_8, false));
+
+				BasicHttpRequest httpRequest = new BasicHttpRequest(httpGet.getMethod(), httpGet.getURI().toString());
+				httpRequest.addHeader(AuthPNames.CREDENTIAL_CHARSET, "UTF-8");
+				httpGet.addHeader(new BasicScheme().authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), httpRequest, null));
 
 				HttpResponse response = httpClient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_UNAUTHORIZED) {
@@ -62,8 +66,9 @@ public class CordateRealm extends AuthorizingRealm {
 				} else {
 					simpleAuthenticationInfo = new SimpleAuthenticationInfo(providedUsername, providedPassword, "cordateRealm");
 				}
+			} catch (org.apache.http.auth.AuthenticationException e) {
+				e.printStackTrace();
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
                 throw new AuthenticationException("Oops! Servern verkar inte vara tillgänglig just nu.");

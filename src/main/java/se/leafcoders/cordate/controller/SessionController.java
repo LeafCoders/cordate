@@ -8,8 +8,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -123,9 +124,9 @@ public class SessionController {
 				"\"password\" : \"" + password + "\", " + 
 				"\"permissions\" : \"" + permissions + "\" }"; 
 
-		HttpClient httpClient = new DefaultHttpClient();
+		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/signupUsers");
-		httpPost.setEntity(new StringEntity(requestBody, "application/json", "UTF-8"));
+		httpPost.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
         HttpResponse remoteResponse = httpClient.execute(httpPost);
 
         if (remoteResponse.getStatusLine().getStatusCode() == HttpServletResponse.SC_CREATED) {
