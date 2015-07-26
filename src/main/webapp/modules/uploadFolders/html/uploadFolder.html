@@ -2,7 +2,8 @@
     <form class="form-horizontal" role="form">
         <text-view item-name="id"></text-view>
         <text-view item-name="name"></text-view>
-        <text-view item-name="description"></text-view>
+        <text-view item-name="description" if-exist></text-view>
+        <checkbox-view item-name="isPublic"></checkbox-view>
         
         <div class="form-group">
             <label class="col-xs-4 col-sm-3 control-label">{{ 'uploadFolderItem.label.mimeTypes' | t }}</label>

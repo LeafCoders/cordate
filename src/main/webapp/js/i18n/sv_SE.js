@@ -108,10 +108,11 @@ angular.module('myApp.translation_sv_SE', []).
         "formLabel.patterns" : "Behörigheter",
         "formLabel.multiSelect" : "Flerval",
         "formLabel.allowText" : "Tillåt text",
-        "formLabel.showOnPalmate" : "Visa på hemsidan",
+        "formLabel.hasPublicEvents.value" : "Publika händelser",
+        "formLabel.hasPublicEvents.allowChange" : "(Publika händelser) Får ändras per händelse",
         "formLabel.createdTime" : "Skapad",
         "formLabel.orderBy" : "Ordna efter",
-        "formLabel.isPublic" : "Publik",
+        "formLabel.isPublic" : "Publikt",
         
         "modalLabel.user" : "Välj person",
         "modalLabel.group" : "Välj grupp",
@@ -144,6 +145,8 @@ angular.module('myApp.translation_sv_SE', []).
         "eventItem.label.location" : "Lokal",
         "eventItem.label.image" : "Bild",
         "eventItem.label.backToItems" : "« Tillbaka till händelser",
+        "eventItem.helpText.description" : "Titel och beskrivning visas i kalendrar",
+        "eventItem.helpText.isPublic" : "En publik händelse visas i publika kalendrar",
 
         "eventEditor.label.newTitle" : "Ny händelse",
         "eventEditor.label.editTitle" : "Redigera händelse",

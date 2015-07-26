@@ -394,8 +394,9 @@
                 $scope.refText = refOrTextToText($scope.refItem, $scope.refType);
             }],
             template: function(tElement, tAttrs) {
+                var ifExist = tAttrs.ifExist != null ? ' ng-show="refText"' : '';
                 return '' +
-                '<div class="form-group">' +
+                '<div class="form-group"' + ifExist + '>' +
                     '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.refType + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                         '<p class="form-control-static">{{ refText }}</p>' +

@@ -92,7 +92,10 @@
     }];
 
     var eventTypeResource = ['$route', '$resource', function($route, $resource) {
-        return BasicResource($route, BasicQuery($resource, 'eventTypes'));
+        var newModelFn = function(params) {
+            return { hasPublicEvents : { value : true, allowChange : false } };
+        };
+        return BasicResource($route, BasicQuery($resource, 'eventTypes'), newModelFn);
     }];
 
     var groupMembershipResource = ['$route', '$resource', function($route, $resource) {

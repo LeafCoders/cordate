@@ -8,7 +8,7 @@
 
     function changeWeek(fromDateString) {
         var now = new Date();
-        var from = fromDateString ? new Date(fromDateString) : new Date(now.setDate(now.getDate() - now.getDay() + 1));
+        var from = fromDateString ? new Date(fromDateString) : new Date(now.setDate(now.getDate() - ((now.getDay() + 6) % 7)));
         var before = dayOffset(from, 7);
         var including = dayOffset(from, 6);
         var prevFromDate = dayOffset(from, -7);

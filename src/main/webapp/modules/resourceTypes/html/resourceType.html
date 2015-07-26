@@ -2,7 +2,7 @@
     <form class="form-horizontal" role="form">
         <text-view item-name="id"></text-view>
         <text-view item-name="name"></text-view>
-        <text-view item-name="description"></text-view>
+        <text-view item-name="description" if-exist></text-view>
 
         <div ng-if="item.type === 'user'">
             <ref-view ref-item="item.group" ref-type="group"></ref-view>

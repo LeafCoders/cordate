@@ -3,9 +3,11 @@
     <time-input item-name="startTime"></time-input>
     <time-input item-name="endTime"></time-input>
 	<text-input item-name="title" autofocus></text-input>
-	<textarea-input item-name="description"></textarea-input>
+	<textarea-input item-name="description" help-text="eventItem.helpText.description"></textarea-input>
     <ref-or-text-input ref-item="item.location" ref-type="location"></ref-or-text-input>
-    <checkbox-input item-name="showOnPalmate"></checkbox-input>
+
+    <checkbox-input ng-if="item.eventType.hasPublicEvents.allowChange" item-name="isPublic" help-text="eventItem.helpText.isPublic"></checkbox-input>
+    <checkbox-view ng-if="!item.eventType.hasPublicEvents.allowChange" item-name="isPublic" help-text="eventItem.helpText.isPublic"></checkbox-view>
 
     <hr>
 

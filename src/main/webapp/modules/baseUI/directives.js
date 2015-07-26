@@ -178,11 +178,14 @@
             transclude: false,
             template: function(tElement, tAttrs) {
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
-                return '' +
-                '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
+                var html = '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
                   '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
-                  '<div class="col-xs-8 col-sm-6"><textarea class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></div>' +
-                '</div>';
+                  '<div class="col-xs-8 col-sm-6"><textarea class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/>';
+                if (tAttrs.helpText != undefined) {
+                    html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
+                }
+                html += '</div></div>';
+                return html;
             }
         };
     });
@@ -190,7 +193,7 @@
     /**
      * item-name | Name of item to show data for
      * form-label | Text to use as label
-     * ifexist | Set to true if <text-view> only shall be visible if date != null
+     * ifexist | Set to true if <text-view> only shall be visible if 'item data' != null
      * msgPrefix | Will use value of 'itemName' as lookup from text strings 
      */
     thisModule.directive("textView", function () {
@@ -199,16 +202,20 @@
             replace: true,
             transclude: true,
             template: function(tElement, tAttrs) {
-                var ifExist = tAttrs.ifexist != null ? ' ng-show="item.' + tAttrs.itemName + '"' : '';
+                var ifExist = tAttrs.ifExist != null ? ' ng-if="item.' + tAttrs.itemName + '"' : '';
                 var formLabel = '\'formLabel.' + (tAttrs.formLabel ? tAttrs.formLabel : tAttrs.itemName) + '\'';
                 var value = tAttrs.msgPrefix != null ? '\'' + tAttrs.msgPrefix + '.\' + item.' + tAttrs.itemName + ' | t' : 'item.' + tAttrs.itemName;
-                return '' +
-                '<div class="form-group"' + ifExist + '>' +
+                var html = '<div class="form-group"' + ifExist + '>' +
                     '<label class="col-xs-4 col-sm-3 control-label">{{ ' + formLabel + ' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
-                        '<p class="form-control-static">{{ ' + value + ' }} <span item-transclude></span></p>' +
-                    '</div>' +
+                        '<p class="form-control-static">{{ ' + value + ' }}<span item-transclude></span></p>';
+                if (tAttrs.helpText != undefined) {
+                    html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
+                }
+                html += '' +
+                  '</div>' +
                 '</div>';
+                return html;
             }
         };
     });
@@ -220,13 +227,20 @@
             transclude: false,
             template: function(tElement, tAttrs) {
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
-                return '' +
-                '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
-                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                var itemName = tAttrs.itemName + (tAttrs.subItemName != undefined ? "." + tAttrs.subItemName : "");
+                var inputId = "form-" + itemName.replace(/./gi, '-'); 
+                var html = '' +
+                '<div class="form-group" ng-class="errors.' + itemName + '">' +
+                  '<label for="' + inputId + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + itemName + '\' | t }}</label>' +
                   '<div class="col-xs-8 col-sm-6">' +
-                    '<div class="checkbox"><label><input type="checkbox" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/></label></div>' +
+                    '<div class="checkbox"><label><input type="checkbox" id="' + inputId + '" ng-model="item.' + itemName + '"' + autofocus + '/></label></div>';
+                if (tAttrs.helpText != undefined) {
+                    html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
+                }
+                html += '' +
                   '</div>' +
                 '</div>';
+                return html;
             }
         };
     });
@@ -237,13 +251,19 @@
             replace: true,
             transclude: false,
             template: function(tElement, tAttrs) {
-                return '' +
+                var itemName = tAttrs.itemName + (tAttrs.subItemName != undefined ? "." + tAttrs.subItemName : "");
+                var html = '' +
                 '<div class="form-group">' +
-                  '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
+                  '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + itemName + '\' | t }}</label>' +
                   '<div class="col-xs-8 col-sm-6">' +
-                    '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' | cordateBool }}</p>' +
+                    '<p class="form-control-static">{{ item.' + itemName + ' | cordateBool }}</p>';
+                if (tAttrs.helpText != undefined) {
+                    html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
+                }
+                html += '' +
                   '</div>' +
                 '</div>';
+                return html;
             }
         };
     });
@@ -271,8 +291,9 @@
             replace:true,
             transclude:false,
             template: function(tElement, tAttrs) {
+                var ifExist = tAttrs.ifExist != null ? ' ng-if="item.' + tAttrs.itemName + '"' : '';
                 return '' +
-                '<div class="form-group">' +
+                '<div class="form-group"' + ifExist + '>' +
                     '<label class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                     '<p class="form-control-static">{{ item.' + tAttrs.itemName + ' | cordateDate }} {{ item.' + tAttrs.itemName + ' | cordateTime }}</p>' +
