@@ -45,14 +45,14 @@
         };
 
         $scope.beforeSave = function(item) {
-            if ($scope.formHelper.startTimePartDate == '' && $scope.formHelper.startTimePartTime == '') {
-                delete item.startTime;
+            if (!$scope.formHelper.startTimePartDate || !$scope.formHelper.startTimePartTime) {
+                item.startTime = null;
             } else {
                 item.startTime = $scope.formHelper.startTimePartDate + ' ' + $scope.formHelper.startTimePartTime + ' Europe/Stockholm';
             }
 
-            if ($scope.formHelper.endTimePartDate == '' && $scope.formHelper.endTimePartTime == '') {
-                delete item.endTime;
+            if (!$scope.formHelper.endTimePartDate || !$scope.formHelper.endTimePartTime) {
+                item.endTime = null;
             } else {
                 item.endTime = $scope.formHelper.endTimePartDate + ' ' + $scope.formHelper.endTimePartTime + ' Europe/Stockholm';
             }
