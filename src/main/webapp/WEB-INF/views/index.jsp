@@ -6,8 +6,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -22,12 +23,10 @@
     <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
 </head>
 
-<body ng-controller="MainController" ng-switch="hasLoadedApp">
+<body ng-controller="MainController">
 
-    <div ng-switch-when="false" style="text-align: center; padding: 20px;">Laddar...</div>
-
-    <div ng-switch-when="true">
-        <div class="navbar navbar-default navbar-static-top" role="navigation" ng-cloak>
+    <div ng-if="hasLoadedApp">
+        <div class="navbar navbar-default navbar-static-top" role="navigation" class="ng-cloak">
             <div class="container">
                 <div class="navbar-header hidden-xs">
                     <a class="navbar-brand" href="#/"><img src="img/logo.png" alt="Logo" width="55" height="30"></a>
@@ -101,8 +100,8 @@
             </div>
         </div>
         
-        <div class="container">
-            <div id="alerts" ng-if="alerts" ng-cloak>
+        <div class="container ng-cloak">
+            <div id="alerts" ng-if="alerts">
                 <div ng-repeat="alert in alerts" class="alert alert-{{ alert.type }}">
                     <span ng-if="alert.type=='success'"class="glyphicon glyphicon-ok"></span>
                     <span ng-if="alert.type=='danger'"class="glyphicon glyphicon-remove"></span>
@@ -115,6 +114,8 @@
             </div>
         </div>
     </div>
+
+    <page-spinner force-show="!hasLoadedApp"></page-spinner>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <jwr:script src="/bundles/all.js"/>

@@ -7,6 +7,10 @@ body {
     word-wrap: break-word;
 }
 
+.ng-cloak {
+  display: none !important;
+}
+
 .table-hover tbody {
     cursor: hand;
     cursor: pointer;
@@ -28,9 +32,9 @@ body {
 }
 
 .alert.ng-enter, .alert.ng-leave {
-    -webkit-transition: 1s linear all;
-    -moz-transition: 1s linear all;
-    transition: 1s linear all;
+    -webkit-transition: all 1s linear;
+    -moz-transition: all 1s linear;
+    transition: all 1s linear;
 }
 .alert.ng-enter {
     opacity: 0;
@@ -191,4 +195,63 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
     bottom: 0;
     border: 3px dashed #3A3;
     background-color: rgba(120,200,120,0.8);
+}
+
+.page-spinner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 100%;
+    opacity: 0;
+    overflow: hidden;
+
+    background-color: rgba(200,200,200,0.8);
+    text-align: center;
+
+    -webkit-transition: opacity 1s ease-in;
+    -moz-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+}
+
+.page-spinner.show {
+    opacity: 1;
+    bottom: 0;
+}
+
+.page-spinner > div {
+    margin: 20% 3px 0 3px;
+    width: 36px;
+    height: 36px;
+    background-color: #777;
+    
+    border-radius: 15px;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.page-spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.page-spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% { 
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 40% { 
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
 }
