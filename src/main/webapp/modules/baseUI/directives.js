@@ -7,9 +7,11 @@
     // Use item-transclude instead of ng-transclude to access directive scope 
     thisModule.directive('itemTransclude', function () {
         return function (scope, element, attrs, ctrl, $transclude) {
-            $transclude(scope, function (content) {
-                element.append(content);
-            });
+            if ($transclude) {
+                $transclude(scope, function (content) {
+                    element.append(content);
+                });
+            }
         };
     });    
     
