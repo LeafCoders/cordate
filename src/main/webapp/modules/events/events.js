@@ -80,10 +80,7 @@
                 return items;
             },
             function onOk(selectedItem) {
-                $scope.item.resources.push({
-                    type: selectedItem.resourceType.type,
-                    resourceType: selectedItem.resourceType
-                });
+                $scope.item.resources.push(eventsUtils.createResource(selectedItem.resourceType.type, selectedItem.resourceType));
             }
         );
     }];

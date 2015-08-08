@@ -15,17 +15,19 @@ eventsUtils.createEventFromEventType = function (eventType) {
     };
     
     angular.forEach(eventType.resourceTypes, function (resourceTypeRef) {
-        switch (resourceTypeRef.type) {
-            case 'user':
-                event.resources.push(eventsUtils.createResourceTypeUser(resourceTypeRef));
-                break;
-            case 'upload':
-                event.resources.push(eventsUtils.createResourceTypeUpload(resourceTypeRef));
-                break;
-        }
+        event.resources.push(eventsUtils.createResource(resourceTypeRef.type, resourceTypeRef));
     });
     
     return event;
+};
+
+eventsUtils.createResource = function (type, resourceType) {
+    switch (type) {
+        case 'user':
+            return eventsUtils.createResourceTypeUser(resourceType);
+        case 'upload':
+            return eventsUtils.createResourceTypeUpload(resourceType);
+    }
 };
 
 eventsUtils.createResourceTypeUser = function (resourceType) {

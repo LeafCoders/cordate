@@ -1,8 +1,11 @@
 package se.leafcoders.cordate.model;
 
+import java.io.Serializable;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class UserPrincipal {
+public class UserPrincipal implements Serializable {
+
+	private static final long serialVersionUID = 5918507778743857739L;
 
 	private String id;
 	private String email;

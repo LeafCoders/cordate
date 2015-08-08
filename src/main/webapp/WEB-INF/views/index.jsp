@@ -78,6 +78,9 @@
                                 <a href="#users/${ userId }">{{ 'navbar.label.userDetails' | t }}</a>
                             </li>
                             <li class="visible-xs">
+                                <a target="_blank" href="https://github.com/LeafCoders/cordate/issues">{{ 'navbar.label.feedback' | t }}</a>
+                            </li>
+                            <li class="visible-xs">
                                 <a href="logout">{{ 'navbar.label.logout' | t }}</a>
                             </li>
                         </ul>
@@ -92,6 +95,7 @@
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">${ fullName }</li>
                             <li><a href="#users/${ userId }">{{ 'navbar.label.userDetails' | t }}</a></li>
+                            <li><a target="_blank" href="https://github.com/LeafCoders/cordate/issues">{{ 'navbar.label.feedback' | t }}</a></li>
                             <li class="divider"></li>
                             <li><a href="logout">{{ 'navbar.label.logout' | t }}</a></li>
                         </ul>
