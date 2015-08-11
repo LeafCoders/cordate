@@ -119,6 +119,7 @@ angular.module('myApp.translation_sv_SE', []).
         "modalLabel.group" : "Välj grupp",
         "modalLabel.location" : "Välj lokal",
         "modalLabel.image" : "Välj bild",
+        "modalLabel.uploadFolder": "Välj fil",
         "modalLabel.userResource" : "Välj person",
         "modalLabel.uploadResource" : "Välj fil",
         

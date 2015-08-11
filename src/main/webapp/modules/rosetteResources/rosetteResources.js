@@ -62,7 +62,9 @@
         day = day < 10 ? '0' + day : day;
         
         model[startParam] = year + '-' + month + '-' + day + ' ' + startTime + ' Europe/Stockholm';
-        model[endParam]   = year + '-' + month + '-' + day + ' ' + endTime   + ' Europe/Stockholm';
+        if (endParam) {
+            model[endParam]   = year + '-' + month + '-' + day + ' ' + endTime   + ' Europe/Stockholm';
+        }
     };
 
 // http://blog.brunoscopelliti.com/show-route-only-after-all-promises-are-resolved    
@@ -75,7 +77,7 @@
     var eventResource = ['$route', '$http', '$resource', function($route, $http, $resource) {
         var newModelFn = function(params) {
             var newModel = {};
-            setStartAndEndTimes(newModel, 'startTime', '11:00', 'endTime', '12:00');
+            setStartAndEndTimes(newModel, 'startTime', '11:00');
             return newModel;
         };
         var resourceMethods = BasicResource($route, BasicQuery($resource, 'events'), newModelFn);
