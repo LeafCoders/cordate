@@ -1,6 +1,7 @@
 package se.leafcoders.cordate.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
@@ -56,9 +57,13 @@ public class ApiProxyController {
 
 	private void callRosetteServer(HttpServletRequest request, String requestBody, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		String requestURI = request.getRequestURI().replaceAll("/cordate", "");
-        requestURI = requestURI + "?" + request.getQueryString();
-		
+		int posApiPath = request.getRequestURI().indexOf("/api/");
+		String apiPath = request.getRequestURI().substring(posApiPath);
+        String requestURI = new URL(new URL(rosetteBaseUrl), apiPath).toString();
+        if (request.getQueryString() != null) {
+        	requestURI += "?" + request.getQueryString();
+        }
+
 		String username = userSession.getUsername();
 		String password = userSession.getPassword();
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
@@ -67,21 +72,21 @@ public class ApiProxyController {
 		httpRequest.addHeader(AuthPNames.CREDENTIAL_CHARSET, "UTF-8");
         HttpResponse remoteResponse = null;
 		if ("GET".equals(request.getMethod())) {
-			HttpGet httpGet = new HttpGet(rosetteBaseUrl + requestURI);
+			HttpGet httpGet = new HttpGet(requestURI);
 			httpGet.addHeader(new BasicScheme().authenticate(credentials, httpRequest, null));
 			remoteResponse = httpClient.execute(httpGet);
 		} else if ("POST".equals(request.getMethod())) {
-			HttpPost httpPost = new HttpPost(rosetteBaseUrl + requestURI);
+			HttpPost httpPost = new HttpPost(requestURI);
 			httpPost.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
 			httpPost.addHeader(new BasicScheme().authenticate(credentials, httpRequest, null));
 			remoteResponse = httpClient.execute(httpPost);
 		} else if ("PUT".equals(request.getMethod())) {
-			HttpPut httpPut = new HttpPut(rosetteBaseUrl + requestURI);
+			HttpPut httpPut = new HttpPut(requestURI);
 			httpPut.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
 			httpPut.addHeader(new BasicScheme().authenticate(credentials, httpRequest, null));
 			remoteResponse = httpClient.execute(httpPut);
 		} else if ("DELETE".equals(request.getMethod())) {
-			HttpDelete httpDelete = new HttpDelete(rosetteBaseUrl + requestURI);
+			HttpDelete httpDelete = new HttpDelete(requestURI);
 			httpDelete.addHeader(new BasicScheme().authenticate(credentials, httpRequest, null));
 			remoteResponse = httpClient.execute(httpDelete);
 		}

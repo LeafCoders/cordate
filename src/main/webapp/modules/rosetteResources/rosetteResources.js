@@ -4,7 +4,7 @@
 
     var thisModule = angular.module('rosetteResources', ['ngRoute', 'ngResource']);
 
-    var cordateApiPath = '/cordate/api/v1';
+    var cordateApiPath = 'api/v1';
 
     /* Helper methods */
 
