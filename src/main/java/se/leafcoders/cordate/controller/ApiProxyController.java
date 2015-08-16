@@ -59,7 +59,7 @@ public class ApiProxyController {
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		int posApiPath = request.getRequestURI().indexOf("/api/");
 		String apiPath = request.getRequestURI().substring(posApiPath);
-        String requestURI = new URL(new URL(rosetteBaseUrl), apiPath).toString();
+        String requestURI = rosetteBaseUrl + apiPath;
         if (request.getQueryString() != null) {
         	requestURI += "?" + request.getQueryString();
         }
