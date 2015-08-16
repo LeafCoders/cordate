@@ -156,7 +156,7 @@
         var resourceMethods = BasicResource($route, BasicQuery($resource, 'signupUsers'));
 
         resourceMethods.transformToUser = function (signupUserId) {
-            return $http.post(cordateApiPath + '/signupUsersTransform/' + signupUserId);
+            return $http.post(cordateApiPath + '/signupUsersTransform/' + signupUserId, {});
         };
 
         return resourceMethods; 
