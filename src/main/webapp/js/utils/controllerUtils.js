@@ -114,7 +114,7 @@ var utils = utils || {};
         };
     }
 
-    function ItemEditorController($scope, $location, $filter, flash, itemService, item) {
+    function ItemEditorController($scope, $location, $window, $filter, flash, itemService, item) {
         $scope.errors = {};
         $scope.isCreate = $location.path().endsWith('/new');
         $scope.backPage = $scope.types + ($scope.isCreate ? '' : '/' + item.id);
@@ -148,7 +148,11 @@ var utils = utils || {};
                 } else if (item.id != undefined) {
                     item.$update(function(data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
-                        $location.path('/' + $scope.types + '/' + data.id);
+                        if ($scope.types === 'users') {
+                            $window.location.href = '/logout';
+                        } else {
+                            $location.path('/' + $scope.types + '/' + data.id);
+                        }
                     }, function(response) {
                         var property = response.data[0].property;
                         var text = response.data[0].message;

@@ -201,6 +201,7 @@ angular.module('myApp.translation_sv_SE', []).
 
         "userEditor.label.newTitle" : "Ny användare",
         "userEditor.label.editTitle" : "Redigera användare",
+        "userEditor.note.logout" : "OBS! Du kommer att loggas ut när du sparar dina ändringar!",
         "userEditor.alert.itemWasCreated" : "Användaren skapades!",
         "userEditor.alert.itemWasUpdated" : "Användaren uppdaterades!",
         "userEditor.alert.passwordsNotMatching" : "Lösenorden matchar inte",
