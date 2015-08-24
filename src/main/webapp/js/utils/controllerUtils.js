@@ -149,7 +149,7 @@ var utils = utils || {};
                     item.$update(function(data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
                         if ($scope.types === 'users') {
-                            $window.location.href = '/logout';
+                            $window.location.href = 'logout';
                         } else {
                             $location.path('/' + $scope.types + '/' + data.id);
                         }
