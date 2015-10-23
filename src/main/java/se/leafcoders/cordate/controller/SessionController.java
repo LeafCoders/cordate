@@ -57,7 +57,8 @@ public class SessionController {
 			
 			userSession.setUsername(username);
 			userSession.setPassword(password);
-		
+			userSession.setJwtToken(((UserPrincipal)SecurityUtils.getSubject().getPrincipal()).getJwtToken());
+
 			String successUrl = null;
 	        boolean contextRelative = true;
 

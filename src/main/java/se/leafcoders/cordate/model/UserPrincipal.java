@@ -9,14 +9,13 @@ public class UserPrincipal implements Serializable {
 
 	private String id;
 	private String email;
-	private String firstName;
-	private String lastName;
+	private String fullName;
+	private String jwtToken;
 
 	public UserPrincipal(JsonNode userData) {
 		id = userData.get("id").asText();
 		email = userData.get("email").asText();
-		firstName = userData.get("firstName").asText();
-		lastName = userData.get("lastName").asText();
+		fullName = userData.get("fullName").asText();
 	}
 	
 	public String getId() {
@@ -28,15 +27,14 @@ public class UserPrincipal implements Serializable {
 	}
 	
 	public String getFullName() {
-		String name = "";
-		String delimiter = "";
-		if (firstName != null) {
-			name = firstName;
-			delimiter = " ";
-		}
-		if (lastName != null) {
-			name += delimiter + lastName;
-		}
-		return name;
+		return fullName;
+	}
+
+	public String getJwtToken() {
+		return jwtToken;
+	}
+
+	public void setJwtToken(String jwtToken) {
+		this.jwtToken = jwtToken;
 	}
 }

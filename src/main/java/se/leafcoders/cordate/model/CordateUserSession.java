@@ -13,6 +13,7 @@ public class CordateUserSession implements UserSession, Serializable {
 
 	private String username;
 	private String password;
+	private String jwtToken;
 	
 	public String getUsername() {
 		return username;
@@ -28,5 +29,13 @@ public class CordateUserSession implements UserSession, Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getJwtToken() {
+		return jwtToken;
+	}
+
+	public void setJwtToken(String jwtToken) {
+		this.jwtToken = jwtToken;
 	}
 }

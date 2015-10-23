@@ -7,7 +7,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthenticationException;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -17,7 +16,6 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,10 +77,7 @@ public class ApiProxyController {
 		}
 
 		if (httpRequest != null) {
-			String username = userSession.getUsername();
-			String password = userSession.getPassword();
-			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
-			httpRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+			httpRequest.addHeader("X-AUTH-TOKEN", userSession.getJwtToken());
 			HttpResponse remoteResponse = httpClient.execute(httpRequest);
 
 			// Copying status

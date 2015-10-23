@@ -1,14 +1,16 @@
 package se.leafcoders.cordate.security;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.annotation.PostConstruct;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -54,19 +56,25 @@ public class CordateRealm extends AuthorizingRealm {
 				String providedUsername = token.getUsername();
 				String providedPassword = new String(token.getPassword());
 
+				HttpUriRequest login = RequestBuilder.post()
+	                    .setUri(new URI(rosetteBaseUrl + "/auth/login"))
+	                    .addParameter("username", providedUsername)
+	                    .addParameter("password", Base64.encodeBase64URLSafeString(providedPassword.getBytes()))
+	                    .build();
+				
 				HttpClient httpClient = HttpClientBuilder.create().build();
-				HttpGet httpGet = new HttpGet(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/authentication");
-				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(providedUsername, providedPassword), "UTF-8", false));
-
-				HttpResponse response = httpClient.execute(httpGet);
+		        HttpResponse response = httpClient.execute(login);
 				if (response.getStatusLine().getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
                     throw new AuthenticationException("E-postadressen eller lösenordet är felaktigt.");
 				} else {
 					String responseBody = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
 					UserPrincipal userPrincipal = new UserPrincipal(new ObjectMapper().readTree(responseBody));
+					userPrincipal.setJwtToken(response.getFirstHeader("X-AUTH-TOKEN").getValue());
 					simpleAuthenticationInfo = new SimpleAuthenticationInfo(userPrincipal, providedPassword, "cordateRealm");
 				}
 			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
                 throw new AuthenticationException("Oops! Servern verkar inte vara tillgänglig just nu.");
