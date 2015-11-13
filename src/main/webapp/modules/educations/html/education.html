@@ -1,0 +1,14 @@
+<item>
+    <form class="form-horizontal" role="form">
+        <div ng-if="item.type === 'user'">
+            <ref-view ref-item="item.event" ref-type="event"></ref-view>
+        </div>
+        
+        <ref-view ref-item="item.educationType" ref-type="educationType"></ref-view>
+        <ref-view ref-item="item.educationTheme" ref-type="educationTheme"></ref-view>
+
+        <text-view item-name="title"></text-view>
+        <textarea-view item-name="content"></textarea-view>
+        <textarea-view item-name="questions"></textarea-view>
+    </form>
+</item>

@@ -109,4 +109,11 @@
         };
     }]);
 
+    thisModule.filter('newlineToBr', function() {
+        return function(input, scope) {
+            return input ? input.replace(/\n/g, '<br>') : input;
+        };
+    });
+
+    
 }());

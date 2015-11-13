@@ -20,7 +20,11 @@ function refToText(ref, refType) {
 			    case 'user': return ref.fullName; break;
 			    case 'group': return ref.name; break;
 				case 'location': return ref.name; break;
+                case 'event': return ref.title; break;
                 case 'eventType': return ref.name; break;
+                case 'resourceType': return ref.name; break;
+                case 'educationType': return ref.name; break;
+                case 'educationTheme': return ref.title; break;
                 default: return ref.name; break;
 			}
 		}

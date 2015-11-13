@@ -33,6 +33,18 @@
                 </div>
                 <ul class="main-menu nav navbar-nav">
                     <li permission="events:view" class="hidden-xs"><a href="#/eventWeeks">{{ 'navbar.label.events' | t }}</a></li>
+                    
+                    <li class="dropdown">
+                        <a permission="educations:view;educationThemes:view"
+                           href="" class="hidden-xs dropdown-toggle top-header" data-toggle="dropdown">
+                            {{ 'navbar.label.educations' | t }} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li permission="educations:view" class="hidden-xs"><a href="#/educations">{{ 'navbar.label.educations' | t }}</a></li>
+                            <li permission="educationThemes:view" class="hidden-xs"><a href="#/educationThemes">{{ 'navbar.label.educationThemes' | t }}</a></li>
+                        </ul>
+                    </li>
+                    
                     <li permission="posters:view" class="hidden-xs"><a href="#/posters">{{ 'navbar.label.posters' | t }}</a></li>
                     <li permission="bookings:view" class="hidden-xs"><a href="#/bookings">{{ 'navbar.label.bookings' | t }}</a></li>
                     <li permission="uploads:view" class="hidden-xs"><a href="#/uploads">{{ 'navbar.label.uploads' | t }}</a></li>
@@ -58,6 +70,12 @@
         
                             <li permission="events:view;posters:view;bookings:view;uploads:view" class="divider visible-xs"></li>
         
+                            <li permission="educations:view" class="visible-xs"><a href="#/educations">{{ 'navbar.label.educations' | t }}</a></li>
+                            <li permission="educationThemes:view" class="visible-xs"><a href="#/educationThemes">{{ 'navbar.label.educationThemes' | t }}</a></li>
+                            <li permission="educationTypes:view"><a href="#/educationTypes">{{ 'navbar.label.educationTypes' | t }}</a></li>
+        
+                            <li permission="educations:view;educationThemes:view;educationTypes:view" class="divider"></li>
+
                             <li permission="locations:view"><a href="#/locations">{{ 'navbar.label.locations' | t }}</a></li>
                             <li permission="resourceTypes:view"><a href="#/resourceTypes">{{ 'navbar.label.resourceTypes' | t }}</a></li>
                             <li permission="eventTypes:view"><a href="#/eventTypes">{{ 'navbar.label.eventTypes' | t }}</a></li>

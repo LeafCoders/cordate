@@ -1,0 +1,23 @@
+<item-editor>
+    <form class="form-horizontal" role="form">
+        <text-view item-name="educationType.name" form-label="educationType"></text-view>
+    
+        <form-item label="type">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="item.type" value="event">
+                    {{ 'education.type.event' | t }}
+                </label>
+            </div>
+        </form-item>
+
+        <div ng-if="item.type === 'event'">
+            <ref-input ref-item="item.event" ref-type="event"></ref-input>
+            <ref-input ref-item="item.educationTheme" ref-type="educationTheme"></ref-input>
+        
+            <text-input item-name="title"></text-input>
+            <textarea-input item-name="content" rows="14"></textarea-input>
+            <textarea-input item-name="questions" rows="10"></textarea-input>
+        </div>
+    </form>
+</item-editor>

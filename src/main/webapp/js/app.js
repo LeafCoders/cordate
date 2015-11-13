@@ -3,10 +3,12 @@
 
 (function () {
 
-    var dependencies = ['ngResource', 'ngRoute', 'ngAnimate',
+    var dependencies = ['ngResource', 'ngRoute', 'ngAnimate', 'ngSanitize',
                         'mgcrea.ngStrap.tooltip', 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStrap.timepicker',
                         'myApp.translation_sv_SE',
-                        'bookings', 'events', 'eventTypes', 'eventWeeks', 'eventSemesters',
+                        'bookings',
+                        'educationThemes', 'educationTypes', 'educations',
+                        'events', 'eventTypes', 'eventWeeks', 'eventSemesters',
                         'groups', 'groupMemberships', 'locations', 'permissions', 'posters',
                         'uploadFolders', 'uploads', 'users', 'signupUsers', 'resourceTypes'
                         ];

@@ -180,9 +180,10 @@
             transclude: false,
             template: function(tElement, tAttrs) {
                 var autofocus = tAttrs.autofocus != undefined ? " autofocus" : "";
+                var rows = tAttrs.rows != undefined ? " rows=\"" + tAttrs.rows + "\"" : "";
                 var html = '<div class="form-group" ng-class="errors.' + tAttrs.itemName + '">' +
                   '<label for="form-' + tAttrs.itemName + '" class="col-xs-4 col-sm-3 control-label">{{ \'formLabel.' + tAttrs.itemName + '\' | t }}</label>' +
-                  '<div class="col-xs-8 col-sm-6"><textarea class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + '/>';
+                  '<div class="col-xs-8 col-sm-6"><textarea class="form-control" id="form-' + tAttrs.itemName + '" ng-model="item.' + tAttrs.itemName + '"' + autofocus + rows + '/>';
                 if (tAttrs.helpText != undefined) {
                     html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
                 }
@@ -211,6 +212,34 @@
                     '<label class="col-xs-4 col-sm-3 control-label">{{ ' + formLabel + ' | t }}</label>' +
                     '<div class="col-xs-8 col-sm-6">' +
                         '<p class="form-control-static">{{ ' + value + ' }}<span item-transclude></span></p>';
+                if (tAttrs.helpText != undefined) {
+                    html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
+                }
+                html += '' +
+                  '</div>' +
+                '</div>';
+                return html;
+            }
+        };
+    });
+
+    /**
+     * item-name | Name of item to show data for
+     * form-label | Text to use as label
+     * ifexist | Set to true if <textarea-view> only shall be visible if 'item data' != null
+     */
+    thisModule.directive("textareaView", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            template: function(tElement, tAttrs) {
+                var ifExist = tAttrs.ifExist != null ? ' ng-if="item.' + tAttrs.itemName + '"' : '';
+                var formLabel = '\'formLabel.' + (tAttrs.formLabel ? tAttrs.formLabel : tAttrs.itemName) + '\'';
+                var html = '<div class="form-group"' + ifExist + '>' +
+                    '<label class="col-xs-4 col-sm-3 control-label">{{ ' + formLabel + ' | t }}</label>' +
+                    '<div class="col-xs-8 col-sm-6">' +
+                        '<p class="form-control-static" ng-bind-html="item.' + tAttrs.itemName + ' | newlineToBr"><span item-transclude></span></p>';
                 if (tAttrs.helpText != undefined) {
                     html += '<span class="help-block">{{ \'' + tAttrs.helpText + '\' | t }}</span>';
                 }

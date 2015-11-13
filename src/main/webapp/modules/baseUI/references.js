@@ -111,9 +111,14 @@
             $scope.singleSelect = true;
         } else {
             var refResourceService = $injector.get($scope.refType + 'Resource');
+            var resourceQuery = undefined;
+            
+            if ($scope.refType == 'resourceType') {
+            	resourceQuery = { type: $scope.subType };
+            }
             angular.extend(this,
                     new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
-                            refResourceService));
+                            refResourceService, resourceQuery));
 
             $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.' + $scope.refType };
             $scope.singleSelect = true;
@@ -129,6 +134,16 @@
                     return { 'id': resource.id, 'text': resource.fileName, 'fileUrl': resource.fileUrl };
                 case 'uploadFolder':
                     return { 'id': resource.id, 'text': resource.name };
+                case 'event':
+                    return { 'id': resource.id, 'text': resource.title };
+                case 'eventType':
+                    return { 'id': resource.id, 'text': resource.name };
+                case 'resourceType':
+                    return { 'id': resource.id, 'text': resource.name, type: $scope.subType };
+                case 'educationType':
+                    return { 'id': resource.id, 'text': resource.name };
+                case 'educationTheme':
+                    return { 'id': resource.id, 'text': resource.title };
                 default:
                     return { 'id': resource.id, 'text': resource.name };
             }
@@ -155,6 +170,9 @@
                 if ($scope.panelItems.length > 0) {
                     if ($scope.singleSelect) {
                         $scope.refItem = { 'id' : $scope.panelItems[0].id };
+                        if ($scope.panelItems[0].type) {
+                        	$scope.refItem.type = $scope.panelItems[0].type;
+                        }
                     } else {
                         // TODO: Handle multiple references
                     }
@@ -322,7 +340,8 @@
             transclude: false,
             scope: {
                 refItem: '=',
-                refType: '@'
+                refType: '@',
+                subType: '@'
             },
             controller: 'refInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'
@@ -336,7 +355,8 @@
             transclude: false,
             scope: {
                 refItem: '=',
-                refType: '@'
+                refType: '@',
+                subType: '@'
             },
             controller: 'refOrTextInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'

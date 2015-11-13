@@ -200,9 +200,6 @@
         var getAllEventTypes = ['eventTypeResource', function(eventTypeResource) {
             return eventTypeResource.getAll();
         }];
-        var getAllLocations = ['locationResource', function(locationResource) {
-            return locationResource.getAll();
-        }];
         
         var resolveShow = {
             item: getOneEvent

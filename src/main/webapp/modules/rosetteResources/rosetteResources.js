@@ -74,6 +74,18 @@
         return BasicResource($route, BasicQuery($resource, 'bookings'));
     }];
 
+    var educationTypeResource = ['$route', '$resource', function($route, $resource) {
+        return BasicResource($route, BasicQuery($resource, 'educationTypes'));
+    }];
+
+    var educationThemeResource = ['$route', '$resource', function($route, $resource) {
+        return BasicResource($route, BasicQuery($resource, 'educationThemes'));
+    }];
+
+    var educationResource = ['$route', '$resource', function($route, $resource) {
+        return BasicResource($route, BasicQuery($resource, 'educations'));
+    }];
+
     var eventResource = ['$route', '$http', '$resource', function($route, $http, $resource) {
         var newModelFn = function(params) {
             var newModel = {};
@@ -170,6 +182,9 @@
     /* Resource services */
 
     thisModule.factory('bookingResource', bookingResource);
+    thisModule.factory('educationTypeResource', educationTypeResource);
+    thisModule.factory('educationThemeResource', educationThemeResource);
+    thisModule.factory('educationResource', educationResource);
     thisModule.factory('eventResource', eventResource);
     thisModule.factory('eventWeekResource', eventWeekResource);
     thisModule.factory('eventTypeResource', eventTypeResource);
