@@ -140,14 +140,16 @@
     <page-spinner force-show="!hasLoadedApp"></page-spinner>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <jwr:script src="/bundles/all.js"/>
-    
+
     <script type="text/javascript">
+        window.rosetteBaseUrl = "${ rosetteBaseUrl }";
+
         <%-- For collapsing the menu when clicking a link in the menu --%>
         $('.main-menu a').click(function() {
             $('.navbar-collapse.in').collapse('hide');
         })
     </script>
     
+    <jwr:script src="/bundles/all.js"/>    
 </body>
 </html>

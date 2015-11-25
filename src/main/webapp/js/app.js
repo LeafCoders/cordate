@@ -67,8 +67,19 @@
 
 
     var httpInterceptor = ['$q', 'flash', function($q, flash) {
+        var jwtToken = undefined;
         return {
+            request: function(config) {
+                if (jwtToken) {
+                    config.headers['x-auth-token'] = jwtToken;
+                }
+                return config;
+            },
             response: function(response) {
+                if (response.headers()['x-auth-token']) {
+                    jwtToken = response.headers()['x-auth-token'];
+                }
+                
                 if (response.headers()['x-cordate-login']) {
                     window.location.reload();
                     return null;
@@ -102,7 +113,6 @@
             }
         };
     }];
-
 
     /* Module setup */
 

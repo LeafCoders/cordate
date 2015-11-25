@@ -47,6 +47,7 @@ public class SessionController {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("userId", userPrincipal.getId());
         modelAndView.addObject("fullName", userPrincipal.getFullName());
+        modelAndView.addObject("rosetteBaseUrl", rosetteBaseUrl);
         return modelAndView;
 	}
 	

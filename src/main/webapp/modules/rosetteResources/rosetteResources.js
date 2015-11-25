@@ -1,10 +1,11 @@
 'use strict';
 
-(function () {
+(function (window) {
 
     var thisModule = angular.module('rosetteResources', ['ngRoute', 'ngResource']);
 
     var cordateApiPath = 'api/v1';
+    var rosetteApiPath = window.rosetteBaseUrl + '/api/v1';
 
     /* Helper methods */
 
@@ -146,9 +147,25 @@
 
     var uploadResource = ['$route', '$resource', function($route, $resource) {
         var query = function() {
-            return $resource(cordateApiPath + '/uploads/:folderId/:id',
-                    { folderId: '@folderId', id: '@id' },
-                    { create: { method: 'POST' }, update: { method: 'PUT' } });
+            function formDataObject (data) {
+                var fd = new FormData();
+                angular.forEach(data, function(value, key) {
+                    fd.append(key, value);
+                });
+                return fd;
+            };            
+            return $resource(
+                rosetteApiPath + '/uploads/:folderId/:id',
+                { folderId: '@folderId', id: '@id' },
+                {
+                    create: {
+                        method: 'POST',
+                        transformRequest: formDataObject,
+                        headers: { 'Content-Type': undefined, enctype: 'multipart/form-data' }
+                    },
+                    update: { method: 'PUT' }
+                }
+            );
         };
         return BasicResource($route, query);
     }];
@@ -199,4 +216,4 @@
     thisModule.factory('signupUserResource', signupUserResource);
     thisModule.factory('userResource', userResource);
 
-}());
+}(window));

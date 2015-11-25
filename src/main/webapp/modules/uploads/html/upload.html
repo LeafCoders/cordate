@@ -7,7 +7,7 @@
             </div>
         </form-item>
         <form-item label="content" ng-if="item.mimeType.indexOf('audio/') == 0">
-            <audio src="{{ item.fileUrl }}" controls></audio>
+            <audio ng-src="{{ safeFileUrl }}" controls style="width: 100%;"></audio>
         </form-item>
         <text-view item-name="fileUrl"></text-view>
         <text-view item-name="fileSize"> bytes</text-view>

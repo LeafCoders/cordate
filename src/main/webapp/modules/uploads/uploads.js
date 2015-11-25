@@ -33,9 +33,11 @@
         $scope.changeFolder(uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null);
     }];
 
-    var uploadController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
+    var uploadController = ['$injector', '$scope', '$sce', 'item', function($injector, $scope, $sce, item) {
         utils.extendItemController(this, $injector, $scope, item);
         $scope.allowEditItem = function() { return false; };
+        
+        $scope.safeFileUrl = $sce.trustAsResourceUrl(item.fileUrl);
     }];
 
     var uploadEditorController = ['$injector', '$scope', '$timeout', 'flash', 'uploadResource', 'item',
@@ -45,6 +47,11 @@
         utils.extendItemEditorController(this, $injector, $scope, uploadResource, item);
         $scope.uploadIsSupported = !!window.FileReader;
         $scope.uploadFolder = lastSelectedFolder;
+
+        $scope.beforeSave = function(item) {
+            item.file = $scope.item.file;
+            return item;
+        };
 
         $scope.onFileSelect = function(files) {
             flash.clearAlerts();
@@ -60,20 +67,7 @@
                 }
 
                 if (allowed && $scope.uploadIsSupported) {
-                    var fileReader = new FileReader();
-                    fileReader.onload = function(e) {
-                        $timeout(function() {
-                            $scope.item.fileData = e.target.result;
-                        });
-                    };
-                    fileReader.onerror = function(e) {
-                        $timeout(function() {
-                            flash.addAlert({ type: 'danger', text: 'upload.invalidFileContent'});
-                            flash.showAlerts();
-                            flash.clearAlerts();
-                        });
-                    };
-                    fileReader.readAsDataURL(files[0]);
+                    $scope.item.file = files[0];
                     $scope.item.fileName = files[0].name;
                     $scope.item.mimeType = files[0].type;
                 } else {

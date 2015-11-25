@@ -34,6 +34,12 @@ public class ApiProxyController {
 	@Value("${cordate.rosetteBaseUrl}")
 	private String rosetteBaseUrl;
 
+    @RequestMapping(value="/api/v1/permissionsForUser", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public void getPermissionForUser(HttpServletRequest request, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
+        response.addHeader("X-AUTH-TOKEN", userSession.getJwtToken());
+        callRosetteServer(request, null, response);
+    }
+
 	@RequestMapping(value="/api/**", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public void proxyGet(HttpServletRequest request, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
 		callRosetteServer(request, null, response);

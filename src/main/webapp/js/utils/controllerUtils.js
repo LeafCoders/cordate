@@ -118,6 +118,7 @@ var utils = utils || {};
         $scope.errors = {};
         $scope.isCreate = $location.path().endsWith('/new');
         $scope.backPage = $scope.types + ($scope.isCreate ? '' : '/' + item.id);
+        $scope.isSaving = false; 
 
         $scope.beforeSave = function(item) {
             return item;
@@ -130,8 +131,10 @@ var utils = utils || {};
 
             if (item) {
                 if ($scope.isCreate) {
+                    $scope.isSaving = true;
                     itemService.getQuery().create(item, function (data, headers) {
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasCreated'});
+                        $scope.isSaving = false;
                         $location.path('/' + $scope.types + '/' + data.id);
                     }, function(response) {
                         var property = response.data[0].property;
@@ -144,9 +147,12 @@ var utils = utils || {};
                         }
 
                         $scope.errors[property] = "has-error";
+                        $scope.isSaving = false;
                     });
                 } else if (item.id != undefined) {
+                    $scope.isSaving = true;
                     item.$update(function(data, headers) {
+                        $scope.isSaving = false;
                         flash.addAlert({ type: 'success', text: $scope.type + 'Editor.alert.itemWasUpdated'});
                         if ($scope.types === 'users') {
                             $window.location.href = 'logout';
@@ -164,6 +170,7 @@ var utils = utils || {};
                         }
 
                         $scope.errors[property] = "has-error";
+                        $scope.isSaving = false;
                     });
                 }
             }

@@ -1,6 +1,8 @@
 <h2 class="col-sm-offset-3" ng-show="isCreate">{{ type + 'Editor.label.newTitle' | t }}</h2>
 <h2 class="col-sm-offset-3" ng-hide="isCreate">{{ type + 'Editor.label.editTitle' | t }}</h2>
 
+<page-spinner force-show="isSaving"></page-spinner>
+
 <form role="form" class="form form-horizontal">
 	<div item-transclude></div>
     <hr>
