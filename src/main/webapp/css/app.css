@@ -215,6 +215,7 @@ body, .navbar-fixed-top, .navbar-fixed-bottom {
 }
 
 .page-spinner.show {
+    z-index: 100001;
     opacity: 1;
     bottom: 0;
 }

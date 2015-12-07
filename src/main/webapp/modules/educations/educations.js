@@ -23,21 +23,25 @@
         );
     }];
 
-    var educationController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
+    var educationController = ['$injector', '$scope', '$sce', 'item', function($injector, $scope, $sce, item) {
         utils.extendItemController(this, $injector, $scope, item);
+        
+        if (item.recording) {
+            $scope.safeRecordingUrl = $sce.trustAsResourceUrl(item.recording.fileUrl);
+        }
     }];
 
-    var educationEditorController = ['$injector', '$scope', 'educationResource', 'item', 'selectedEducationType',
-                                     function($injector, $scope, educationResource, item, selectedEducationType) {
-        utils.extendItemEditorController(this, $injector, $scope, educationResource, item);
-        
-        if (!item.type) {
-            item.type = 'event';
+    var educationEditorController = ['$injector', '$scope', 'educationResource', 'data',
+                                     function($injector, $scope, educationResource, data) {
+        if (!data.item.type) {
+            data.item.type = 'event';
         }
 
-        if (selectedEducationType && selectedEducationType.id) {
-            item.educationType = selectedEducationType;
+        if (data.selectedEducationType && data.selectedEducationType.id) {
+            data.item.educationType = data.selectedEducationType;
         }
+        
+        utils.extendItemEditorController(this, $injector, $scope, educationResource, data.item);
     }];
     
     /* Configuration */
@@ -53,18 +57,42 @@
         var getAllEducationTypes = ['educationTypeResource', function(educationTypeResource) {
             return educationTypeResource.getAll();
         }];
-        var getOneEducationType = ['educationTypeResource', function(educationTypeResource) {
-            return educationTypeResource.getOneUseParamAsId('educationTypeId');
+
+        var getEditData = ['$q', 'educationResource', 'educationTypeResource', function($q, educationResource, educationTypeResource) {
+            var defer = $q.defer();
+            var newSelected = educationTypeResource.getOneUseParamAsId('educationTypeId');
+            if (Object.keys(newSelected).length > 0) {
+                newSelected.then(function (educationType) {
+                    defer.resolve({
+                        item: {},
+                        selectedEducationType: educationType
+                    });
+                });
+            } else {
+                educationResource.getOne().then(function (education) {
+                    educationTypeResource.getQuery().get({ id: education.educationType.id }).$promise.then(function (educationType) {
+                        defer.resolve({
+                            item: education,
+                            selectedEducationType: educationType
+                        });
+                    });
+                });
+            }
+            return defer.promise;
         }];
 
+        var resolveShow = {
+            item: getOneEducation
+        };
+        var resolveEdit = {
+            data: getEditData
+        };
+        
         utils.createBasicAllRoute($routeProvider, educationsPath, {
             items: getAllEducations,
             educationTypes: getAllEducationTypes
         });
-        utils.createBasicOneRoute($routeProvider, educationsPath, {
-            item: getOneEducation,
-            selectedEducationType: getOneEducationType
-        });
+        utils.createBasicOneRoute($routeProvider, educationsPath, resolveShow, resolveEdit);
     }];
 
 

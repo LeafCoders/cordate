@@ -13,7 +13,7 @@
                 'forceShow' : '='
             },
             link : function(scope, elem, attrs) {
-                var showTimer;
+                var showTimer = null;
 
                 scope.$watch('forceShow', function(newVal) {
                     newVal ? showSpinner(true) : hideSpinner(true);

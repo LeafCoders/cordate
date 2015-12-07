@@ -101,14 +101,21 @@
 
     function BaseRefInputController($injector, $scope) {
         if ($scope.refType == undefined) {
-            var uploadService = $injector.get('uploadResource');
-            angular.extend(this,
-                    new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalImageList.html',
-                            uploadService, { folderId: $scope.uploadFolderId }));
-
             $scope.refType = 'upload';
-            $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.image' };
             $scope.singleSelect = true;
+            $scope.labels = { inputTitle: 'formLabel.' + $scope.mediaType, modalTitle: 'modalLabel.' + $scope.mediaType };
+
+            var uploadService = $injector.get('uploadResource');
+            if ($scope.mediaType == 'image') {
+                angular.extend(this,
+                        new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalImageList.html',
+                                uploadService, { folderId: $scope.uploadFolderId }));
+            }
+            if ($scope.mediaType == 'audio') {
+                angular.extend(this,
+                        new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
+                                uploadService, { folderId: $scope.uploadFolderId }));
+            }
         } else {
             var refResourceService = $injector.get($scope.refType + 'Resource');
             var resourceQuery = undefined;
@@ -363,17 +370,23 @@
         };
     });
     
-    thisModule.directive("imageRefInput", function () {
+    thisModule.directive("uploadRefInput", function () {
         return {
             restrict: 'E',
             replace: true,
             transclude: false,
             scope: {
                 refItem: '=',
-                uploadFolderId: '@'
+                uploadFolderId: '=',
+                mediaType: '@'
             },
             controller: 'refInputController',
-            templateUrl: 'modules/baseUI/html/panelImageList.html'
+            templateUrl: function(tElement, tAttrs) {
+                switch (tAttrs.mediaType) {
+                    case 'image': return 'modules/baseUI/html/panelImageList.html';
+                    default: return 'modules/baseUI/html/panelTextList.html';
+                }
+            }
         };
     });
 

@@ -205,7 +205,7 @@
             replace: true,
             transclude: true,
             template: function(tElement, tAttrs) {
-                var ifExist = tAttrs.ifExist != null ? ' ng-if="item.' + tAttrs.itemName + '"' : '';
+                var ifExist = tAttrs.ifExist != null ? ' ng-show="item.' + tAttrs.itemName + '"' : '';
                 var formLabel = '\'formLabel.' + (tAttrs.formLabel ? tAttrs.formLabel : tAttrs.itemName) + '\'';
                 var value = tAttrs.msgPrefix != null ? '\'' + tAttrs.msgPrefix + '.\' + item.' + tAttrs.itemName + ' | t' : 'item.' + tAttrs.itemName;
                 var html = '<div class="form-group"' + ifExist + '>' +
