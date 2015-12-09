@@ -377,7 +377,7 @@
             transclude: false,
             scope: {
                 refItem: '=',
-                uploadFolderId: '=',
+                uploadFolderId: '@',
                 mediaType: '@'
             },
             controller: 'refInputController',

@@ -9,7 +9,7 @@
                         'bookings',
                         'educationThemes', 'educationTypes', 'educations',
                         'events', 'eventTypes', 'eventWeeks', 'eventSemesters',
-                        'groups', 'groupMemberships', 'locations', 'permissions', 'posters',
+                        'groups', 'groupMemberships', 'locations', 'permissions', 'podcasts', 'posters',
                         'uploadFolders', 'uploads', 'users', 'signupUsers', 'resourceTypes'
                         ];
 

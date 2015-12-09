@@ -21,7 +21,7 @@
             <textarea-input item-name="content" rows="14"></textarea-input>
             <textarea-input item-name="questions" rows="10"></textarea-input>
             
-            <upload-ref-input ref-item="item.recording" upload-folder-id="item.educationType.uploadFolder.id" media-type="audio"></upload-ref-input>
+            <upload-ref-input ref-item="item.recording" upload-folder-id="{{ item.educationType.uploadFolder.id }}" media-type="audio"></upload-ref-input>
         </div>
     </form>
 </item-editor>

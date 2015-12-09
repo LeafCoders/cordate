@@ -73,8 +73,9 @@
                             <li permission="educations:view" class="visible-xs"><a href="#/educations">{{ 'navbar.label.educations' | t }}</a></li>
                             <li permission="educationThemes:view" class="visible-xs"><a href="#/educationThemes">{{ 'navbar.label.educationThemes' | t }}</a></li>
                             <li permission="educationTypes:view"><a href="#/educationTypes">{{ 'navbar.label.educationTypes' | t }}</a></li>
+                            <li permission="podcasts:view"><a href="#/podcasts">{{ 'navbar.label.podcasts' | t }}</a></li>
         
-                            <li permission="educations:view;educationThemes:view;educationTypes:view" class="divider"></li>
+                            <li permission="educations:view;educationThemes:view;educationTypes:view;podcasts:view" class="divider"></li>
 
                             <li permission="locations:view"><a href="#/locations">{{ 'navbar.label.locations' | t }}</a></li>
                             <li permission="resourceTypes:view"><a href="#/resourceTypes">{{ 'navbar.label.resourceTypes' | t }}</a></li>

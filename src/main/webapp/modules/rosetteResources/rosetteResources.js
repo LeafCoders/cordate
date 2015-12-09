@@ -135,6 +135,18 @@
         return resourceMethods; 
     }];
 
+    var podcastResource = ['$route', '$resource', function($route, $resource) {
+        var newModelFn = function(params) {
+            return {
+                copyright: '© 2015 Your name',
+                mainCategory: 'Religion & Spirituality',
+                subCategory: 'Christianity',
+                language: 'sv-se'
+            };
+        };
+        return BasicResource($route, BasicQuery($resource, 'podcasts'), newModelFn);
+    }];
+
     var posterResource = ['$route', '$resource', function($route, $resource) {
         var newModelFn = function(params) {
             var newModel = {};
@@ -209,6 +221,7 @@
     thisModule.factory('groupResource', groupResource);
     thisModule.factory('locationResource', locationResource);
     thisModule.factory('permissionResource', permissionResource);
+    thisModule.factory('podcastResource', podcastResource);
     thisModule.factory('posterResource', posterResource);
     thisModule.factory('uploadResource', uploadResource);
     thisModule.factory('uploadFolderResource', uploadFolderResource);
