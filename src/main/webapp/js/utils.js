@@ -20,11 +20,13 @@ function refToText(ref, refType) {
 			    case 'user': return ref.fullName; break;
 			    case 'group': return ref.name; break;
 				case 'location': return ref.name; break;
-                case 'event': return ref.title; break;
+                case 'event': return ref.startTime.substr(0, 10) + ' - ' + ref.title; break;
                 case 'eventType': return ref.name; break;
                 case 'resourceType': return ref.name; break;
                 case 'educationType': return ref.name; break;
                 case 'educationTheme': return ref.title; break;
+                case 'upload': return ref.fileName; break;
+                case 'uploadFolder': return ref.name; break;
                 default: return ref.name; break;
 			}
 		}
@@ -38,7 +40,7 @@ function refOrTextToText(refOrText, refType) {
             // TODO: Handle multiple references
         } else {
             if (refOrText.ref != null) {
-                return refToText(refOrText.ref);
+                return refToText(refOrText.ref, refType);
             } else if (refOrText.text != null) {
                 return refOrText.text;
             }
@@ -91,7 +93,8 @@ function parseVerticalTextByFormat(text, format) {
         return data;
     };
 
-    var rows = text.split('\n');
+    // Split by \n or ;;
+    var rows = text.split(/[(;)\2\n]+/g);
     var dataList = { success: [], errors : [] };
     var startText = format[0].text, numRows = rows.length, i;
     for (i = 0; i < numRows; i++) {
