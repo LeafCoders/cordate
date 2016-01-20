@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12" ng-switch="selectedFolder != null">
-        <div ng-switch-when="true" class="btn-group" style="padding-bottom: 10px;">
+        <div ng-switch-when="true" ng-if="folders.length > 1" class="btn-group" style="padding-bottom: 10px;">
             <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                 {{ "formLabel.folder" | t }}: {{ selectedFolder.name | t }}
                 &nbsp;<span class="caret"></span>

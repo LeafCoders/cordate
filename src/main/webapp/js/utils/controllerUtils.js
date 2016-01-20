@@ -123,6 +123,10 @@ var utils = utils || {};
         $scope.beforeSave = function(item) {
             return item;
         };
+        
+        $scope.gotoList = function() {
+            $location.path('/' + $scope.types);
+        };
 
         $scope.save = function() {
             $scope.errors = {};
@@ -137,17 +141,19 @@ var utils = utils || {};
                         $scope.isSaving = false;
                         $location.path('/' + $scope.types + '/' + data.id);
                     }, function(response) {
-                        var property = response.data[0].property;
-                        var text = response.data[0].message;
-
-                        if (property != undefined) {
-                            flash.addAlert({ type: 'danger', text: text});
-                            flash.showAlerts();
-                            flash.clearAlerts();
-                        }
-
-                        $scope.errors[property] = "has-error";
                         $scope.isSaving = false;
+                        if (response.data[0]) {
+                            var property = response.data[0].property;
+                            var text = response.data[0].message;
+    
+                            if (property != undefined) {
+                                flash.addAlert({ type: 'danger', text: text});
+                                flash.showAlerts();
+                                flash.clearAlerts();
+                            }
+    
+                            $scope.errors[property] = "has-error";
+                        }
                     });
                 } else if (item.id != undefined) {
                     $scope.isSaving = true;
@@ -160,17 +166,19 @@ var utils = utils || {};
                             $location.path('/' + $scope.types + '/' + data.id);
                         }
                     }, function(response) {
-                        var property = response.data[0].property;
-                        var text = response.data[0].message;
-
-                        if (property != undefined) {
-                            flash.addAlert({ type: 'danger', text: text});
-                            flash.showAlerts();
-                            flash.clearAlerts();
-                        }
-
-                        $scope.errors[property] = "has-error";
                         $scope.isSaving = false;
+                        if (response.data[0]) {
+                            var property = response.data[0].property;
+                            var text = response.data[0].message;
+    
+                            if (property != undefined) {
+                                flash.addAlert({ type: 'danger', text: text});
+                                flash.showAlerts();
+                                flash.clearAlerts();
+                            }
+    
+                            $scope.errors[property] = "has-error";
+                        }
                     });
                 }
             }

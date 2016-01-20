@@ -8,8 +8,8 @@
     
     /* Controllers */
 
-    var uploadsController = ['$injector', '$scope', '$location', 'permissionService', 'uploadResource', 'uploadFolders',
-                             function($injector, $scope, $location, permissionService, uploadResource, uploadFolders) {
+    var uploadsController = ['$injector', '$scope', 'permissionService', 'uploadResource', 'uploadFolders',
+                             function($injector, $scope, permissionService, uploadResource, uploadFolders) {
         utils.extendItemsController(this, $injector, $scope, []);
 
         $scope.tableHeaderUrl = 'modules/uploads/html/uploadsHeader.html';
@@ -42,12 +42,16 @@
 
     var uploadEditorController = ['$injector', '$scope', '$timeout', 'flash', 'uploadResource', 'item',
                                   function($injector, $scope, $timeout, flash, uploadResource, item) {
-        item.folderId = item.folderId || lastSelectedFolder.id;
-
         utils.extendItemEditorController(this, $injector, $scope, uploadResource, item);
+
         $scope.uploadIsSupported = !!window.FileReader;
         $scope.uploadFolder = lastSelectedFolder;
-
+        item.folderId = item.folderId || lastSelectedFolder.id;
+        if (!lastSelectedFolder) {
+            $scope.gotoList();
+            return;
+        }
+        
         $scope.beforeSave = function(item) {
             item.file = $scope.item.file;
             return item;

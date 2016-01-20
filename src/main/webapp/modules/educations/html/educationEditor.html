@@ -2,7 +2,13 @@
     <form class="form-horizontal" role="form">
         <text-view item-name="educationType.name" form-label="educationType"></text-view>
     
-        <form-item label="type">
+        <form-item ng-if="isCreate" label="type">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="item.type" value="simple">
+                    {{ 'education.type.simple' | t }}
+                </label>
+            </div>
             <div class="radio">
                 <label>
                     <input type="radio" ng-model="item.type" value="event">
@@ -10,10 +16,22 @@
                 </label>
             </div>
         </form-item>
+        <text-view ng-if="!isCreate" item-name="type" msg-prefix="education.type"></text-view>
 
-        <div ng-if="item.type === 'event'">
+        <hr>
+
+        <div ng-if="item.type != null">
+            <div ng-if="item.type === 'simple'">
+                <ref-or-text-input ref-item="item.author" ref-type="user" form-label="authorName"></ref-or-text-input>
+                <time-input item-name="time"></time-input>
+            </div>
+
+            <div ng-if="item.type === 'event'">
+                <ref-input ref-item="item.event" ref-type="event"></ref-input>
+                <text-view ng-if="item.authorName" item-name="authorName"></text-view>
+            </div>
+
             <ref-input ref-item="item.educationTheme" ref-type="educationTheme"></ref-input>
-            <ref-input ref-item="item.event" ref-type="event"></ref-input>
 
             <hr>
 

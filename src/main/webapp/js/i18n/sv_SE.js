@@ -77,6 +77,7 @@ angular.module('myApp.translation_sv_SE', []).
         "error.description.max200Chars" : "Beskrivningen får max innehålla 200 tecken.",
 
         "formLabel.id" : "Id",
+        "formLabel.time" : "Tid",
         "formLabel.startTime" : "Börjar",
         "formLabel.endTime" : "Slutar",
         "formLabel.title" : "Titel",
@@ -147,6 +148,7 @@ angular.module('myApp.translation_sv_SE', []).
         "modalLabel.resourceType" : "Välj resurstyp",
         "modalLabel.educationType" : "Välj utbildningstyp",
         "modalLabel.educationTheme" : "Välj utbildningstema",
+        "modalLabel.authorName" : "Välj författare",
         
         "event" : "Händelse",
         "eventItems.label.title" : "Händelser",
@@ -349,10 +351,11 @@ angular.module('myApp.translation_sv_SE', []).
         
         "educationTheme" : "Undervisningstema",
         "educationThemeItems.label.title" : "Undervisningsteman",
-        "educationThemeItems.action.new" : "Ny undervisningsteman",
+        "educationThemeItems.action.new" : "Ntt undervisningstema",
         "educationThemeItems.prompt.itemDeleteConfirmation" : "Vill du verkligen radera undervisningstemat?",
         "educationThemeItems.alert.itemWasDeleted" : "Undervisningstemat raderades!",
-
+        "educationThemeItems.noEducationThemesToShow" : "Det finns ingen utbildningstyp med undervisningsteman att visa.", 
+        
         "educationThemeItem.prompt.itemDeleteConfirmation" : "Vill du verkligen radera undervisningstemat?",
         "educationThemeItem.alert.itemWasDeleted" : "Undervisningstemat raderades!",
         "educationThemeItem.label.backToItems" : "« Tillbaka till undervisningsteman",
@@ -400,13 +403,15 @@ angular.module('myApp.translation_sv_SE', []).
         "educationEditor.alert.itemWasUpdated" : "Undervisningen uppdaterades!",
         "education.type.notEmpty" : "Typ saknas",
         "education.educationType.mustBeSet" : "Undervisningstyp måste anges",
+        "education.educationType.notAllowedToChange" : "Undervisningstyp får inte ändras",
         "education.educationTheme.mustBeSet" : "Undervisningstema måste anges",
         "education.title.notEmpty" : "Titel måste anges",
         "education.content.max10000Chars" : "Innehållet får max innehålla 10000 tecken.",
         "education.questions.max10000Chars" : "Samtalsfrågorna får max innehålla 10000 tecken.",
         "eventEducation.event.mustBeSet" : "En händelse måste anges.",
         "education.modalTitle.create" : "Välj form av undervisning",
-        "education.type.event" : "Undervisning för händelser",
+        "education.type.simple" : "Utan händelse",
+        "education.type.event" : "Kopplad till en händelse",
 
         
         "podcast" : "Podcast",

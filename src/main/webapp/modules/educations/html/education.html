@@ -1,15 +1,12 @@
 <item>
     <form class="form-horizontal" role="form">
-        <div ng-if="item.type === 'user'">
-            <ref-view ref-item="item.event" ref-type="event"></ref-view>
-        </div>
-        
         <ref-view ref-item="item.educationType" ref-type="educationType"></ref-view>
         <ref-view ref-item="item.educationTheme" ref-type="educationTheme"></ref-view>
 
-        <div ng-if="item.type === 'event'">
-            <ref-view ref-item="item.event" ref-type="event"></ref-view>
-        </div>
+        <hr>
+
+        <ref-view ng-if="item.type === 'event'" ref-item="item.event" ref-type="event"></ref-view>
+        <time-view ng-if="item.type === 'simple'" item-name="time"></time-view>
 
         <text-view item-name="authorName"></text-view>
 

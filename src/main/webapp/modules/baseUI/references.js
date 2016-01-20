@@ -123,37 +123,29 @@
             if ($scope.refType == 'resourceType') {
             	resourceQuery = { type: $scope.subType };
             }
+            if ($scope.refType == 'event') {
+                resourceQuery = { sortBy: '-startTime' };
+            }
             angular.extend(this,
                     new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
                             refResourceService, resourceQuery));
 
-            $scope.labels = { inputTitle: 'formLabel.' + $scope.refType, modalTitle: 'modalLabel.' + $scope.refType };
+            var label = $scope.formLabel ? $scope.formLabel : $scope.refType;
+            $scope.labels = { inputTitle: 'formLabel.' + label, modalTitle: 'modalLabel.' + label };
             $scope.singleSelect = true;
         }
 
         $scope.resourceToItem = function(resource) {
+            var item = { 'id' : resource.id, 'text' : refToText(resource, $scope.refType) };
             switch ($scope.refType) {
-                case 'group':
-                    return { 'id': resource.id, 'text': resource.name };
-                case 'user':
-                    return { 'id': resource.id, 'text': resource.firstName + ' ' + resource.lastName };
                 case 'upload':
-                    return { 'id': resource.id, 'text': resource.fileName, 'fileUrl': resource.fileUrl };
-                case 'uploadFolder':
-                    return { 'id': resource.id, 'text': resource.name };
-                case 'event':
-                    return { 'id': resource.id, 'text': resource.title };
-                case 'eventType':
-                    return { 'id': resource.id, 'text': resource.name };
+                    item.fileUrl = resource.fileUrl;
+                    break;
                 case 'resourceType':
-                    return { 'id': resource.id, 'text': resource.name, type: $scope.subType };
-                case 'educationType':
-                    return { 'id': resource.id, 'text': resource.name };
-                case 'educationTheme':
-                    return { 'id': resource.id, 'text': resource.title };
-                default:
-                    return { 'id': resource.id, 'text': resource.name };
+                    item.type = $scope.subType;
+                    break;
             }
+            return item;
         };
     };
 
@@ -363,7 +355,8 @@
             scope: {
                 refItem: '=',
                 refType: '@',
-                subType: '@'
+                subType: '@',
+                formLabel: '@'
             },
             controller: 'refOrTextInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'
