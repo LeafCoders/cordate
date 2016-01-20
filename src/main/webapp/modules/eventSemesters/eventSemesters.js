@@ -5,6 +5,7 @@
     var thisModule = angular.module('eventSemesters', ['ngRoute', 'ngResource', 'rosetteResources', 'baseUI']);
 
     var currentSemester = { from: null, before: null, range: null, prevLink: null, nextLink: null };
+    var lastSelectedResourceType = null;
 
     function changeSemester(fromDateString) {
         var now = new Date();
@@ -28,17 +29,19 @@
     
     /* Controllers */
 
-    var eventSemesterController = ['$injector', '$scope', '$filter', '$route', 'flash', 'permissionService', 'eventResource', 'eventTypes', 'items',
-                               function($injector, $scope, $filter, $route, flash, permissionService, eventResource, eventTypes, items) {
+    var eventSemesterController = ['$injector', '$scope', '$filter', '$route', 'flash', 'permissionService', 'eventResource', 'eventTypes', 'resourceTypes', 'items',
+                               function($injector, $scope, $filter, $route, flash, permissionService, eventResource, eventTypes, resourceTypes, items) {
         utils.extendItemsController(this, $injector, $scope, items);
 
         $scope.type = 'event';
         $scope.types = 'events';
         $scope.backPage = "eventSemesters";
+        $scope.resourceTypes = resourceTypes;
         $scope.items = items;
         $scope.allowCreateItem = function() { return permissionService.hasPermission('events:create'); };
         $scope.allowImport = true;
         $scope.currentSemester = currentSemester;
+        $scope.selectedResourceType = lastSelectedResourceType;
 
         utils.extendCreateWithModal($injector, $scope, 'event.modalTitle.create',
             function createItems() {
@@ -52,6 +55,23 @@
             }
         );
 
+        var getFilteredItems = function() {
+            if ($scope.selectedResourceType) {
+                var filteredItems = [];
+                angular.forEach($scope.items, function (item) {
+                    angular.forEach(item.resources, function (resource) {
+                        if (resource.resourceType.id == $scope.selectedResourceType.id) {
+                            filteredItems.push(item);
+                        }
+                    });
+                });
+                return filteredItems;
+            } else {
+                return $scope.items;
+            }
+        };
+        
+
         $scope.remove = function(item) {
             eventResource.getQuery().remove({ id : item.id }, function(response, headers) {
                 flash.addAlert({ type: 'success', text: 'eventItems.alert.itemWasDeleted' });
@@ -62,6 +82,14 @@
         $scope.allowAssignResourceType = function(resource) {
             return permissionService.hasPermission('events:update:resourceTypes:' + resource.resourceType.id);
         };
+        
+        $scope.changeResourceType = function(resourceType) {
+            lastSelectedResourceType = resourceType;
+            $scope.selectedResourceType = resourceType;
+            $scope.filteredItems = getFilteredItems();
+        };
+
+        $scope.filteredItems = getFilteredItems();
     }];
 
 
@@ -86,15 +114,19 @@
             return eventTypeResource.getAll();
         }];
         
+        var getAllResourceTypes = ['resourceTypeResource', function(resourceTypeResource) {
+            return resourceTypeResource.getAll();
+        }];
+        
         $routeProvider.when('/eventSemesters', {
             templateUrl: 'modules/eventSemesters/html/eventSemester.html',
             controller:  'eventSemesterController',
-            resolve:     { items: getOneSemester, eventTypes: getAllEventTypes }
+            resolve:     { items: getOneSemester, eventTypes: getAllEventTypes, resourceTypes: getAllResourceTypes }
         });
         $routeProvider.when('/eventSemesters/:id', {
             templateUrl: 'modules/eventSemesters/html/eventSemester.html',
             controller:  'eventSemesterController',
-            resolve:     { items: getOneSemester, eventTypes: getAllEventTypes }
+            resolve:     { items: getOneSemester, eventTypes: getAllEventTypes, resourceTypes: getAllResourceTypes }
         });
     }];
 

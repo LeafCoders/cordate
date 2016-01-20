@@ -9,7 +9,6 @@
     function AbstractModalController($injector, $scope, modalTemplate, resource, resourceQuery) {
         var $q = $injector.get('$q');
         var $modal = $injector.get('$modal');
-        var $filter = $injector.get('$filter');
 
         // Options
         $scope.modalTitle = "Not set";
@@ -287,7 +286,7 @@
                     update.users = { refs: [] };
                     angular.forEach(newPanelItems, function(panelItem) {
                         if (panelItem.id != undefined) {
-                            update.users.refs.push({ 'id': panelItem.id });
+                            update.users.refs.push({ 'id': panelItem.id, 'fullName': panelItem.text });
                         } else {
                             update.users.text = panelItem.text;
                         }
@@ -295,7 +294,7 @@
                 } else if ($scope.resource.type == 'upload') {
                     update.uploads = [];
                     angular.forEach(newPanelItems, function(panelItem) {
-                        update.uploads.push({ 'id': panelItem.id });
+                        update.uploads.push({ 'id': panelItem.id, 'fileName': panelItem.text });
                     });
                 }
 

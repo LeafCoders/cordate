@@ -25,11 +25,27 @@
 
 <h4 class="dateRange">{{ currentSemester.range | cordateDateRange }}</h4>
 
-<div ng-repeat="item in items">
+<div class="row">
+    <div class="col-md-12">
+        <div ng-if="resourceTypes.length > 0" class="btn-group">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                {{ "formLabel.resourceType" | t }}: {{ (selectedResourceType ? selectedResourceType.name : 'all') | t }}
+                &nbsp;<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="" ng-click="changeResourceType(null)">{{ 'all' | t }}</a></li>
+                <li ng-repeat="rt in resourceTypes"><a href="" ng-click="changeResourceType(rt)">{{ rt.name | t }}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div ng-repeat="item in filteredItems">
     <hr>
     <div class="col-sm-offset-3">
         <h5>{{ item.startTime | cordateDate }} {{ item.startTime | cordateTime }} | {{ item.eventType.name }}</h5>
-        <h3>{{ item.title }}</h3>
+        <h3><a ng-href="#/events/{{ item.id }}">{{ item.title }}</a></h3>
     </div>
     <form class="form-horizontal" role="form">
         <textarea-view item-name="description" if-exist></textarea-view>

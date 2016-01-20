@@ -40,6 +40,7 @@ angular.module('myApp.translation_sv_SE', []).
 
         "yes" : "Ja",
         "no" : "Nej",
+        "all" : "Alla",
         
         "items.action.edit" : "Redigera",
         "items.action.delete" : "Radera",
