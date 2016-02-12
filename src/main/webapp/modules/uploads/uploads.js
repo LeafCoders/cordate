@@ -18,6 +18,9 @@
             return uploadFolders.length > 0 && $scope.selectedFolder ? permissionService.hasPermission('uploads:create:' + $scope.selectedFolder.id) : false;
         };
         $scope.allowEditItem = function() { return false; };
+        $scope.allowDeleteItem = function(item) {
+            return uploadFolders.length > 0 && $scope.selectedFolder ? permissionService.hasPermission($scope.types + ':delete:' + $scope.selectedFolder.id) : false;
+        };
         
         $scope.changeFolder = function(folder) {
             if (folder) {
@@ -33,9 +36,13 @@
         $scope.changeFolder(uploadFolders.length > 0 ? (lastSelectedFolder != null ? lastSelectedFolder : uploadFolders[0]) : null);
     }];
 
-    var uploadController = ['$injector', '$scope', '$sce', 'item', function($injector, $scope, $sce, item) {
+    var uploadController = ['$injector', '$scope', '$sce', 'permissionService', 'item',
+                            function($injector, $scope, $sce, permissionService, item) {
         utils.extendItemController(this, $injector, $scope, item);
         $scope.allowEditItem = function() { return false; };
+        $scope.allowDeleteItem = function() {
+            return permissionService.hasPermission($scope.types + ':delete:' + lastSelectedFolder.id);
+        };
         
         $scope.safeFileUrl = $sce.trustAsResourceUrl(item.fileUrl);
     }];
