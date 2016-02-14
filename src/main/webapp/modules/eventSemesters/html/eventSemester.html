@@ -40,13 +40,16 @@
     </div>
 </div>
 
+<br>
 
-<div ng-repeat="item in filteredItems">
-    <hr>
+<div ng-repeat="item in filteredItems" class="panel panel-default">
+<div class="panel-heading">
     <div class="col-sm-offset-3">
         <h5>{{ item.startTime | cordateDate }} {{ item.startTime | cordateTime }} | {{ item.eventType.name }}</h5>
         <h3><a ng-href="#/events/{{ item.id }}">{{ item.title }}</a></h3>
     </div>
+</div>
+<div class="panel-body" ng-if="item.resources.length > 0 || item.description.length > 0">
     <form class="form-horizontal" role="form">
         <textarea-view item-name="description" if-exist></textarea-view>
         <div ng-repeat="resource in item.resources" ng-switch="allowAssignResourceType(resource)">
@@ -58,4 +61,5 @@
             </div>
         </div>
     </form>
+</div>    
 </div>
