@@ -16,6 +16,9 @@
         $scope.allowOptionalText = false;
         $scope.panelItems = new Array();
         $scope.errors = {};
+        $scope.currentPage = 0;
+        $scope.pageSize = 16;
+        $scope.listPages = [];
 
         $scope.inputModal = {
             showModal: function() {
@@ -30,6 +33,7 @@
                         items.push($scope.createIdItem(resources[r]));
                     }
                     $scope.modalItems = items;
+                    $scope.listPages = new Array(Math.ceil(items.length/$scope.pageSize));
     
                     // Select items and set optional text
                     $scope.optionalText = {};
@@ -124,6 +128,9 @@
             }
             if ($scope.refType == 'event') {
                 resourceQuery = { sortBy: '-startTime' };
+                if ($scope.filterEventTypeId) {
+                    resourceQuery.eventTypeId = $scope.filterEventTypeId;
+                }
             }
             angular.extend(this,
                     new AbstractModalController($injector, $scope, 'modules/baseUI/html/modalTextList.html',
@@ -339,7 +346,8 @@
             scope: {
                 refItem: '=',
                 refType: '@',
-                subType: '@'
+                subType: '@',
+                filterEventTypeId: '='
             },
             controller: 'refInputController',
             templateUrl: 'modules/baseUI/html/panelTextList.html'

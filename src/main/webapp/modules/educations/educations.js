@@ -53,8 +53,8 @@
         };
     }];
 
-    var educationEditorController = ['$injector', '$scope', '$filter', 'educationResource', 'item',
-                                     function($injector, $scope, $filter, educationResource, item) {
+    var educationEditorController = ['$injector', '$scope', '$filter', 'educationResource', 'educationTypes', 'item',
+                                     function($injector, $scope, $filter, educationResource, educationTypes, item) {
         utils.extendItemEditorController(this, $injector, $scope, educationResource, item);
 
         item.educationType = item.educationType || lastSelectedEducationType;
@@ -76,6 +76,11 @@
             }
             return item;
         };
+        
+        $scope.educationType = educationTypes.find(function (educationType) {
+            return educationType.id === item.educationType.id;
+        });
+
     }];
     
     /* Configuration */
@@ -90,7 +95,10 @@
         }];
         
         utils.createBasicAllRoute($routeProvider, educationsPath, { educationTypes: getAllEducationTypes });
-        utils.createBasicOneRoute($routeProvider, educationsPath, { item: getOneEducation });
+        utils.createBasicOneRoute($routeProvider, educationsPath,
+                { item: getOneEducation },
+                { item: getOneEducation, educationTypes: getAllEducationTypes }
+        );
     }];
 
 

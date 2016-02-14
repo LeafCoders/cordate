@@ -1,16 +1,28 @@
 <div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">x</button>
                 <h4>{{ labels.modalTitle | t }}</h4>
             </div>
-            <div class="modal-body row">
-                <div ng-repeat="item in modalItems" class="col-xs-6 col-sm-4">
-                    <div class="list-group">
-                        <a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" class="list-group-item"> 
-                            <img class="modal-img-item img-responsive" ng-src="{{item.fileUrl}}">
-                        </a>
+            <div class="modal-body">
+                <div class="row">
+                    <div ng-repeat="item in modalItems | startFrom:currentPage*pageSize | limitTo:pageSize" class="col-xs-6 col-md-3">
+                        <div class="list-group">
+                            <a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" class="list-group-item"> 
+                                <img class="modal-img-item img-responsive center-block" ng-src="{{item.fileUrl}}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group col-xs-12" role="group" ng-show="listPages.length > 1">
+                        <button class="btn btn-default" type="button"
+                                ng-repeat="p in listPages track by $index"
+                                ng-class="{ 'btn-primary': $index === currentPage }"
+                                ng-click="$parent.currentPage = $index">
+                            {{ $index + 1 }}
+                        </button>
                     </div>
                 </div>
             </div>

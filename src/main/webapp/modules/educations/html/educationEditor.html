@@ -27,7 +27,7 @@
             </div>
 
             <div ng-if="item.type === 'event'">
-                <ref-input ref-item="item.event" ref-type="event"></ref-input>
+                <ref-input ref-item="item.event" ref-type="event" filter-event-type-id="educationType.eventType.id"></ref-input>
                 <text-view ng-if="item.authorName" item-name="authorName"></text-view>
             </div>
 
@@ -39,7 +39,7 @@
             <textarea-input item-name="content" rows="14"></textarea-input>
             <textarea-input item-name="questions" rows="10"></textarea-input>
             
-            <upload-ref-input ref-item="item.recording" upload-folder-id="{{ item.educationType.uploadFolder.id }}" media-type="audio"></upload-ref-input>
+            <upload-ref-input ref-item="item.recording" upload-folder-id="{{ educationType.uploadFolder.id }}" media-type="audio"></upload-ref-input>
         </div>
     </form>
 </item-editor>

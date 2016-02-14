@@ -133,6 +133,7 @@
                     element.css('display', 'none');
                     var files = evt.originalEvent ? evt.originalEvent.dataTransfer.files : evt.dataTransfer.files;
                     dropCallback(files);
+                    scope.$apply();
                     return false;
                 });
             }

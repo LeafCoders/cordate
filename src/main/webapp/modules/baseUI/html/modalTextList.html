@@ -7,11 +7,23 @@
     		</div>
     		<div class="modal-body">
     			<div class="list-group">
-    				<a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" ng-repeat="item in modalItems" class="list-group-item">{{ item.text }}</a>
+    				<a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}"
+                       ng-repeat="item in modalItems | startFrom:currentPage*pageSize | limitTo:pageSize"
+                       class="list-group-item">
+                       {{ item.text }}
+                   </a>
     				<a href="" class="list-group-item" ng-class="{active: optionalText.text}" ng-if="allowOptionalText">
     					<input type="text" class="form-control" ng-model="optionalText.text" ng-change="inputModal.toggleModalItem(null, optionalText.text)" placeholder="Ange namn här om det saknas i listan">
     				</a>
     			</div>
+                <div class="btn-group" role="group" ng-show="listPages.length > 1">
+                    <button class="btn btn-default" type="button"
+                            ng-repeat="p in listPages track by $index"
+                            ng-class="{ 'btn-primary': $index === currentPage }"
+                            ng-click="$parent.currentPage = $index">
+                        {{ $index + 1 }}
+                    </button>
+                </div>
     		</div>
     		<div class="modal-footer">
     		  <button type="button" class="btn btn-primary" ng-click="$hide();inputModal.saveModalItems()">{{ 'itemEditor.action.ok' | t }}</button>
