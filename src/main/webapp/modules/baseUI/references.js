@@ -153,6 +153,11 @@
             }
             return item;
         };
+
+        $scope.iconImg = function (image) {
+            var index = image.fileUrl.lastIndexOf('/');
+            return image.fileUrl.slice(0, index) + "/icon/" + image.fileUrl.slice(index + 1);
+        };
     };
 
     var refInputController = ['$injector', '$scope', function($injector, $scope) {

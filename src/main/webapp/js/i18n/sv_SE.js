@@ -73,6 +73,7 @@ angular.module('myApp.translation_sv_SE', []).
         "error.hasIdOrText.oneMustBeSet" : "Id eller text måste sättas.",
         "error.id.mustBeUnique" : "Ej unikt id! Id som du angett finns redan.",
         "error.id.notValidFormat" : "Fel format! Id måste börja med liten bokstav och får bara innehålla a-z, A-Z och 0-9.",
+        "error.fileName.notValidFormat" : "Fel format! Filnamet får bara innehålla a-z, A-Z, 0-9, _ och punkt.",
         "error.name.notEmpty" : "Namn får inte vara tom.",
         "error.permssions.notValid" : "Fel format på behörigheten.",
         "error.description.max200Chars" : "Beskrivningen får max innehålla 200 tecken.",

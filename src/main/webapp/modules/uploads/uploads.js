@@ -22,6 +22,11 @@
             return uploadFolders.length > 0 && $scope.selectedFolder ? permissionService.hasPermission($scope.types + ':delete:' + $scope.selectedFolder.id) : false;
         };
         
+        $scope.iconImg = function (item) {
+            var index = item.fileUrl.lastIndexOf('/');
+            return item.fileUrl.slice(0, index) + "/icon/" + item.fileUrl.slice(index + 1);
+        };
+        
         $scope.changeFolder = function(folder) {
             if (folder) {
                 $scope.subTypePermission = folder.id;

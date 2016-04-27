@@ -10,7 +10,8 @@
                     <div ng-repeat="item in modalItems | startFrom:currentPage*pageSize | limitTo:pageSize" class="col-xs-6 col-md-3">
                         <div class="list-group">
                             <a href="" ng-click="inputModal.toggleModalItem(item)" ng-class="{active: item.selected}" class="list-group-item"> 
-                                <img class="modal-img-item img-responsive center-block" ng-src="{{item.fileUrl}}">
+                                <img class="modal-img-item img-responsive center-block" ng-src="{{iconImg(item)}}">
+                                <div class="text-center">{{ item.text }}</div>
                             </a>
                         </div>
                     </div>

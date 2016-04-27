@@ -26,6 +26,11 @@
         utils.extendItemsController(this, $injector, $scope, items);
         angular.extend(this, new PosterBase($scope));
         $scope.tableHeaderUrl = 'modules/posters/html/postersHeader.html';
+
+        $scope.iconImg = function (image) {
+            var index = image.fileUrl.lastIndexOf('/');
+            return image.fileUrl.slice(0, index) + "/icon/" + image.fileUrl.slice(index + 1);
+        };
     }];
 
     var posterController = ['$injector', '$scope', 'item', function($injector, $scope, item) {
