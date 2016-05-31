@@ -55,11 +55,14 @@ public class CordateRealm extends AuthorizingRealm {
 				UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 				String providedUsername = token.getUsername();
 				String providedPassword = new String(token.getPassword());
+				
+				String postUrl = rosetteBaseUrl + "/auth/login?username=" + providedUsername +
+				        "&password=" + Base64.encodeBase64URLSafeString(providedPassword.getBytes());
 
+				System.out.println(rosetteBaseUrl + "/auth/login");
 				HttpUriRequest login = RequestBuilder.post()
-	                    .setUri(new URI(rosetteBaseUrl + "/auth/login"))
-	                    .addParameter("username", providedUsername)
-	                    .addParameter("password", Base64.encodeBase64URLSafeString(providedPassword.getBytes()))
+	                    .setUri(new URI(postUrl))
+	                    .addHeader("Content-Type", "application/json")
 	                    .build();
 				
 				HttpClient httpClient = HttpClientBuilder.create().build();
@@ -77,6 +80,7 @@ public class CordateRealm extends AuthorizingRealm {
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
+                e.printStackTrace();
                 throw new AuthenticationException("Oops! Servern verkar inte vara tillgänglig just nu.");
 			}
 

@@ -75,6 +75,7 @@ public class SessionController {
 	        } else 
 	        	return "redirect:/";
 		} catch (AuthenticationException e) {
+		    e.printStackTrace();
 			String errorMessage = e.getMessage();
 
             redirectAttributes.addFlashAttribute("loginFailed", true);
