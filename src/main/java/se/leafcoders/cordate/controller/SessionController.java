@@ -1,9 +1,12 @@
 package se.leafcoders.cordate.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -26,8 +29,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+
 import se.leafcoders.cordate.model.UserPrincipal;
 import se.leafcoders.cordate.model.UserSession;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class SessionController {
@@ -122,17 +128,18 @@ public class SessionController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String postSignup(@RequestParam String email, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String permissions,
 			RedirectAttributes redirectAttributes) throws ClientProtocolException, IOException {
-
-		String requestBody = "{" + 
-				"\"email\" : \"" + email + "\", " + 
-				"\"firstName\" : \"" + firstName + "\", " + 
-				"\"lastName\" : \"" + lastName + "\", " + 
-				"\"password\" : \"" + password + "\", " + 
-				"\"permissions\" : \"" + permissions + "\" }"; 
-
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("email", email);
+        data.put("firstName", firstName);
+        data.put("lastName", lastName);
+        data.put("password", password);
+        data.put("permissions", permissions);
+        StringEntity entity = new StringEntity(mapper.writeValueAsString(data), ContentType.APPLICATION_JSON);
+	    
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/signupUsers");
-		httpPost.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
+		httpPost.setEntity(entity);
         HttpResponse remoteResponse = httpClient.execute(httpPost);
 
         if (remoteResponse.getStatusLine().getStatusCode() == HttpServletResponse.SC_CREATED) {
