@@ -143,7 +143,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <script type="text/javascript">
-        window.rosetteBaseUrl = "${ rosetteBaseUrl }";
+        window.rosetteBaseUrl = "${ externalRosetteBaseUrl }";
 
         <%-- For collapsing the menu when clicking a link in the menu --%>
         $('.main-menu a').click(function() {

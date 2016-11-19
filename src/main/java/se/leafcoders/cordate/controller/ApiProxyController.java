@@ -31,8 +31,8 @@ public class ApiProxyController {
 	@Autowired
 	private UserSession userSession;
 
-	@Value("${cordate.rosetteBaseUrl}")
-	private String rosetteBaseUrl;
+	@Value("${cordate.internalRosetteBaseUrl}")
+	private String internalRosetteBaseUrl;
 
     @RequestMapping(value="/api/v1/permissionsForUser", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public void getPermissionForUser(HttpServletRequest request, HttpServletResponse response) throws ClientProtocolException, IOException, AuthenticationException {
@@ -64,7 +64,7 @@ public class ApiProxyController {
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		int posApiPath = request.getRequestURI().indexOf("/api/");
 		String apiPath = request.getRequestURI().substring(posApiPath);
-        String requestURI = rosetteBaseUrl + apiPath;
+        String requestURI = internalRosetteBaseUrl + apiPath;
         if (request.getQueryString() != null) {
         	requestURI += "?" + request.getQueryString();
         }

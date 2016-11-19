@@ -41,8 +41,11 @@ public class SessionController {
 	@Autowired
 	private UserSession userSession;
 
-	@Value("${cordate.rosetteBaseUrl}")
-	private String rosetteBaseUrl;
+    @Value("${cordate.internalRosetteBaseUrl}")
+    private String internalRosetteBaseUrl;
+
+	@Value("${cordate.externalRosetteBaseUrl}")
+	private String externalRosetteBaseUrl;
 
 	@Value("${cordate.rosetteApiVersion}")
 	private String rosetteApiVersion;
@@ -53,7 +56,7 @@ public class SessionController {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("userId", userPrincipal.getId());
         modelAndView.addObject("fullName", userPrincipal.getFullName());
-        modelAndView.addObject("rosetteBaseUrl", rosetteBaseUrl);
+        modelAndView.addObject("externalRosetteBaseUrl", externalRosetteBaseUrl);
         return modelAndView;
 	}
 	
@@ -138,7 +141,7 @@ public class SessionController {
         StringEntity entity = new StringEntity(mapper.writeValueAsString(data), ContentType.APPLICATION_JSON);
 	    
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost(rosetteBaseUrl + "/api/" + rosetteApiVersion + "/signupUsers");
+		HttpPost httpPost = new HttpPost(internalRosetteBaseUrl + "/api/" + rosetteApiVersion + "/signupUsers");
 		httpPost.setEntity(entity);
         HttpResponse remoteResponse = httpClient.execute(httpPost);
 

@@ -36,8 +36,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service("cordateRealm")
 public class CordateRealm extends AuthorizingRealm {
 	
-	@Value("${cordate.rosetteBaseUrl}")
-	private String rosetteBaseUrl;
+	@Value("${cordate.internalRosetteBaseUrl}")
+	private String internalRosetteBaseUrl;
 
 	@Value("${cordate.rosetteApiVersion}")
 	private String rosetteApiVersion;
@@ -69,7 +69,7 @@ public class CordateRealm extends AuthorizingRealm {
 				StringEntity entity = new StringEntity(mapper.writeValueAsString(data), ContentType.APPLICATION_JSON);
 
 				HttpUriRequest login = RequestBuilder.post()
-                        .setUri(new URI(rosetteBaseUrl + "/auth/login"))
+                        .setUri(new URI(internalRosetteBaseUrl + "/auth/login"))
                         .setEntity(entity)
                         .addHeader("Content-Type", "application/json")
                         .build();
