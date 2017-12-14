@@ -1,0 +1,6 @@
+@import "src/scss/flex-mixin.scss";
+
+textarea {
+  min-height: 72px;
+  resize: vertical;
+}

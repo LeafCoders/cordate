@@ -1,0 +1,16 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="E-postadress" [value]="item.email" (changed)="setEmail($event)" [state]="emailState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Förnamn" [value]="item.firstName" (changed)="setFirstName($event)" [state]="firstNameState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Efternamn" [value]="item.lastName" (changed)="setLastName($event)" [state]="lastNameState"></lc-text-editor>
+    <lc-password-editor lc-list-item valueTitle="Lösenord" [value]="password" (changed)="setPassword($event)" [state]="passwordState"></lc-password-editor>
+    <lc-boolean-editor *ngIf="hasAdminPermission" lc-list-item valueTitle="Aktiv"
+      falseIcon="done" falseText="Nej, väntar på att aktiveras av administratör"
+      trueIcon="done" trueText="Ja, användaren är aktiv"
+      [value]="item.isActive" (changed)="setIsActive($event)" [state]="isActiveState"></lc-boolean-editor>
+    <lc-static-editor *ngIf="hasAdminPermission" lc-list-item valueTitle="Senaste inloggning" icon="access_time">
+      <div *ngIf="item.lastLoginTime">{{ item.lastLoginTime | amCalendar }}</div>
+      <div *ngIf="!item.lastLoginTime">-</div>
+    </lc-static-editor>
+  </lc-list>
+</lc-editor-container>

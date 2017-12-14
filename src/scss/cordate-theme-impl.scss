@@ -1,0 +1,10 @@
+@import 'src/scss/cordate-theme-def';
+
+@include mat-core();
+
+@include angular-material-theme($cordate-theme);
+
+// Fix for https://github.com/angular/material2/issues/2725
+.mat-menu-panel {
+  max-height: 370px !important;
+}

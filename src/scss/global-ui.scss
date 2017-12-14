@@ -1,0 +1,138 @@
+@import "src/scss/cordate-theme-def.scss";
+@import "src/scss/flex-mixin.scss";
+
+.flex-rows {
+  @include fb-rows-container();
+}
+
+.value-title {
+  color: #999;
+  font-size: 12px;
+}
+
+.list-content {
+  padding: 16px;
+  flex: 1;
+  @include fb-rows-container();
+}
+
+.list-icon {
+  padding: 16px;
+  color: $cordate-icon-color;
+}
+
+.list-no-icon {
+  width: 56px;
+  min-width: 56px;
+}
+
+.list-action {
+  padding: 8px;
+  color: $cordate-icon-color;
+}
+
+.overflow-ellipsis-parent {
+  overflow: hidden;
+}
+
+.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.alert-info {
+  background-color: #8888DD;
+  color: white;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  font-family: 'tahoma'; //$md-font-family;
+
+  & a {
+    color: white;
+    font-size: 0.8rem;
+  }
+}
+
+.alert-error {
+  background-color: #F44336;
+  color: white;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  font-family: 'tahoma'; //$md-font-family;
+
+  & a {
+    color: white;
+    font-size: 0.8rem;
+  }
+}
+
+.filter-bar {
+  @include fb-columns-container();
+  align-items: center;
+  justify-content: flex-start; //space-between;
+  padding-right: 8px;
+
+  & small {
+    color: #999;
+  }
+
+  & mat-icon {
+    color: $cordate-icon-color;
+  }
+
+  &.dark {
+    background-color: mat-color($cordate-primary, 0.1);
+    border-bottom: 1px solid mat-color($cordate-primary, 0.2);
+  }
+}
+
+.centered-list-item {
+  align-items: center;
+
+  & mat-icon {
+    color: $cordate-icon-color;
+  }
+
+}
+
+// The height left below header and filter in a list
+.max-height-header-filter {
+  max-height: calc(100vh - 105px); // 64 (from .mat-toolbar-row) + 41 (filter)
+  @media (max-width: 600px) {
+    max-height: calc(100vh - 97px); // 56 (from .mat-toolbar-row) + 41 (filter)
+  }
+}
+
+.mat-button-compact {
+  min-width: 32px !important;
+}
+
+.expander {
+  flex: 1 1;
+}
+
+.shrink {
+  flex: 0;
+}
+
+input[type="file"].file-input-hidden {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-drag-over {
+  background-color: mat-color($cordate-primary, 0.2);
+}
+
+mat-dialog-container .file-drag-over {
+  margin: -8px;
+  border: 4px dashed mat-color($cordate-primary);
+  padding: 4px;
+}

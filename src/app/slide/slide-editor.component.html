@@ -1,0 +1,8 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item && item.slideShow">
+    <lc-time-range-editor lc-list-item valueTitle="Tid" [startTime]="item.startTime" [endTime]="item.endTime" (changed)="setTime($event)" [state]="timeState"></lc-time-range-editor>
+    <lc-text-editor lc-list-item valueTitle="Titel" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Visningstid" [value]="item.duration" (changed)="setDuration($event)" [state]="durationState"></lc-text-editor>
+    <lc-asset-file-editor lc-list-item valueTitle="Bild" [asset]="item.image" [assetFolder]="item.slideShow.assetFolder" (changed)="setImage($event)" [state]="imageState"></lc-asset-file-editor>
+  </lc-list>
+</lc-editor-container>

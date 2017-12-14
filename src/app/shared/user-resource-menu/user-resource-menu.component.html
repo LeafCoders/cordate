@@ -1,0 +1,18 @@
+<div *ngIf="saving" style="padding: 8px;">
+  <mat-progress-spinner mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+</div>
+<button mat-icon-button *ngIf="(assignPermission || managePermission) && !saving" [matMenuTriggerFor]="resourceMenu" (click)="$event.stopPropagation()">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu class="menu" #resourceMenu="matMenu" xPosition="before">
+  <mat-progress-spinner *ngIf="!resources || !resources.length" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+  <button mat-menu-item *ngFor="let resourceSelect of resources" (click)="toggleSelect(resourceSelect)">
+    <mat-icon>{{ trueFalseIcons[resourceSelect.selected ? 0 : 1] }}</mat-icon>
+    <span>{{ resourceSelect.resource.user.fullName }}</span>
+  </button>
+  <div class="menu-divider"></div>
+  <button mat-menu-item (click)="selectAll()" *ngIf="allowMultiSelect">Välj alla</button>
+  <button mat-menu-item (click)="clear()">Rensa</button>
+  <div class="menu-divider" *ngIf="managePermission"></div>
+  <button mat-menu-item (click)="remove()" *ngIf="managePermission"><mat-icon>remove_circle</mat-icon><span>Ta bort resursbehov</span></button>
+</mat-menu>

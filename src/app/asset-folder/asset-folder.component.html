@@ -1,0 +1,15 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Filkataloger"></lc-page-header>
+    <div class="filter-bar dark">
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+    <lc-asset-folder-list (select)="onItemSelected($event)"></lc-asset-folder-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-asset-folder-editor [item]="selectedItem" (close)="onEditorClose()"></lc-asset-folder-editor>
+  </div>
+</lc-double-pane>

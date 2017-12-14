@@ -1,0 +1,44 @@
+@import "src/scss/flex-mixin.scss";
+
+
+:host {
+  @include fb-rows-container();
+
+  max-width: 96rem;
+  margin: 0 auto;
+
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.content {
+  @include fb-fill();
+}
+
+.content > /deep/ * {
+  display: flex;
+}
+
+/*
+.header {
+//  @include fb-fixed-size(3rem);
+  background-color: #fff;
+  border-bottom: 1px solid #aaa;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  z-index: 1000000;
+}
+
+
+.footer {
+  @include fb-fixed-size(3rem);
+  background-color: #fff;
+  border-top: 1px solid #aaa;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+//    display: none !important;
+  }
+}
+*/

@@ -1,0 +1,28 @@
+<mat-nav-list (click)="showModal = true">
+  <mat-list-item>
+    <div mat-line>{{ resource.resourceType.name }}</div>
+    <div mat-line>{{ resource.hasUsers() ? resource.asText() : '-' }}</div>
+    <button mat-icon-button>
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-nav-list>
+
+<div class="modal" *ngIf="!!showModal">
+  <div class="modal-content">
+    <div *ngFor="let userSelect of users"
+         class="select-row"
+         [class.selected]="userSelect.selected"
+         (click)="selectUser(userSelect)">
+      {{ userSelect.user.fullName }}
+    </div>
+    <div *ngIf="resource.resourceType.allowText" (click)="selectOptionalText()" class="select-row"
+         [class.selected]="optionalText">
+      <input type="text" [(ngModel)]="optionalText" placeholder="Namn på person/er">
+    </div>
+    <div style="text-align: center; margin: 10px">
+      <button mat-button (click)="cancel()">Avbryt</button>
+      <button mat-button color="primary" (click)="ok()">Ok</button>
+    </div>
+  </div>
+</div>

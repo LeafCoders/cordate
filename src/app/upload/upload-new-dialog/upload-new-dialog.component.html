@@ -1,0 +1,31 @@
+<mat-dialog-content class="container" [class.file-drag-over]="isDragOver"
+                   opFilesDrop (opFilesDropDropped)="dragFilesDropped($event)" (opFilesDropOver)="dragFilesOver($event)">
+
+  <div class="indicators" [ngSwitch]="state">
+    <mat-icon *ngSwitchCase="'START'">file_upload</mat-icon>
+    <mat-icon *ngSwitchCase="'SUCCESS'" style="color: green">done</mat-icon>
+    <mat-icon *ngSwitchCase="'FAILURE'" style="color: red">error_outline</mat-icon>
+    <mat-spinner *ngSwitchCase="'UPLOADING'"></mat-spinner>
+  </div>
+
+  <lc-list [header]="results.length + ' filer'" scrollable="true" *ngIf="results.length > 0">
+    <div lc-list-item *ngFor="let result of results">
+      <mat-icon class="list-icon" [class.error]="!result.responseData">{{ result.responseData ? 'done' : 'error_outline' }}</mat-icon>
+      <div class="list-content">
+        <div>{{ result.fileName }}</div>
+        <div *ngIf="result.errorMessage">{{ result.errorMessage }}</div>
+      </div>
+    </div>
+  </lc-list>
+
+  <div *ngIf="state != 'UPLOADING'" style="text-align: center; margin-top: 32px;">
+    <p>Släpp filer här för att ladda upp</p>
+    <p>
+      <input class="file-input-hidden" type="file" name="file" multiple tabindex="-1" #fileInput (change)="filesSelected($event)">
+      <button mat-button (click)="fileInput.click()">eller klicka här för att välja filer</button>
+    </p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions style="text-align: right; flex: 1;">
+  <button mat-button (click)="dialogRef.close()" color="primary">Stäng</button>
+</mat-dialog-actions>

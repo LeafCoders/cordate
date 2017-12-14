@@ -1,0 +1,26 @@
+<div *ngIf="item">
+  <mat-toolbar color="accent">
+    <div *ngIf="item.id" class="overflow-ellipsis-parent">
+      <button mat-icon-button class="hide-desktop" style="color: white; margin-right: 8px;" (click)="closeEditor()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div class="overflow-ellipsis">{{ item.asText() }}</div>
+    </div>
+    <div *ngIf="!item.id">
+      <button mat-raised-button color="accent" (click)="closeEditor(true)">Avbryt</button>
+      <button mat-raised-button color="primary" (click)="createItem()" [disabled]="disabled">Skapa</button>
+    </div>
+
+    <span class="expander"></span>
+    <div *ngIf="actions.length > 0">
+      <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #itemMenu="matMenu" xPosition="before">
+        <button *ngFor="let action of actions" mat-menu-item [disabled]="action.isDisabled()" (click)="action.call()">{{ action.getTitle() }}</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <ng-content></ng-content>
+</div>

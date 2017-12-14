@@ -1,0 +1,18 @@
+@import "src/scss/flex-mixin.scss";
+
+.container {
+  @include fb-align-center();
+  min-height: 50vh;
+}
+
+.indicators mat-icon {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 48px;
+  height: auto;
+  width: auto;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}

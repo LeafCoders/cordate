@@ -1,0 +1,35 @@
+<div class="auth-window">
+  <div class="auth-header">
+    Välkommen till Cordate
+  </div>
+  <div class="auth-content">
+    <div *ngIf="errorMessage" class="alert-error">Misslyckad inloggning: {{ errorMessage }}</div>
+    <div *ngIf="showForgottenPasswordInfo" class="alert-info">
+      <a [routerLink]="['/auth/forgotten']">Har du glömt ditt lösenord? Klicka här.</a>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="login()" autocomplete="off">
+      <div *ngIf="selectedUser" class="username">
+        <div style="flex: 1; padding: 8px 0;">{{ selectedUser.fullName }}<br><small>{{ selectedUser.username }}</small></div>
+        <button type="button" mat-icon-button [matMenuTriggerFor]="usersMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+      <mat-form-field *ngIf="!selectedUser">
+        <input matInput formControlName="username" placeholder="E-postadress" autofocus autocapitalize="none">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="password" placeholder="Lösenord" type="password" autofocus>
+      </mat-form-field>
+      <button mat-button color="primary" type="submit" [disabled]="!form.valid">LOGGA IN</button>
+    </form>
+  </div>
+</div>
+
+<div class="auth-footer" *ngIf="!showSelectUser">
+  <a [routerLink]="['/auth/signup']" mat-button>Skapa nytt konto</a>
+</div>
+
+<mat-menu #usersMenu="matMenu" xPosition="before">
+  <button mat-menu-item *ngFor="let user of previousUsers" (click)="setUser(user)">{{ user.fullName }}</button>
+  <button mat-menu-item (click)="setUser()">Annat konto</button>
+</mat-menu>

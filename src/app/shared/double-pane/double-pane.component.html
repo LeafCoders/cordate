@@ -1,0 +1,11 @@
+<div class="main">
+  <div (mouseenter)="mouseEnterMain()">
+    <ng-content select=".pane-main"></ng-content>
+    <div class="cover" [class.on]="showMainCover"></div>
+  </div>
+</div>
+<div class="aside" [class.open]="asideIsOpen">
+  <div #aside (mouseenter)="mouseEnterAside()">
+    <ng-content select=".pane-aside"></ng-content>
+  </div>
+</div>

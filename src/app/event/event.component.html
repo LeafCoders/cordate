@@ -1,0 +1,30 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Händelser"></lc-page-header>
+    <div class="filter-bar dark">
+      <button mat-button [matMenuTriggerFor]="filterMenu"><small>Filter: </small>{{ selectedFilter.text }}</button>
+      <button mat-button [matMenuTriggerFor]="showFromMenu"><small>Från: </small>{{ selectedShowFrom.text }}</button>
+      <button mat-button (click)="toggleView()"><small>Gruppering: </small>{{ weekView ? 'Vecka' : 'Månad' }}</button>
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="showNewDialog()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+    <lc-event-list (select)="onItemSelected($event)" (create)="showNewDialog($event)" [isWeekView]="weekView" [filter]="selectedFilter"></lc-event-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-event-editor [item]="selectedItem" (close)="onEditorClose()"></lc-event-editor>
+  </div>
+</lc-double-pane>
+
+<mat-menu #filterMenu="matMenu" xPosition="after">
+  <button mat-menu-item *ngFor="let filter of filters" (click)="selectFilter(filter)" [disabled]="filter.disabled">
+    {{ filter.text }}
+  </button>
+</mat-menu>
+
+<mat-menu #showFromMenu="matMenu" xPosition="after">
+  <button mat-menu-item *ngFor="let showFrom of allShowFrom" (click)="selectShowFrom(showFrom)">
+    {{ showFrom.text }}
+  </button>
+</mat-menu>

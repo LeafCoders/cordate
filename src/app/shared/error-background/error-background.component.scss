@@ -1,0 +1,23 @@
+@import "src/scss/flex-mixin.scss";
+
+:host {
+  @include fb-rows-container();
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+mat-icon {
+  color: rgba(0, 0, 0, 0.1);
+  text-shadow: 0 5px 5px white;
+  font-size: 200px;
+  height: auto;
+  width: auto;
+}
+
+span {
+  color: rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 0 20px;
+}

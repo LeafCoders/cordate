@@ -1,0 +1,26 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <mat-tab-group>
+    <mat-tab label="Info">
+      <lc-list *ngIf="item">
+        <lc-text-editor lc-list-item valueTitle="Id-alias" icon="bookmark" [value]="item.idAlias" (changed)="setIdAlias($event)" [state]="idAliasState"></lc-text-editor>
+        <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
+        <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
+      </lc-list>
+    </mat-tab>
+    <mat-tab label="Medlemmar" *ngIf="item?.id">
+      <lc-list header="Användare som är medlemmar i gruppen">
+        <div lc-list-item class="centered-list-item" *ngFor="let user of item.users">
+          <div class="list-content">{{ user.asText() }}</div>
+          <div class="list-action"><button mat-icon-button (click)="removeUser(user)"><mat-icon>remove_circle</mat-icon></button></div>
+        </div>
+      </lc-list>
+
+      <lc-list header="Lägg till användare">
+        <div lc-list-item class="centered-list-item" *ngFor="let user of usersNotInGroup">
+          <div class="list-content">{{ user.asText() }}</div>
+          <div class="list-action"><button mat-icon-button (click)="addUser(user)"><mat-icon>add_circle</mat-icon></button></div>
+        </div>
+      </lc-list>
+    </mat-tab>
+  </mat-tab-group>
+</lc-editor-container>

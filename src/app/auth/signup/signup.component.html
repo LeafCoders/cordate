@@ -1,0 +1,45 @@
+<div class="auth-window">
+  <div class="auth-header">
+    <div>Nytt konto</div>
+    <a [routerLink]="['/auth/login']">
+      <mat-icon>close</mat-icon>
+    </a>
+  </div>
+  <div class="auth-content">
+    <div *ngIf="errorMessage" class="alert-error">{{ errorMessage }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="signup()" autocomplete="off">
+      <mat-form-field>
+        <input matInput [disabled]="!notSent" formControlName="email" placeholder="E-postadress">
+        <mat-hint align="end" *ngIf="!form.controls.email.valid && form.controls.email.touched">Måste fyllas i</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [disabled]="!notSent" formControlName="firstName" placeholder="Förnamn">
+        <mat-hint align="end" *ngIf="!form.controls.firstName.valid && form.controls.firstName.touched">Måste fyllas i</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [disabled]="!notSent" formControlName="lastName" placeholder="Efternamn">
+        <mat-hint align="end" *ngIf="!form.controls.lastName.valid && form.controls.lastName.touched">Måste fyllas i</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [disabled]="!notSent" formControlName="password" placeholder="Lösenord" type="password">
+        <mat-hint align="end" *ngIf="!form.controls.password.valid && form.controls.password.touched">Måste fyllas i</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [disabled]="!notSent" formControlName="repeated" placeholder="Repetera lösenord" type="password">
+        <mat-hint align="end" *ngIf="!form.controls.repeated.valid && form.controls.repeated.touched">Lösenorden är olika</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="T.ex. mötesledare, ljud eller tolk.">
+        <input matInput [disabled]="!notSent" formControlName="wantedPermissions" placeholder="Grupper som du ingår i">
+        <mat-hint align="end" *ngIf="!form.controls.wantedPermissions.valid && form.controls.wantedPermissions.touched">Måste fyllas i</mat-hint>
+      </mat-form-field>
+
+      <br>
+
+      <button *ngIf="notSent" mat-button color="primary" type="submit" [disabled]="!form.valid || !notSent">SKAPA</button>
+      <mat-progress-spinner *ngIf="sending" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+      <h4 *ngIf="success">Kontot har skapats. Ett e-postmeddelande kommer att skicks till dig när kontot har aktiverats.</h4>
+    </form>
+  </div>
+</div>

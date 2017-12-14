@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+
+//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+@import "scss/global-ui.scss";
+
+@import "src/scss/flex-mixin.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Open Sans', arial;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+
+  background-color: #444;
+}
+
+@media screen and (min-width: 96rem) {
+  body {
+    background: radial-gradient(ellipse at top, rgba(160,160,200,1) 0%,rgba(14,14,14,1) 100%);
+  }
+
+  main {
+    max-width: 96rem;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+}
+
+
+
+// Prevent double-tap on iPhone. How about iPad?
+@media only screen and (max-width: 768px) {
+  [md-button]:hover::after {
+    content: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+
+.md-tab-header {
+  background-color: #ff4081;
+  color: white;
+
+  .md-tab-label {
+    opacity: 1 !important;
+  }
+}
+
+.menu-divider {
+  border: 1px solid #eee;
+  margin: 1px 0;
+}
+
+
+.rows-container {
+  @include fb-rows-container();
+}

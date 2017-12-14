@@ -1,0 +1,26 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Textvärden" [isLoading]="isLoading" [failedToLoad]="failedToLoad"></lc-page-header>
+    <div class="filter-bar dark">
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="newTextValue()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+
+    <lc-list>
+      <div lc-list-item *ngFor="let textValue of textValues" (click)="selectTextValue(textValue)" clickable="true">
+        <div class="list-content">
+          {{ textValue.id }}
+        </div>
+        <div class="list-content">
+          {{ textValue.format }}
+        </div>
+      </div>
+    </lc-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-text-value-editor [textValue]="selectedTextValue" (updated)="textValueUpdated($event)" (close)="doublePane.closeAside()">
+    </lc-text-value-editor>
+  </div>
+</lc-double-pane>

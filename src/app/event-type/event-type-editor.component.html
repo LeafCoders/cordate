@@ -1,0 +1,26 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <mat-tab-group>
+    <mat-tab label="Info">
+      <lc-list *ngIf="item">
+        <lc-text-editor lc-list-item valueTitle="Id-alias" icon="bookmark" [value]="item.idAlias" (changed)="setIdAlias($event)" [state]="idAliasState"></lc-text-editor>
+        <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
+        <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
+      </lc-list>
+    </mat-tab>
+    <mat-tab label="Resurstyper" *ngIf="item?.id">
+      <lc-list header="Resurstyper som automatiskt läggs till i en händelse som skapas med händelsetypen">
+        <div lc-list-item class="centered-list-item" *ngFor="let resourceType of item.resourceTypes">
+          <div class="list-content">{{ resourceType.asText() }}</div>
+          <div class="list-action"><button mat-icon-button (click)="removeResourceType(resourceType)"><mat-icon>remove_circle</mat-icon></button></div>
+        </div>
+      </lc-list>
+
+      <lc-list header="Lägg till resurstyp">
+        <div lc-list-item class="centered-list-item" *ngFor="let resourceType of resourceTypesNotInEventType">
+          <div class="list-content">{{ resourceType.asText() }}</div>
+          <div class="list-action"><button mat-icon-button (click)="addResourceType(resourceType)"><mat-icon>add_circle</mat-icon></button></div>
+        </div>
+      </lc-list>
+    </mat-tab>
+  </mat-tab-group>
+</lc-editor-container>

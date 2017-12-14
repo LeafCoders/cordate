@@ -1,0 +1,94 @@
+import { Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
+import { RestApiErrorService } from './rest-api-error.service';
+import { IdModel } from './rest-api.model';
+
+export interface ChildResource<PARENT extends IdModel, CHILD extends IdModel> {
+  newChildInstance(parent: PARENT, data?: any): CHILD;
+}
+
+
+export class BaseResource<T extends IdModel, U> {
+
+  private listItems: Array<T> = [];
+  private selectedItem: T;
+
+  protected listSubject: BehaviorSubject<Array<T>> = new BehaviorSubject<Array<T>>([]);
+  protected selectedSubject: BehaviorSubject<T> = new BehaviorSubject<T>(undefined);
+
+  constructor(
+    private apiError: RestApiErrorService,
+    private findBeforeFn: (a: T, b: T) => boolean,
+  ) { }
+
+  handleError<T>(observer: Observable<T>): Observable<T> {
+    return <Observable<T>>observer.catch(this.catchError.bind(this));
+  }
+
+  private catchError(errorResponse: Response): ErrorObservable {
+    this.apiError.addError(errorResponse);
+    return Observable.throw(errorResponse);
+  };
+
+  protected nextList(): void {
+    this.listSubject.next(this.listItems);
+  }
+
+  protected nextSelected(): void {
+    this.selectedSubject.next(this.selectedItem);
+  }
+
+  protected isEmptyList(): boolean {
+    return !this.listItems || this.listItems.length === 0;
+  }
+
+  protected getItemInLoadedList(itemId: number): T {
+    return this.listItems.find(IdModel.idEquals(itemId));
+  }
+
+  protected setList(items: Array<T>): Array<T> {
+    this.listItems = items;
+    this.nextList();
+    this.nextSelected();
+    return this.listItems;
+  }
+
+  protected selectItem(item: T): void {
+    this.selectedItem = item;
+    this.nextSelected();
+  }
+
+  protected insertCreated(user: T): T {
+    let index: number = this.listItems.findIndex(this.findBeforeFn.bind(undefined, user));
+    if (index >= 0) {
+      this.listItems.splice(index, 0, user);
+    } else {
+      this.listItems.push(user);
+    }
+    this.nextList();
+    return user;
+  }
+
+  protected replaceUpdated(user: T): T {
+    this.removeDeleted(user, false);
+    this.insertCreated(user);
+    this.nextList();
+    return user;
+  }
+
+  protected removeDeleted(user: T, callNext: boolean = true): void {
+    let index: number = this.listItems.findIndex(IdModel.idEquals(user));
+    if (index >= 0) {
+      this.listItems.splice(index, 1);
+      if (callNext) {
+        this.nextList();
+      }
+    }
+  }
+
+}

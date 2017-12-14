@@ -1,0 +1,37 @@
+<mat-icon class="list-icon">access_time</mat-icon>
+<div class="list-content">
+  <div class="value-title">{{ valueTitle }}</div>
+  <div *ngIf="!state.editing && !state.createMode">{{ startTime?.format('YYYY-MM-DD HH:mm') }} - {{ endTime?.format('YYYY-MM-DD HH:mm') }}</div>
+  <div *ngIf="state.editing || state.createMode" class="rows-container">
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="startDatepicker" [formControl]="editingStartDate" (dateChange)="dateChanged()" placeholder="Från" autofocus>
+        <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatepicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="time" [(ngModel)]="editingStartTime" (ngModelChange)="timeChanged()">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="endDatepicker" [formControl]="editingEndDate" (dateChange)="dateChanged()" placeholder="Till">
+        <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatepicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="time" [(ngModel)]="editingEndTime" (ngModelChange)="timeChanged()">
+      </mat-form-field>
+    </div>
+    <div *ngIf="!state.createMode">
+      <button mat-button (click)="cancel()">Avbryt</button>
+      <button mat-button (click)="saveValue()" color="primary">Spara</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!state.editing && state.editable && !state.createMode" class="list-action">
+  <button mat-icon-button [disabled]="state.saving" (click)="state.editing = true">
+    <mat-progress-spinner *ngIf="state.saving" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+    <mat-icon *ngIf="!state.saving">edit</mat-icon>
+  </button>
+</div>

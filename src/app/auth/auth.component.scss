@@ -1,0 +1,76 @@
+@import "src/scss/cordate-theme-def.scss";
+@import "src/scss/flex-mixin.scss";
+
+
+$mat-font-family: 'helvetica';
+$mat-body-font-size-base: 12;
+
+.auth-container {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 8px 0;
+
+  @include fb-rows-container();
+  align-items: center;
+  justify-content: center;
+
+  background-color: mat-color($cordate-primary);
+}
+
+.auth-window {
+  @include mat-elevation(10);
+  border-radius: 3px;
+  font-family: $mat-font-family;
+  background-color: white;
+
+  max-width: 400px;
+  width: 95vw;
+
+  & form {
+    @include fb-rows-container();
+
+    mat-hint {
+    color: red;
+    }
+  }
+}
+
+.auth-header {
+  @include fb-columns-container();
+  @include fb-align-ends();
+  background-color: mat-color($cordate-primary);
+  color: white;
+  font-size: 20px;
+  line-height: 26px;
+  padding: 24px 16px;
+
+  & a {
+    color: currentColor;
+  }
+}
+
+.auth-content {
+  padding: 16px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+  text-align: center;
+  color: white;
+}
+
+.username {
+  @include fb-columns-container();
+  @include fb-align-ends();
+  font-size: 1.2 * $mat-body-font-size-base;
+  font-family: $mat-font-family;
+  font-weight: 700;
+  color: mat-color($cordate-primary);
+}
+
+@media only screen and (max-width: 768px) {
+  .auth-header {
+    font-size: 18px;
+    padding: 16px 16px;
+  }
+}

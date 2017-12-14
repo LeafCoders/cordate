@@ -1,0 +1,81 @@
+export class Messages {
+
+  public static ERROR_SYNTAX: string = 'error.syntax';
+  public static ERROR_FORBIDDEN: string = 'error.forbidden';
+
+  public static REASON_SERVER_UNREACHABLE: string = 'reason.serverUnreachable';
+
+  public static AUTH_INVALID_PASSWORD: string = 'auth.invalidPassword';
+
+  private static messages: { [langCode: string]: string } = {
+    [Messages.AUTH_INVALID_PASSWORD]: 'Felaktigt lösenord',
+    'auth.userNotActivated': 'Användaren har inte aktiverats än',
+
+    [Messages.REASON_SERVER_UNREACHABLE]: 'Servern kan inte nås för tillfället',
+    'reason.unknown': 'Okänd anledning',
+    'reason.missingPermission': 'Du saknar rättighet till detta',
+    'reason.childAlreadyExist': 'Objektet är redan tillaggt',
+    'reason.childDontBelongTo': 'Objektet kan inte läggas till',
+    'reason.create.alreadyExist': 'Ett objekt med samma id eller namn finns redan',
+
+    [Messages.ERROR_SYNTAX]: 'Fel i programmet, kontakta utvecklaren',
+    [Messages.ERROR_FORBIDDEN]: 'Ogiltigt anrop, kontakta utvecklaren',
+    'error.notFound': 'Hittades inte, ladda om sidan',
+    'error.notNull': 'Måste anges',
+    'error.unknown': 'Okänt fel, ladda om sidan',
+
+    'error.string.notEmpty': 'Får inte vara tomt',
+    'error.string.max200Chars': 'Får max innehålla 200 tecken',
+    'error.string.notAnyOf': 'Måste vara en av dem i listan',
+
+    'error.number.outOfRange': 'Värdet är för stort eller för litet',
+
+    'error.email.invalid': 'Ogiltig e-postadress',
+    'error.email.notUnique': 'E-postadressen används redan',
+
+    'error.filename.invalid': 'Ogiltigt filnamn',
+    'error.filename.notUnique': 'En fil med samma filnamn finns redan',
+
+    'error.file.notReadable': 'Filen kunder inte läsas',
+    'error.file.invalidContent': 'Filen har ogiltigt innehåll',
+    'error.file.mimeTypeNotAllowed': 'Filtypen är inte tillåten',
+
+    'error.idAlias.invalidFormat': 'Id-alias måste vara på formatet [a-z][a-zA-Z0-9]+',
+
+    'error.permssions.invalid': 'Rättigheten har felaktigt format',
+
+    'error.duration.tooShort': 'Tiden är för kort',
+
+    'error.date.mustBeAfter': 'Datumet måste vara senare',
+    'error.dateTime.mustBeAfter': 'Tidpunkten måste vara senare',
+
+    'property.id': 'Id',
+    'property.idAlias': 'Id-alias',
+    'property.name': 'Namn',
+    'property.firstName': 'Förnamn',
+    'property.lastName': 'Efternamn',
+    'property.email': 'E-postadress',
+    'property.password': 'Lösenord',
+    'property.description': 'Beskrivning',
+    'property.title': 'Titel',
+    'property.content': 'Innehåll',
+    'property.startTime': 'Starttid',
+    'property.endTime': 'Sluttid',
+    'property.duration': 'Visningstid',
+    'property.fileName': 'Filnamn',
+    'property.imageId': 'Bild',
+    'property.articleTypeId': 'Artikeltyp-id',
+  };
+
+  static get(langCode: string): string {
+    if (!langCode) {
+      return Messages.get('error.unknown');
+    }
+    const message: string = Messages.messages[langCode];
+    return message ? message : `#${langCode}#`;
+  }
+
+  static getProperty(propertyName: string): string {
+    return Messages.get(`property.${propertyName}`);
+  }
+}

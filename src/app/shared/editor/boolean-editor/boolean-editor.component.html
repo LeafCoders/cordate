@@ -1,0 +1,15 @@
+<mat-icon class="list-icon">{{ icon() }}</mat-icon>
+<div class="list-content">
+  <small class="value-title">{{ valueTitle }}</small><div>{{ text() }}</div>
+</div>
+<div *ngIf="state.editable || state.createMode" class="list-action">
+  <button mat-icon-button [disabled]="state.saving" [matMenuTriggerFor]="boolMenu">
+    <mat-progress-spinner *ngIf="state.saving" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+    <mat-icon *ngIf="!state.saving">more_vert</mat-icon>
+  </button>
+</div>
+
+<mat-menu #boolMenu="matMenu" xPosition="before">
+  <button mat-menu-item (click)="valueSelected(true)">Ja</button>
+  <button mat-menu-item (click)="valueSelected(false)">Nej</button>
+</mat-menu>

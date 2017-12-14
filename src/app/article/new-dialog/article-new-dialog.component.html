@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>{{ newTitle }}</h2>
+
+  <div class="flex-rows">
+    <lc-list scrollable="true">
+      <div lc-list-item *ngFor="let serie of articleSeries" clickable="true" (click)="selectArticleSerie(serie)">
+        <div class="list-content">{{ serie.asText() }}</div>
+      </div>
+    </lc-list>
+  </div>
+
+  <div style="text-align: right">
+    <button mat-button (click)="dialogRef.close()">Avbryt</button>
+  </div>
+</div>

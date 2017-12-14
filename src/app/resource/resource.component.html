@@ -1,0 +1,15 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Resurser"></lc-page-header>
+    <div class="filter-bar dark">
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+    <lc-resource-list (select)="onItemSelected($event)"></lc-resource-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-resource-editor [item]="selectedItem" (close)="onEditorClose()"></lc-resource-editor>
+  </div>
+</lc-double-pane>

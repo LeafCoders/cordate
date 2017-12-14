@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+$cordate-primary: mat-palette($mat-indigo);
+$cordate-accent: mat-palette($mat-pink, A200, A100, A400);
+$cordate-warn: mat-palette($mat-red);
+
+$cordate-theme: mat-light-theme($cordate-primary, $cordate-accent, $cordate-warn);
+
+$cordate-icon-color: #888;

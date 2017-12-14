@@ -1,0 +1,38 @@
+<div *ngIf="textValue">
+  <mat-toolbar color="accent">
+    <div *ngIf="!createMode" class="expander">
+      <button mat-icon-button class="hide-desktop" style="color: white; margin-right: 8px;" (click)="closeEditor()">
+        <mat-icon>close</mat-icon>
+      </button> {{ textValue.id }}
+    </div>
+    <div *ngIf="createMode" class="expander">
+      <button mat-raised-button color="accent" (click)="closeEditor(true)">Avbryt</button>
+      <button mat-raised-button color="primary" (click)="createTextValue()" [disabled]="creatingNew">Skapa</button>
+    </div>
+
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]="textValueMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #textValueMenu="matMenu" xPosition="before">
+        <button mat-menu-item disabled>Ta bort</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <lc-list>
+    <lc-text-editor lc-list-item valueTitle="Id" [value]="textValue.id" (changed)="setId($event)" [state]="idState">
+    </lc-text-editor>
+
+    <lc-text-editor lc-list-item valueTitle="Format (t.ex. json eller xml)" [value]="textValue.format" (changed)="setFormat($event)" [state]="formatState">
+    </lc-text-editor>
+
+    <lc-boolean-editor lc-list-item falseIcon="lock_outline" falseText="Nej, textvärdet publiceras inte i api:et"
+      trueIcon="lock_open" trueText="Ja, textvärdet är publiceras i api:et"
+      [value]="textValue.isPublic" (changed)="setIsPublic($event)" [state]="isPublicState">
+    </lc-boolean-editor>
+
+    <lc-text-editor lc-list-item valueTitle="Värde" multiLine="true" [value]="textValue.value" (changed)="setValue($event)" [state]="valueState">
+    </lc-text-editor>
+  </lc-list>
+</div>

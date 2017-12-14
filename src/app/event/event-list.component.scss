@@ -1,0 +1,43 @@
+@import "src/scss/cordate-theme-def.scss";
+@import "src/scss/flex-mixin.scss";
+
+.event-time {
+  flex: 0;
+  width: 72px;
+  min-width: 72px;
+  padding-right: 0;
+}
+
+.event-content {
+  @include fb-rows-container();
+  @include fb-fill();
+  min-width: 0;
+
+  .event-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .event-description {
+    flex: 1;
+    font-size: 12px;
+    color: #999;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.not-public {
+  background-color: mat-color($cordate-primary);
+  color: white;
+  font-size: 9px;
+  padding: 2px 4px;
+  margin-left: 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+}

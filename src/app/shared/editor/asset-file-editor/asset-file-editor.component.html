@@ -1,0 +1,25 @@
+<mat-icon class="list-icon">attach_file</mat-icon>
+<div class="list-content" [class.file-drag-over]="isDragOver" opFilesDrop (opFilesDropDropped)="dragFilesDropped($event)" (opFilesDropOver)="dragFilesOver($event)">
+  <div class="value-title">{{ valueTitle }}</div>
+  <div *ngIf="asset?.url" class="imgContainer" (click)="showSelectDialog()" style="cursor: pointer">
+    <lc-upload-row [upload]="asset"></lc-upload-row>
+  </div>
+  <div *ngIf="!asset?.url" style="text-align: center; margin-top: 32px;">
+    <p>Släpp en fil här för att ladda upp den</p>
+    <p>
+      <input class="file-input-hidden" type="file" name="file" tabindex="-1" #fileInput (change)="fileSelected($event)">
+      <button mat-button (click)="fileInput.click()">eller välj fil att ladda upp</button>
+    </p>
+  </div>
+</div>
+<div *ngIf="state.editable || state.createMode" class="list-action">
+  <button mat-icon-button [disabled]="state.saving" [matMenuTriggerFor]="editMenu">
+    <mat-progress-spinner *ngIf="state.saving" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+    <mat-icon *ngIf="!state.saving">more_vert</mat-icon>
+  </button>
+</div>
+
+<mat-menu #editMenu="matMenu" xPosition="before">
+  <button mat-menu-item (click)="showSelectDialog()">Välj fil</button>
+  <button mat-menu-item (click)="clear()" *ngIf="asset" disabled>Rensa</button>
+</mat-menu>

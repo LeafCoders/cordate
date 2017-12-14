@@ -1,0 +1,12 @@
+<main>
+  <mat-sidenav-container>
+    <mat-sidenav mode="over">
+      <div class="header">
+        <h1>Cordate</h1>
+        <a mat-raised-button *ngFor="let link of visibleLinks" (click)="closeNav()" [routerLink]="[link.routePath]">{{ link.title }}</a>
+      </div>
+    </mat-sidenav>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-container>
+</main>

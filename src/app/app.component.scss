@@ -1,0 +1,24 @@
+@import "src/scss/cordate-theme-def.scss";
+
+
+mat-sidenav {
+  background-color: mat-color($cordate-primary);
+}
+
+h1 {
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+a {
+  margin-bottom: 8px;
+}
+
+.content > * {
+  display: flex;
+}

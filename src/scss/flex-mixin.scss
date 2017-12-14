@@ -1,0 +1,78 @@
+
+
+@mixin fb-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin fb-direction($value: row) {
+  @if $value == column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+  }
+  -webkit-flex-direction: $value;
+  -moz-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+
+@mixin fb-rows-container {
+  @include fb-container();
+  @include fb-direction(column);
+}
+
+@mixin fb-columns-container {
+  @include fb-container();
+  @include fb-direction(row);
+}
+
+@mixin fb-align-right() {
+  @include fb-container();
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  -moz-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+@mixin fb-align-ends() {
+  @include fb-container();
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+}
+
+@mixin fb-align-bottom() {
+  @include fb-container();
+  -webkit-align-items: flex-end;
+  -moz-align-items: flex-end;
+  align-items: flex-end;
+}
+
+@mixin fb-align-center() {
+  @include fb-rows-container();
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin fb-fixed-size($size) {
+  @include fb-container();
+  -webkit-flex: 0 0 $size;
+  -moz-flex: 0 0 $size;
+  -ms-flex: 0 0 $size;
+  flex: 0 0 $size;
+}
+
+@mixin fb-fill() {
+  @include fb-container();
+  -webkit-flex: 1 1;
+  -moz-flex: 1 1;
+  -ms-flex: 1 1;
+  flex: 1 1;
+}

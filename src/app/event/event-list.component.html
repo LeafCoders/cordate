@@ -1,0 +1,20 @@
+<div style="position: relative" *ngIf="isLoading">
+  <mat-progress-bar style="position: absolute" mode="indeterminate"></mat-progress-bar>
+</div>
+<lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
+
+<lc-list *ngFor="let group of eventGroups" [header]="group.title">
+  <ng-template lc-list-actions>
+    <button mat-icon-button (click)="createNew(group)"><mat-icon>add_circle</mat-icon></button>
+  </ng-template>
+  <div lc-list-item *ngFor="let item of group.items" (click)="selectItem(item.event)" clickable="true">
+    <lc-date-time-box [date]="item.event.startTime" class="event-time list-content"></lc-date-time-box>
+    <div class="event-content list-content">
+      <div class="event-title">{{ item.event.title }}<span *ngIf="!item.event.isPublic" class="not-public">EJ PUBLIK</span></div>
+      <div class="event-description">{{ item.description }}</div>
+    </div>
+    <div class="list-action" *ngIf="item.resourceToShow">
+      <lc-user-resource-menu [event]="item.event" [resourceRequirement]="item.resourceToShow" (eventUpdated)="updateEventViewModel($event)"></lc-user-resource-menu>
+    </div>
+  </div>
+</lc-list>

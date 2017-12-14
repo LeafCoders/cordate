@@ -1,0 +1,15 @@
+@import "src/scss/flex-mixin.scss";
+
+:host {
+  height: calc(100% - 10px);
+}
+
+img {
+  height: 100%;
+}
+
+
+.audio {
+  @include fb-align-center();
+  height: 100%;
+}

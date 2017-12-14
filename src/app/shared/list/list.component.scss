@@ -1,0 +1,40 @@
+@import '~@angular/material/theming';
+@import "src/scss/flex-mixin.scss";
+
+:host {
+  @include fb-rows-container();
+}
+
+.header {
+  @include fb-columns-container();
+  @include fb-align-ends();
+  @include fb-align-bottom();
+
+  font-size: 12px;
+  line-height: 30px;
+  padding-left: 16px;
+  margin: 4px 0;
+  font-weight: 700;
+  color: #888;
+}
+
+.content {
+  @include mat-elevation(1);
+  background-color: #fff;
+  margin-bottom: 3px;
+  overflow-x: visible;
+}
+
+.scrollable {
+  overflow-y: auto;
+}
+
+/deep/ [lc-list-item] {
+  display: flex;
+  flex-direction: row;
+
+  &.with-hover:hover {
+    cursor: pointer;
+    background-color: #fafafa;
+  }
+}

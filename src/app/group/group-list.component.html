@@ -1,0 +1,9 @@
+<div style="position: relative" *ngIf="isLoading">
+  <mat-progress-bar style="position: absolute" mode="indeterminate"></mat-progress-bar>
+</div>
+<lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
+<lc-list class="max-height-header-filter" *ngIf="!failedToLoad">
+  <div lc-list-item *ngFor="let group of items" (click)="selectItem(group)" clickable="true">
+    <div class="list-content">{{ group.asText() }}</div>
+  </div>
+</lc-list>

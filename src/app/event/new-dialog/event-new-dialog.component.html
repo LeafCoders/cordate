@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Ny händelse</h2>
+
+  <div *ngIf="!selectedEventType" class="flex-rows">
+    <p>Välj händelsetyp</p>
+    <lc-list scrollable="true">
+      <div lc-list-item *ngFor="let eventType of eventTypes" clickable="true" (click)="selectedEventType = eventType">
+        <div class="list-content">{{ eventType.asText() }}</div>
+      </div>
+    </lc-list>
+  </div>
+
+  <div *ngIf="selectedEventType" class="flex-rows">
+    <p>Välj startdatum</p>
+    <lc-list [header]="datesHeader" scrollable="true">
+      <ng-template lc-list-actions>
+        <button mat-icon-button (click)="moveDates(-1)"><mat-icon>chevron_left</mat-icon></button>
+        <button mat-icon-button (click)="moveDates(1)"><mat-icon>chevron_right</mat-icon></button>
+      </ng-template>
+      <div lc-list-item *ngFor="let day of dates" clickable="true" (click)="selectDate(day)">
+        <div class="list-content">{{ day.format('dddd D MMMM') }}</div>
+      </div>
+    </lc-list>
+  </div>
+
+  <div style="text-align: right">
+    <button mat-button (click)="dialogRef.close()">Avbryt</button>
+  </div>
+</div>

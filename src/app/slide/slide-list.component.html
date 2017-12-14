@@ -1,0 +1,20 @@
+<div style="position: relative" *ngIf="isLoading">
+  <mat-progress-bar style="position: absolute" mode="indeterminate"></mat-progress-bar>
+</div>
+<lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
+
+<div *ngIf="!failedToLoad">
+  <lc-list *ngFor="let group of slideGroups" [header]="group.title">
+    <div lc-list-item *ngFor="let slide of group.items" (click)="selectItem(slide)" clickable="true">
+      <img [src]="slide.image.iconUrl()" style="height: 112px; padding: 4px;">
+      <div class="list-content shrink">
+        <lc-date-time-box [date]="slide.startTime" style="border-bottom: 1px solid #999; padding-bottom: 8px; margin-bottom: 8px;">
+        </lc-date-time-box>
+        <lc-date-time-box [date]="slide.endTime"></lc-date-time-box>
+      </div>
+      <div class="list-content overflow-ellipsis expander" style="padding-left: 0">
+        {{ slide.title }}
+      </div>
+    </div>
+  </lc-list>
+</div>

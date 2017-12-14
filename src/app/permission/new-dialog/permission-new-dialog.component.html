@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>Ny rättighet</h2>
+
+  <div class="flex-rows">
+    <lc-list scrollable="true">
+      <div lc-list-item *ngFor="let level of levels" clickable="true" (click)="selectLevel(level)">
+        <div class="list-content">{{ level.text }}</div>
+      </div>
+    </lc-list>
+  </div>
+
+  <div style="text-align: right">
+    <button mat-button (click)="dialogRef.close()">Avbryt</button>
+  </div>
+</div>

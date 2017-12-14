@@ -1,0 +1,21 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Bildspel"></lc-page-header>
+    <div class="filter-bar dark">
+      <button mat-button [matMenuTriggerFor]="slideShowMenu"><small>Bildspel: </small>{{ selectedSlideShow?.asText() }}</button>
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+    <lc-slide-list *ngIf="selectedSlideShow" (select)="onItemSelected($event)" [slideShow]="selectedSlideShow"></lc-slide-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-slide-editor [item]="selectedItem" (close)="onEditorClose()"></lc-slide-editor>
+  </div>
+</lc-double-pane>
+
+
+<mat-menu #slideShowMenu="matMenu" xPosition="after">
+  <button mat-menu-item *ngFor="let slideShow of slideShows" (click)="selectSlideShow(slideShow)">{{ slideShow.asText() }}</button>
+</mat-menu>

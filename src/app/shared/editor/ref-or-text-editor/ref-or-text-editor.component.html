@@ -1,0 +1,19 @@
+<mat-icon class="list-icon">{{ icon }}</mat-icon>
+<div class="list-content">
+  <small class="value-title">{{ valueTitle }}</small>
+  <div>{{ value.asText() }}</div>
+</div>
+<div *ngIf="state.editable || state.createMode" class="list-action">
+  <button mat-icon-button [disabled]="state.saving" [matMenuTriggerFor]="refMenu">
+    <mat-progress-spinner *ngIf="state.saving" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+    <mat-icon *ngIf="!state.saving">more_vert</mat-icon>
+  </button>
+</div>
+
+<mat-menu #refMenu="matMenu" xPosition="before">
+  <mat-progress-spinner *ngIf="!refs || !refs.length" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+  <button mat-menu-item *ngFor="let ref of refs" (click)="refSelected(ref)">{{ ref.asText() }}</button>
+  <button mat-menu-item (click)="textSelected()">Fritext...</button>
+  <div class="menu-divider"></div>
+  <button mat-menu-item (click)="clear()">Rensa</button>
+</mat-menu>

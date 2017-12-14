@@ -1,0 +1,7 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="Rubrik" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Innehåll" [value]="item.content" (changed)="setContent($event)" [state]="contentState" multiLine="true"></lc-text-editor>
+    <lc-ref-editor lc-list-item valueTitle="Tillhör serie" refType="articleSerie" [value]="item.articleSerie" (changed)="setArticleSerie($event)" [state]="articleSerieState"></lc-ref-editor>
+  </lc-list>
+</lc-editor-container>

@@ -1,0 +1,7 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="Id-alias" icon="bookmark" [value]="item.idAlias" (changed)="setIdAlias($event)" [state]="idAliasState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
+    <lc-ref-editor lc-list-item valueTitle="Filkatalog" refType="assetFolder" [value]="item.assetFolder" (changed)="setAssetFolder($event)" [state]="assetFolderState"></lc-ref-editor>
+  </lc-list>
+</lc-editor-container>
