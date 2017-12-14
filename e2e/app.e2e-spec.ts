@@ -1,10 +1,10 @@
-import { EordatePage } from './app.po';
+import { CordatePage } from './app.po';
 
-describe('eordate App', function() {
-  let page: EordatePage;
+describe('cordate App', function() {
+  let page: CordatePage;
 
   beforeEach(() => {
-    page = new EordatePage();
+    page = new CordatePage();
   });
 
   it('should display message saying app works', () => {

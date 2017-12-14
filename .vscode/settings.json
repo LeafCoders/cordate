@@ -1,0 +1,13 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.wordWrap": 200,
+  "html.format.unformatted": null,
+  "html.format.wrapLineLength": 200,
+  "files.trimTrailingWhitespace": true,
+  "typescript.tsdk": "./node_modules/typescript/lib"
+}
