@@ -16,7 +16,7 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
   protected parentItem: IdModel = undefined;
   protected listParams: Object = undefined;
 
-  protected requestListSubject: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
+  protected requestListSubject: BehaviorSubject<void> = undefined;
 
   constructor(
     protected api: RestApiService,
@@ -25,12 +25,6 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     findBeforeFn?: (a: T, b: T) => boolean,
   ) {
     super(apiError, findBeforeFn ? findBeforeFn : (a: T, b: T) => a.asText().localeCompare(b.asText()) < 0);
-
-    this.requestListSubject
-      .debounceTime(50)
-      .subscribe(() => {
-        this.requestList().subscribe();
-      });
   }
 
   abstract newInstance(data?: any): T;
@@ -66,9 +60,21 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     if (forceRefresh || this.isEmptyList() || currentTime - this.lastRefreshTime > 60 * 1000) {
       // console.log(this.name, 'Do refresh');
       this.lastRefreshTime = currentTime;
-      this.requestListSubject.next(undefined);
+      this.getRequestListSubject().next(undefined);
     }
     // console.log(this.name, 'After refresh');
+  }
+
+  private getRequestListSubject(): BehaviorSubject<void> {
+    if (!this.requestListSubject) {
+      this.requestListSubject = new BehaviorSubject<void>(undefined);
+      this.requestListSubject
+        .debounceTime(50)
+        .subscribe(() => {
+          this.requestList().subscribe();
+        });
+    }
+    return this.requestListSubject;
   }
 
   private requestList(): Observable<Array<T>> {

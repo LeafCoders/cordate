@@ -1,7 +1,7 @@
 @import "src/scss/flex-mixin.scss";
 
 :host, div {
-  @include fb-columns-container();
+  @include fb-column-container();
   flex: 1;
 }
 

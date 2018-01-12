@@ -1,7 +1,7 @@
 <mat-icon class="list-icon">{{ icon }}</mat-icon>
 <div class="list-content">
   <small class="value-title">{{ valueTitle }}</small>
-  <div>{{ value.asText() }}</div>
+  <div class="selectable-text">{{ value.asText() }}</div>
 </div>
 <div *ngIf="state.editable || state.createMode" class="list-action">
   <button mat-icon-button [disabled]="state.saving" [matMenuTriggerFor]="refMenu">

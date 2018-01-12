@@ -12,7 +12,7 @@ import { ArticleSerie, ArticleType, ArticleTypeData, ArticleTypes } from '../sha
 })
 export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
 
-  private articleTypeData: ArticleTypeData;
+  articleTypeData: ArticleTypeData;
 
   constructor(
     private articleSeriesResource: ArticleSeriesResource,

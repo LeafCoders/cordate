@@ -2,7 +2,11 @@
 @import "src/scss/flex-mixin.scss";
 
 .flex-rows {
-  @include fb-rows-container();
+  @include fb-row-container();
+}
+
+.flex-cols {
+  @include fb-column-container();
 }
 
 .value-title {
@@ -13,7 +17,7 @@
 .list-content {
   padding: 16px;
   flex: 1;
-  @include fb-rows-container();
+  @include fb-column-container();
 }
 
 .list-icon {
@@ -29,6 +33,11 @@
 .list-action {
   padding: 8px;
   color: $cordate-icon-color;
+}
+
+.menu-divider {
+  border: 1px solid #eee;
+  margin: 1px 0;
 }
 
 .overflow-ellipsis-parent {
@@ -70,7 +79,7 @@
 }
 
 .filter-bar {
-  @include fb-columns-container();
+  @include fb-row-container();
   align-items: center;
   justify-content: flex-start; //space-between;
   padding-right: 8px;
@@ -135,4 +144,16 @@ mat-dialog-container .file-drag-over {
   margin: -8px;
   border: 4px dashed mat-color($cordate-primary);
   padding: 4px;
+}
+
+pre {
+  padding: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #bbb;
+  user-select: all;
+}
+
+.selectable-text {
+  user-select: all;
 }

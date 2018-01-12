@@ -9,7 +9,7 @@
 }
 
 .event-content {
-  @include fb-rows-container();
+  @include fb-column-container();
   @include fb-fill();
   min-width: 0;
 

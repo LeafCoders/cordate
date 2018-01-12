@@ -2,7 +2,7 @@
 
 
 :host {
-  @include fb-rows-container();
+  @include fb-column-container();
 
   max-width: 96rem;
   margin: 0 auto;

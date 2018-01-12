@@ -1,8 +1,8 @@
 <mat-icon class="list-icon">{{ editorIcon() }}</mat-icon>
 <div class="list-content">
   <div class="value-title">{{ valueTitle }}</div>
-  <div *ngIf="!state.editing && !state.createMode" [innerHtml]="displayValue"></div>
-  <div *ngIf="state.editing || state.createMode" class="rows-container">
+  <div *ngIf="!state.editing && !state.createMode" class="selectable-text" [innerHtml]="displayValue"></div>
+  <div *ngIf="state.editing || state.createMode" class="flex-cols">
     <mat-form-field *ngIf="!multiLine">
       <input matInput [(ngModel)]="editingValue" (ngModelChange)="valueChanged()">
       <mat-hint *ngIf="editingHelpText">{{ editingHelpText }}</mat-hint>

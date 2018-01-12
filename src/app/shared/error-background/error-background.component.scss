@@ -1,7 +1,7 @@
 @import "src/scss/flex-mixin.scss";
 
 :host {
-  @include fb-rows-container();
+  @include fb-column-container();
   align-items: center;
   justify-content: center;
   height: 70vh;

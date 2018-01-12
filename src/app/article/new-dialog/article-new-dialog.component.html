@@ -1,7 +1,7 @@
 <div class="container">
   <h2>{{ newTitle }}</h2>
 
-  <div class="flex-rows">
+  <div class="flex-cols">
     <lc-list scrollable="true">
       <div lc-list-item *ngFor="let serie of articleSeries" clickable="true" (click)="selectArticleSerie(serie)">
         <div class="list-content">{{ serie.asText() }}</div>

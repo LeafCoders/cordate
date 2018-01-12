@@ -10,7 +10,7 @@ $mat-body-font-size-base: 12;
   min-height: 100vh;
   padding: 8px 0;
 
-  @include fb-rows-container();
+  @include fb-column-container();
   align-items: center;
   justify-content: center;
 
@@ -27,7 +27,7 @@ $mat-body-font-size-base: 12;
   width: 95vw;
 
   & form {
-    @include fb-rows-container();
+    @include fb-column-container();
 
     mat-hint {
     color: red;
@@ -36,7 +36,7 @@ $mat-body-font-size-base: 12;
 }
 
 .auth-header {
-  @include fb-columns-container();
+  @include fb-row-container();
   @include fb-align-ends();
   background-color: mat-color($cordate-primary);
   color: white;
@@ -60,7 +60,7 @@ $mat-body-font-size-base: 12;
 }
 
 .username {
-  @include fb-columns-container();
+  @include fb-row-container();
   @include fb-align-ends();
   font-size: 1.2 * $mat-body-font-size-base;
   font-family: $mat-font-family;

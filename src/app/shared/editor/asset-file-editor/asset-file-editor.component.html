@@ -1,8 +1,9 @@
 <mat-icon class="list-icon">attach_file</mat-icon>
 <div class="list-content" [class.file-drag-over]="isDragOver" opFilesDrop (opFilesDropDropped)="dragFilesDropped($event)" (opFilesDropOver)="dragFilesOver($event)">
   <div class="value-title">{{ valueTitle }}</div>
-  <div *ngIf="asset?.url" class="imgContainer" (click)="showSelectDialog()" style="cursor: pointer">
-    <lc-upload-row [upload]="asset"></lc-upload-row>
+  <div *ngIf="asset?.url" class="imgContainer">
+    <lc-upload-row [upload]="asset" (click)="showSelectDialog()" style="cursor: pointer"></lc-upload-row>
+    <pre>{{ asset.url }}</pre>
   </div>
   <div *ngIf="!asset?.url" style="text-align: center; margin-top: 32px;">
     <p>Släpp en fil här för att ladda upp den</p>

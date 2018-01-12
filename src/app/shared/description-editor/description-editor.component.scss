@@ -16,7 +16,7 @@
 
 
 .modal {
-  @include fb-rows-container();
+  @include fb-column-container();
   align-items: center;
   justify-content: center;
 
@@ -42,5 +42,5 @@
 
   overflow-y: auto;
 
-  @include fb-rows-container();
+  @include fb-column-container();
 }

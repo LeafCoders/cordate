@@ -1,8 +1,8 @@
 <mat-icon class="list-icon">access_time</mat-icon>
 <div class="list-content">
   <div class="value-title">{{ valueTitle }}</div>
-  <div *ngIf="!state.editing && !state.createMode">{{ startTime?.format('YYYY-MM-DD HH:mm') }} - {{ endTime?.format('YYYY-MM-DD HH:mm') }}</div>
-  <div *ngIf="state.editing || state.createMode" class="rows-container">
+  <div *ngIf="!state.editing && !state.createMode" class="selectable-text">{{ startTime?.format('YYYY-MM-DD HH:mm') }} - {{ endTime?.format('YYYY-MM-DD HH:mm') }}</div>
+  <div *ngIf="state.editing || state.createMode" class="flex-cols">
     <div>
       <mat-form-field>
         <input matInput [matDatepicker]="startDatepicker" [formControl]="editingStartDate" (dateChange)="dateChanged()" placeholder="Från" autofocus>

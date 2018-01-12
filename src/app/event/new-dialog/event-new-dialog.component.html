@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Ny händelse</h2>
 
-  <div *ngIf="!selectedEventType" class="flex-rows">
+  <div *ngIf="!selectedEventType" class="flex-cols">
     <p>Välj händelsetyp</p>
     <lc-list scrollable="true">
       <div lc-list-item *ngFor="let eventType of eventTypes" clickable="true" (click)="selectedEventType = eventType">
@@ -10,7 +10,7 @@
     </lc-list>
   </div>
 
-  <div *ngIf="selectedEventType" class="flex-rows">
+  <div *ngIf="selectedEventType" class="flex-cols">
     <p>Välj startdatum</p>
     <lc-list [header]="datesHeader" scrollable="true">
       <ng-template lc-list-actions>

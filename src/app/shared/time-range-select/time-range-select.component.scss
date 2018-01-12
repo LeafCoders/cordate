@@ -48,7 +48,7 @@ table {
   text-align: center;
 
   & div {
-    @include fb-columns-container();
+    @include fb-row-container();
     -webkit-justify-content: space-between;
     -moz-justify-content: space-between;
     justify-content: space-between;
@@ -114,7 +114,7 @@ table {
 
 
 .modal {
-  @include fb-rows-container();
+  @include fb-column-container();
   align-items: center;
   justify-content: center;
 
@@ -140,7 +140,7 @@ table {
 
   overflow-y: auto;
 
-  @include fb-rows-container();
+  @include fb-column-container();
 }
 
 .select-row {

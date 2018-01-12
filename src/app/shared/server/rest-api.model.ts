@@ -990,6 +990,8 @@ export interface ArticleTypeData {
   permissionBase: string
   articlesTitle: string;
   newArticleTitle: string;
+  articleSeriesTitle: string;
+  newArticleSerieTitle: string;
 }
 
 export const ArticleTypes: { [type: number]: ArticleTypeData } = {
@@ -997,6 +999,8 @@ export const ArticleTypes: { [type: number]: ArticleTypeData } = {
     articleTypeId: ArticleType.SERMON,
     permissionBase: 'sermon',
     articlesTitle: 'Predikningar',
-    newArticleTitle: 'Ny predikan'
+    newArticleTitle: 'Ny predikan',
+    articleSeriesTitle: 'Predikoserier',
+    newArticleSerieTitle: 'Ny predikoserie',
   }
 };

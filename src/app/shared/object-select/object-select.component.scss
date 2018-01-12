@@ -16,7 +16,7 @@
 }
 
 .modal {
-  @include fb-rows-container();
+  @include fb-column-container();
   align-items: center;
   justify-content: center;
 
@@ -40,7 +40,7 @@
   border-radius: 3px;
   background-color: #fff;
 
-  @include fb-rows-container();
+  @include fb-column-container();
 }
 
 .select-row {

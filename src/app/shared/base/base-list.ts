@@ -23,15 +23,13 @@ export abstract class BaseList<ITEM extends IdModel> implements OnInit {
 
   ngOnInit() {
     this.init();
-    this.resource.list().subscribe((items: Array<ITEM>) => {
-      this.items = items;
-    });
     this.loadList();
   }
 
   protected loadList(): void {
     this.isLoading = true;
-    this.listLoader().subscribe(() => {
+    this.listLoader().subscribe((items: Array<ITEM>) => {
+      this.items = items;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

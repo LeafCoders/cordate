@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Ny rättighet</h2>
 
-  <div class="flex-rows">
+  <div class="flex-cols">
     <lc-list scrollable="true">
       <div lc-list-item *ngFor="let level of levels" clickable="true" (click)="selectLevel(level)">
         <div class="list-content">{{ level.text }}</div>

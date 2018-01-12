@@ -2,11 +2,11 @@
 @import "src/scss/flex-mixin.scss";
 
 :host {
-  @include fb-rows-container();
+  @include fb-column-container();
 }
 
 .header {
-  @include fb-columns-container();
+  @include fb-row-container();
   @include fb-align-ends();
   @include fb-align-bottom();
 

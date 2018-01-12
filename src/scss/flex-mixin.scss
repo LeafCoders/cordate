@@ -22,14 +22,14 @@
   flex-direction: $value;
 }
 
-@mixin fb-rows-container {
-  @include fb-container();
-  @include fb-direction(column);
-}
-
-@mixin fb-columns-container {
+@mixin fb-row-container {
   @include fb-container();
   @include fb-direction(row);
+}
+
+@mixin fb-column-container {
+  @include fb-container();
+  @include fb-direction(column);
 }
 
 @mixin fb-align-right() {
@@ -56,7 +56,7 @@
 }
 
 @mixin fb-align-center() {
-  @include fb-rows-container();
+  @include fb-column-container();
   align-items: center;
   justify-content: center;
 }
