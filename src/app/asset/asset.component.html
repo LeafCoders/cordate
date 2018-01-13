@@ -1,0 +1,21 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main" (dragover)="showNewDialog()">
+    <lc-page-header title="Filer"></lc-page-header>
+    <div class="filter-bar dark">
+      <button mat-button [matMenuTriggerFor]="assetFolderMenu"><small>Filkatalog: </small>{{ selectedAssetFolder?.asText() }}</button>
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="showNewDialog()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+    <lc-asset-list *ngIf="selectedAssetFolder" (select)="onItemSelected($event)" [assetFolder]="selectedAssetFolder"></lc-asset-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-asset-editor [item]="selectedItem" (close)="onEditorClose()"></lc-asset-editor>
+  </div>
+</lc-double-pane>
+
+
+<mat-menu #assetFolderMenu="matMenu" xPosition="after">
+  <button mat-menu-item *ngFor="let assetFolder of assetFolders" (click)="selectAssetFolder(assetFolder)">{{ assetFolder.asText() }}</button>
+</mat-menu>

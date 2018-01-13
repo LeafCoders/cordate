@@ -10,6 +10,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { MyPagesComponent } from './my-pages/my-pages.component';
 import { ArticleComponent } from './article/article.component';
 import { ArticleSerieComponent } from './article-serie/article-serie.component';
+import { AssetComponent } from './asset/asset.component';
 import { AssetFolderComponent } from './asset-folder/asset-folder.component';
 import { EventComponent } from './event/event.component';
 import { EventTypeComponent } from './event-type/event-type.component';
@@ -20,7 +21,6 @@ import { ResourceTypeComponent } from './resource-type/resource-type.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { SlideComponent } from './slide/slide.component';
 import { TextValueComponent } from './text-value/text-value.component';
-import { UploadComponent } from './upload/upload.component';
 import { UserComponent } from './user/user.component';
 
 import { ArticleType } from './shared/server/rest-api.model';
@@ -40,6 +40,7 @@ export const ROUTES: Routes = [
       { path: 'mypages', component: MyPagesComponent, canActivate: [AuthGuardService] },
       { path: 'sermons', component: ArticleComponent, canActivate: [AuthGuardService, ArticlesResourceGuard], data: { articleType: ArticleType.SERMON } },
       { path: 'sermonSeries', component: ArticleSerieComponent, canActivate: [AuthGuardService, ArticlesResourceGuard], data: { articleType: ArticleType.SERMON } },
+      { path: 'assets', component: AssetComponent, canActivate: [AuthGuardService] },
       { path: 'assetFolders', component: AssetFolderComponent, canActivate: [AuthGuardService] },
       { path: 'events', component: EventComponent, canActivate: [AuthGuardService] },
       { path: 'eventTypes', component: EventTypeComponent, canActivate: [AuthGuardService] },
@@ -51,7 +52,6 @@ export const ROUTES: Routes = [
       { path: 'slideShows', component: SlideShowComponent, canActivate: [AuthGuardService] },
       { path: 'slides', component: SlideComponent, canActivate: [AuthGuardService] },
       { path: 'textValues', component: TextValueComponent, canActivate: [AuthGuardService] },
-      { path: 'uploads', component: UploadComponent, canActivate: [AuthGuardService] },
       { path: 'users', component: UserComponent, canActivate: [AuthGuardService] },
       { path: '**', redirectTo: '/mypages' }
     ]

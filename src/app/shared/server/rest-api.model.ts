@@ -636,6 +636,10 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
 
   assetFolder: AssetFolder;
 
+  // Calculated
+  isImage: boolean;
+  isAudio: boolean;
+
   constructor(data: any) {
     super(data);
     readValue(this, data, 'fileName');
@@ -646,6 +650,9 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
     readValue(this, data, 'width');
     readValue(this, data, 'height');
     readValue(this, data, 'duration');
+
+    this.isImage = this.mimeType.startsWith('image');
+    this.isAudio = this.mimeType.startsWith('audio');
   }
 
   setParent(parent: AssetFolder): Asset {
@@ -664,6 +671,25 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
       return this.url + '?size=icon';
     }
     return `http://localhost:9000/api/assets/${this.id}`;
+  }
+
+  fileSizeString(): string {
+    if (this.fileSize >= (1024 * 1024)) {
+      return `${Math.floor(10 * this.fileSize / (1024 * 1024)) / 10} MB`;
+    }
+    if (this.fileSize >= 1024) {
+      return `${Math.floor(10 * this.fileSize / 1024) / 10} KB`;
+    }
+    return `${this.fileSize} B`;
+  }
+
+  durationString(): string {
+    let hours: number = Math.floor(this.duration / 3600);
+    let minutes: number = Math.floor((this.duration - 3600 * hours) / 60);
+    let seconds: number = this.duration - 3600 * hours - 60 * minutes;
+    if (hours) return `${hours}:${minutes}:${seconds}`;
+    if (minutes) return `${minutes}:${seconds}`;
+    return `${seconds}`;
   }
 }
 

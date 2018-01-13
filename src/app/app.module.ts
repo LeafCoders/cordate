@@ -17,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
 import { ArticleModule } from './article/article.module';
 import { ArticleSerieModule } from './article-serie/article-serie.module';
 import { AuthModule } from './auth/auth.module';
+import { AssetModule } from './asset/asset.module';
 import { AssetFolderModule } from './asset-folder/asset-folder.module';
 import { EventModule } from './event/event.module';
 import { EventTypeModule } from './event-type/event-type.module';
@@ -28,7 +29,6 @@ import { ResourceTypeModule } from './resource-type/resource-type.module';
 import { SlideShowModule } from './slide-show/slide-show.module';
 import { SlideModule } from './slide/slide.module';
 import { TextValueModule } from './text-value/text-value.module';
-import { UploadModule } from './upload/upload.module';
 import { UserModule } from './user/user.module';
 
 @NgModule({
@@ -47,6 +47,7 @@ import { UserModule } from './user/user.module';
     ArticleSerieModule,
     AuthModule,
     SharedModule,
+    AssetModule,
     AssetFolderModule,
     EventModule,
     EventTypeModule,
@@ -58,7 +59,6 @@ import { UserModule } from './user/user.module';
     SlideShowModule,
     SlideModule,
     TextValueModule,
-    UploadModule,
     UserModule,
   ],
   entryComponents: [],

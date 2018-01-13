@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     { permission: 'slideShows', title: 'Bildspel', routePath: '/slideShows' },
     { permission: 'slides', title: 'Bildspel', routePath: '/slides' },
     { permission: 'textValues', title: 'Textvärden', routePath: '/textValues' },
-    { permission: 'uploads', title: 'Filer', routePath: '/uploads' },
+    { permission: 'assets', title: 'Filer', routePath: '/assets' },
     { permission: 'assetFolders', title: 'Filkataloger', routePath: '/assetFolders' },
     { permission: 'sermons', title: 'Predikningar', routePath: '/sermons' },
     { permission: 'sermonSeries', title: 'Predikoserier', routePath: '/sermonSeries' },
