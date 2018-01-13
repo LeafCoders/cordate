@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     { permission: 'users', title: 'Användare', routePath: '/users' },
     { permission: 'groups', title: 'Grupper', routePath: '/groups' },
     { permission: 'permissions', title: 'Rättigheter', routePath: '/permissions' },
+    { permission: 'podcasts', title: 'Podcasts', routePath: '/podcasts' },
     { permission: 'resources', title: 'Resurser', routePath: '/resources' },
     { permission: 'resourceTypes', title: 'Resurstyper', routePath: '/resourceTypes' },
     { permission: 'eventTypes', title: 'Händelsetyper', routePath: '/eventTypes' },

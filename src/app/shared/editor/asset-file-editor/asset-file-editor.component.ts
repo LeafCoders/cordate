@@ -18,7 +18,7 @@ export class AssetFileEditorComponent {
   @Output('changed') changedEmitter: EventEmitter<Asset> = new EventEmitter<Asset>();
 
   asset: Asset;
-  assetFolder: AssetFolder;
+  assetFolder: AssetFolder = new AssetFolder({ id: 1 });
   isDragOver: boolean = false;
 
   private dropState: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';

@@ -1004,3 +1004,41 @@ export const ArticleTypes: { [type: number]: ArticleTypeData } = {
     newArticleSerieTitle: 'Ny predikoserie',
   }
 };
+
+
+export class Podcast extends IdModel {
+  articleTypeId: number;
+  idAlias: string;
+  title: string;
+  subTitle: string;
+  authorName: string;
+  copyright: string;
+  description: string;
+  mainCategory: string;
+  subCategory: string;
+  language: string;
+  link: string;
+  image: Asset;
+
+  constructor(data: any) {
+    super(data);
+    readValue(this, data, 'articleTypeId');
+    readValue(this, data, 'idAlias');
+    readValue(this, data, 'title');
+    readValue(this, data, 'subTitle');
+    readValue(this, data, 'authorName');
+    readValue(this, data, 'copyright');
+    readValue(this, data, 'description');
+    readValue(this, data, 'mainCategory');
+    readValue(this, data, 'subCategory');
+    readValue(this, data, 'language');
+    readValue(this, data, 'link');
+    readObject<Asset>(this, data, 'image', Asset);
+  }
+
+  asText(): string {
+    return this.title;
+  }
+}
+
+export declare type PodcastList = Array<Podcast>;

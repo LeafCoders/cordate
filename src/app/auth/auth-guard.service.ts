@@ -27,6 +27,7 @@ export class AuthGuardService implements CanActivate {
         case 'eventTypes': permission = 'eventTypes:view'; break;
         case 'groups': permission = 'groups:view'; break;
         case 'permissions': permission = 'permissions:view'; break;
+        case 'podcasts': permission = 'podcasts:view'; break;
         case 'resources': permission = 'resources:view'; break;
         case 'resourceTypes': permission = 'resourceTypes:view'; break;
         case 'slideShows': permission = 'slideShows:view'; break;

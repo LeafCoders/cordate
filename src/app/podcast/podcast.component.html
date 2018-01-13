@@ -1,0 +1,15 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Podcasts"></lc-page-header>
+    <div class="filter-bar dark">
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()"><mat-icon>add_circle</mat-icon></button>
+    </div>
+    <lc-podcast-list (select)="onItemSelected($event)"></lc-podcast-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-podcast-editor [item]="selectedItem" (close)="onEditorClose()"></lc-podcast-editor>
+  </div>
+</lc-double-pane>

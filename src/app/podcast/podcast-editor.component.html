@@ -1,0 +1,16 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="Artikeltyp" [value]="item.articleTypeId" (changed)="setArticleTypeId($event)" [state]="articleTypeIdState" icon="folder"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Id-alias" [value]="item.idAlias" (changed)="setIdAlias($event)" [state]="idAliasState" icon="bookmark"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Titel" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Undertitel" [value]="item.subTitle" (changed)="setSubTitle($event)" [state]="subTitleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Författare" [value]="item.authorName" (changed)="setAuthorName($event)" [state]="authorNameState" icon="person"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Copyright" [value]="item.copyright" (changed)="setCopyright($event)" [state]="copyrightState" icon="copyright"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Kategori" [value]="item.mainCategory" (changed)="setMainCategory($event)" [state]="mainCategoryState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Underkategori" [value]="item.subCategory" (changed)="setSubCategory($event)" [state]="subCategoryState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Språk" [value]="item.language" (changed)="setLanguage($event)" [state]="languageState" icon="language"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Länk" [value]="item.link" (changed)="setLink($event)" [state]="linkState" icon="link"></lc-text-editor>
+    <lc-asset-file-editor lc-list-item valueTitle="Bild" [asset]="item.image" (changed)="setImage($event)" [state]="imageState"></lc-asset-file-editor>
+  </lc-list>
+</lc-editor-container>

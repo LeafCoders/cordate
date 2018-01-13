@@ -22,6 +22,7 @@ import { EventModule } from './event/event.module';
 import { EventTypeModule } from './event-type/event-type.module';
 import { GroupModule } from './group/group.module';
 import { PermissionModule } from './permission/permission.module';
+import { PodcastModule } from './podcast/podcast.module';
 import { ResourceModule } from './resource/resource.module';
 import { ResourceTypeModule } from './resource-type/resource-type.module';
 import { SlideShowModule } from './slide-show/slide-show.module';
@@ -51,6 +52,7 @@ import { UserModule } from './user/user.module';
     EventTypeModule,
     GroupModule,
     PermissionModule,
+    PodcastModule,
     ResourceModule,
     ResourceTypeModule,
     SlideShowModule,

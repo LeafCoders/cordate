@@ -23,6 +23,7 @@ import { EventTypesResource } from './server/event-types.resource';
 import { GroupsResource } from './server/groups.resource';
 import { LocationsResource } from './server/locations.resource';
 import { PermissionsResource } from './server/permissions.resource';
+import { PodcastsResource } from './server/podcasts.resource';
 import { SlideShowsResource } from './server/slide-shows.resource';
 import { SlidesResource } from './server/slides.resource';
 import { ResourcesResource } from './server/resources.resource';
@@ -129,6 +130,7 @@ let resourceServices = [
   GroupsResource,
   LocationsResource,
   PermissionsResource,
+  PodcastsResource,
   SlideShowsResource,
   SlidesResource,
   ResourcesResource,
