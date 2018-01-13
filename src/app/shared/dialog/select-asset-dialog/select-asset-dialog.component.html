@@ -9,7 +9,7 @@
     <mat-grid-list cols="5" gutterSize="1px">
       <mat-grid-tile *ngFor="let asset of assets" (click)="selectAsset(asset)" (dblclick)="ok()">
         <div *ngIf="isSelected(asset)" class="selected"></div>
-        <lc-upload-box [upload]="asset"></lc-upload-box>
+        <lc-asset-box [asset]="asset"></lc-asset-box>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-dialog-content>

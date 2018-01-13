@@ -5,7 +5,6 @@ import { EditorState } from '../editor-state';
 import { IdModel, Location } from '../../server/rest-api.model';
 import { ArticleSeriesResource } from '../../server/article-series.resource';
 import { AssetFoldersResource } from '../../server/asset-folders.resource';
-import { EducationThemesResource } from '../../server/education-themes.resource';
 import { EventTypesResource } from '../../server/event-types.resource';
 import { GroupsResource } from '../../server/groups.resource';
 import { UsersResource } from '../../server/users.resource';
@@ -30,7 +29,6 @@ export class RefEditorComponent {
   constructor(
     private articleSeriesResource: ArticleSeriesResource,
     private assetFoldersResource: AssetFoldersResource,
-    private educationThemesResource: EducationThemesResource,
     private eventTypesResource: EventTypesResource,
     private groupsResource: GroupsResource,
     private usersResource: UsersResource,
@@ -56,10 +54,6 @@ export class RefEditorComponent {
       case 'assetFolder':
         this.icon = this.icon ? this.icon : 'folder';
         this.assetFoldersResource.list().subscribe(setRefs);
-        break;
-      case 'educationTheme':
-        this.icon = this.icon ? this.icon : 'bubble_chart';
-        this.educationThemesResource.list().subscribe(setRefs);
         break;
       case 'eventType':
         this.icon = this.icon ? this.icon : 'event';

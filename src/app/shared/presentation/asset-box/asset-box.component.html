@@ -1,0 +1,8 @@
+<img *ngIf="fileType === 'IMAGE'" [src]="asset.iconUrl()">
+<div *ngIf="fileType === 'AUDIO'" class="audio">
+  <mat-icon>audiotrack</mat-icon>
+  <p>{{ asset.asText() }}</p>
+</div>
+<div *ngIf="fileType === 'UNKNOWN'">
+  Kan inte visa filer av typ: {{ asset.mimeType }}.
+</div>

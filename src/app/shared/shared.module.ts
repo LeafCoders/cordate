@@ -15,9 +15,6 @@ import { ArticlesResource, ArticlesResourceGuard } from './server/articles.resou
 import { ArticleSeriesResource } from './server/article-series.resource';
 import { AssetFoldersResource } from './server/asset-folders.resource';
 import { AssetsResource } from './server/assets.resource';
-import { EducationsResource } from './server/educations.resource';
-import { EducationThemesResource } from './server/education-themes.resource';
-import { EducationTypesResource } from './server/education-types.resource';
 import { EventsResource } from './server/events.resource';
 import { EventTypesResource } from './server/event-types.resource';
 import { GroupsResource } from './server/groups.resource';
@@ -29,8 +26,6 @@ import { SlidesResource } from './server/slides.resource';
 import { ResourcesResource } from './server/resources.resource';
 import { ResourceTypesResource } from './server/resource-types.resource';
 import { TextValuesResource } from './server/text-values.resource';
-import { UploadsResource } from './server/uploads.resource';
-import { UploadFoldersResource } from './server/upload-folders.resource';
 import { UsersResource } from './server/users.resource';
 
 import { AppComponent } from '../app.component';
@@ -50,12 +45,11 @@ import { RefOrTextEditorComponent, RefOrTextDialog } from './editor/ref-or-text-
 import { StaticEditorComponent } from './editor/static-editor/static-editor.component';
 import { TextEditorComponent } from './editor/text-editor/text-editor.component';
 import { TimeRangeEditorComponent } from './editor/time-range-editor/time-range-editor.component';
-import { UploadEditorComponent } from './editor/upload-editor/upload-editor.component';
 
 import { EditorContainerComponent } from './presentation/editor-container/editor-container.component';
 import { PageHeaderComponent } from './presentation/page-header/page-header.component';
-import { UploadBoxComponent } from './presentation/upload-box/upload-box.component';
-import { UploadRowComponent } from './presentation/upload-row/upload-row.component';
+import { AssetBoxComponent } from './presentation/asset-box/asset-box.component';
+import { AssetRowComponent } from './presentation/asset-row/asset-row.component';
 import { DateTimeBoxComponent } from './date-time-box/date-time-box.component';
 
 import { DoublePaneComponent } from './double-pane/double-pane.component';
@@ -68,7 +62,6 @@ import { ObjectSelectComponent } from './object-select/object-select.component';
 import { UserResourceMenuComponent } from './user-resource-menu/user-resource-menu.component';
 import { UserResourceSelectComponent } from './user-resource-select/user-resource-select.component';
 
-import { SelectUploadDialogComponent } from './dialog/select-upload-dialog/select-upload-dialog.component';
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
 
 import { SignalService } from './signal.service';
@@ -91,20 +84,18 @@ let dataEditors = [
   StaticEditorComponent,
   TextEditorComponent,
   TimeRangeEditorComponent,
-  UploadEditorComponent,
 ];
 
 let dialogs = [
   RefOrTextDialog,
-  SelectUploadDialogComponent,
   SelectAssetDialogComponent,
 ];
 
 let presentations = [
   EditorContainerComponent,
   PageHeaderComponent,
-  UploadBoxComponent,
-  UploadRowComponent,
+  AssetBoxComponent,
+  AssetRowComponent,
 ];
 
 let services = [
@@ -122,9 +113,6 @@ let resourceServices = [
   ArticleSeriesResource,
   AssetFoldersResource,
   AssetsResource,
-  EducationsResource,
-  EducationThemesResource,
-  EducationTypesResource,
   EventsResource,
   EventTypesResource,
   GroupsResource,
@@ -136,8 +124,6 @@ let resourceServices = [
   ResourcesResource,
   ResourceTypesResource,
   TextValuesResource,
-  UploadsResource,
-  UploadFoldersResource,
   UsersResource,
 ];
 

@@ -7,7 +7,7 @@
 
   <mat-grid-list cols="5" gutterSize="1px">
     <mat-grid-tile *ngFor="let item of items">
-      <lc-upload-box [upload]="item" (click)="selectItem(item)"></lc-upload-box>
+      <lc-asset-box [asset]="item" (click)="selectItem(item)"></lc-asset-box>
     </mat-grid-tile>
   </mat-grid-list>
 

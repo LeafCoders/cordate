@@ -27,17 +27,18 @@ export class SelectAssetDialogComponent {
 
   setAssetFolder(assetFolder: AssetFolder): void {
     this.assetFolder = assetFolder;
-    this.assetsResource.list().subscribe((uploads: AssetList) => {
-      this.assets = uploads.reverse();
+    this.assetsResource.setListParams({ assetFolderId: assetFolder.id });
+    this.assetsResource.list().subscribe((assets: AssetList) => {
+      this.assets = assets.reverse();
     });
   }
 
-  selectAsset(upload: Asset): void {
-    this.selection = upload ? [upload] : [];
+  selectAsset(asset: Asset): void {
+    this.selection = asset ? [asset] : [];
   }
 
-  isSelected(upload: Asset): boolean {
-    return this.selection.some(selected => selected.idEquals(upload));
+  isSelected(asset: Asset): boolean {
+    return this.selection.some(selected => selected.idEquals(asset));
   }
 
   ok(): void {
