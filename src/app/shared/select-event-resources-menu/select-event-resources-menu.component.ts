@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from '../server/rest-api.service';
@@ -13,15 +12,13 @@ interface ResourceSelect {
 }
 
 @Component({
-  selector: 'lc-user-resource-menu',
-  templateUrl: './user-resource-menu.component.html',
+  selector: 'lc-select-event-resources-menu',
+  templateUrl: './select-event-resources-menu.component.html',
 })
-export class UserResourceMenuComponent {
+export class SelectEventResourcesMenuComponent {
 
   @Input('event') event: Event;
-  @Input('permission') permission: boolean;
   @Output('eventUpdated') eventUpdatedEmitter: EventEmitter<Event> = new EventEmitter<Event>();
-  //  @Output() removeResourceRequirement: EventEmitter<void> = new EventEmitter<void>();
 
   allowMultiSelect: boolean;
   trueFalseIcons: Array<string> = ['', ''];

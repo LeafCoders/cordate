@@ -54,13 +54,11 @@ import { DateTimeBoxComponent } from './date-time-box/date-time-box.component';
 
 import { DoublePaneComponent } from './double-pane/double-pane.component';
 import { ErrorBackgroundComponent } from './error-background/error-background.component';
-import { DescriptionEditorComponent } from './description-editor/description-editor.component';
 import { ListComponent, ListActionsDirective, ListItemDirective } from './list/list.component'
 
 import { TimeRangeSelectComponent } from './time-range-select/time-range-select.component';
 import { ObjectSelectComponent } from './object-select/object-select.component';
-import { UserResourceMenuComponent } from './user-resource-menu/user-resource-menu.component';
-import { UserResourceSelectComponent } from './user-resource-select/user-resource-select.component';
+import { SelectEventResourcesMenuComponent } from './select-event-resources-menu/select-event-resources-menu.component';
 
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
 
@@ -168,12 +166,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   declarations: [
     BooleanEditorComponent,
     DateTimeBoxComponent,
-    DescriptionEditorComponent,
     DoublePaneComponent,
     ErrorBackgroundComponent,
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
-    UserResourceMenuComponent,
+    SelectEventResourcesMenuComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,
@@ -181,12 +178,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   exports: [
     BooleanEditorComponent,
     DateTimeBoxComponent,
-    DescriptionEditorComponent,
     DoublePaneComponent,
     ErrorBackgroundComponent,
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
-    UserResourceMenuComponent,
+    SelectEventResourcesMenuComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,

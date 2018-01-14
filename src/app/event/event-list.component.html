@@ -14,7 +14,7 @@
       <div class="event-description">{{ item.description }}</div>
     </div>
     <div class="list-action" *ngIf="item.resourceToShow">
-      <lc-user-resource-menu [event]="item.event" [resourceRequirement]="item.resourceToShow" (eventUpdated)="updateEventViewModel($event)"></lc-user-resource-menu>
+      <lc-select-event-resources-menu [event]="item.event" [resourceRequirement]="item.resourceToShow" (eventUpdated)="updateEventViewModel($event)"></lc-select-event-resources-menu>
     </div>
   </div>
 </lc-list>
