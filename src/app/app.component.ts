@@ -3,6 +3,8 @@ import { MatSidenav } from '@angular/material';
 
 import { AuthPermissionService } from './auth/auth-permission.service';
 import { SignalService } from './shared/signal.service';
+import { ArticleTypesResource } from './shared/server/article-types.resource';
+import { ArticleTypeList } from './shared/server/rest-api.model';
 
 interface LinkItem {
   permission: string;
@@ -24,6 +26,7 @@ export class AppComponent implements OnInit {
     { permission: 'slideShows', title: 'Bildspel', routePath: '/slideShows' },
     { permission: 'slides', title: 'Bildspel', routePath: '/slides' },
     { permission: 'textValues', title: 'Textvärden', routePath: '/textValues' },
+    { permission: 'articleTypes', title: 'Artikeltyper', routePath: '/articleTypes' },
     { permission: 'assets', title: 'Filer', routePath: '/assets' },
     { permission: 'assetFolders', title: 'Filkataloger', routePath: '/assetFolders' },
     { permission: 'sermons', title: 'Predikningar', routePath: '/sermons' },
@@ -43,6 +46,7 @@ export class AppComponent implements OnInit {
   constructor(
     signalService: SignalService,
     authPermission: AuthPermissionService,
+    articleTypesResource: ArticleTypesResource,
   ) {
     signalService.openSideNavRequested$.subscribe(() => {
       this.visibleLinks = this.links.filter((link: LinkItem): boolean => {
@@ -52,6 +56,15 @@ export class AppComponent implements OnInit {
         return true;
       });
       this.sideNav.open();
+    });
+
+    let subscription = articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => {
+      articleTypes.forEach(at => this.links.push({
+        permission: at.idAlias, title: at.articleSeriesTitle, routePath: `/articleSeries/${at.idAlias}`
+      }));
+      articleTypes.forEach(at => this.links.push({
+        permission: at.idAlias, title: at.articlesTitle, routePath: `/articles/${at.idAlias}`
+      }));
     });
   }
 

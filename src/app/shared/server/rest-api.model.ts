@@ -733,6 +733,31 @@ export class Permission extends IdModel {
 export declare type PermissionList = Array<Permission>;
 
 
+export class ArticleType extends IdModel {
+  idAlias: string;
+  articlesTitle: string;
+  newArticleTitle: string;
+  articleSeriesTitle: string;
+  newArticleSerieTitle: string;
+
+  constructor(data: any) {
+    super(data);
+    readValue(this, data, 'articleTypeId');
+    readValue(this, data, 'idAlias');
+    readValue(this, data, 'articlesTitle');
+    readValue(this, data, 'newArticleTitle');
+    readValue(this, data, 'articleSeriesTitle');
+    readValue(this, data, 'newArticleSerieTitle');
+  }
+
+  asText(): string {
+    return this.articlesTitle;
+  }
+}
+
+export declare type ArticleTypeList = Array<ArticleType>;
+
+
 export class ArticleSerie extends IdModel {
   articleTypeId: number;
   idAlias: string;
@@ -780,7 +805,7 @@ export class Article extends IdModel {
   articleSerie: ArticleSerieRef;
   lastModifiedTime: moment.Moment;
   time: moment.Moment;
-  authors: UserRefList;
+  authors: Array<ResourceRef>;
   title: string;
   content: string;
 
@@ -792,7 +817,7 @@ export class Article extends IdModel {
     readDate(this, data, 'time');
     readValue(this, data, 'title');
     readValue(this, data, 'content');
-    readArray<UserRef>(this, data, 'authors', UserRef);
+    readArray<ResourceRef>(this, data, 'authors', ResourceRef);
   }
 
   asText(): string {
@@ -801,31 +826,6 @@ export class Article extends IdModel {
 }
 
 export declare type ArticleList = Array<Article>;
-
-
-export enum ArticleType {
-  SERMON = 3,
-}
-
-export interface ArticleTypeData {
-  articleTypeId: number;
-  permissionBase: string
-  articlesTitle: string;
-  newArticleTitle: string;
-  articleSeriesTitle: string;
-  newArticleSerieTitle: string;
-}
-
-export const ArticleTypes: { [type: number]: ArticleTypeData } = {
-  [ArticleType.SERMON]: {
-    articleTypeId: ArticleType.SERMON,
-    permissionBase: 'sermon',
-    articlesTitle: 'Predikningar',
-    newArticleTitle: 'Ny predikan',
-    articleSeriesTitle: 'Predikoserier',
-    newArticleSerieTitle: 'Ny predikoserie',
-  }
-};
 
 
 export class Podcast extends IdModel {

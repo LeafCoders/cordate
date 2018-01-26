@@ -16,11 +16,12 @@ export class AuthGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
     if (this.auth.isAuthorized()) {
       let permission: string;
-      switch (route.routeConfig.path) {
+      switch (route.url[0].path) {
         //        case '': return true;
         case 'mypages': permission = '*:view'; break;
-        case 'sermons': permission = 'articles:view'; break;
-        case 'sermonSeries': permission = 'articleSeries:view'; break;
+        case 'articles': permission = 'articles:view'; break;
+        case 'articleSeries': permission = 'articleSeries:view'; break;
+        case 'articleTypes': permission = 'articleTypes:view'; break;
         case 'assets': permission = 'assets:view'; break;
         case 'assetFolders': permission = 'assetFolders:view'; break;
         case 'events': permission = 'events:view'; break;
@@ -35,7 +36,7 @@ export class AuthGuardService implements CanActivate {
         case 'textValues': permission = 'textValues:view'; break;
         case 'users': permission = 'users:view'; break;
         default:
-          alert('Missing permissions for url path: ' + route.routeConfig.path);
+          alert('Missing permissions for url path: ' + route.url[0].path);
           break;
       }
       return this.authPermission.readUserPermissions().then(() => {

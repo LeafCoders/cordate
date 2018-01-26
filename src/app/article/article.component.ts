@@ -6,8 +6,9 @@ import { Observable } from 'rxjs/Observable';
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ArticleSeriesResource } from '../shared/server/article-series.resource';
+import { ArticleTypesResource } from '../shared/server/article-types.resource';
 import { ArticlesResource } from '../shared/server/articles.resource';
-import { Article, ArticleType, ArticleTypeData, ArticleTypes, ArticleSerie } from '../shared/server/rest-api.model';
+import { Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
 import { ArticleNewDialogComponent } from './new-dialog/article-new-dialog.component';
 
 @Component({
@@ -17,17 +18,18 @@ import { ArticleNewDialogComponent } from './new-dialog/article-new-dialog.compo
 export class ArticleComponent extends BaseContainer<Article> {
 
   private newArticleDialogRef: MatDialogRef<ArticleNewDialogComponent>;
-  articleTypeData: ArticleTypeData;
+  articleType: ArticleType;
 
   constructor(
     private articlesResource: ArticlesResource,
     private articleSeriesResource: ArticleSeriesResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
+    articleTypesResource: ArticleTypesResource,
     route: ActivatedRoute,
   ) {
     super(articlesResource);
-    this.articleTypeData = ArticleTypes[(<{ articleType: ArticleType }>route.snapshot.data).articleType];
+    this.articleType = articleTypesResource.fromRoute(route);
   }
 
   protected init(): void {
@@ -36,12 +38,12 @@ export class ArticleComponent extends BaseContainer<Article> {
 
   showNewDialog(): void {
     this.newArticleDialogRef = this.dialog.open(ArticleNewDialogComponent);
-    this.newArticleDialogRef.componentInstance.newTitle = this.articleTypeData.newArticleTitle;
+    this.newArticleDialogRef.componentInstance.newTitle = this.articleType.newArticleTitle;
 
     this.newArticleDialogRef.afterClosed().subscribe((data: ArticleSerie) => {
       if (data) {
         this.openEditorWithNew(new Article({
-          articleTypeId: this.articleTypeData.articleTypeId,
+          articleTypeId: this.articleType.id,
           articleSerie: data.asRef(),
         }));
       }

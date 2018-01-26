@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
 
 import { RestApiService } from './rest-api.service';
 import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, Article, User, ArticleType } from './rest-api.model';
-import { ArticleSeriesResource } from './article-series.resource';
+import { IdModel, Article, User } from './rest-api.model';
 
 export interface ArticleUpdate {
   id: number;
@@ -65,20 +63,4 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
     );
   }
 
-}
-
-@Injectable()
-export class ArticlesResourceGuard implements CanActivate {
-
-  constructor(
-    private articlesResource: ArticlesResource,
-    private articleSeriesResource: ArticleSeriesResource,
-  ) { }
-
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const articleType: ArticleType = (<{ articleType: ArticleType }>route.data).articleType;
-    this.articlesResource.setListParams({ articleTypeId: articleType });
-    this.articleSeriesResource.setListParams({ articleTypeId: articleType });
-    return true;
-  }
 }

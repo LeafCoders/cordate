@@ -1,5 +1,6 @@
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/catch';
@@ -18,7 +19,7 @@ export class BaseResource<T extends IdModel, U> {
   private listItems: Array<T> = [];
   private selectedItem: T;
 
-  protected listSubject: BehaviorSubject<Array<T>> = new BehaviorSubject<Array<T>>([]);
+  protected listSubject: ReplaySubject<Array<T>> = new ReplaySubject<Array<T>>(1);
   protected selectedSubject: BehaviorSubject<T> = new BehaviorSubject<T>(undefined);
 
   constructor(
@@ -49,6 +50,10 @@ export class BaseResource<T extends IdModel, U> {
 
   protected getItemInLoadedList(itemId: number): T {
     return this.listItems.find(IdModel.idEquals(itemId));
+  }
+
+  protected findItemInLoadedList(compareFn: (item: T) => boolean): T {
+    return this.listItems.find(compareFn);
   }
 
   protected setList(items: Array<T>): Array<T> {

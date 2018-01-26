@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ArticleSeriesResource } from '../shared/server/article-series.resource';
-import { ArticleSerie, ArticleType, ArticleTypeData, ArticleTypes } from '../shared/server/rest-api.model';
+import { ArticleTypesResource } from '../shared/server/article-types.resource';
+import { ArticleSerie, ArticleType, ArticleTypes } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-article-serie',
@@ -12,15 +13,16 @@ import { ArticleSerie, ArticleType, ArticleTypeData, ArticleTypes } from '../sha
 })
 export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
 
-  articleTypeData: ArticleTypeData;
+  articleType: ArticleType;
 
   constructor(
     private articleSeriesResource: ArticleSeriesResource,
     private authPermission: AuthPermissionService,
+    articleTypesResource: ArticleTypesResource,
     route: ActivatedRoute,
   ) {
     super(articleSeriesResource);
-    this.articleTypeData = ArticleTypes[(<{ articleType: ArticleType }>route.snapshot.data).articleType];
+    this.articleType = articleTypesResource.fromRoute(route);
   }
 
   protected init(): void {
@@ -28,6 +30,6 @@ export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
   }
 
   createNew(): void {
-    this.openEditorWithNew(new ArticleSerie({ articleTypeId: this.articleTypeData.articleTypeId }));
+    this.openEditorWithNew(new ArticleSerie({ articleTypeId: this.articleType.id }));
   }
 }

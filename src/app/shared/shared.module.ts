@@ -11,8 +11,9 @@ import { tokenNotExpired, AuthConfig, AuthHttp } from 'angular2-jwt';
 
 import { RestApiService } from './server/rest-api.service';
 import { RestApiErrorService } from './server/rest-api-error.service';
-import { ArticlesResource, ArticlesResourceGuard } from './server/articles.resource';
+import { ArticlesResource } from './server/articles.resource';
 import { ArticleSeriesResource } from './server/article-series.resource';
+import { ArticleTypesResource } from './server/article-types.resource';
 import { AssetFoldersResource } from './server/asset-folders.resource';
 import { AssetsResource } from './server/assets.resource';
 import { EventsResource } from './server/events.resource';
@@ -42,6 +43,7 @@ import { BooleanEditorComponent } from './editor/boolean-editor/boolean-editor.c
 import { PasswordEditorComponent } from './editor/password-editor/password-editor.component';
 import { RefEditorComponent } from './editor/ref-editor/ref-editor.component';
 import { RefOrTextEditorComponent, RefOrTextDialog } from './editor/ref-or-text-editor/ref-or-text-editor.component';
+import { ResourcesEditorComponent } from './editor/resources-editor/resources-editor.component';
 import { StaticEditorComponent } from './editor/static-editor/static-editor.component';
 import { TextEditorComponent } from './editor/text-editor/text-editor.component';
 import { TimeRangeEditorComponent } from './editor/time-range-editor/time-range-editor.component';
@@ -79,6 +81,7 @@ let dataEditors = [
   PasswordEditorComponent,
   RefEditorComponent,
   RefOrTextEditorComponent,
+  ResourcesEditorComponent,
   StaticEditorComponent,
   TextEditorComponent,
   TimeRangeEditorComponent,
@@ -106,9 +109,9 @@ let services = [
 ];
 
 let resourceServices = [
-  ArticlesResourceGuard,
   ArticlesResource,
   ArticleSeriesResource,
+  ArticleTypesResource,
   AssetFoldersResource,
   AssetsResource,
   EventsResource,

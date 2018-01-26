@@ -1,0 +1,9 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="Id-alias" icon="bookmark" [value]="item.idAlias" (changed)="setIdAlias($event)" [state]="idAliasState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Artikel-namn (plural)" [value]="item.articlesTitle" (changed)="setArticlesTitle($event)" [state]="articlesTitleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Ny artikel-namn" [value]="item.newArticleTitle" (changed)="setNewArticleTitle($event)" [state]="newArticleTitleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Artikelserie-namn (plural)" [value]="item.articleSeriesTitle" (changed)="setArticleSeriesTitle($event)" [state]="articleSeriesTitleState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Ny artikelserie-namn" [value]="item.newArticleSerieTitle" (changed)="setNewArticleSerieTitle($event)" [state]="newArticleSerieTitleState"></lc-text-editor>
+  </lc-list>
+</lc-editor-container>

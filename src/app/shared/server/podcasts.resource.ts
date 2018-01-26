@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { RestApiService } from './rest-api.service';
 import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { Podcast, ArticleType } from './rest-api.model';
+import { Podcast } from './rest-api.model';
 
 import * as moment from 'moment';
 
@@ -35,7 +35,6 @@ export class PodcastsResource extends DefaultBaseResource<Podcast, PodcastUpdate
 
   newInstance(data?: any): Podcast {
     return new Podcast(data ? data : {
-      articleTypeId: ArticleType.SERMON,
       copyright: `© ${moment().year()} Your name`,
       mainCategory: 'Religion & Spirituality',
       subCategory: 'Christianity',

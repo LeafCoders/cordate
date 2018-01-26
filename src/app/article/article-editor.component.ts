@@ -7,7 +7,7 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { ArticlesResource, ArticleUpdate } from '../shared/server/articles.resource';
 import { GroupsResource } from '../shared/server/groups.resource';
 import { UsersResource } from '../shared/server/users.resource';
-import { Article, IdModel, User, ArticleSerie } from '../shared/server/rest-api.model';
+import { Article, IdModel, User, ArticleSerie, ResourceList } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-article-editor',
@@ -15,6 +15,7 @@ import { Article, IdModel, User, ArticleSerie } from '../shared/server/rest-api.
 })
 export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
 
+  authorsState: EditorState = new EditorState();
   titleState: EditorState = new EditorState();
   contentState: EditorState = new EditorState();
   articleSerieState: EditorState = new EditorState();
@@ -29,7 +30,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.titleState, this.contentState, this.articleSerieState];
+    return [this.authorsState, this.titleState, this.contentState, this.articleSerieState];
   }
 
   protected checkPermissions(): void {
@@ -48,6 +49,13 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   protected afterSetEditorItem(item: Article): void {
+  }
+
+  setAuthors(authors: ResourceList): void {
+    this.setValue(this.authorsState,
+      (item: ArticleUpdate) => item.authorIds = authors.map(author => author.id),
+      () => this.item.authors = authors
+    );
   }
 
   setTitle(title: string): void {

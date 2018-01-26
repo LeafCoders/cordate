@@ -37,8 +37,13 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
   }
 
   setListParams(params: Object): void {
-    this.listParams = params;
-    this.refreshList(true);
+    const current = Object.values(this.listParams ? this.listParams : []);
+    const next = Object.values(params ? params : []);
+    const notEqual: boolean = current.length !== next.length || current.some((v, index) => v !== next[index]);
+    if (notEqual) {
+      this.listParams = params;
+      this.refreshList(true);
+    }
   }
 
   select(item: T): void {
@@ -50,19 +55,16 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
   }
 
   list(): Subject<Array<T>> {
-    this.refreshList()
+    this.refreshList();
     return this.listSubject;
   };
 
   protected refreshList(forceRefresh: boolean = false): void {
     const currentTime: number = new Date().getTime();
-    // console.log(this.name, 'Before refresh');
     if (forceRefresh || this.isEmptyList() || currentTime - this.lastRefreshTime > 60 * 1000) {
-      // console.log(this.name, 'Do refresh');
       this.lastRefreshTime = currentTime;
       this.getRequestListSubject().next(undefined);
     }
-    // console.log(this.name, 'After refresh');
   }
 
   private getRequestListSubject(): BehaviorSubject<void> {
@@ -78,7 +80,6 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
   }
 
   private requestList(): Observable<Array<T>> {
-    // console.log(this.name, 'Request list');
     return this.handleError<Array<T>>(
       this.api.read(this.apiPath(), this.listParams)
         .map((data: Response): Array<T> => {

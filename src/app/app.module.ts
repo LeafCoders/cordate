@@ -12,10 +12,12 @@ import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { MyPagesComponent } from './my-pages/my-pages.component';
+import { ArticleTypeGuard } from './article-type.guard';
 
 import { SharedModule } from './shared/shared.module';
 import { ArticleModule } from './article/article.module';
 import { ArticleSerieModule } from './article-serie/article-serie.module';
+import { ArticleTypeModule } from './article-type/article-type.module';
 import { AuthModule } from './auth/auth.module';
 import { AssetModule } from './asset/asset.module';
 import { AssetFolderModule } from './asset-folder/asset-folder.module';
@@ -45,6 +47,7 @@ import { UserModule } from './user/user.module';
 
     ArticleModule,
     ArticleSerieModule,
+    ArticleTypeModule,
     AuthModule,
     SharedModule,
     AssetModule,
@@ -62,7 +65,9 @@ import { UserModule } from './user/user.module';
     UserModule,
   ],
   entryComponents: [],
-  providers: [],
+  providers: [
+    ArticleTypeGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
