@@ -58,6 +58,7 @@ export class AppComponent implements OnInit {
       this.sideNav.open();
     });
 
+    // TODO: This must be done after authorization
     let subscription = articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => {
       articleTypes.forEach(at => this.links.push({
         permission: at.idAlias, title: at.articleSeriesTitle, routePath: `/articleSeries/${at.idAlias}`

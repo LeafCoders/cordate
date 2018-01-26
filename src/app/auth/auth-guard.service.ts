@@ -3,6 +3,7 @@ import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { AuthService } from './auth.service';
 import { AuthPermissionService } from './auth-permission.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
@@ -13,7 +14,7 @@ export class AuthGuardService implements CanActivate {
     private authPermission: AuthPermissionService
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
+  canActivate(route: ActivatedRouteSnapshot): boolean | Observable<boolean> {
     if (this.auth.isAuthorized()) {
       let permission: string;
       switch (route.url[0].path) {
@@ -39,17 +40,16 @@ export class AuthGuardService implements CanActivate {
           alert('Missing permissions for url path: ' + route.url[0].path);
           break;
       }
-      return this.authPermission.readUserPermissions().then(() => {
+
+      return this.authPermission.loadAndCheckPermission(permission).map(permitted => {
         if (permission) {
-          if (this.authPermission.isPermitted(permission)) {
-            return true;
+          if (!permitted) {
+            this.router.navigate(['/auth/login']);
           }
-          this.router.navigate(['/auth/login']);
-          return false;
         } else {
           this.router.navigate(['/mypages']);
-          return false;
         }
+        return permitted;
       });
     }
     this.router.navigate(['/auth/login']);

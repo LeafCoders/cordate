@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { RestApiService } from '../shared/server/rest-api.service';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs/Observable';
 
 export interface PermissionResults {
   [key: string]: boolean;
@@ -15,6 +16,7 @@ export interface PermissionResults {
 export class AuthPermissionService {
 
   private userPermissions: PermissionsChecker;
+  private hasLoadedFromServer: boolean = false;
 
   constructor(private api: RestApiService, private auth: AuthService) { }
 
@@ -23,31 +25,56 @@ export class AuthPermissionService {
     return this.userPermissions ? this.userPermissions.hasPermission(permissions) : false;
   }
 
-  clearPermissions(): void {
-    this.userPermissions = undefined;
-    localStorage.removeItem('permissions');
-  }
-
-  readUserPermissions(): Promise<boolean> {
-    const useFromLocalStorage: boolean = false;
-
+  // Multiple permissions should be divided with a ';'
+  loadAndCheckPermission(permissions: string): Observable<boolean> {
     // Get previous permissions from local storage
-    let fromStorage: string = localStorage.getItem('permissions');
+    const fromStorage: string = localStorage.getItem(this.storageKey());
     this.userPermissions = fromStorage ? new PermissionsChecker(fromStorage.split(';')) : undefined;
+    if (this.userPermissions && this.userPermissions.hasPermission(permissions)) {
+      if (!this.hasLoadedFromServer) {
+        this.hasLoadedFromServer = true;
+        this.getPermissionsFromServer().subscribe();
+      }
+      return Observable.of<boolean>(true);
+    }
 
     // Get current permissions from server
-    let userId: number = this.auth.userId;
-    var promise = this.api.read(`api/users/${userId}/permissions`).map(data => data.json()).toPromise();
-    promise = promise.then((permissions: any) => {
-      this.userPermissions = new PermissionsChecker(permissions);
-      localStorage.setItem('permissions', permissions.join(';'));
-      return true;
-    }).catch(() => {
-      this.clearPermissions();
-      return false;
+    const userId: number = this.auth.userId;
+    return Observable.create(observer => {
+      this.getPermissionsFromServer().subscribe(
+        permissionsFromServer => {
+          this.userPermissions = permissionsFromServer;
+          observer.next(this.userPermissions.hasPermission(permissions));
+        },
+        error => {
+          this.clearPermissions();
+          observer.next(false);
+        },
+        () => observer.complete()
+      );
     });
-    return useFromLocalStorage && this.userPermissions ? Promise.resolve(true) : promise;
   }
+
+  clearPermissions(): void {
+    this.userPermissions = undefined;
+    this.hasLoadedFromServer = false;
+  }
+
+  private getPermissionsFromServer(): Observable<PermissionsChecker> {
+    const userId: number = this.auth.userId;
+    return this.api.read(`api/users/${userId}/permissions`)
+      .map(data => data.json())
+      .map(permissionsFromServer => {
+        const permissions = new PermissionsChecker(permissionsFromServer);
+        localStorage.setItem(this.storageKey(), permissionsFromServer.join(';'));
+        return permissions;
+      });
+  }
+
+  private storageKey(): string {
+    return `permissions-${this.auth.userId}`;
+  }
+
 }
 
 class PermissionsChecker {
