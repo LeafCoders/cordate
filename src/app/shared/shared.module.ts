@@ -40,6 +40,7 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 import { AssetFileEditorComponent } from './editor/asset-file-editor/asset-file-editor.component';
 import { BooleanEditorComponent } from './editor/boolean-editor/boolean-editor.component';
+import { DateTimeEditorComponent } from './editor/date-time-editor/date-time-editor.component';
 import { PasswordEditorComponent } from './editor/password-editor/password-editor.component';
 import { RefEditorComponent } from './editor/ref-editor/ref-editor.component';
 import { RefOrTextEditorComponent, RefOrTextDialog } from './editor/ref-or-text-editor/ref-or-text-editor.component';
@@ -78,6 +79,7 @@ import { PortalModule } from '@angular/cdk/portal';
 
 let dataEditors = [
   AssetFileEditorComponent,
+  DateTimeEditorComponent,
   PasswordEditorComponent,
   RefEditorComponent,
   RefOrTextEditorComponent,

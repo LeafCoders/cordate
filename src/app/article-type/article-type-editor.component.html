@@ -5,5 +5,6 @@
     <lc-text-editor lc-list-item valueTitle="Ny artikel-namn" [value]="item.newArticleTitle" (changed)="setNewArticleTitle($event)" [state]="newArticleTitleState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Artikelserie-namn (plural)" [value]="item.articleSeriesTitle" (changed)="setArticleSeriesTitle($event)" [state]="articleSeriesTitleState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Ny artikelserie-namn" [value]="item.newArticleSerieTitle" (changed)="setNewArticleSerieTitle($event)" [state]="newArticleSerieTitleState"></lc-text-editor>
+    <lc-ref-editor lc-list-item valueTitle="Filkatalog" refType="assetFolder" [value]="item.assetFolder" (changed)="setAssetFolder($event)" [state]="assetFolderState"></lc-ref-editor>
   </lc-list>
 </lc-editor-container>

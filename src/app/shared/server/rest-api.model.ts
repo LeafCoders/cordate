@@ -739,6 +739,7 @@ export class ArticleType extends IdModel {
   newArticleTitle: string;
   articleSeriesTitle: string;
   newArticleSerieTitle: string;
+  assetFolder: AssetFolder;
 
   constructor(data: any) {
     super(data);
@@ -748,6 +749,7 @@ export class ArticleType extends IdModel {
     readValue(this, data, 'newArticleTitle');
     readValue(this, data, 'articleSeriesTitle');
     readValue(this, data, 'newArticleSerieTitle');
+    readObject<AssetFolder>(this, data, 'assetFolder', AssetFolder);
   }
 
   asText(): string {
@@ -763,6 +765,7 @@ export class ArticleSerie extends IdModel {
   idAlias: string;
   title: string;
   content: string;
+  image: Asset;
 
   constructor(data: any) {
     super(data);
@@ -770,6 +773,7 @@ export class ArticleSerie extends IdModel {
     readValue(this, data, 'idAlias');
     readValue(this, data, 'title');
     readValue(this, data, 'content');
+    readObject<Asset>(this, data, 'image', Asset);
   }
 
   asText(): string {

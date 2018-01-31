@@ -13,6 +13,7 @@ export interface ArticleSerieUpdate {
   idAlias: string;
   title: string;
   content: string;
+  imageId: number;
 }
 
 @Injectable()

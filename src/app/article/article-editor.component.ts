@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
@@ -15,6 +16,7 @@ import { Article, IdModel, User, ArticleSerie, ResourceList } from '../shared/se
 })
 export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
 
+  timeState: EditorState = new EditorState();
   authorsState: EditorState = new EditorState();
   titleState: EditorState = new EditorState();
   contentState: EditorState = new EditorState();
@@ -30,7 +32,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.authorsState, this.titleState, this.contentState, this.articleSerieState];
+    return [this.timeState, this.authorsState, this.titleState, this.contentState, this.articleSerieState];
   }
 
   protected checkPermissions(): void {
@@ -49,6 +51,14 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   protected afterSetEditorItem(item: Article): void {
+  }
+
+  setTime(time: moment.Moment): void {
+    console.log(time.toJSON());
+    this.setValue(this.timeState,
+      (item: ArticleUpdate) => item.time = time ? time.toJSON() : undefined,
+      () => this.item.time = time
+    );
   }
 
   setAuthors(authors: ResourceList): void {

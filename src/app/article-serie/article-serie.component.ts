@@ -5,7 +5,8 @@ import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ArticleSeriesResource } from '../shared/server/article-series.resource';
 import { ArticleTypesResource } from '../shared/server/article-types.resource';
-import { ArticleSerie, ArticleType, ArticleTypes } from '../shared/server/rest-api.model';
+import { ArticleSerie, ArticleType } from '../shared/server/rest-api.model';
+import { ArticleSerieService } from './article-serie.service';
 
 @Component({
   selector: 'lc-article-serie',
@@ -13,16 +14,15 @@ import { ArticleSerie, ArticleType, ArticleTypes } from '../shared/server/rest-a
 })
 export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
 
-  articleType: ArticleType;
-
   constructor(
+    public viewData: ArticleSerieService,
     private articleSeriesResource: ArticleSeriesResource,
     private authPermission: AuthPermissionService,
     articleTypesResource: ArticleTypesResource,
     route: ActivatedRoute,
   ) {
     super(articleSeriesResource);
-    this.articleType = articleTypesResource.fromRoute(route);
+    this.viewData.articleType = articleTypesResource.fromRoute(route);
   }
 
   protected init(): void {
@@ -30,6 +30,6 @@ export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
   }
 
   createNew(): void {
-    this.openEditorWithNew(new ArticleSerie({ articleTypeId: this.articleType.id }));
+    this.openEditorWithNew(new ArticleSerie({ articleTypeId: this.viewData.articleType.id }));
   }
 }

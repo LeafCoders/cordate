@@ -7,7 +7,9 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { ArticleSeriesResource, ArticleSerieUpdate } from '../shared/server/article-series.resource';
 import { ResourceTypesResource } from '../shared/server/resource-types.resource';
 
-import { ArticleSerie, ResourceTypeRef } from '../shared/server/rest-api.model';
+import { ArticleSerie, ResourceTypeRef, Asset } from '../shared/server/rest-api.model';
+import { ArticleTypesResource } from '../shared/server/article-types.resource';
+import { ArticleSerieService } from './article-serie.service';
 
 @Component({
   selector: 'lc-article-serie-editor',
@@ -18,16 +20,19 @@ export class ArticleSerieEditorComponent extends BaseEditor<ArticleSerie, Articl
   idAliasState: EditorState = new EditorState();
   titleState: EditorState = new EditorState();
   contentState: EditorState = new EditorState();
+  imageState: EditorState = new EditorState();
 
   constructor(
+    public viewData: ArticleSerieService,
     private authPermission: AuthPermissionService,
     private articleSeriesResource: ArticleSeriesResource,
+    private articleTypesResource: ArticleTypesResource,
   ) {
     super(articleSeriesResource);
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.idAliasState, this.titleState, this.contentState];
+    return [this.idAliasState, this.titleState, this.contentState, this.imageState];
   }
 
   protected checkPermissions(): void {
@@ -63,6 +68,13 @@ export class ArticleSerieEditorComponent extends BaseEditor<ArticleSerie, Articl
     this.setValue(this.contentState,
       (item: ArticleSerieUpdate) => item.content = content,
       () => this.item.content = content
+    );
+  }
+
+  setImage(image: Asset): void {
+    this.setValue(this.imageState,
+      (item: ArticleSerieUpdate) => item.imageId = image ? image.id : undefined,
+      () => this.item.image = image
     );
   }
 }

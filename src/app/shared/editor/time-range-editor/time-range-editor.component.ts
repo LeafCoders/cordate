@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'lc-time-range-editor',
   templateUrl: './time-range-editor.component.html',
-  styleUrls: ['./time-range-editor.component.scss']
 })
 export class TimeRangeEditorComponent {
 
