@@ -740,6 +740,7 @@ export class ArticleType extends IdModel {
   articleSeriesTitle: string;
   newArticleSerieTitle: string;
   assetFolder: AssetFolder;
+  authorResourceType: ResourceTypeRef;
 
   constructor(data: any) {
     super(data);
@@ -750,6 +751,7 @@ export class ArticleType extends IdModel {
     readValue(this, data, 'articleSeriesTitle');
     readValue(this, data, 'newArticleSerieTitle');
     readObject<AssetFolder>(this, data, 'assetFolder', AssetFolder);
+    readObject<ResourceTypeRef>(this, data, 'authorResourceType', ResourceTypeRef);
   }
 
   asText(): string {

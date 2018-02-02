@@ -44,7 +44,7 @@ import { DateTimeEditorComponent } from './editor/date-time-editor/date-time-edi
 import { PasswordEditorComponent } from './editor/password-editor/password-editor.component';
 import { RefEditorComponent } from './editor/ref-editor/ref-editor.component';
 import { RefOrTextEditorComponent, RefOrTextDialog } from './editor/ref-or-text-editor/ref-or-text-editor.component';
-import { ResourcesEditorComponent } from './editor/resources-editor/resources-editor.component';
+import { ResourceRefsEditorComponent } from './editor/resource-refs-editor/resource-refs-editor.component';
 import { StaticEditorComponent } from './editor/static-editor/static-editor.component';
 import { TextEditorComponent } from './editor/text-editor/text-editor.component';
 import { TimeRangeEditorComponent } from './editor/time-range-editor/time-range-editor.component';
@@ -83,7 +83,7 @@ let dataEditors = [
   PasswordEditorComponent,
   RefEditorComponent,
   RefOrTextEditorComponent,
-  ResourcesEditorComponent,
+  ResourceRefsEditorComponent,
   StaticEditorComponent,
   TextEditorComponent,
   TimeRangeEditorComponent,

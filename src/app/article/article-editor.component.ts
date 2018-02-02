@@ -9,6 +9,7 @@ import { ArticlesResource, ArticleUpdate } from '../shared/server/articles.resou
 import { GroupsResource } from '../shared/server/groups.resource';
 import { UsersResource } from '../shared/server/users.resource';
 import { Article, IdModel, User, ArticleSerie, ResourceList } from '../shared/server/rest-api.model';
+import { ArticleService } from './article.service';
 
 @Component({
   selector: 'lc-article-editor',
@@ -23,6 +24,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   articleSerieState: EditorState = new EditorState();
 
   constructor(
+    public viewData: ArticleService,
     private authPermission: AuthPermissionService,
     private articlesResource: ArticlesResource,
     private groupsResource: GroupsResource,
@@ -62,8 +64,9 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   setAuthors(authors: ResourceList): void {
+    const authorIds: Array<number> = authors ? authors.map(author => author.id) : [];
     this.setValue(this.authorsState,
-      (item: ArticleUpdate) => item.authorIds = authors.map(author => author.id),
+      (item: ArticleUpdate) => item.authorIds = authorIds,
       () => this.item.authors = authors
     );
   }
@@ -84,7 +87,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
 
   setArticleSerie(articleSerie: ArticleSerie): void {
     this.setValue(this.articleSerieState,
-      (item: ArticleUpdate) => item.articleSerieId = articleSerie.id,
+      (item: ArticleUpdate) => item.articleSerieId = articleSerie ? articleSerie.id : undefined,
       () => this.item.articleSerie = articleSerie
     );
   }

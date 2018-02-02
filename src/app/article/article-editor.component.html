@@ -1,6 +1,6 @@
 <lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
   <lc-list *ngIf="item">
-    <!-- <lc-resources-editor lc-list-item valueTitle="Författare" [resourceType]="" [value]="item.authors" (changed)="setAuthors($event)" [state]="authorsState"></lc-resources-editor> -->
+    <lc-resource-refs-editor lc-list-item valueTitle="Författare" icon="people" [resourceType]="viewData.articleType.authorResourceType" [value]="item.authors" (changed)="setAuthors($event)" [state]="authorsState"></lc-resource-refs-editor>
     <lc-date-time-editor lc-list-item valueTitle="Tid" [time]="item.time" (changed)="setTime($event)" [state]="timeState"></lc-date-time-editor>
     <lc-text-editor lc-list-item valueTitle="Rubrik" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Innehåll" [value]="item.content" (changed)="setContent($event)" [state]="contentState" multiLine="true"></lc-text-editor>

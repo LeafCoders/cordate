@@ -7,6 +7,7 @@ import { ArticleSeriesResource } from '../../server/article-series.resource';
 import { AssetFoldersResource } from '../../server/asset-folders.resource';
 import { EventTypesResource } from '../../server/event-types.resource';
 import { GroupsResource } from '../../server/groups.resource';
+import { ResourceTypesResource } from '../../server/resource-types.resource';
 import { UsersResource } from '../../server/users.resource';
 
 @Component({
@@ -31,6 +32,7 @@ export class RefEditorComponent {
     private assetFoldersResource: AssetFoldersResource,
     private eventTypesResource: EventTypesResource,
     private groupsResource: GroupsResource,
+    private resourceTypesResource: ResourceTypesResource,
     private usersResource: UsersResource,
     private dialog: MatDialog
   ) { }
@@ -48,7 +50,7 @@ export class RefEditorComponent {
 
     switch (inRefType) {
       case 'articleSerie':
-        this.icon = this.icon ? this.icon : 'folder';
+        this.icon = this.icon ? this.icon : 'local_offer';
         this.articleSeriesResource.list().subscribe(setRefs);
         break;
       case 'assetFolder':
@@ -56,12 +58,16 @@ export class RefEditorComponent {
         this.assetFoldersResource.list().subscribe(setRefs);
         break;
       case 'eventType':
-        this.icon = this.icon ? this.icon : 'event';
+        this.icon = this.icon ? this.icon : 'local_offer';
         this.eventTypesResource.list().subscribe(setRefs);
         break;
       case 'group':
         this.icon = this.icon ? this.icon : 'group';
         this.groupsResource.list().subscribe(setRefs);
+        break;
+      case 'resourceType':
+        this.icon = this.icon ? this.icon : 'local_offer';
+        this.resourceTypesResource.list().subscribe(setRefs);
         break;
       case 'user':
         this.icon = this.icon ? this.icon : 'person';

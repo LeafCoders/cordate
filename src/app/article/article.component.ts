@@ -10,6 +10,7 @@ import { ArticleTypesResource } from '../shared/server/article-types.resource';
 import { ArticlesResource } from '../shared/server/articles.resource';
 import { Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
 import { ArticleNewDialogComponent } from './new-dialog/article-new-dialog.component';
+import { ArticleService } from './article.service';
 
 @Component({
   selector: 'lc-article',
@@ -18,9 +19,9 @@ import { ArticleNewDialogComponent } from './new-dialog/article-new-dialog.compo
 export class ArticleComponent extends BaseContainer<Article> {
 
   private newArticleDialogRef: MatDialogRef<ArticleNewDialogComponent>;
-  articleType: ArticleType;
 
   constructor(
+    public viewData: ArticleService,
     private articlesResource: ArticlesResource,
     private articleSeriesResource: ArticleSeriesResource,
     private authPermission: AuthPermissionService,
@@ -29,7 +30,7 @@ export class ArticleComponent extends BaseContainer<Article> {
     route: ActivatedRoute,
   ) {
     super(articlesResource);
-    this.articleType = articleTypesResource.fromRoute(route);
+    this.viewData.articleType = articleTypesResource.fromRoute(route);
   }
 
   protected init(): void {
@@ -38,12 +39,12 @@ export class ArticleComponent extends BaseContainer<Article> {
 
   showNewDialog(): void {
     this.newArticleDialogRef = this.dialog.open(ArticleNewDialogComponent);
-    this.newArticleDialogRef.componentInstance.newTitle = this.articleType.newArticleTitle;
+    this.newArticleDialogRef.componentInstance.newTitle = this.viewData.articleType.newArticleTitle;
 
     this.newArticleDialogRef.afterClosed().subscribe((data: ArticleSerie) => {
       if (data) {
         this.openEditorWithNew(new Article({
-          articleTypeId: this.articleType.id,
+          articleTypeId: this.viewData.articleType.id,
           articleSerie: data.asRef(),
         }));
       }

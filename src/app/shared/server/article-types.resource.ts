@@ -14,6 +14,7 @@ export interface ArticleTypeUpdate {
   articleSeriesTitle: string;
   newArticleSerieTitle: string;
   assetFolderId: number;
+  authorResourceTypeId: number;
 }
 
 @Injectable()

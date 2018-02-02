@@ -7,7 +7,7 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { ArticleTypesResource, ArticleTypeUpdate } from '../shared/server/article-types.resource';
 import { UsersResource } from '../shared/server/users.resource';
 
-import { ArticleType, User, UserList, AssetFolder } from '../shared/server/rest-api.model';
+import { ArticleType, User, UserList, AssetFolder, ResourceType } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-article-type-editor',
@@ -21,6 +21,7 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
   articleSeriesTitleState: EditorState = new EditorState();
   newArticleSerieTitleState: EditorState = new EditorState();
   assetFolderState: EditorState = new EditorState();
+  authorResourceTypeState: EditorState = new EditorState();
 
   allUsers: UserList = [];
   usersNotInArticleType: UserList = [];
@@ -36,7 +37,7 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
     return [
       this.idAliasState, this.articlesTitleState, this.newArticleTitleState,
       this.articleSeriesTitleState, this.newArticleSerieTitleState,
-      this.assetFolderState,
+      this.assetFolderState, this.authorResourceTypeState,
     ];
   }
 
@@ -94,6 +95,13 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
     this.setValue(this.assetFolderState,
       (item: ArticleTypeUpdate) => item.assetFolderId = assetFolder.id,
       () => this.item.assetFolder = assetFolder
+    );
+  }
+
+  setAuthorResourceType(authorResourceType: ResourceType): void {
+    this.setValue(this.authorResourceTypeState,
+      (item: ArticleTypeUpdate) => item.authorResourceTypeId = authorResourceType ? authorResourceType.id : null,
+      () => this.item.authorResourceType = authorResourceType
     );
   }
 }
