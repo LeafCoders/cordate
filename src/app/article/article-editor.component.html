@@ -1,9 +1,23 @@
 <lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
-  <lc-list *ngIf="item">
-    <lc-resource-refs-editor lc-list-item valueTitle="Författare" icon="people" [resourceType]="viewData.articleType.authorResourceType" [value]="item.authors" (changed)="setAuthors($event)" [state]="authorsState"></lc-resource-refs-editor>
-    <lc-date-time-editor lc-list-item valueTitle="Tid" [time]="item.time" (changed)="setTime($event)" [state]="timeState"></lc-date-time-editor>
-    <lc-text-editor lc-list-item valueTitle="Rubrik" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
-    <lc-text-editor lc-list-item valueTitle="Innehåll" [value]="item.content" (changed)="setContent($event)" [state]="contentState" multiLine="true"></lc-text-editor>
-    <lc-ref-editor lc-list-item valueTitle="Tillhör serie" refType="articleSerie" [value]="item.articleSerie" (changed)="setArticleSerie($event)" [state]="articleSerieState"></lc-ref-editor>
-  </lc-list>
+  <mat-tab-group *ngIf="item">
+    <mat-tab label="Info">
+      <lc-list>
+        <lc-date-time-editor lc-list-item valueTitle="Tid" [time]="item.time" (changed)="setTime($event)" [state]="timeState"></lc-date-time-editor>
+        <lc-text-editor lc-list-item valueTitle="Rubrik" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
+        <lc-resource-refs-editor lc-list-item valueTitle="Författare" icon="people" [resourceType]="viewData.articleType.authorResourceType" [value]="item.authors" (changed)="setAuthors($event)" [state]="authorsState"></lc-resource-refs-editor>
+        <lc-ref-editor lc-list-item valueTitle="Tillhör serie" refType="articleSerie" [value]="item.articleSerie" (changed)="setArticleSerie($event)" [state]="articleSerieState"></lc-ref-editor>
+        <lc-ref-editor lc-list-item valueTitle="Tillhör händelse" refType="event" [value]="item.event" (changed)="setEvent($event)" [state]="eventState"></lc-ref-editor>
+      </lc-list>
+    </mat-tab>
+    <mat-tab label="Innehåll">
+      <lc-list>
+        <lc-text-editor lc-list-item valueTitle="Innehåll" [value]="item.content" (changed)="setContent($event)" [state]="contentState" multiLine="true"></lc-text-editor>
+      </lc-list>
+    </mat-tab>
+    <mat-tab label="Media">
+      <lc-list>
+        <lc-asset-file-editor lc-list-item valueTitle="Ljudinspelning" [asset]="item.recording" [assetFolder]="viewData.articleType.recordingFolder" (changed)="setRecording($event)" [state]="recordingState"></lc-asset-file-editor>
+      </lc-list>
+    </mat-tab>
+  </mat-tab-group>
 </lc-editor-container>

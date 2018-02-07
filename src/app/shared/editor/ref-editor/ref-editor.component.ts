@@ -9,6 +9,7 @@ import { EventTypesResource } from '../../server/event-types.resource';
 import { GroupsResource } from '../../server/groups.resource';
 import { ResourceTypesResource } from '../../server/resource-types.resource';
 import { UsersResource } from '../../server/users.resource';
+import { EventsResource } from '../../server/events.resource';
 
 @Component({
   selector: 'lc-ref-editor',
@@ -30,6 +31,7 @@ export class RefEditorComponent {
   constructor(
     private articleSeriesResource: ArticleSeriesResource,
     private assetFoldersResource: AssetFoldersResource,
+    private eventsResource: EventsResource,
     private eventTypesResource: EventTypesResource,
     private groupsResource: GroupsResource,
     private resourceTypesResource: ResourceTypesResource,
@@ -56,6 +58,10 @@ export class RefEditorComponent {
       case 'assetFolder':
         this.icon = this.icon ? this.icon : 'folder';
         this.assetFoldersResource.list().subscribe(setRefs);
+        break;
+      case 'event':
+        this.icon = this.icon ? this.icon : 'event';
+        this.eventsResource.list().subscribe(setRefs);
         break;
       case 'eventType':
         this.icon = this.icon ? this.icon : 'local_offer';

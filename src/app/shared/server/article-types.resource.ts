@@ -13,7 +13,8 @@ export interface ArticleTypeUpdate {
   newArticleTitle: string;
   articleSeriesTitle: string;
   newArticleSerieTitle: string;
-  assetFolderId: number;
+  imageFolderId: number;
+  recordingFolderId: number;
   authorResourceTypeId: number;
 }
 

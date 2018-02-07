@@ -20,7 +20,8 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
   newArticleTitleState: EditorState = new EditorState();
   articleSeriesTitleState: EditorState = new EditorState();
   newArticleSerieTitleState: EditorState = new EditorState();
-  assetFolderState: EditorState = new EditorState();
+  imageFolderState: EditorState = new EditorState();
+  recordingFolderState: EditorState = new EditorState();
   authorResourceTypeState: EditorState = new EditorState();
 
   allUsers: UserList = [];
@@ -37,7 +38,7 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
     return [
       this.idAliasState, this.articlesTitleState, this.newArticleTitleState,
       this.articleSeriesTitleState, this.newArticleSerieTitleState,
-      this.assetFolderState, this.authorResourceTypeState,
+      this.imageFolderState, this.recordingFolderState, this.authorResourceTypeState,
     ];
   }
 
@@ -91,10 +92,17 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
     );
   }
 
-  setAssetFolder(assetFolder: AssetFolder): void {
-    this.setValue(this.assetFolderState,
-      (item: ArticleTypeUpdate) => item.assetFolderId = assetFolder.id,
-      () => this.item.assetFolder = assetFolder
+  setImageFolder(imageFolder: AssetFolder): void {
+    this.setValue(this.imageFolderState,
+      (item: ArticleTypeUpdate) => item.imageFolderId = imageFolder.id,
+      () => this.item.imageFolder = imageFolder
+    );
+  }
+
+  setRecordingFolder(recordingFolder: AssetFolder): void {
+    this.setValue(this.imageFolderState,
+      (item: ArticleTypeUpdate) => item.recordingFolderId = recordingFolder.id,
+      () => this.item.recordingFolder = recordingFolder
     );
   }
 

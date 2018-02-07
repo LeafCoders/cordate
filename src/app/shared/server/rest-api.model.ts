@@ -212,7 +212,7 @@ export class Event extends IdModel {
   }
 
   asText(): string {
-    return this.title;
+    return this.startTime.format('YYYY-MM-DD HH:mm') + ' - ' + this.title;
   }
 
   updateObject(): Event {
@@ -739,7 +739,8 @@ export class ArticleType extends IdModel {
   newArticleTitle: string;
   articleSeriesTitle: string;
   newArticleSerieTitle: string;
-  assetFolder: AssetFolder;
+  imageFolder: AssetFolder;
+  recordingFolder: AssetFolder;
   authorResourceType: ResourceTypeRef;
 
   constructor(data: any) {
@@ -750,7 +751,8 @@ export class ArticleType extends IdModel {
     readValue(this, data, 'newArticleTitle');
     readValue(this, data, 'articleSeriesTitle');
     readValue(this, data, 'newArticleSerieTitle');
-    readObject<AssetFolder>(this, data, 'assetFolder', AssetFolder);
+    readObject<AssetFolder>(this, data, 'imageFolder', AssetFolder);
+    readObject<AssetFolder>(this, data, 'recordingFolder', AssetFolder);
     readObject<ResourceTypeRef>(this, data, 'authorResourceType', ResourceTypeRef);
   }
 
@@ -809,25 +811,30 @@ export declare type ArticleSerieRefList = Array<ArticleSerieRef>;
 export class Article extends IdModel {
   articleTypeId: number;
   articleSerie: ArticleSerieRef;
+  event: EventRef;
   lastModifiedTime: moment.Moment;
   time: moment.Moment;
   authors: Array<ResourceRef>;
   title: string;
   content: string;
+  recording: Asset;
 
   constructor(data: any) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readObject<ArticleSerieRef>(this, data, 'articleSerie', ArticleSerieRef);
+    readObject<EventRef>(this, data, 'event', EventRef);
     readDate(this, data, 'lastModifiedTime');
     readDate(this, data, 'time');
+    readArray<ResourceRef>(this, data, 'authors', ResourceRef);
     readValue(this, data, 'title');
     readValue(this, data, 'content');
-    readArray<ResourceRef>(this, data, 'authors', ResourceRef);
+    readObject<Asset>(this, data, 'recording', Asset);
   }
 
   asText(): string {
-    return this.title;
+    const timeString: string = this.time ? this.time.format('YYYY-MM-DD') : '';
+    return timeString + ' - ' + this.title;
   }
 }
 

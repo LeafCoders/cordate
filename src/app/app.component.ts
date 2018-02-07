@@ -29,8 +29,6 @@ export class AppComponent implements OnInit {
     { permission: 'articleTypes', title: 'Artikeltyper', routePath: '/articleTypes' },
     { permission: 'assets', title: 'Filer', routePath: '/assets' },
     { permission: 'assetFolders', title: 'Filkataloger', routePath: '/assetFolders' },
-    { permission: 'sermons', title: 'Predikningar', routePath: '/sermons' },
-    { permission: 'sermonSeries', title: 'Predikoserier', routePath: '/sermonSeries' },
     { permission: 'users', title: 'Användare', routePath: '/users' },
     { permission: 'groups', title: 'Grupper', routePath: '/groups' },
     { permission: 'permissions', title: 'Rättigheter', routePath: '/permissions' },

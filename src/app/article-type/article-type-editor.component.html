@@ -5,7 +5,8 @@
     <lc-text-editor lc-list-item valueTitle="Titel för 'Ny artikel'" [value]="item.newArticleTitle" (changed)="setNewArticleTitle($event)" [state]="newArticleTitleState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Titel för 'Artikelserier'" [value]="item.articleSeriesTitle" (changed)="setArticleSeriesTitle($event)" [state]="articleSeriesTitleState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Titel för 'Ny artikelserie'" [value]="item.newArticleSerieTitle" (changed)="setNewArticleSerieTitle($event)" [state]="newArticleSerieTitleState"></lc-text-editor>
-    <lc-ref-editor lc-list-item valueTitle="Filkatalog för bilder och ljud" refType="assetFolder" [value]="item.assetFolder" (changed)="setAssetFolder($event)" [state]="assetFolderState"></lc-ref-editor>
+    <lc-ref-editor lc-list-item valueTitle="Filkatalog för bilder" refType="assetFolder" [value]="item.imageFolder" (changed)="setImageFolder($event)" [state]="imageFolderState"></lc-ref-editor>
+    <lc-ref-editor lc-list-item valueTitle="Filkatalog för ljud" refType="assetFolder" [value]="item.recordingFolder" (changed)="setRecordingFolder($event)" [state]="recordingFolderState"></lc-ref-editor>
     <lc-ref-editor lc-list-item valueTitle="Resurstyp för författare" refType="resourceType" [value]="item.authorResourceType" (changed)="setAuthorResourceType($event)" [state]="authorResourceTypeState"></lc-ref-editor>
   </lc-list>
 </lc-editor-container>
