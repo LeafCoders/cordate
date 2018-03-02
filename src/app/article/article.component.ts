@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
@@ -27,9 +27,11 @@ export class ArticleComponent extends BaseContainer<Article> {
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
     articleTypesResource: ArticleTypesResource,
+    router: Router,
     route: ActivatedRoute,
+
   ) {
-    super(articlesResource);
+    super(articlesResource, router, route);
     this.viewData.articleType = articleTypesResource.fromRoute(route);
   }
 

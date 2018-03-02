@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
@@ -14,8 +15,10 @@ export class SlideShowComponent extends BaseContainer<SlideShow> {
   constructor(
     private slideShowsResource: SlideShowsResource,
     private authPermission: AuthPermissionService,
+    router: Router,
+    route: ActivatedRoute,
   ) {
-    super(slideShowsResource);
+    super(slideShowsResource, router, route);
   }
 
   protected init(): void {

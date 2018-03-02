@@ -8,8 +8,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 export class DoublePaneComponent {
 
   private mouseAtMain: boolean = true;
-  private asideIsOpen: boolean = false;
-  private showMainCover: boolean = false;
+  asideIsOpen: boolean = false;
+  showMainCover: boolean = false;
 
   @ViewChild('aside')
   private asideElement: ElementRef;

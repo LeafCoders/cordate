@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
@@ -14,8 +15,10 @@ export class AssetFolderComponent extends BaseContainer<AssetFolder> {
   constructor(
     private assetFoldersResource: AssetFoldersResource,
     private authPermission: AuthPermissionService,
+    router: Router,
+    route: ActivatedRoute,
   ) {
-    super(assetFoldersResource);
+    super(assetFoldersResource, router, route);
   }
 
   protected init(): void {

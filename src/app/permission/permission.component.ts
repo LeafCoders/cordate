@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
@@ -19,8 +20,10 @@ export class PermissionComponent extends BaseContainer<Permission> {
     private permissionsResource: PermissionsResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
+    router: Router,
+    route: ActivatedRoute,
   ) {
-    super(permissionsResource);
+    super(permissionsResource, router, route);
   }
 
   protected init(): void {

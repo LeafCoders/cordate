@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import * as moment from 'moment';
 
@@ -28,8 +29,10 @@ export class EventComponent extends BaseContainer<Event> {
     private eventsResource: EventsResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
+    router: Router,
+    route: ActivatedRoute,
   ) {
-    super(eventsResource);
+    super(eventsResource, router, route);
   }
 
   protected init(): void {

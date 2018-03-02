@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
@@ -14,8 +15,10 @@ export class ResourceComponent extends BaseContainer<Resource> {
   constructor(
     private resourcesResource: ResourcesResource,
     private authPermission: AuthPermissionService,
+    router: Router,
+    route: ActivatedRoute,
   ) {
-    super(resourcesResource);
+    super(resourcesResource, router, route);
   }
 
   protected init(): void {

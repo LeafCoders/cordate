@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
@@ -19,9 +19,10 @@ export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
     private articleSeriesResource: ArticleSeriesResource,
     private authPermission: AuthPermissionService,
     articleTypesResource: ArticleTypesResource,
+    router: Router,
     route: ActivatedRoute,
   ) {
-    super(articleSeriesResource);
+    super(articleSeriesResource, router, route);
     this.viewData.articleType = articleTypesResource.fromRoute(route);
   }
 

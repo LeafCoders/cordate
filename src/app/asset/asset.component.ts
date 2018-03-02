@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { BaseContainer } from '../shared/base/base-container';
@@ -24,8 +25,10 @@ export class AssetComponent extends BaseContainer<Asset> {
     private assetFoldersResource: AssetFoldersResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
+    router: Router,
+    route: ActivatedRoute,
   ) {
-    super(assetsResource);
+    super(assetsResource, router, route);
   }
 
   protected init(): void {
