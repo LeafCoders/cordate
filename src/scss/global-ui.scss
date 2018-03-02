@@ -9,19 +9,24 @@
   @include fb-column-container();
 }
 
+.pane-aside {
+  max-width: 48rem;
+}
+
 .value-title {
   color: #999;
   font-size: 12px;
 }
 
 .list-content {
-  padding: 16px;
+  padding: 1rem;
   flex: 1;
+  max-width: 39rem;
   @include fb-column-container();
 }
 
 .list-icon {
-  padding: 16px;
+  padding: 1rem;
   color: $cordate-icon-color;
 }
 
@@ -31,7 +36,7 @@
 }
 
 .list-action {
-  padding: 8px;
+  padding: 0.5rem;
   color: $cordate-icon-color;
 }
 
@@ -147,6 +152,7 @@ mat-dialog-container .file-drag-over {
 }
 
 pre {
+  max-width: 38rem;
   padding: 6px;
   background-color: #eee;
   border-radius: 3px;
@@ -155,6 +161,12 @@ pre {
 
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+@media screen and (max-width: 48rem) {
+  pre {
+    max-width: calc(100vw - 10rem);
+  }
 }
 
 .selectable-text {

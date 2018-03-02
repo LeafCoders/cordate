@@ -3,7 +3,7 @@
   <div class="value-title">{{ valueTitle }}</div>
   <div *ngIf="asset?.url" class="imgContainer">
     <lc-asset-row [asset]="asset" (click)="showSelectDialog()" style="cursor: pointer"></lc-asset-row>
-    <pre style="max-width: 240px">{{ asset.url }}</pre>
+    <pre>{{ asset.url }}</pre>
   </div>
   <div *ngIf="!asset?.url" style="text-align: center; margin-top: 32px;">
     <p>Släpp en fil här för att ladda upp den</p>
