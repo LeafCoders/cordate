@@ -9,7 +9,7 @@ import { ArticleSeriesResource } from '../shared/server/article-series.resource'
 import { ArticleTypesResource } from '../shared/server/article-types.resource';
 import { ArticlesResource } from '../shared/server/articles.resource';
 import { Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
-import { ArticleNewDialogComponent } from './new-dialog/article-new-dialog.component';
+import { SingleSelectDialogComponent } from '../shared/dialog/single-select-dialog/single-select-dialog.component';
 import { ArticleService } from './article.service';
 
 @Component({
@@ -17,8 +17,6 @@ import { ArticleService } from './article.service';
   templateUrl: './article.component.html'
 })
 export class ArticleComponent extends BaseContainer<Article> {
-
-  private newArticleDialogRef: MatDialogRef<ArticleNewDialogComponent>;
 
   constructor(
     public viewData: ArticleService,
@@ -40,17 +38,14 @@ export class ArticleComponent extends BaseContainer<Article> {
   }
 
   showNewDialog(): void {
-    this.newArticleDialogRef = this.dialog.open(ArticleNewDialogComponent);
-    this.newArticleDialogRef.componentInstance.newTitle = this.viewData.articleType.newArticleTitle;
-
-    this.newArticleDialogRef.afterClosed().subscribe((data: ArticleSerie) => {
-      if (data) {
+    this.dialog.open(SingleSelectDialogComponent).componentInstance.init(
+      this.viewData.articleType.newArticleTitle, this.articleSeriesResource.listOnce(),
+      (articleSerie: ArticleSerie) => {
         this.openEditorWithNew(new Article({
           articleTypeId: this.viewData.articleType.id,
-          articleSerie: data.asRef(),
+          articleSerie: articleSerie.asRef(),
         }));
-      }
-    });
+      });
   }
 
 }

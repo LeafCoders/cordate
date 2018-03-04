@@ -64,6 +64,7 @@ import { ObjectSelectComponent } from './object-select/object-select.component';
 import { SelectEventResourcesMenuComponent } from './select-event-resources-menu/select-event-resources-menu.component';
 
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
+import { SingleSelectDialogComponent } from './dialog/single-select-dialog/single-select-dialog.component';
 
 import { SignalService } from './signal.service';
 
@@ -92,6 +93,7 @@ let dataEditors = [
 let dialogs = [
   RefOrTextDialog,
   SelectAssetDialogComponent,
+  SingleSelectDialogComponent,
 ];
 
 let presentations = [

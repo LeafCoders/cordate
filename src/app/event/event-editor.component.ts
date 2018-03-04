@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material';
+import { Router } from '@angular/router';
+import { MatTabChangeEvent, MatDialog } from '@angular/material';
 import * as moment from 'moment';
 
 import { BaseEditor } from '../shared/base/base-editor';
@@ -8,7 +9,11 @@ import { EditorState } from '../shared/editor/editor-state';
 import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
 import { EventsResource, EventUpdate } from '../shared/server/events.resource';
 import { ResourceTypesResource } from '../shared/server/resource-types.resource';
-import { Event, EventTypeRef, TimeRange, ResourceTypeList, ResourceTypeRef, ResourceRequirement, Resource, ResourceType } from '../shared/server/rest-api.model';
+import { ArticlesResource, ArticleUpdate } from '../shared/server/articles.resource';
+import { ArticleSeriesResource } from '../shared/server/article-series.resource';
+import { ArticleTypesResource } from '../shared/server/article-types.resource';
+import { Event, EventTypeRef, TimeRange, ResourceTypeList, ResourceTypeRef, ResourceRequirement, Resource, ResourceType, ArticleList, Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
+import { SingleSelectDialogComponent } from '../shared/dialog/single-select-dialog/single-select-dialog.component';
 
 @Component({
   selector: 'lc-event-editor',
@@ -28,10 +33,20 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   notAddedResourceTypes: ResourceTypeList = [];
   permissionAddRequirements: boolean = false;
 
+  // Article
+  isLoadingArticles: boolean = true;
+  articleCreatePermitted: boolean = false;
+  articles: ArticleList = undefined;
+
   constructor(
     private authPermission: AuthPermissionService,
     private eventsResource: EventsResource,
     private resourceTypeResource: ResourceTypesResource,
+    private articlesResource: ArticlesResource,
+    private articleTypesResource: ArticleTypesResource,
+    private articleSeriesResource: ArticleSeriesResource,
+    private router: Router,
+    private dialog: MatDialog,
   ) {
     super(eventsResource);
 
@@ -50,6 +65,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     if (hasUpdatePermission) {
       EditorState.setAllEditable(this.allEditorStates());
     }
+    this.articleCreatePermitted = this.authPermission.isPermitted(this.articlesResource.createPermission());
   }
 
   protected rebuildActions(): Array<EditorAction> {
@@ -62,11 +78,12 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
 
   protected afterSetEditorItem(event: Event): void {
     this.refreshAvailableAddResourceTypes();
+    this.refreshArticles();
   }
 
   onTabSelectChange(changeEvent: MatTabChangeEvent): void {
     this.currentTabIndex = changeEvent.index;
-    //this.initEducationTab();
+    this.loadArticles();
   }
 
   addResourceRequirement(resourceType: ResourceType): void {
@@ -118,6 +135,49 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
         return false;
       });
     }
+  }
+
+  private refreshArticles(): void {
+    this.articles = undefined;
+    this.isLoadingArticles = true;
+    this.loadArticles();
+  }
+
+  private loadArticles(): void {
+    if (this.articles === undefined && this.currentTabIndex === 2) {
+      this.articles = [];
+      this.eventsResource.readArticles(this.item).subscribe(articles => {
+        this.isLoadingArticles = false;
+        this.articles = articles;
+      });
+    }
+  }
+
+  navigateToArticle(article: Article): void {
+    this.router.navigate([`/articles/${article.articleTypeIdAlias}`, { 'itemId': article.id }]);
+  }
+
+  showCreateArticleModal(): void {
+    this.dialog.open(SingleSelectDialogComponent).componentInstance.init(
+      "Välj typ av undervisning att skapa", this.articleTypesResource.listOnce(),
+      (articleType: ArticleType) => {
+        this.dialog.open(SingleSelectDialogComponent).componentInstance.init(
+          `Välj ${articleType.articleSeriesTitle}`,
+          this.articleSeriesResource.listOnceFor({ articleTypeId: articleType.id }),
+          (articleSerie: ArticleSerie) => {
+            let createObject: ArticleUpdate = {
+              articleTypeId: articleType.id,
+              articleSerieId: articleSerie.id,
+              eventId: this.item.id,
+              time: this.item.startTime.toJSON(),
+              authorIds: this.item.resourcesOfResourceType(articleType.authorResourceType).map(r => r.id),
+              title: this.item.title,
+            };
+            this.articlesResource.create(createObject).subscribe((article: Article) => {
+              this.navigateToArticle(article);
+            });
+          });
+      });
   }
 
   setTime(time: TimeRange): void {

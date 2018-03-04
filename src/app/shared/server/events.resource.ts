@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { RestApiService } from './rest-api.service';
 import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, Event, User, ResourceRequirement, Resource, ResourceList, ResourceType, ResourceTypeRef } from './rest-api.model';
+import { IdModel, Event, User, ResourceRequirement, Resource, ResourceList, ResourceType, ResourceTypeRef, ArticleList, Article } from './rest-api.model';
 
 export interface EventUpdate {
   id: number;
@@ -93,5 +93,15 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   assignResourceRequirementPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
     return `events:update:${event.id};eventsByEventTypes:update:${event.eventType.id};events:assign:resourceTypes:${resourceType.id}`;
   }
+
+  readArticles(event: Event): Observable<ArticleList> {
+    return this.handleError<ArticleList>(
+      this.api.read(`api/events/${event.id}/articles`)
+        .map((data: Response): ArticleList => {
+          return data.json().map(item => new Article(item));
+        })
+    );
+  }
+
 
 }

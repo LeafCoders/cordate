@@ -25,7 +25,10 @@ export class Messages {
     'error.unknown': 'Okänt fel, ladda om sidan',
 
     'error.string.notEmpty': 'Får inte vara tomt',
+    'error.string.max32Chars': 'Får max innehålla 32 tecken',
     'error.string.max200Chars': 'Får max innehålla 200 tecken',
+    'error.string.max4000Chars': 'Får max innehålla 4000 tecken',
+    'error.string.max10000Chars': 'Får max innehålla 10000 tecken',
     'error.string.notAnyOf': 'Måste vara en av dem i listan',
 
     'error.number.outOfRange': 'Värdet är för stort eller för litet',
@@ -50,6 +53,7 @@ export class Messages {
     'error.date.mustBeAfter': 'Datumet måste vara senare',
     'error.dateTime.mustBeAfter': 'Tidpunkten måste vara senare',
 
+    'property.articleSerieId': 'Artikelserie-id',
     'property.articleTypeId': 'Artikeltyp-id',
     'property.authorName': 'Namn på författare',
     'property.content': 'Innehåll',

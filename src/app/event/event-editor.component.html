@@ -9,52 +9,55 @@
       </lc-list>
     </mat-tab>
 
-    <mat-tab [label]="'Resursbehov (' + item.resourceRequirements.length + ')'" *ngIf="item?.id">
-      <lc-list header="Händelsens resursbehov">
-        <div lc-list-item *ngFor="let rr of item.resourceRequirements">
-          <mat-icon class="list-icon">group</mat-icon>
-          <div class="list-content">
-            <small class="value-title">{{ rr.resourceType.name }}</small>
-            <div>{{ rr.asText() }}</div>
+    <mat-tab [label]="'Resursbehov (' + item?.resourceRequirements.length + ')'">
+      <lc-error-background *ngIf="!item?.id" icon="block" text="Skapa händelsen först"></lc-error-background>
+
+      <div *ngIf="item?.id">
+        <lc-list header="Händelsens resursbehov">
+          <div lc-list-item *ngFor="let rr of item.resourceRequirements">
+            <mat-icon class="list-icon">group</mat-icon>
+            <div class="list-content">
+              <small class="value-title">{{ rr.resourceType.name }}</small>
+              <div>{{ rr.asText() }}</div>
+            </div>
+            <div class="list-action">
+              <lc-select-event-resources-menu [event]="item" [resourceRequirement]="rr" (eventUpdated)="setResource(rr, $event)" (removeResourceRequirement)="removeResourceRequirement(rr)">
+              </lc-select-event-resources-menu>
+            </div>
           </div>
-          <div class="list-action">
-            <lc-select-event-resources-menu [event]="item" [resourceRequirement]="rr" (eventUpdated)="setResource(rr, $event)" (removeResourceRequirement)="removeResourceRequirement(rr)">
-            </lc-select-event-resources-menu>
+        </lc-list>
+
+        <lc-list header="Lägg till resursbehov" *ngIf="notAddedResourceTypes?.length">
+          <div lc-list-item class="centered-list-item" *ngFor="let resourceType of notAddedResourceTypes">
+            <div class="list-content">{{ resourceType.asText() }}</div>
+            <div class="list-action"><button mat-icon-button (click)="addResourceRequirement(resourceType)"><mat-icon>add_circle</mat-icon></button></div>
           </div>
-        </div>
-      </lc-list>
+        </lc-list>
 
-      <lc-list header="Lägg till resursbehov" *ngIf="notAddedResourceTypes?.length">
-        <div lc-list-item class="centered-list-item" *ngFor="let resourceType of notAddedResourceTypes">
-          <div class="list-content">{{ resourceType.asText() }}</div>
-          <div class="list-action"><button mat-icon-button (click)="addResourceRequirement(resourceType)"><mat-icon>add_circle</mat-icon></button></div>
-        </div>
-      </lc-list>
-
-
-      <lc-error-background *ngIf="!item.resourceRequirements.length" icon="info_outline" text="Händelsen har inga resursbehov">
-      </lc-error-background>
+        <lc-error-background *ngIf="!item.resourceRequirements.length" icon="info_outline" text="Händelsen har inga resursbehov">
+        </lc-error-background>
+      </div>
     </mat-tab>
 
-    <!--
-    <mat-tab label="Undervisning" *ngIf="hasEducationType">
-      <mat-progress-bar mode="indeterminate" *ngIf="isLoadingEducations"></mat-progress-bar>
-      <div *ngIf="item.id && !isLoadingEducations">
-        <div class="filter-bar">
+    <mat-tab label="Undervisning">
+      <mat-progress-bar *ngIf="item?.id && isLoadingArticles" mode="indeterminate"></mat-progress-bar>
+      <lc-error-background *ngIf="!item?.id" icon="block" text="Skapa händelsen först"></lc-error-background>
+
+      <div *ngIf="item?.id && !isLoadingArticles">
+        <div class="filter-bar" *ngIf="articleCreatePermitted">
           <div class="expander"></div>
-          <button mat-icon-button *ngIf="!education" [disabled]="!educationCreatePermitted" (click)="createNewEducation()"><mat-icon>add_circle</mat-icon></button>
-          <button mat-icon-button *ngIf="education" [matMenuTriggerFor]="educationMenu"><mat-icon>more_vert</mat-icon></button>
-          <mat-menu #educationMenu="matMenu" xPosition="before">
-            <button mat-menu-item [disabled]="!educationDeletePermitted" (click)="deleteEducation()">Ta bort</button>
-          </mat-menu>
+          <button mat-icon-button (click)="showCreateArticleModal()"><mat-icon>add_circle</mat-icon></button>
         </div>
-        <lc-error-background *ngIf="!education" icon="info_outline" text="Det finns ingen undervisning för händelsen"></lc-error-background>
-        <lc-education-inner-editor *ngIf="education" [event]="item" [education]="education" (close)="closeEducationEditor()"></lc-education-inner-editor>
+        <lc-error-background *ngIf="!articles.length" icon="info_outline" text="Det finns ingen undervisning för händelsen"></lc-error-background>
       </div>
 
-      <lc-error-background *ngIf="!item.id" icon="block" text="Skapa händelsen först"></lc-error-background>
+      <lc-list *ngIf="articles?.length">
+        <div lc-list-item class="centered-list-item" *ngFor="let article of articles">
+          <div class="list-content">{{ article.asText() }}</div>
+          <div class="list-action"><button title="Visa undervisning" mat-icon-button (click)="navigateToArticle(article)"><mat-icon>navigate_next</mat-icon></button></div>
+        </div>
+      </lc-list>
     </mat-tab>
-    -->
 
   </mat-tab-group>
 </lc-editor-container>

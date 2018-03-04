@@ -211,6 +211,11 @@ export class Event extends IdModel {
     return event;
   }
 
+  resourcesOfResourceType(resourceType: ResourceTypeRef): Array<ResourceRef> {
+    let rr = this.resourceRequirements.find(rr => rr.resourceType.idEquals(resourceType));
+    return rr ? rr.resources : [];
+  }
+
   asText(): string {
     return this.startTime.format('YYYY-MM-DD HH:mm') + ' - ' + this.title;
   }
@@ -249,7 +254,7 @@ export class EventRef extends IdModel {
   }
 
   asText(): string {
-    return this.title;
+    return this.startTime.format('YYYY-MM-DD HH:mm') + ' - ' + this.title;
   }
 }
 
@@ -810,6 +815,7 @@ export declare type ArticleSerieRefList = Array<ArticleSerieRef>;
 
 export class Article extends IdModel {
   articleTypeId: number;
+  articleTypeIdAlias: string;
   articleSerie: ArticleSerieRef;
   event: EventRef;
   lastModifiedTime: moment.Moment;
@@ -822,6 +828,7 @@ export class Article extends IdModel {
   constructor(data: any) {
     super(data);
     readValue(this, data, 'articleTypeId');
+    readValue(this, data, 'articleTypeIdAlias');
     readObject<ArticleSerieRef>(this, data, 'articleSerie', ArticleSerieRef);
     readObject<EventRef>(this, data, 'event', EventRef);
     readDate(this, data, 'lastModifiedTime');

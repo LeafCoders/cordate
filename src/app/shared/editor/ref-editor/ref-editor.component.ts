@@ -53,31 +53,31 @@ export class RefEditorComponent {
     switch (inRefType) {
       case 'articleSerie':
         this.icon = this.icon ? this.icon : 'local_offer';
-        this.articleSeriesResource.list().subscribe(setRefs);
+        this.articleSeriesResource.listOnce().subscribe(setRefs);
         break;
       case 'assetFolder':
         this.icon = this.icon ? this.icon : 'folder';
-        this.assetFoldersResource.list().subscribe(setRefs);
+        this.assetFoldersResource.listOnce().subscribe(setRefs);
         break;
       case 'event':
         this.icon = this.icon ? this.icon : 'event';
-        this.eventsResource.list().subscribe(setRefs);
+        this.eventsResource.listOnce().subscribe(setRefs);
         break;
       case 'eventType':
         this.icon = this.icon ? this.icon : 'local_offer';
-        this.eventTypesResource.list().subscribe(setRefs);
+        this.eventTypesResource.listOnce().subscribe(setRefs);
         break;
       case 'group':
         this.icon = this.icon ? this.icon : 'group';
-        this.groupsResource.list().subscribe(setRefs);
+        this.groupsResource.listOnce().subscribe(setRefs);
         break;
       case 'resourceType':
         this.icon = this.icon ? this.icon : 'local_offer';
-        this.resourceTypesResource.list().subscribe(setRefs);
+        this.resourceTypesResource.listOnce().subscribe(setRefs);
         break;
       case 'user':
         this.icon = this.icon ? this.icon : 'person';
-        this.usersResource.list().subscribe(setRefs);
+        this.usersResource.listOnce().subscribe(setRefs);
         break;
     }
   }

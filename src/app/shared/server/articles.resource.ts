@@ -9,15 +9,15 @@ import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, Article, User } from './rest-api.model';
 
 export interface ArticleUpdate {
-  id: number;
+  id?: number;
   articleTypeId: number;
-  articleSerieId: number;
+  articleSerieId?: number;
   eventId: number;
   time: string;
   authorIds: Array<number>;
   title: string;
-  content: string;
-  recordingId: number;
+  content?: string;
+  recordingId?: number;
 }
 
 @Injectable()

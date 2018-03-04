@@ -25,6 +25,10 @@
   @include fb-column-container();
 }
 
+.list-content:first-child {
+  max-width: 43rem;
+}
+
 .list-icon {
   padding: 1rem;
   color: $cordate-icon-color;

@@ -2,12 +2,14 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 
 import { BaseResource } from './base.resource';
 import { RestApiService } from './rest-api.service';
 import { RestApiErrorService } from './rest-api-error.service';
 import { IdModel } from './rest-api.model';
+import { Observer } from 'rxjs/Observer';
 
 export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseResource<T, U> {
 
@@ -58,6 +60,27 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     this.refreshList();
     return this.listSubject;
   };
+
+  listOnce(): Observable<Array<T>> {
+    this.refreshList();
+    return Observable.create((observer: Observer<Array<T>>) => {
+      let subscription: Subscription = this.listSubject.subscribe(items => {
+        observer.next(items);
+      }, undefined, () => {
+        observer.complete();
+        subscription.unsubscribe();
+      });
+    });
+  };
+
+  listOnceFor(listParams: Object): Observable<Array<T>> {
+    return this.handleError<Array<T>>(
+      this.api.read(this.apiPath(), listParams)
+        .map((data: Response): Array<T> => {
+          return data.json().map(item => this.newInstance(item));
+        })
+    );
+  }
 
   protected refreshList(forceRefresh: boolean = false): void {
     const currentTime: number = new Date().getTime();

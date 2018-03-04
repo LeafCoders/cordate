@@ -1,14 +1,14 @@
 <div *ngIf="item">
   <mat-toolbar color="accent">
-    <div *ngIf="item.id" class="overflow-ellipsis-parent">
+    <div *ngIf="item.id" class="overflow-ellipsis-parent" style="display: flex; align-items: center;">
       <button mat-icon-button class="hide-desktop" style="color: white; margin-right: 8px;" (click)="closeEditor()">
         <mat-icon>close</mat-icon>
       </button>
       <div class="overflow-ellipsis">{{ item.asText() }}</div>
     </div>
     <div *ngIf="!item.id">
-      <button mat-raised-button color="accent" (click)="closeEditor(true)">Avbryt</button>
       <button mat-raised-button color="primary" (click)="createItem()" [disabled]="disabled">Skapa</button>
+      <button mat-button (click)="closeEditor(true)">Avbryt</button>
     </div>
 
     <span class="expander"></span>
