@@ -1,5 +1,25 @@
 @import "src/scss/flex-mixin.scss";
 
-:host {
+mat-toolbar {
+  & > button {
+    display: none;
+  }
 
+  & > span {
+    padding-left: 1rem;
+  }
 }
+
+@media screen and (max-width: 48rem) {
+  mat-toolbar {
+    & > button {
+      display: block;
+      margin-left: -0.5rem;
+    }
+
+    & > span {
+      padding-left: 0.5rem;
+    }
+  }
+}
+

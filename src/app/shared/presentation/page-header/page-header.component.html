@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
-  <button style="margin-left: -8px" mat-icon-button (click)="openSideNav()"><mat-icon>menu</mat-icon></button>
-  <span style="padding-left: 8px">{{ title }}</span>
+  <button mat-icon-button (click)="openSideNav()"><mat-icon>menu</mat-icon></button>
+  <span>{{ title }}</span>
 </mat-toolbar>
 <div style="position: relative" *ngIf="isLoading">
   <mat-progress-bar style="position: absolute" mode="indeterminate"></mat-progress-bar>

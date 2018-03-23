@@ -15,22 +15,8 @@ body {
   font-size: 14px;
   line-height: 16px;
 
-  background-color: #444;
+  background-color: mat-color($cordate-primary);
 }
-
-@media screen and (min-width: 96rem) {
-  body {
-    background: radial-gradient(ellipse at top, rgba(160,160,200,1) 0%,rgba(14,14,14,1) 100%);
-  }
-
-  main {
-    max-width: 96rem;
-    margin: 0 auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  }
-}
-
-
 
 // Prevent double-tap on iPhone. How about iPad?
 @media only screen and (max-width: 768px) {

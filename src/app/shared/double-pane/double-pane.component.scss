@@ -22,12 +22,14 @@
   max-width: 96rem;
 }
 
+/* Not sure if this is needed anymore...
 /deep/ .pane-main {
   min-height: 100%;
 }
+*/
 
 .main {
-  background-color: #f6f6f6;
+  background-color: #fafafa;
   overflow: hidden;
   @include col-style();
 
@@ -59,7 +61,7 @@
 
   & div {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: #f6f6f6;
+    background-color: #fafafa;
 
     transform: translate3d(0, 0, 0);
     -webkit-overflow-scrolling: touch;

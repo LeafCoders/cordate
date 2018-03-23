@@ -1,4 +1,4 @@
-import { OnInit, ViewChild } from '@angular/core';
+import { OnInit, ViewChild, HostBinding } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
@@ -17,6 +17,9 @@ export abstract class BaseContainer<ITEM extends IdModel> implements OnInit {
 
   @ViewChild(DoublePaneComponent)
   private doublePane: DoublePaneComponent;
+
+  @HostBinding('style.display')
+  private displayFlex = 'flex';
 
   constructor(
     private resource: DefaultBaseResource<ITEM, any>,

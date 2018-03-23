@@ -2,13 +2,11 @@
 @import "src/scss/flex-mixin.scss";
 
 
-$mat-font-family: 'helvetica';
+$mat-font-family: 'Open Sans';
 $mat-body-font-size-base: 12;
 
 .auth-container {
-  width: 100vw;
   min-height: 100vh;
-  padding: 8px 0;
 
   @include fb-column-container();
   align-items: center;

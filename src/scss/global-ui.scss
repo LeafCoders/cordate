@@ -44,6 +44,16 @@
   color: $cordate-icon-color;
 }
 
+.list-item {
+  display: flex;
+  flex-direction: row;
+
+  &.with-hover:hover {
+    cursor: pointer;
+    background-color: #fafafa;
+  }
+}
+
 .menu-divider {
   border: 1px solid #eee;
   margin: 1px 0;

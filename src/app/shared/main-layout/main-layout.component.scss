@@ -1,44 +1,71 @@
 @import "src/scss/flex-mixin.scss";
 
 
-:host {
+@import "src/scss/cordate-theme-def.scss";
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+
+  & > button {
+    margin-left: -0.5rem;
+  }
+
+  & > span {
+    padding-left: 0.5rem;
+  }
+}
+
+mat-sidenav {
+  width: 16rem;
+  max-width: 16rem;
+  overflow-x: hidden;
+  background-color: #fff; //mat-color($cordate-primary);
+}
+
+.content-wrapper {
   @include fb-column-container();
 
   max-width: 96rem;
   margin: 0 auto;
+  padding-top: 4rem;
 
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: calc(100vh - 64px);
+  max-height: calc(100vh - 64px);
   overflow: auto;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
-.content {
+.full-height-content {
   @include fb-fill();
 }
 
-.content > /deep/ * {
-  display: flex;
-}
 
-/*
-.header {
-//  @include fb-fixed-size(3rem);
-  background-color: #fff;
-  border-bottom: 1px solid #aaa;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-  z-index: 1000000;
-}
+@media screen and (min-width: 112rem) {
+  mat-toolbar {
+    left: 16rem;
 
+    & > button {
+      display: none;
+    }
 
-.footer {
-  @include fb-fixed-size(3rem);
-  background-color: #fff;
-  border-top: 1px solid #aaa;
-}
-
-@media screen and (max-width: 768px) {
-  .header {
-//    display: none !important;
+    & > span {
+      padding-left: 1rem;
+    }
   }
 }
-*/
+
+@media screen and (max-width: 48rem) {
+  mat-toolbar {
+    display: none;
+  }
+
+  .content-wrapper {
+    padding-top: 0;
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+}

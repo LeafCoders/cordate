@@ -28,13 +28,3 @@
 .scrollable {
   overflow-y: auto;
 }
-
-/deep/ [lc-list-item] {
-  display: flex;
-  flex-direction: row;
-
-  &.with-hover:hover {
-    cursor: pointer;
-    background-color: #fafafa;
-  }
-}

@@ -4,11 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-//import { MdNativeDateModule } from '@angular/material';
-//import { OVERLAY_PROVIDERS } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { ROUTES } from './app.routes';
-
 
 import { AppComponent } from './app.component';
 import { MyPagesComponent } from './my-pages/my-pages.component';
@@ -33,6 +32,18 @@ import { SlideModule } from './slide/slide.module';
 import { TextValueModule } from './text-value/text-value.module';
 import { UserModule } from './user/user.module';
 
+export const CORDATE_FORMATS = {
+  parse: {
+    dateInput: 'YYYY-MM-DD',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'YYYY-MM-DD',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +54,6 @@ import { UserModule } from './user/user.module';
     FormsModule, ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
-    //MdNativeDateModule,
 
     ArticleModule,
     ArticleSerieModule,
@@ -67,6 +77,8 @@ import { UserModule } from './user/user.module';
   entryComponents: [],
   providers: [
     ArticleTypeGuard,
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: CORDATE_FORMATS },
   ],
   bootstrap: [AppComponent]
 })

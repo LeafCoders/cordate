@@ -1,12 +1,16 @@
-import { ContentChild, Component, Directive, ElementRef, EventEmitter, Input, Output, QueryList, Renderer, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ContentChild, Component, Directive, ElementRef, EventEmitter, Input, Output, QueryList, Renderer, TemplateRef, ViewContainerRef, HostBinding } from '@angular/core';
 import { CdkPortal } from '@angular/cdk/portal';
 
 @Directive({
-  selector: '[lc-list-item]'
+  selector: '[lc-list-item]',
 })
 export class ListItemDirective {
 
   constructor(private elementRef: ElementRef, private renderer: Renderer) { }
+
+  // Will use global class 'list-item'. Not so nice...
+  @HostBinding('class.list-item')
+  private alwaysClass: boolean = true;
 
   @Input()
   set clickable(enable: boolean) {
