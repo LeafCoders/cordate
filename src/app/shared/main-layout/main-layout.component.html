@@ -11,13 +11,13 @@
         <h3 mat-subheader>Folders</h3>
         <mat-list-item *ngFor="let link of visibleLinks">
           <mat-icon mat-list-icon>folder</mat-icon>
-          <a mat-line>{{link.title}}</a>
+          <a mat-line (click)="closeNav()" [routerLink]="[link.routePath]">{{link.title}}</a>
         </mat-list-item>
         <mat-divider></mat-divider>
         <h3 mat-subheader>Notes</h3>
         <mat-list-item *ngFor="let link of visibleLinks">
           <mat-icon mat-list-icon>note</mat-icon>
-          <h4 mat-line>{{link.title}}</h4>
+          <h4 mat-line (click)="closeNav()" [routerLink]="[link.routePath]">{{link.title}}</h4>
         </mat-list-item>
       </mat-nav-list>
 
@@ -32,7 +32,7 @@
   <mat-sidenav-content>
     <mat-toolbar class="mat-elevation-z6" color="primary">
       <button *ngIf="!router.url.startsWith('/auth')" mat-icon-button (click)="toggleNav()"><mat-icon>menu</mat-icon></button>
-      <span>Cordate</span>
+      <span>{{ applicationName }}</span>
     </mat-toolbar>
     <main class="content-wrapper">
       <div class="full-height-content">

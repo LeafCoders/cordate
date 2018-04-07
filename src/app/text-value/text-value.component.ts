@@ -12,15 +12,15 @@ import { TextValue, TextValueList } from '../shared/server/rest-api.model';
 })
 export class TextValueComponent implements OnInit {
 
-  private textValues: TextValueList = [];
-  private selectedTextValue: TextValue;
+  textValues: TextValueList = [];
+  selectedTextValue: TextValue;
 
-  private isLoading: boolean = false;
-  private failedToLoad: boolean = false;
-  private allowAddNew: boolean = true;
+  isLoading: boolean = false;
+  failedToLoad: boolean = false;
+  allowAddNew: boolean = true;
 
   @ViewChild(DoublePaneComponent)
-  private doublePane: DoublePaneComponent;
+  doublePane: DoublePaneComponent;
 
   constructor(
     private textValuesResource: TextValuesResource,

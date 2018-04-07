@@ -22,11 +22,11 @@ interface AssetResult {
 })
 export class AssetNewDialogComponent {
 
-  public assetFolder: AssetFolder;
+  assetFolder: AssetFolder;
 
-  private isDragOver: boolean = false;
-  private state: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
-  private results: Array<AssetResult> = [];
+  isDragOver: boolean = false;
+  state: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
+  results: Array<AssetResult> = [];
 
   constructor(
     public dialogRef: MatDialogRef<AssetNewDialogComponent>,

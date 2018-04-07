@@ -12,14 +12,15 @@ import { TextValue } from '../../shared/server/rest-api.model';
 })
 export class TextValueEditorComponent {
 
-  private textValue: TextValue;
-  private createMode: boolean = false;
+  textValue: TextValue;
+  createMode: boolean = false;
   private creatingNew: boolean;
 
-  private idState: EditorState = new EditorState();
-  private formatState: EditorState = new EditorState();
-  private isPublicState: EditorState = new EditorState();
-  private valueState: EditorState = new EditorState();
+  idState: EditorState = new EditorState();
+  formatState: EditorState = new EditorState();
+  isPublicState: EditorState = new EditorState();
+  valueState: EditorState = new EditorState();
+
   private editorStates: Array<EditorState> = [
     this.idState, this.formatState, this.isPublicState, this.valueState
   ];

@@ -19,9 +19,8 @@ export class EventNewDialogComponent implements OnInit {
   dates: Array<moment.Moment> = [];
   datesHeader: string;
 
-
   constructor(
-    private dialogRef: MatDialogRef<EventNewDialogComponent>,
+    public dialogRef: MatDialogRef<EventNewDialogComponent>,
     private eventTypesResource: EventTypesResource
   ) {
   }

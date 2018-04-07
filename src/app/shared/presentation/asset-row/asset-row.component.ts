@@ -8,8 +8,8 @@ import { Asset } from '../../server/rest-api.model';
   styleUrls: ['./asset-row.component.scss']
 })
 export class AssetRowComponent {
-  private asset: Asset;
-  private fileType: 'UNKNOWN' | 'IMAGE' | 'AUDIO' = 'UNKNOWN';
+  asset: Asset;
+  fileType: 'UNKNOWN' | 'IMAGE' | 'AUDIO' = 'UNKNOWN';
 
   @Input('asset')
   set setAsset(asset: Asset) {

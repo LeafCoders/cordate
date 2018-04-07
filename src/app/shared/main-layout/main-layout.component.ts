@@ -4,6 +4,7 @@ import { MatSnackBar, MatSidenav } from '@angular/material';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs/Subscription';
 
+import { environment } from '../../../environments/environment';
 import { ArticleTypeList } from '../server/rest-api.model';
 import { SignalService } from '../signal.service';
 import { RestApiError } from '../../shared/server/rest-api-error.model';
@@ -24,6 +25,7 @@ interface LinkItem {
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
 
+  applicationName: string = environment.applicationName;
 
   private links: Array<LinkItem> = [
     { permission: 'events', title: 'Händelser', routePath: '/events' },

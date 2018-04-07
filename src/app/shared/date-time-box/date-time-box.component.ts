@@ -8,10 +8,10 @@ import * as moment from 'moment';
 })
 export class DateTimeBoxComponent {
 
-  private dayNumber: number;
-  private dayName: string;
-  private monthName: string;
-  private time: string;
+  dayNumber: number;
+  dayName: string;
+  monthName: string;
+  time: string;
 
   @Input()
   set date(dateTime: moment.Moment) {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth.service';
 import { AuthPermissionService } from '../auth-permission.service';
 import { RestApiError } from "../../shared/server/rest-api-error.model";
@@ -18,6 +19,8 @@ interface PreviousUser {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  applicationName: string = environment.applicationName;
 
   public selectedUser: PreviousUser;
   public previousUsers: Array<PreviousUser> = [];
@@ -51,7 +54,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public setUser(user: PreviousUser): void {
+  public setUser(user?: PreviousUser): void {
     setTimeout(() => {
       this.selectedUser = user;
       this.usernameCtrl.setValue(user ? user.username : '');

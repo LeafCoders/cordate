@@ -43,7 +43,6 @@ import { BooleanEditorComponent } from './editor/boolean-editor/boolean-editor.c
 import { DateTimeEditorComponent } from './editor/date-time-editor/date-time-editor.component';
 import { PasswordEditorComponent } from './editor/password-editor/password-editor.component';
 import { RefEditorComponent } from './editor/ref-editor/ref-editor.component';
-import { RefOrTextEditorComponent, RefOrTextDialog } from './editor/ref-or-text-editor/ref-or-text-editor.component';
 import { ResourceRefsEditorComponent } from './editor/resource-refs-editor/resource-refs-editor.component';
 import { StaticEditorComponent } from './editor/static-editor/static-editor.component';
 import { TextEditorComponent } from './editor/text-editor/text-editor.component';
@@ -59,7 +58,6 @@ import { DoublePaneComponent } from './double-pane/double-pane.component';
 import { ErrorBackgroundComponent } from './error-background/error-background.component';
 import { ListComponent, ListActionsDirective, ListItemDirective } from './list/list.component'
 
-import { TimeRangeSelectComponent } from './time-range-select/time-range-select.component';
 import { ObjectSelectComponent } from './object-select/object-select.component';
 import { SelectEventResourcesMenuComponent } from './select-event-resources-menu/select-event-resources-menu.component';
 
@@ -83,7 +81,6 @@ let dataEditors = [
   DateTimeEditorComponent,
   PasswordEditorComponent,
   RefEditorComponent,
-  RefOrTextEditorComponent,
   ResourceRefsEditorComponent,
   StaticEditorComponent,
   TextEditorComponent,
@@ -91,7 +88,6 @@ let dataEditors = [
 ];
 
 let dialogs = [
-  RefOrTextDialog,
   SelectAssetDialogComponent,
   SingleSelectDialogComponent,
 ];
@@ -178,6 +174,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
     SelectEventResourcesMenuComponent,
+    ObjectSelectComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,
@@ -190,6 +187,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
     SelectEventResourcesMenuComponent,
+    ObjectSelectComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,
