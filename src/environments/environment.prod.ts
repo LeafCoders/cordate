@@ -8,9 +8,13 @@ function readCordateConfiguration(): CordateConfig {
   return cordateConfig ? cordateConfig : <CordateConfig>{};
 }
 
+function endWithSlash(url: string): string {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
 export const environment = {
   production: true,
 
-  rosetteUrl: readCordateConfiguration().rosetteUrl,
+  rosetteUrl: endWithSlash(readCordateConfiguration().rosetteUrl),
   applicationName: readCordateConfiguration().applicationName,
 };

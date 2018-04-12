@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
@@ -34,18 +33,18 @@ export class GroupsResource extends DefaultBaseResource<Group, GroupUpdate> {
 
   addUser(group: Group, userId: number): Observable<void> {
     return this.handleError<void>(
-      this.api.create(`api/groups/${group.id}/users/${userId}`)
-        .map((data: Response): void => {
-          group.users = data.json().map(item => new User(item));
+      this.api.create<any[]>(`api/groups/${group.id}/users/${userId}`)
+        .map((data): void => {
+          group.users = data.map(item => new User(item));
         })
     );
   }
 
   removeUser(group: Group, userId: number): Observable<void> {
     return this.handleError<void>(
-      this.api.delete(`api/groups/${group.id}/users/${userId}`)
-        .map((data: Response): void => {
-          group.users = data.json().map(item => new User(item));
+      this.api.delete<any[]>(`api/groups/${group.id}/users/${userId}`)
+        .map((data): void => {
+          group.users = data.map(item => new User(item));
         })
     );
   }

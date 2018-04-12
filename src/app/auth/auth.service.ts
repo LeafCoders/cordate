@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { RestApiService } from '../shared/server/rest-api.service';
 import { RestApiError } from '../shared/server/rest-api-error.model';
@@ -9,7 +9,7 @@ import { RestApiError } from '../shared/server/rest-api-error.model';
 @Injectable()
 export class AuthService {
 
-  private rosetteUrl: string = 'http://localhost:9000/';
+  private jwtHelperService: JwtHelperService = new JwtHelperService();
   userId: number = 0;
 
   constructor(private api: RestApiService) {
@@ -18,15 +18,15 @@ export class AuthService {
   public isAuthorized(): boolean {
     let token: string = localStorage.getItem('accessToken');
     if (token) {
-      this.userId = new JwtHelper().decodeToken(token).sub;
-      return tokenNotExpired(null, token);
+      this.userId = this.jwtHelperService.decodeToken(token).sub;
+      return !this.jwtHelperService.isTokenExpired(token);
     }
     return false;
   }
 
   public signup(email: string, firstName: string, lastName: string, password: string, wantedPermissions: string): Observable<boolean> {
     return Observable.create(observer => {
-      this.api.postNoAuth('api/signupUsers', {}, {
+      this.api.create('api/signupUsers', {}, {
         email: email, firstName: firstName, lastName: lastName,
         password: password, permissions: wantedPermissions
       })
@@ -40,14 +40,14 @@ export class AuthService {
 
   public login(username: string, password: string): Observable<any> {
     return Observable.create(observer => {
-      this.api.postNoAuth('auth/login', {}, { username: username, password: password })
+      this.api.createReturnResponse('auth/login', {}, { username: username, password: password })
         .subscribe(
-          (response: Response) => {
+          (response: HttpResponse<any>) => {
             localStorage.setItem('accessToken', response.headers.get('X-AUTH-TOKEN'));
-            observer.next(response.json());
+            observer.next(response.body);
           },
-          (error: Response) => {
-            observer.error(new RestApiError(error));
+          (error: HttpResponse<any>) => {
+            observer.error(new RestApiError(error.body));
           },
           () => observer.complete()
         );
@@ -60,7 +60,7 @@ export class AuthService {
 
   public createForgottenPassword(email: string): Observable<boolean> {
     return Observable.create(observer => {
-      this.api.postNoAuth('auth/forgottenPassword', { email: email })
+      this.api.create('auth/forgottenPassword', { email: email })
         .subscribe(
           response => observer.next(true),
           error => observer.next(false),
@@ -71,7 +71,7 @@ export class AuthService {
 
   public applyForgottenPassword(token: string, password: string): Observable<boolean> {
     return Observable.create(observer => {
-      this.api.putNoAuth('auth/forgottenPassword', { token: token, password: btoa(password) })
+      this.api.updateReturnResponse('auth/forgottenPassword', { token: token, password: btoa(password) })
         .subscribe(
           response => observer.next(true),
           error => observer.next(false),

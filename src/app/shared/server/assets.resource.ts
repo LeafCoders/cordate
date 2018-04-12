@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Response } from '@angular/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
@@ -26,7 +26,7 @@ export class AssetsResource extends DefaultBaseResource<Asset, AssetUpdate> {
     api: RestApiService,
     apiError: RestApiErrorService,
   ) {
-    super(api, 'assets', apiError);
+    super(api, 'assets', apiError, (a: Asset, b: Asset) => a.id < b.id);
   }
 
   newInstance(data?: any): Asset {
@@ -44,12 +44,11 @@ export class AssetsResource extends DefaultBaseResource<Asset, AssetUpdate> {
     formData.append('folderId', assetFolderId.toString());
     formData.append('file', fileData.file, fileData.fileName);
     formData.append('fileName', fileData.fileName);
-    let headers: Headers = new Headers({ 'Accept': 'application/json', 'enctype': 'multipart/form-data' });
 
     return this.handleError<Asset>(
-      this.api.create(`api/assets/files`, {}, formData, headers)
-        .map((data: Response): Asset => {
-          return this.insertCreated(this.newInstance(data.json()));
+      this.api.createMultiPart(`api/assets/files`, {}, formData)
+        .map((data: JSON): Asset => {
+          return this.insertCreated(this.newInstance(data));
         })
     );
   }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
@@ -35,9 +34,9 @@ export class TextValuesResource {
       return Observable.of(this.cachedTextValues);
     }
     return this.baseResource.handleError<TextValueList>(
-      this.api.read('api/textValues', {})
-        .map((data: Response): TextValueList => {
-          this.cachedTextValues = data.json().map(item => new TextValue(item))
+      this.api.read<any[]>('api/textValues', {})
+        .map((data): TextValueList => {
+          this.cachedTextValues = data.map(item => new TextValue(item))
           return this.cachedTextValues;
         })
     );
@@ -53,9 +52,9 @@ export class TextValuesResource {
 
   create(textValue: TextValue): Observable<TextValue> {
     return this.baseResource.handleError<TextValue>(
-      this.api.create('api/textValues', {}, textValue)
-        .map((data: Response): TextValue => {
-          return new TextValue(data.json());
+      this.api.create<Object>('api/textValues', {}, textValue)
+        .map((data): TextValue => {
+          return new TextValue(data);
         })
     );
   }
@@ -63,7 +62,7 @@ export class TextValuesResource {
   update(textValueId: number, textValue: TextValue): Observable<TextValue> {
     return this.baseResource.handleError<TextValue>(
       this.api.update(`api/textValues/${textValueId}`, {}, textValue)
-        .map((data: Response): TextValue => {
+        .map((data): TextValue => {
           return undefined; //new TextValue(data.json());
         })
     );

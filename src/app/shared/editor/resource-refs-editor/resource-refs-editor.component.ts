@@ -41,9 +41,9 @@ export class ResourceRefsEditorComponent {
   set setResourceType(resourceType: ResourceTypeRef) {
     this.resourceType = resourceType;
 
-    this.api.read(`api/resourceTypes/${resourceType.id}/resources`)
+    this.api.read<any[]>(`api/resourceTypes/${resourceType.id}/resources`)
       .subscribe(data => {
-        this.resources = data.json().map(item => <ResourceSelect>{ resource: new Resource(item), selected: false })
+        this.resources = data.map(item => <ResourceSelect>{ resource: new Resource(item), selected: false })
         this.updateSelections();
 
         this.allowMultiSelect = true;

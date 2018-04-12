@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Response } from '@angular/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
@@ -75,10 +74,10 @@ export class AssetNewDialogComponent {
         this.results.push({ fileName: fileName, responseData: response });
         return Observable.of<boolean>(true);
       })
-      .catch((response: Response) => {
+      .catch((response) => {
         let errorMessage: string;
         if (response.status == 400) {
-          let errors: Array<{ property: string, message: string }> = response.json();
+          let errors: Array<{ property: string, message: string }> = response.body;
           errorMessage = errors.map((error: { property: string, message: string }) => {
             return Messages.get(error.message);
           }).join(', ');

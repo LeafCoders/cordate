@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/observable/of';
@@ -27,9 +26,9 @@ export class LocationsResource {
       return Observable.of(this.cachedLocations);
     }
     return this.baseResource.handleError<LocationList>(
-      this.api.read(`api/locations`)
-        .map((data: Response): LocationList => {
-          this.cachedLocations = data.json().map(item => new Location(item))
+      this.api.read<any[]>(`api/locations`)
+        .map((data): LocationList => {
+          this.cachedLocations = data.map(item => new Location(item))
           return this.cachedLocations;
         })
     );

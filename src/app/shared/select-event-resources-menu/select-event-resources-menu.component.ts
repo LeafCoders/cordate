@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { RestApiService } from '../server/rest-api.service';
 import { AuthPermissionService, PermissionResults } from '../../auth/auth-permission.service';
 import { EventsResource } from '../server/events.resource';
-import { Event, Resource, ResourceList, ResourceRef, ResourceRequirement, User, UserRef, ObjectRefsAndText } from '../server/rest-api.model';
+import { Event, Resource, ResourceList, ResourceRef, ResourceRequirement, User, UserRef } from '../server/rest-api.model';
 
 interface ResourceSelect {
   resource: Resource;
@@ -41,9 +41,9 @@ export class SelectEventResourcesMenuComponent {
   set setResourceRequirement(rr: ResourceRequirement) {
     this.resourceRequirement = rr;
 
-    this.api.read(`api/resourceTypes/${rr.resourceType.id}/resources`)
+    this.api.read<any[]>(`api/resourceTypes/${rr.resourceType.id}/resources`)
       .subscribe(data => {
-        this.resources = data.json().map(item => <ResourceSelect>{ resource: new Resource(item), selected: false })
+        this.resources = data.map(item => <ResourceSelect>{ resource: new Resource(item), selected: false })
         if (rr.resources) {
           rr.resources.forEach((resource: Resource) => {
             let toSelect: ResourceSelect = this.resources.find((select: ResourceSelect) => select.resource.id === resource.id);
@@ -61,6 +61,7 @@ export class SelectEventResourcesMenuComponent {
   }
 
   toggleSelect(select: ResourceSelect): void {
+    console.error(select);
     if (this.allowMultiSelect) {
       select.selected = !select.selected;
     } else {

@@ -28,9 +28,7 @@ export class SelectAssetDialogComponent {
   setAssetFolder(assetFolder: AssetFolder): void {
     this.assetFolder = assetFolder;
     this.assetsResource.setListParams({ assetFolderId: assetFolder.id });
-    this.assetsResource.list().subscribe((assets: AssetList) => {
-      this.assets = assets.reverse();
-    });
+    this.assetsResource.list().subscribe((assets: AssetList) => this.assets = assets);
   }
 
   selectAsset(asset: Asset): void {

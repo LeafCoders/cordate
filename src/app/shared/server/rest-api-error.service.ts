@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -15,7 +15,7 @@ export class RestApiErrorService {
     this.errorSubject = new Subject<RestApiError>();
   }
 
-  addError(errorResponse: Response): RestApiError {
+  addError(errorResponse: HttpResponse<any>): RestApiError {
     this.latestError = new RestApiError(errorResponse);
     this.errorSubject.next(this.latestError);
     return this.latestError;

@@ -1,4 +1,3 @@
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -6,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 
 import { BaseResource } from './base.resource';
-import { RestApiService } from './rest-api.service';
+import { RestApiService, RequestParams } from './rest-api.service';
 import { RestApiErrorService } from './rest-api-error.service';
 import { IdModel } from './rest-api.model';
 import { Observer } from 'rxjs/Observer';
@@ -16,7 +15,7 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
   private lastRefreshTime: number = 0;
   protected parentName: string = undefined;
   protected parentItem: IdModel = undefined;
-  protected listParams: Object = undefined;
+  protected listParams: RequestParams = undefined;
 
   protected requestListSubject: BehaviorSubject<void> = undefined;
 
@@ -38,7 +37,7 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     this.refreshList(true);
   }
 
-  setListParams(params: Object): void {
+  setListParams(params: RequestParams): void {
     const current = Object.values(this.listParams ? this.listParams : []);
     const next = Object.values(params ? params : []);
     const notEqual: boolean = current.length !== next.length || current.some((v, index) => v !== next[index]);
@@ -73,11 +72,11 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     });
   };
 
-  listOnceFor(listParams: Object): Observable<Array<T>> {
+  listOnceFor(listParams: RequestParams): Observable<Array<T>> {
     return this.handleError<Array<T>>(
-      this.api.read(this.apiPath(), listParams)
-        .map((data: Response): Array<T> => {
-          return data.json().map(item => this.newInstance(item));
+      this.api.read<Array<T>>(this.apiPath(), listParams)
+        .map((data): Array<T> => {
+          return data.map(item => this.newInstance(item));
         })
     );
   }
@@ -104,11 +103,11 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
 
   private requestList(): Observable<Array<T>> {
     return this.handleError<Array<T>>(
-      this.api.read(this.apiPath(), this.listParams)
-        .map((data: Response): Array<T> => {
+      this.api.read<any[]>(this.apiPath(), this.listParams)
+        .map((data): Array<T> => {
           console.log(this.name, 'Got DATA');
           this.lastRefreshTime = new Date().getTime();
-          return this.setList(data.json().map(item => this.newInstance(item)));
+          return this.setList(data.map(item => this.newInstance(item)));
         })
     );
   }
@@ -119,34 +118,34 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
       return Observable.of(item);
     }
     return this.handleError<T>(
-      this.api.read(this.apiPath(itemId))
-        .map((data: Response): T => {
-          return this.newInstance(data.json());
+      this.api.read<Object>(this.apiPath(itemId))
+        .map((data): T => {
+          return this.newInstance(data);
         })
     );
   }
 
   create(item: U): Observable<T> {
     return this.handleError<T>(
-      this.api.create(this.apiPath(), {}, item)
-        .map((data: Response): T => {
-          return this.insertCreated(this.newInstance(data.json()));
+      this.api.create<Object>(this.apiPath(), {}, item)
+        .map((data): T => {
+          return this.insertCreated(this.newInstance(data));
         })
     );
   }
 
   update(itemId: number, itemUpdate: U): Observable<T> {
     return this.handleError<T>(
-      this.api.update(this.apiPath(itemId), {}, itemUpdate)
-        .map((data: Response): T => {
-          return this.replaceUpdated(this.newInstance(data.json()));
+      this.api.update<Object>(this.apiPath(itemId), {}, itemUpdate)
+        .map((data): T => {
+          return this.replaceUpdated(this.newInstance(data));
         })
     );
   }
 
   delete(itemId: number, item: T): Observable<void> {
     return this.handleError<void>(
-      this.api.delete(this.apiPath(itemId))
+      this.api.delete<Object>(this.apiPath(itemId))
         .map((): void => {
           this.removeDeleted(item);
         })

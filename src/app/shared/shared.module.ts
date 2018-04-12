@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, Http, RequestOptions } from '@angular/http';
-
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { JwtModule } from '@auth0/angular-jwt';
 import { FilesDropModule } from 'ng2-files-drop';
 
-import { tokenNotExpired, AuthConfig, AuthHttp } from 'angular2-jwt';
+import { environment } from '../../environments/environment';
 
 import { RestApiService } from './server/rest-api.service';
 import { RestApiErrorService } from './server/rest-api-error.service';
@@ -58,7 +58,6 @@ import { DoublePaneComponent } from './double-pane/double-pane.component';
 import { ErrorBackgroundComponent } from './error-background/error-background.component';
 import { ListComponent, ListActionsDirective, ListItemDirective } from './list/list.component'
 
-import { ObjectSelectComponent } from './object-select/object-select.component';
 import { SelectEventResourcesMenuComponent } from './select-event-resources-menu/select-event-resources-menu.component';
 
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
@@ -148,23 +147,33 @@ let materialModules = [
   MatToolbarModule,
 ];
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
-    headerName: 'X-AUTH-TOKEN',
-    noTokenScheme: true,
-    noJwtError: true,
-    tokenName: 'accessToken',
-  }), http, options);
+
+// Must not contain protocol or end with a '/'
+function jwtModuleCompatible(url: string): string {
+  url = url.replace('http://', '').replace('https://', '');
+  return url.endsWith('/') ? url.substr(0, url.length - 1) : url;
 }
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule,
     FilesDropModule,
     ...materialModules,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('accessToken');
+        },
+        headerName: 'X-AUTH-TOKEN',
+        authScheme: '',
+        whitelistedDomains: [jwtModuleCompatible(environment.rosetteUrl)],
+        blacklistedRoutes: [`${environment.rosetteUrl}auth`]
+      }
+    })
   ],
   declarations: [
     BooleanEditorComponent,
@@ -174,7 +183,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
     SelectEventResourcesMenuComponent,
-    ObjectSelectComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,
@@ -187,7 +195,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
     SelectEventResourcesMenuComponent,
-    ObjectSelectComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,
@@ -197,11 +204,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ...dialogs,
   ],
   providers: [
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
-    },
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'sv-SE'

@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -52,7 +52,7 @@ export const CORDATE_FORMATS = {
   imports: [
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
 
     ArticleModule,

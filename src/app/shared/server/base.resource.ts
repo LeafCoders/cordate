@@ -1,4 +1,4 @@
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -31,7 +31,7 @@ export class BaseResource<T extends IdModel, U> {
     return <Observable<T>>observer.catch(this.catchError.bind(this));
   }
 
-  private catchError(errorResponse: Response): ErrorObservable {
+  private catchError(errorResponse: HttpResponse<any>): ErrorObservable {
     this.apiError.addError(errorResponse);
     return Observable.throw(errorResponse);
   };

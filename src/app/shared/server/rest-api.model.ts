@@ -1,5 +1,8 @@
 import * as moment from 'moment';
 
+type Input<T> = { readonly [P in keyof T]?: T[P]; }
+//type Input = { [key: string]: Object };
+
 export type AnyModel = IdModel | TypeModel;
 
 type ModelConstructor<T> = { new(data: any, clazz?: any): T };
@@ -63,7 +66,7 @@ export abstract class IdModel {
   rawData: any;
   id: number;
 
-  constructor(data: any) {
+  constructor(data: Input<IdModel>) {
     this.rawData = data;
     this.id = data ? data.id : undefined;
   }
@@ -102,7 +105,7 @@ export abstract class TypeModel {
   rawData: any;
   type: string;
 
-  constructor(data: any) {
+  constructor(data: Input<TypeModel>) {
     this.rawData = data;
     this.type = data ? data.type : undefined;
   }
@@ -119,7 +122,7 @@ export class Slide extends IdModel implements HasParent<SlideShow, Slide> {
 
   slideShow: SlideShow;
 
-  constructor(data: any) {
+  constructor(data: Input<Slide>) {
     super(data);
     readValue(this, data, 'title');
     readDate(this, data, 'startTime');
@@ -161,7 +164,7 @@ export class SlideShow extends IdModel {
   assetFolder: AssetFolder;
   slides: SlideList;
 
-  constructor(data: any) {
+  constructor(data: Input<SlideShow>) {
     super(data);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
@@ -187,10 +190,9 @@ export class Event extends IdModel {
   title: string;
   description: string;
   isPublic: boolean;
-  location: ObjectRefOrText<LocationRef>;
   resourceRequirements: Array<ResourceRequirement>;
 
-  constructor(data: any) {
+  constructor(data: Input<Event>) {
     super(data);
     readObject<EventTypeRef>(this, data, 'eventType', EventTypeRef);
     readDate(this, data, 'startTime');
@@ -198,7 +200,6 @@ export class Event extends IdModel {
     readValue(this, data, 'title');
     readValue(this, data, 'description');
     readValue(this, data, 'isPublic');
-    readObject<ObjectRefOrText<Location>>(this, data, 'location', ObjectRefOrText, LocationRef);
     readArray<ResourceRequirement>(this, data, 'resourceRequirements', ResourceRequirement);
   }
 
@@ -247,7 +248,7 @@ export class EventRef extends IdModel {
   title: string;
   startTime: moment.Moment;
 
-  constructor(data: any) {
+  constructor(data: Input<EventRef>) {
     super(data);
     readValue(this, data, 'title');
     readDate(this, data, 'startTime');
@@ -265,7 +266,7 @@ export class EventType extends IdModel {
   description: string;
   resourceTypes: Array<ResourceTypeRef>;
 
-  constructor(data: any) {
+  constructor(data: Input<EventType>) {
     super(data);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
@@ -281,7 +282,7 @@ export class EventType extends IdModel {
 export class EventTypeRef extends IdModel {
   name: string;
 
-  constructor(data: any) {
+  constructor(data: Input<EventTypeRef>) {
     super(data);
     readValue(this, data, 'name');
   }
@@ -298,7 +299,7 @@ export class Location extends IdModel {
   name: string;
   description: string;
 
-  constructor(data: any) {
+  constructor(data: Input<Location>) {
     super(data);
     readValue(this, data, 'name');
     readValue(this, data, 'description');
@@ -314,7 +315,7 @@ export declare type LocationList = Array<Location>;
 export class LocationRef extends IdModel {
   name: string;
 
-  constructor(data: any) {
+  constructor(data: Input<LocationRef>) {
     super(data);
     readValue(this, data, 'name');
   }
@@ -328,7 +329,7 @@ export class ResourceRequirement extends IdModel {
   resourceType: ResourceTypeRef;
   resources: Array<ResourceRef>;
 
-  constructor(data: any) {
+  constructor(data: Input<ResourceRequirement>) {
     super(data);
     readObject<ResourceTypeRef>(this, data, 'resourceType', ResourceTypeRef);
     readArray<ResourceRef>(this, data, 'resources', ResourceRef);
@@ -356,7 +357,7 @@ export class Resource extends IdModel {
   resourceTypes: Array<ResourceTypeRef>;
   user: UserRef;
 
-  constructor(data: any) {
+  constructor(data: Input<Resource>) {
     super(data);
     readValue(this, data, 'name');
     readValue(this, data, 'description');
@@ -379,7 +380,7 @@ export class ResourceRef extends IdModel {
   name: string;
   user: UserRef;
 
-  constructor(data: any) {
+  constructor(data: Input<ResourceRef>) {
     super(data);
     readValue(this, data, 'name');
     readObject<UserRef>(this, data, 'user', UserRef);
@@ -405,7 +406,7 @@ export class ResourceType extends IdModel {
   name: string;
   description: string;
 
-  constructor(data: any) {
+  constructor(data: Input<ResourceType>) {
     super(data);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
@@ -424,7 +425,7 @@ export class ResourceType extends IdModel {
 export class ResourceTypeRef extends IdModel {
   name: string;
 
-  constructor(data: any) {
+  constructor(data: Input<ResourceTypeRef>) {
     super(data);
     readValue(this, data, 'name');
   }
@@ -436,37 +437,6 @@ export class ResourceTypeRef extends IdModel {
 
 export declare type ResourceTypeList = Array<ResourceType>;
 
-export class UserResourceType extends ResourceType {
-  group: Group;
-  multiSelect: boolean;
-  allowText: boolean;
-
-  constructor(data: any) {
-    super(data);
-    readObject<Group>(this, data, 'group', Group);
-    readValue(this, data, 'multiSelect');
-    readValue(this, data, 'allowText');
-  }
-
-  asText(): string {
-    return this.name;
-  }
-}
-
-export class DefaultSetting<T> {
-  value: T;
-  allowChange: boolean;
-
-  constructor(data: any) {
-    readValue(this, data, 'value');
-    readValue(this, data, 'allowChange');
-  }
-
-  asText(): string {
-    return `${this.value}`;
-  }
-}
-
 
 export class User extends IdModel {
   email: string;
@@ -475,7 +445,7 @@ export class User extends IdModel {
   isActive: boolean;
   lastLoginTime: moment.Moment;
 
-  constructor(data: any) {
+  constructor(data: Input<User>) {
     super(data);
     readValue(this, data, 'email');
     readValue(this, data, 'firstName');
@@ -499,7 +469,7 @@ export class UserRef extends IdModel {
 
   fullName: string;
 
-  constructor(data: any) {
+  constructor(data: Input<UserRef>) {
     super(data);
     readValue(this, data, 'firstName');
     readValue(this, data, 'lastName');
@@ -522,7 +492,7 @@ export class Group extends IdModel {
   description: string;
   users: UserList;
 
-  constructor(data: any) {
+  constructor(data: Input<Group>) {
     super(data);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
@@ -555,7 +525,7 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
   isImage: boolean;
   isAudio: boolean;
 
-  constructor(data: any) {
+  constructor(data: Input<Asset>) {
     super(data);
     readValue(this, data, 'fileName');
     readValue(this, data, 'folderId');
@@ -566,8 +536,10 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
     readValue(this, data, 'height');
     readValue(this, data, 'duration');
 
-    this.isImage = this.mimeType.startsWith('image');
-    this.isAudio = this.mimeType.startsWith('audio');
+    if (this.mimeType) {
+      this.isImage = this.mimeType.startsWith('image');
+      this.isAudio = this.mimeType.startsWith('audio');
+    }
   }
 
   setParent(parent: AssetFolder): Asset {
@@ -617,7 +589,7 @@ export class AssetFolder extends IdModel {
   description: string;
   allowedMimeTypes: string;
 
-  constructor(data: any) {
+  constructor(data: Input<AssetFolder>) {
     super(data);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
@@ -635,7 +607,7 @@ export declare type AssetFolderList = Array<AssetFolder>;
 export class AssetFolderRef extends IdModel {
   name: string;
 
-  constructor(data: any) {
+  constructor(data: Input<AssetFolderRef>) {
     super(data);
     readValue(this, data, 'name');
   }
@@ -646,44 +618,12 @@ export class AssetFolderRef extends IdModel {
 }
 
 
-
-export class ObjectRefsAndText<T> {
-  refs: Array<T>;
-  text: string;
-
-  constructor(data: any, clazz: ModelConstructor<T>) {
-    readArray<T>(this, data, 'refs', clazz);
-    readValue(this, data, 'text');
-  }
-
-  asText(): string {
-    return this.text + 'bolla';
-  }
-}
-
-export class ObjectRefOrText<T extends IdModel> {
-  ref: T;
-  text: string;
-
-  constructor(data?: any, clazz?: ModelConstructor<T>) {
-    if (data) {
-      readObject<T>(this, data, 'ref', clazz);
-      readValue(this, data, 'text');
-    }
-  }
-
-  asText(): string {
-    return this.ref ? this.ref.asText() : (this.text ? this.text : '-');
-  }
-}
-
-
 export class TextValue extends IdModel {
   format: string;
   isPublic: boolean;
   value: string;
 
-  constructor(data: any) {
+  constructor(data: Input<TextValue>) {
     super(data);
     readValue(this, data, 'format');
     readValue(this, data, 'isPublic');
@@ -714,7 +654,7 @@ export class Permission extends IdModel {
   entity: IdModel;
   patterns: string;
 
-  constructor(data: any) {
+  constructor(data: Input<Permission & { entityId: number }>) {
     super(data);
     readValue(this, data, 'name');
     readValue(this, data, 'level');
@@ -748,7 +688,7 @@ export class ArticleType extends IdModel {
   recordingFolder: AssetFolder;
   authorResourceType: ResourceTypeRef;
 
-  constructor(data: any) {
+  constructor(data: Input<ArticleType>) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readValue(this, data, 'idAlias');
@@ -776,7 +716,7 @@ export class ArticleSerie extends IdModel {
   content: string;
   image: Asset;
 
-  constructor(data: any) {
+  constructor(data: Input<ArticleSerie>) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readValue(this, data, 'idAlias');
@@ -798,7 +738,7 @@ export class ArticleSerieRef extends IdModel {
   articleTypeId: number;
   title: string;
 
-  constructor(data: any) {
+  constructor(data: Input<ArticleSerieRef>) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readValue(this, data, 'title');
@@ -825,7 +765,7 @@ export class Article extends IdModel {
   content: string;
   recording: Asset;
 
-  constructor(data: any) {
+  constructor(data: Input<Article>) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readValue(this, data, 'articleTypeIdAlias');
@@ -862,7 +802,7 @@ export class Podcast extends IdModel {
   link: string;
   image: Asset;
 
-  constructor(data: any) {
+  constructor(data: Input<Podcast>) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readValue(this, data, 'idAlias');

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
@@ -34,18 +33,18 @@ export class EventTypesResource extends DefaultBaseResource<EventType, EventType
 
   addResourceType(eventType: EventType, resourceTypeId: number): Observable<void> {
     return this.handleError<void>(
-      this.api.create(`api/eventTypes/${eventType.id}/resourceTypes/${resourceTypeId}`)
-        .map((data: Response): void => {
-          eventType.resourceTypes = data.json().map(item => new ResourceTypeRef(item));
+      this.api.create<any[]>(`api/eventTypes/${eventType.id}/resourceTypes/${resourceTypeId}`)
+        .map((data): void => {
+          eventType.resourceTypes = data.map(item => new ResourceTypeRef(item));
         })
     );
   }
 
   removeResourceType(eventType: EventType, resourceTypeId: number): Observable<void> {
     return this.handleError<void>(
-      this.api.delete(`api/eventTypes/${eventType.id}/resourceTypes/${resourceTypeId}`)
-        .map((data: Response): void => {
-          eventType.resourceTypes = data.json().map(item => new ResourceTypeRef(item));
+      this.api.delete<any[]>(`api/eventTypes/${eventType.id}/resourceTypes/${resourceTypeId}`)
+        .map((data): void => {
+          eventType.resourceTypes = data.map(item => new ResourceTypeRef(item));
         })
     );
   }

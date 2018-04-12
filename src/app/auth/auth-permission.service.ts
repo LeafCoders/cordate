@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -62,8 +61,7 @@ export class AuthPermissionService {
 
   private getPermissionsFromServer(): Observable<PermissionsChecker> {
     const userId: number = this.auth.userId;
-    return this.api.read(`api/users/${userId}/permissions`)
-      .map(data => data.json())
+    return this.api.read<Array<string>>(`api/users/${userId}/permissions`)
       .map(permissionsFromServer => {
         const permissions = new PermissionsChecker(permissionsFromServer);
         localStorage.setItem(this.storageKey(), permissionsFromServer.join(';'));
