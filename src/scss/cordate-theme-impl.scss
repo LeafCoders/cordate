@@ -1,10 +1,38 @@
-@import 'src/scss/cordate-theme-def';
+@import "src/scss/cordate-theme-def";
 
 @include mat-core();
 
 @include angular-material-theme($cordate-theme);
 
 // Fix for https://github.com/angular/material2/issues/2725
-.mat-menu-panel {
-  max-height: 370px !important;
+// .mat-menu-panel {
+//   max-height: 370px !important;
+// }
+
+.md-tab-header {
+  background-color: #ff4081;
+  color: white;
+
+  .md-tab-label {
+    opacity: 1 !important;
+  }
+}
+
+.mat-drawer-container {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.mat-list-text {
+  line-height: 24px;
+}
+
+// Prevent double-tap on iPhone. How about iPad?
+@media only screen and (max-width: 768px) {
+  [md-button]:hover::after {
+    content: none;
+  }
+}
+
+mat-icon {
+  color: $cordate-icon-color;
 }

@@ -1,3 +1,4 @@
+@import "src/scss/cordate-theme-def.scss";
 @import "src/scss/flex-mixin.scss";
 
 mat-toolbar {
@@ -7,6 +8,10 @@ mat-toolbar {
 
   & > span {
     padding-left: 1rem;
+  }
+
+  & mat-icon {
+    color: mat-color($cordate-primary, default-contrast);
   }
 }
 

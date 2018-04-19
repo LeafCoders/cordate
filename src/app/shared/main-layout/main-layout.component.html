@@ -1,31 +1,57 @@
 <mat-sidenav-container>
-  <mat-sidenav [mode]="sideModeQuery.matches ? 'side' : 'over'" fixedInViewport="false" [opened]="sideModeQuery.matches">
+  <mat-sidenav class="mat-elevation-z6" [mode]="sideModeQuery.matches ? 'side' : 'over'" fixedInViewport="false" [opened]="sideModeQuery.matches">
     <div>
-      <div style="background-color: #9c6; padding: 0.5rem; color: #f9f9f9">
+      <div style="background-color: #693; padding: 0.5rem; color: #f9f9f9">
         <p style="padding: 1rem;"></p>
-        <div>User name</div>
-        <div>user@name.se</div>
+        <div style="display: flex; cursor: pointer;" [matMenuTriggerFor]="userMenu">
+          <div style="flex: 100">
+            User name<br>
+            user@name.se
+          </div>
+          <button mat-icon-button><mat-icon>arrow_drop_down</mat-icon></button>
+        </div>
+
+        <mat-menu #userMenu="matMenu" xPosition="before">
+          <button mat-menu-item [routerLink]="'/auth/logout'">Logga ut</button>
+        </mat-menu>
       </div>
 
       <mat-nav-list>
-        <h3 mat-subheader>Folders</h3>
-        <mat-list-item *ngFor="let link of visibleLinks">
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <a mat-line (click)="closeNav()" [routerLink]="[link.routePath]">{{link.title}}</a>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <h3 mat-subheader>Notes</h3>
-        <mat-list-item *ngFor="let link of visibleLinks">
-          <mat-icon mat-list-icon>note</mat-icon>
-          <h4 mat-line (click)="closeNav()" [routerLink]="[link.routePath]">{{link.title}}</h4>
-        </mat-list-item>
-      </mat-nav-list>
+        <a mat-list-item *ngFor="let link of rootLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
+          <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
+          <p mat-line>{{link.title}}</p>
+        </a>
 
-      <a mat-raised-button *ngFor="let link of visibleLinks" (click)="closeNav()" [routerLink]="[link.routePath]">{{ link.title }}</a>
-      <!--
-          <p>Konfiguration</p>
-          <a mat-button *ngFor="let link of visibleLinks" (click)="closeNav()" [routerLink]="[link.routePath]">{{ link.title }}</a>
-          -->
+        <h3 matSubheader *ngIf="mediaLinks.length">Media</h3>
+        <a mat-list-item *ngFor="let link of mediaLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
+          <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
+          <p mat-line>{{link.title}}</p>
+        </a>
+
+        <h3 matSubheader *ngIf="articleLinks.length">Artiklar</h3>
+        <a mat-list-item *ngFor="let link of articleLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
+          <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
+          <p mat-line>{{link.title}}</p>
+        </a>
+
+        <h3 matSubheader *ngIf="userLinks.length">Personer</h3>
+        <a mat-list-item *ngFor="let link of userLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
+          <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
+          <p mat-line>{{link.title}}</p>
+        </a>
+
+        <h3 matSubheader *ngIf="exportLinks.length">Export</h3>
+        <a mat-list-item *ngFor="let link of exportLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
+          <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
+          <p mat-line>{{link.title}}</p>
+        </a>
+
+        <h3 matSubheader *ngIf="configurationLinks.length">Konfiguration</h3>
+        <a mat-list-item *ngFor="let link of configurationLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
+          <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
+          <p mat-line>{{link.title}}</p>
+        </a>
+      </mat-nav-list>
     </div>
   </mat-sidenav>
 

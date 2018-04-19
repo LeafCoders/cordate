@@ -107,10 +107,6 @@
     color: #999;
   }
 
-  & mat-icon {
-    color: $cordate-icon-color;
-  }
-
   &.dark {
     background-color: mat-color($cordate-primary, 0.1);
     border-bottom: 1px solid mat-color($cordate-primary, 0.2);
@@ -119,11 +115,6 @@
 
 .centered-list-item {
   align-items: center;
-
-  & mat-icon {
-    color: $cordate-icon-color;
-  }
-
 }
 
 // The height left below header and filter in a list

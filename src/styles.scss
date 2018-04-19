@@ -1,10 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import '~@angular/material/theming';
+@import "scss/cordate-theme-def";
 @import "scss/global-ui.scss";
-
-@import "src/scss/flex-mixin.scss";
 
 body {
   margin: 0;
@@ -15,36 +12,11 @@ body {
   font-size: 14px;
   line-height: 16px;
 
-  background-color: mat-color($cordate-primary);
-}
-
-// Prevent double-tap on iPhone. How about iPad?
-@media only screen and (max-width: 768px) {
-  [md-button]:hover::after {
-    content: none;
-  }
+  background-color: #c8c8c8;
 }
 
 @media screen and (min-width: 768px) {
   .hide-desktop {
     display: none !important;
   }
-}
-
-
-.md-tab-header {
-  background-color: #ff4081;
-  color: white;
-
-  .md-tab-label {
-    opacity: 1 !important;
-  }
-}
-
-.mat-drawer-container {
-  background-color: rgba(0,0,0,0.2);
-}
-
-.mat-list-text {
-  line-height: 24px;
 }

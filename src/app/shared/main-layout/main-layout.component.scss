@@ -23,7 +23,26 @@ mat-sidenav {
   width: 16rem;
   max-width: 16rem;
   overflow-x: hidden;
-  background-color: #fff; //mat-color($cordate-primary);
+  background-color: #fff;
+}
+
+[mat-icon-button] mat-icon {
+  color: white;
+}
+
+[mat-list-item] {
+  &.selected {
+    background-color: mat-color($cordate-primary, 100);
+    color: mat-color($cordate-primary, 900);
+
+    mat-icon {
+      color: mat-color($cordate-primary, 900);
+    }
+  }
+  &.selected:focus, &.selected:hover {
+    background-color: mat-color($cordate-primary, 100);
+  }
+
 }
 
 .content-wrapper {

@@ -14,8 +14,14 @@ import { ArticleTypesResource } from '../server/article-types.resource';
 
 interface LinkItem {
   permission: string;
+  icon: string,
   title: string;
   routePath: string;
+}
+
+interface LinkGroup {
+  title: string;
+  linkItems: Array<LinkItem>;
 }
 
 @Component({
@@ -27,27 +33,16 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   applicationName: string = environment.applicationName;
 
-  private links: Array<LinkItem> = [
-    { permission: 'events', title: 'Händelser', routePath: '/events' },
-    { permission: 'slideShows', title: 'Bildspel', routePath: '/slideShows' },
-    { permission: 'slides', title: 'Bildspel', routePath: '/slides' },
-    { permission: 'textValues', title: 'Textvärden', routePath: '/textValues' },
-    { permission: 'articleTypes', title: 'Artikeltyper', routePath: '/articleTypes' },
-    { permission: 'assets', title: 'Filer', routePath: '/assets' },
-    { permission: 'assetFolders', title: 'Filkataloger', routePath: '/assetFolders' },
-    { permission: 'users', title: 'Användare', routePath: '/users' },
-    { permission: 'groups', title: 'Grupper', routePath: '/groups' },
-    { permission: 'permissions', title: 'Rättigheter', routePath: '/permissions' },
-    { permission: 'podcasts', title: 'Podcasts', routePath: '/podcasts' },
-    { permission: 'resources', title: 'Resurser', routePath: '/resources' },
-    { permission: 'resourceTypes', title: 'Resurstyper', routePath: '/resourceTypes' },
-    { permission: 'eventTypes', title: 'Händelsetyper', routePath: '/eventTypes' },
-    { permission: undefined, title: 'Logga ut', routePath: '/auth/login' },
-  ];
+  rootLinks: Array<LinkItem> = [];
+  mediaLinks: Array<LinkItem> = [];
+  articleLinks: Array<LinkItem> = [];
+  userLinks: Array<LinkItem> = [];
+  exportLinks: Array<LinkItem> = [];
+  configurationLinks: Array<LinkItem> = [];
 
-  visibleLinks: Array<LinkItem> = [];
   sideModeQuery: MediaQueryList;
   private subscription: Subscription;
+  private articleTypes: ArticleTypeList;
 
   @ViewChild(MatSidenav)
   private sideNav: MatSidenav;
@@ -70,12 +65,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
     // TODO: This must be done after authorization
     let subscription = articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => {
-      articleTypes.forEach(at => this.links.push({
-        permission: at.idAlias, title: at.articleSeriesTitle, routePath: `/articleSeries/${at.idAlias}`
-      }));
-      articleTypes.forEach(at => this.links.push({
-        permission: at.idAlias, title: at.articlesTitle, routePath: `/articles/${at.idAlias}`
-      }));
+      this.articleTypes = articleTypes;
     });
   }
 
@@ -95,6 +85,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     if (this.sideNav.opened) {
       this.closeNav();
     } else {
+      this.setupLinks();
       this.signalService.requestOpenSideNav();
     }
   }
@@ -106,12 +97,48 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   private setupLinks(): void {
-    this.visibleLinks = this.links.filter((link: LinkItem): boolean => {
-      if (link.permission) {
-        return this.authPermission.isPermitted(`${link.permission}:view`);
-      }
-      return true;
-    });
+    this.rootLinks = [
+      this.linkIfPermitted({ permission: 'events', icon: 'event', title: 'Händelser', routePath: '/events' }),
+    ].filter(link => link);
+
+    this.mediaLinks = [
+      this.linkIfPermitted({ permission: 'slides', icon: 'filter', title: 'Bildspel', routePath: '/slides' }),
+      this.linkIfPermitted({ permission: 'assets', icon: 'attach_file', title: 'Filer', routePath: '/assets' }),
+    ].filter(link => link);
+
+    this.articleLinks = [];
+    this.articleTypes.forEach(at => this.articleLinks.push({
+      permission: at.idAlias, icon: 'filter_none', title: at.articleSeriesTitle, routePath: `/articleSeries/${at.idAlias}`
+    }));
+    this.articleTypes.forEach(at => this.articleLinks.push({
+      permission: at.idAlias, icon: 'crop_square', title: at.articlesTitle, routePath: `/articles/${at.idAlias}`
+    }));
+
+    this.userLinks = [
+      this.linkIfPermitted({ permission: 'users', icon: 'person', title: 'Användare', routePath: '/users' }),
+      this.linkIfPermitted({ permission: 'groups', icon: 'group', title: 'Grupper', routePath: '/groups' }),
+      this.linkIfPermitted({ permission: 'resources', icon: 'account_box', title: 'Resurser', routePath: '/resources' }),
+    ].filter(link => link);
+
+    this.exportLinks = [
+      this.linkIfPermitted({ permission: 'podcasts', icon: 'rss_feed', title: 'Podcasts', routePath: '/podcasts' }),
+    ].filter(link => link);
+
+    this.configurationLinks = [
+      this.linkIfPermitted({ permission: 'permissions', icon: 'security', title: 'Rättigheter', routePath: '/permissions' }),
+      this.linkIfPermitted({ permission: 'resourceTypes', icon: 'local_offer', title: 'Resurstyper', routePath: '/resourceTypes' }),
+      this.linkIfPermitted({ permission: 'eventTypes', icon: 'local_offer', title: 'Händelsetyper', routePath: '/eventTypes' }),
+      this.linkIfPermitted({ permission: 'articleTypes', icon: 'local_offer', title: 'Artikeltyper', routePath: '/articleTypes' }),
+      this.linkIfPermitted({ permission: 'assetFolders', icon: 'folder', title: 'Filkataloger', routePath: '/assetFolders' }),
+      this.linkIfPermitted({ permission: 'slideShows', icon: 'filter', title: 'Bildspelsenheter', routePath: '/slideShows' }),
+    ].filter(link => link);
+  }
+
+  private linkIfPermitted(link: LinkItem): LinkItem {
+    if (!link.permission || this.authPermission.isPermitted(`${link.permission}:view`)) {
+      return link;
+    }
+    return undefined;
   }
 
   private showError(error: RestApiError): void {

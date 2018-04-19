@@ -1,1 +1,5 @@
+@import "src/scss/cordate-theme-def.scss";
 
+mat-icon {
+  color: mat-color($cordate-primary, default-contrast);
+}
