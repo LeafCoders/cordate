@@ -6,20 +6,39 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { RestApiService } from '../shared/server/rest-api.service';
 import { RestApiError } from '../shared/server/rest-api-error.model';
 
+export interface UserIdentity {
+  id: number;
+  fullName: string;
+  email: string;
+};
+
+
 @Injectable()
 export class AuthService {
 
   private jwtHelperService: JwtHelperService = new JwtHelperService();
-  userId: number = 0;
+  private currentUser: UserIdentity;
 
   constructor(private api: RestApiService) {
   }
 
+  get userId(): number {
+    return this.currentUser ? this.currentUser.id : undefined;
+  }
+
+  get user(): UserIdentity {
+    return this.currentUser ? this.currentUser : { id: undefined, fullName: '-', email: '-' };
+  }
+
   public isAuthorized(): boolean {
     let token: string = localStorage.getItem('accessToken');
-    if (token) {
-      this.userId = this.jwtHelperService.decodeToken(token).sub;
-      return !this.jwtHelperService.isTokenExpired(token);
+    if (token && !this.jwtHelperService.isTokenExpired(token)) {
+      this.currentUser = {
+        id: this.jwtHelperService.decodeToken(token).sub,
+        fullName: localStorage.getItem('userFullName'),
+        email: localStorage.getItem('userEmail')
+      };
+      return true;
     }
     return false;
   }
@@ -38,13 +57,16 @@ export class AuthService {
     });
   }
 
-  public login(username: string, password: string): Observable<any> {
+  public login(username: string, password: string): Observable<UserIdentity> {
     return Observable.create(observer => {
-      this.api.createReturnResponse('auth/login', {}, { username: username, password: password })
+      this.api.createReturnResponse<UserIdentity>('auth/login', {}, { username: username, password: password })
         .subscribe(
           (response: HttpResponse<any>) => {
             localStorage.setItem('accessToken', response.headers.get('X-AUTH-TOKEN'));
-            observer.next(response.body);
+            this.currentUser = <UserIdentity>response.body;
+            localStorage.setItem('userFullName', this.currentUser.fullName);
+            localStorage.setItem('userEmail', this.currentUser.email);
+            observer.next(this.currentUser);
           },
           (error: HttpResponse<any>) => {
             observer.error(new RestApiError(error.body));

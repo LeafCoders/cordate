@@ -9,6 +9,7 @@ import { ArticleTypeList } from '../server/rest-api.model';
 import { SignalService } from '../signal.service';
 import { RestApiError } from '../../shared/server/rest-api-error.model';
 import { RestApiErrorService } from '../../shared/server/rest-api-error.service';
+import { AuthService } from '../../auth/auth.service';
 import { AuthPermissionService } from '../../auth/auth-permission.service';
 import { ArticleTypesResource } from '../server/article-types.resource';
 
@@ -49,6 +50,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   constructor(
     public router: Router,
+    public authService: AuthService,
     private signalService: SignalService,
     private snackBar: MatSnackBar,
     private apiError: RestApiErrorService,
@@ -63,10 +65,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       this.sideNav.open();
     });
 
-    // TODO: This must be done after authorization
-    let subscription = articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => {
-      this.articleTypes = articleTypes;
-    });
+    let subscription = articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => this.articleTypes = articleTypes);
   }
 
   ngOnInit() {
@@ -107,12 +106,14 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     ].filter(link => link);
 
     this.articleLinks = [];
-    this.articleTypes.forEach(at => this.articleLinks.push({
-      permission: at.idAlias, icon: 'filter_none', title: at.articleSeriesTitle, routePath: `/articleSeries/${at.idAlias}`
-    }));
-    this.articleTypes.forEach(at => this.articleLinks.push({
-      permission: at.idAlias, icon: 'crop_square', title: at.articlesTitle, routePath: `/articles/${at.idAlias}`
-    }));
+    if (this.articleTypes) {
+      this.articleTypes.forEach(at => this.articleLinks.push({
+        permission: at.idAlias, icon: 'filter_none', title: at.articleSeriesTitle, routePath: `/articleSeries/${at.idAlias}`
+      }));
+      this.articleTypes.forEach(at => this.articleLinks.push({
+        permission: at.idAlias, icon: 'crop_square', title: at.articlesTitle, routePath: `/articles/${at.idAlias}`
+      }));
+    }
 
     this.userLinks = [
       this.linkIfPermitted({ permission: 'users', icon: 'person', title: 'Användare', routePath: '/users' }),

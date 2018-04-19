@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../auth.service';
+import { AuthService, UserIdentity } from '../auth.service';
 import { AuthPermissionService } from '../auth-permission.service';
 import { RestApiError } from "../../shared/server/rest-api-error.model";
 
@@ -70,8 +70,8 @@ export class LoginComponent implements OnInit {
     }
     let username: string = this.usernameCtrl.value;
     let password: string = this.passwordCtrl.value;
-    this.authService.login(username, password).subscribe((data: any) => {
-      this.storePreviousUsers({ fullName: data.fullName, username: username });
+    this.authService.login(username, password).subscribe((userIdentity: UserIdentity) => {
+      this.addToPreviousUsers({ fullName: userIdentity.fullName, username: username });
       this.router.navigateByUrl('/events');
     }, (error: RestApiError) => {
       this.passwordCtrl.setValue('');
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private storePreviousUsers(toStoreUser: PreviousUser): void {
+  private addToPreviousUsers(toStoreUser: PreviousUser): void {
     let index: number = this.previousUsers.findIndex(user => user.username === toStoreUser.username);
     if (index >= 0) {
       this.previousUsers.splice(index, 1);

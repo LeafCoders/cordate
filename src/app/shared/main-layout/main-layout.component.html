@@ -5,8 +5,7 @@
         <p style="padding: 1rem;"></p>
         <div style="display: flex; cursor: pointer;" [matMenuTriggerFor]="userMenu">
           <div style="flex: 100">
-            User name<br>
-            user@name.se
+            {{ authService.user.fullName }}<br>{{ authService.user.email }}
           </div>
           <button mat-icon-button><mat-icon>arrow_drop_down</mat-icon></button>
         </div>
