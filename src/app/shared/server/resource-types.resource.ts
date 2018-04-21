@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, ResourceType } from './rest-api.model';
 
@@ -17,9 +16,8 @@ export class ResourceTypesResource extends DefaultBaseResource<ResourceType, Res
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'resourceTypes', apiError);
+    super(api, 'resourceTypes');
   }
 
   newInstance(data?: any): ResourceType {

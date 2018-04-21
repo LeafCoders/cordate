@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { ArticleType } from './rest-api.model';
 
@@ -23,9 +22,8 @@ export class ArticleTypesResource extends DefaultBaseResource<ArticleType, Artic
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'articleTypes', apiError);
+    super(api, 'articleTypes');
   }
 
   newInstance(data?: any): ArticleType {

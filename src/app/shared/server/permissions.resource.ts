@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, Permission } from './rest-api.model';
 
@@ -19,9 +18,8 @@ export class PermissionsResource extends DefaultBaseResource<Permission, Permiss
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'permissions', apiError);
+    super(api, 'permissions');
   }
 
   newInstance(data?: any): Permission {

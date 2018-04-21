@@ -1,4 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Messages } from "../messages";
 
@@ -14,19 +14,18 @@ export class RestApiError {
   private reasonParams: Array<string>;
   private validationErrors: Array<ValidationError>;
 
-  constructor(response: HttpResponse<any>) {
-    if (!response.body) {
+  constructor(errorResponse: HttpErrorResponse) {
+    if (errorResponse.error instanceof ErrorEvent) {
       this.error = Messages.ERROR_FORBIDDEN;
       this.reason = Messages.REASON_SERVER_UNREACHABLE;
-      console.error(response);
       return;
     }
 
-    const data: any = response.body;
-    if (response.status === 0) {
+    const data: any = errorResponse.error;
+    if (errorResponse.status === 0) {
       this.error = Messages.ERROR_FORBIDDEN;
       this.reason = Messages.REASON_SERVER_UNREACHABLE;
-    } else if (response.status === 400) {
+    } else if (errorResponse.status === 400) {
       this.validationErrors = data;
     } else {
       this.error = data.error;

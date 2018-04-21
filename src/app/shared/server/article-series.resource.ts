@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, ArticleSerie } from './rest-api.model';
 
@@ -20,9 +19,8 @@ export class ArticleSeriesResource extends DefaultBaseResource<ArticleSerie, Art
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'articleSeries', apiError);
+    super(api, 'articleSeries');
   }
 
   newInstance(data?: any): ArticleSerie {

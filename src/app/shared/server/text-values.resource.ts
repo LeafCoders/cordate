@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { BaseResource } from './base.resource';
 import { TextValue, TextValueList } from './rest-api.model';
 
@@ -15,9 +14,8 @@ export class TextValuesResource {
 
   constructor(
     private api: RestApiService,
-    apiError: RestApiErrorService
   ) {
-    this.baseResource = new BaseResource<TextValue, any>(apiError, undefined);
+    this.baseResource = new BaseResource<TextValue, any>(undefined);
   }
 
   refreshCache(textValueToRefresh: TextValue): void {
@@ -33,13 +31,11 @@ export class TextValuesResource {
     if (!reload && this.cachedTextValues.length) {
       return Observable.of(this.cachedTextValues);
     }
-    return this.baseResource.handleError<TextValueList>(
-      this.api.read<any[]>('api/textValues', {})
-        .map((data): TextValueList => {
-          this.cachedTextValues = data.map(item => new TextValue(item))
-          return this.cachedTextValues;
-        })
-    );
+    return this.api.read<any[]>('api/textValues', {})
+      .map((data): TextValueList => {
+        this.cachedTextValues = data.map(item => new TextValue(item))
+        return this.cachedTextValues;
+      });
   }
 
   listCached(): TextValueList {
@@ -51,27 +47,21 @@ export class TextValuesResource {
   }
 
   create(textValue: TextValue): Observable<TextValue> {
-    return this.baseResource.handleError<TextValue>(
-      this.api.create<Object>('api/textValues', {}, textValue)
-        .map((data): TextValue => {
-          return new TextValue(data);
-        })
-    );
+    return this.api.create<Object>('api/textValues', {}, textValue)
+      .map((data): TextValue => {
+        return new TextValue(data);
+      });
   }
 
   update(textValueId: number, textValue: TextValue): Observable<TextValue> {
-    return this.baseResource.handleError<TextValue>(
-      this.api.update(`api/textValues/${textValueId}`, {}, textValue)
-        .map((data): TextValue => {
-          return undefined; //new TextValue(data.json());
-        })
-    );
+    return this.api.update(`api/textValues/${textValueId}`, {}, textValue)
+      .map((data): TextValue => {
+        return undefined; //new TextValue(data.json());
+      });
   }
 
   delete(textValueId: number): Observable<void> {
-    return this.baseResource.handleError<any>(
-      this.api.delete(`api/textValues/${textValueId}}`)
-    );
+    return this.api.delete(`api/textValues/${textValueId}}`);
   }
 
 }

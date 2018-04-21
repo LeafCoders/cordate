@@ -3,10 +3,12 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
 
 import { AssetsResource } from '../../shared/server/assets.resource';
 import { Asset, AssetFolder } from '../../shared/server/rest-api.model';
 import { Messages } from '../../shared/messages';
+import { RestApiError } from '../../shared/server/rest-api-error.model';
 
 interface AssetResult {
   fileName: string;
@@ -67,22 +69,21 @@ export class AssetNewDialogComponent {
   }
 
   private assetFile(file: File): Observable<boolean> {
-    let fileName: string = this.assetsResource.makeSafeFileName(file.name);
-    // TODO: How to do this in the right way without <> cast
+    const fileName: string = this.assetsResource.makeSafeFileName(file.name);
     return <Observable<boolean>>this.assetsResource.createFile(this.assetFolder.id, { file: file, fileName: fileName, mimeType: file.type })
       .do((response: Asset) => {
         this.results.push({ fileName: fileName, responseData: response });
         return Observable.of<boolean>(true);
       })
-      .catch((response) => {
+      .catch((apiError: RestApiError) => {
+        console.log(apiError);
         let errorMessage: string;
-        if (response.status == 400) {
-          let errors: Array<{ property: string, message: string }> = response.body;
-          errorMessage = errors.map((error: { property: string, message: string }) => {
-            return Messages.get(error.message);
-          }).join(', ');
+        if (!apiError) {
+          errorMessage = 'Okänt fel...';
+        } else if (apiError.isValidataionError()) {
+          errorMessage = apiError.getFirstValidationError();
         } else {
-          errorMessage = 'Okänt fel!';
+          errorMessage = apiError.getError();
         }
         this.results.push({ fileName: fileName, errorMessage: errorMessage });
         return Observable.of<boolean>(false);

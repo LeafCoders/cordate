@@ -61,7 +61,6 @@ export class SelectEventResourcesMenuComponent {
   }
 
   toggleSelect(select: ResourceSelect): void {
-    console.error(select);
     if (this.allowMultiSelect) {
       select.selected = !select.selected;
     } else {

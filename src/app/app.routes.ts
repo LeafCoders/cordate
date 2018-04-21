@@ -8,6 +8,7 @@ import { GroupComponent } from './group/group.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MyPagesComponent } from './my-pages/my-pages.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { ArticleComponent } from './article/article.component';
 import { ArticleSerieComponent } from './article-serie/article-serie.component';
 import { ArticleTypeComponent } from './article-type/article-type.component';
@@ -54,7 +55,7 @@ export const ROUTES: Routes = [
       { path: 'slides', component: SlideComponent, canActivate: [AuthGuardService] },
       { path: 'textValues', component: TextValueComponent, canActivate: [AuthGuardService] },
       { path: 'users', component: UserComponent, canActivate: [AuthGuardService] },
-      { path: '**', redirectTo: '/mypages' }
+      { path: '**', component: NotFoundPageComponent, canActivate: [AuthGuardService] },
     ]
   },
 ];

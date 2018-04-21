@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, SlideShow, Slide } from './rest-api.model';
 
@@ -18,9 +17,8 @@ export class SlideShowsResource extends DefaultBaseResource<SlideShow, SlideShow
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'slideShows', apiError);
+    super(api, 'slideShows');
   }
 
   newInstance(data?: any): SlideShow {

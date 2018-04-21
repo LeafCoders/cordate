@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, Article, User, Resource } from './rest-api.model';
 
@@ -24,9 +23,8 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'articles', apiError);
+    super(api, 'articles');
   }
 
   newInstance(data?: any): Article {
@@ -47,21 +45,17 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
   }
 
   addAuthor(article: Article, userId: number): Observable<void> {
-    return this.handleError<void>(
-      this.api.create<any[]>(`api/articles/${article.id}/authors/${userId}`)
-        .map((data): void => {
-          article.authors = data.map(item => new Resource(item).asRef());
-        })
-    );
+    return this.api.create<any[]>(`api/articles/${article.id}/authors/${userId}`)
+      .map((data): void => {
+        article.authors = data.map(item => new Resource(item).asRef());
+      });
   }
 
   removeAuthor(article: Article, userId: number): Observable<void> {
-    return this.handleError<void>(
-      this.api.delete<any[]>(`api/articles/${article.id}/authors/${userId}`)
-        .map((data): void => {
-          article.authors = data.map(item => new Resource(item).asRef());
-        })
-    );
+    return this.api.delete<any[]>(`api/articles/${article.id}/authors/${userId}`)
+      .map((data): void => {
+        article.authors = data.map(item => new Resource(item).asRef());
+      });
   }
 
 }

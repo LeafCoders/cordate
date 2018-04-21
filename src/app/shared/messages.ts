@@ -42,6 +42,7 @@ export class Messages {
     'error.file.exceedSize': 'Filen är för stor',
     'error.file.notReadable': 'Filen kunder inte läsas',
     'error.file.invalidContent': 'Filen har ogiltigt innehåll',
+    'error.file.invalidDimension': 'Filens bredd och höjd kunde inte läsas',
     'error.file.mimeTypeNotAllowed': 'Filtypen är inte tillåten',
 
     'error.idAlias.invalidFormat': 'Id-alias måste vara på formatet [a-z][a-zA-Z0-9]+',
@@ -62,6 +63,7 @@ export class Messages {
     'property.duration': 'Visningstid',
     'property.email': 'E-postadress',
     'property.endTime': 'Sluttid',
+    'property.file': 'Fil',
     'property.fileName': 'Filnamn',
     'property.firstName': 'Förnamn',
     'property.id': 'Id',

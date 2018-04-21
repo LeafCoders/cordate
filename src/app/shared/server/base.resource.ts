@@ -1,12 +1,6 @@
-import { HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 
-import { RestApiErrorService } from './rest-api-error.service';
 import { IdModel } from './rest-api.model';
 
 export interface ChildResource<PARENT extends IdModel, CHILD extends IdModel> {
@@ -23,18 +17,8 @@ export class BaseResource<T extends IdModel, U> {
   protected selectedSubject: BehaviorSubject<T> = new BehaviorSubject<T>(undefined);
 
   constructor(
-    private apiError: RestApiErrorService,
     private findBeforeFn: (a: T, b: T) => boolean,
   ) { }
-
-  handleError<T>(observer: Observable<T>): Observable<T> {
-    return <Observable<T>>observer.catch(this.catchError.bind(this));
-  }
-
-  private catchError(errorResponse: HttpResponse<any>): ErrorObservable {
-    this.apiError.addError(errorResponse);
-    return Observable.throw(errorResponse);
-  };
 
   protected nextList(): void {
     this.listSubject.next(this.listItems);

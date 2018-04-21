@@ -8,7 +8,7 @@
   <mat-progress-spinner *ngIf="!resources || !resources.length" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
   <button mat-menu-item *ngFor="let resourceSelect of resources" (click)="toggleSelect(resourceSelect)">
     <mat-icon>{{ trueFalseIcons[resourceSelect.selected ? 0 : 1] }}</mat-icon>
-    <span>{{ resourceSelect.resource.user.fullName }}</span>
+    <span>{{ resourceSelect.resource.name }}</span>
   </button>
   <div class="menu-divider"></div>
   <button mat-menu-item (click)="selectAll()" *ngIf="allowMultiSelect">Välj alla</button>

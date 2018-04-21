@@ -11,6 +11,7 @@ import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { MyPagesComponent } from './my-pages/my-pages.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { ArticleTypeGuard } from './article-type.guard';
 
 import { SharedModule } from './shared/shared.module';
@@ -48,6 +49,7 @@ export const CORDATE_FORMATS = {
   declarations: [
     AppComponent,
     MyPagesComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     BrowserAnimationsModule,

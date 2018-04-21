@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-//import { AuthHttp } from '@auth0/angular-jwt';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError } from 'rxjs/operators';
+
 import { environment } from '../../../environments/environment';
+import { RestApiError } from './rest-api-error.model';
+import { RestApiErrorService } from './rest-api-error.service';
 
 export type RequestParams = HttpParams | { [param: string]: any | string[] };
 
@@ -13,6 +17,7 @@ export class RestApiService {
 
   constructor(
     private httpClient: HttpClient,
+    private apiErrorService: RestApiErrorService,
   ) {
   }
 
@@ -47,7 +52,9 @@ export class RestApiService {
       headers: new HttpHeaders({ 'Accept': 'application/json', 'enctype': 'multipart/form-data' }),
       params: params,
       body: data
-    }).map((data: HttpResponse<JSON>) => data.body);
+    })
+      .pipe(catchError(e => this.handleError(e)))
+      .map((data: HttpResponse<JSON>) => data.body);
   }
 
   private makeRequest<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<T> {
@@ -64,7 +71,13 @@ export class RestApiService {
       headers: headers ? headers : new HttpHeaders({ 'Accept': 'application/json', 'Content-Type': 'application/json' }),
       params: params,
       body: body
-    });
+    })
+      .pipe(catchError(e => this.handleError(e)));
   }
 
+  private handleError(error: HttpErrorResponse): ErrorObservable {
+    const apiError = new RestApiError(error)
+    this.apiErrorService.addApiError(apiError);
+    return new ErrorObservable(apiError);
+  };
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, Event, User, ResourceRequirement, Resource, ResourceList, ResourceType, ResourceTypeRef, ArticleList, Article } from './rest-api.model';
 
@@ -20,9 +19,8 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'events', apiError);
+    super(api, 'events');
   }
 
   newInstance(data?: any): Event {
@@ -48,41 +46,33 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   addResourceRequirement(event: Event, resourceType: ResourceType): Observable<void> {
-    return this.handleError<void>(
-      this.api.create<any[]>(`api/events/${event.id}/resourceRequirements`, undefined, { resourceTypeId: resourceType.id })
-        .map((data): void => {
-          event.resourceRequirements = data.map(item => new ResourceRequirement(item));
-        })
-    );
+    return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements`, undefined, { resourceTypeId: resourceType.id })
+      .map((data): void => {
+        event.resourceRequirements = data.map(item => new ResourceRequirement(item));
+      });
   }
 
   removeResourceRequirement(event: Event, resourceRequirement: ResourceRequirement): Observable<void> {
-    return this.handleError<void>(
-      this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}`)
-        .map((data): void => {
-          event.resourceRequirements = data.map(item => new ResourceRequirement(item));
-        })
-    );
+    return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}`)
+      .map((data): void => {
+        event.resourceRequirements = data.map(item => new ResourceRequirement(item));
+      });
   }
 
   addResource(event: Event, resourceRequirement: ResourceRequirement, resource?: Resource): Observable<void> {
     let oneOrAll: Object = resource ? { resourceId: resource.id } : undefined;
-    return this.handleError<void>(
-      this.api.create<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources`, oneOrAll)
-        .map((data): void => {
-          resourceRequirement.resources = data.map(item => new Resource(item));
-        })
-    );
+    return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources`, oneOrAll)
+      .map((data): void => {
+        resourceRequirement.resources = data.map(item => new Resource(item));
+      });
   }
 
   removeResource(event: Event, resourceRequirement: ResourceRequirement, resource?: Resource): Observable<void> {
     let oneOrAll: string = resource ? `/${resource.id}` : '';
-    return this.handleError<void>(
-      this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources${oneOrAll}`)
-        .map((data): void => {
-          resourceRequirement.resources = data.map(item => new Resource(item));
-        })
-    );
+    return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources${oneOrAll}`)
+      .map((data): void => {
+        resourceRequirement.resources = data.map(item => new Resource(item));
+      });
   }
 
   manageResourceRequirementsPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
@@ -94,12 +84,10 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   readArticles(event: Event): Observable<ArticleList> {
-    return this.handleError<ArticleList>(
-      this.api.read<any[]>(`api/events/${event.id}/articles`)
-        .map((data): ArticleList => {
-          return data.map(item => new Article(item));
-        })
-    );
+    return this.api.read<any[]>(`api/events/${event.id}/articles`)
+      .map((data): ArticleList => {
+        return data.map(item => new Article(item));
+      });
   }
 
 }

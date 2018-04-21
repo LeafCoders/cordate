@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { IdModel, User } from './rest-api.model';
 
@@ -19,9 +18,8 @@ export class UsersResource extends DefaultBaseResource<User, UserUpdate> {
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService
   ) {
-    super(api, 'users', apiError);
+    super(api, 'users');
   }
 
   newInstance(data?: any): User {

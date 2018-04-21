@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { RestApiService } from './rest-api.service';
-import { RestApiErrorService } from './rest-api-error.service';
 import { DefaultBaseResource } from './default-base.resource';
 import { Podcast } from './rest-api.model';
 
@@ -28,9 +27,8 @@ export class PodcastsResource extends DefaultBaseResource<Podcast, PodcastUpdate
 
   constructor(
     api: RestApiService,
-    apiError: RestApiErrorService,
   ) {
-    super(api, 'podcasts', apiError);
+    super(api, 'podcasts');
   }
 
   newInstance(data?: any): Podcast {
