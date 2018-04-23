@@ -68,8 +68,8 @@ export class AuthService {
             localStorage.setItem('userEmail', this.currentUser.email);
             observer.next(this.currentUser);
           },
-          (error: HttpResponse<any>) => {
-            observer.error(new RestApiError(error.body));
+          (error: RestApiError) => {
+            observer.error(error);
           },
           () => observer.complete()
         );

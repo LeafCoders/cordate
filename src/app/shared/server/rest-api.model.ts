@@ -690,7 +690,6 @@ export class ArticleType extends IdModel {
 
   constructor(data: Input<ArticleType>) {
     super(data);
-    readValue(this, data, 'articleTypeId');
     readValue(this, data, 'idAlias');
     readValue(this, data, 'articlesTitle');
     readValue(this, data, 'newArticleTitle');
@@ -699,6 +698,19 @@ export class ArticleType extends IdModel {
     readObject<AssetFolder>(this, data, 'imageFolder', AssetFolder);
     readObject<AssetFolder>(this, data, 'recordingFolder', AssetFolder);
     readObject<ResourceTypeRef>(this, data, 'authorResourceType', ResourceTypeRef);
+  }
+
+  asText(): string {
+    return this.articlesTitle;
+  }
+}
+
+export class ArticleTypeRef extends IdModel {
+  articlesTitle: string;
+
+  constructor(data: Input<ArticleTypeRef>) {
+    super(data);
+    readValue(this, data, 'articlesTitle');
   }
 
   asText(): string {
@@ -789,7 +801,7 @@ export declare type ArticleList = Array<Article>;
 
 
 export class Podcast extends IdModel {
-  articleTypeId: number;
+  articleType: ArticleTypeRef;
   idAlias: string;
   title: string;
   subTitle: string;
@@ -804,7 +816,7 @@ export class Podcast extends IdModel {
 
   constructor(data: Input<Podcast>) {
     super(data);
-    readValue(this, data, 'articleTypeId');
+    readObject<ArticleTypeRef>(this, data, 'articleType', ArticleTypeRef);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'title');
     readValue(this, data, 'subTitle');

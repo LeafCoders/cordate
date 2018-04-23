@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { Podcast } from './rest-api.model';
+import { Podcast, IdModel } from './rest-api.model';
 
 import * as moment from 'moment';
 
@@ -46,7 +46,7 @@ export class PodcastsResource extends DefaultBaseResource<Podcast, PodcastUpdate
       return <PodcastUpdate>{ id: from.id }
     } else {
       return <PodcastUpdate>{
-        articleTypeId: from.articleTypeId,
+        articleTypeId: IdModel.idOf(from.articleType),
         copyright: from.copyright,
         mainCategory: from.mainCategory,
         subCategory: from.subCategory,

@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { EditorState } from '../editor-state';
 import { IdModel, Location } from '../../server/rest-api.model';
 import { ArticleSeriesResource } from '../../server/article-series.resource';
+import { ArticleTypesResource } from '../../server/article-types.resource';
 import { AssetFoldersResource } from '../../server/asset-folders.resource';
 import { EventTypesResource } from '../../server/event-types.resource';
 import { GroupsResource } from '../../server/groups.resource';
@@ -30,6 +31,7 @@ export class RefEditorComponent {
 
   constructor(
     private articleSeriesResource: ArticleSeriesResource,
+    private articleTypesResource: ArticleTypesResource,
     private assetFoldersResource: AssetFoldersResource,
     private eventsResource: EventsResource,
     private eventTypesResource: EventTypesResource,
@@ -54,6 +56,10 @@ export class RefEditorComponent {
       case 'articleSerie':
         this.icon = this.icon ? this.icon : 'local_offer';
         this.articleSeriesResource.listOnce().subscribe(setRefs);
+        break;
+      case 'articleType':
+        this.icon = this.icon ? this.icon : 'local_offer';
+        this.articleTypesResource.listOnce().subscribe(setRefs);
         break;
       case 'assetFolder':
         this.icon = this.icon ? this.icon : 'folder';

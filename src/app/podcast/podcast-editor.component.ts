@@ -7,7 +7,7 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { PodcastsResource, PodcastUpdate } from '../shared/server/podcasts.resource';
 import { UsersResource } from '../shared/server/users.resource';
 
-import { Podcast, Asset } from '../shared/server/rest-api.model';
+import { Podcast, Asset, ArticleTypeRef } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-podcast-editor',
@@ -15,7 +15,7 @@ import { Podcast, Asset } from '../shared/server/rest-api.model';
 })
 export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
 
-  articleTypeIdState: EditorState = new EditorState();
+  articleTypeState: EditorState = new EditorState();
   idAliasState: EditorState = new EditorState();
   titleState: EditorState = new EditorState();
   subTitleState: EditorState = new EditorState();
@@ -42,7 +42,7 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
 
   protected allEditorStates(): Array<EditorState> {
     return [
-      this.articleTypeIdState, this.idAliasState, this.titleState, this.subTitleState, this.authorNameState,
+      this.articleTypeState, this.idAliasState, this.titleState, this.subTitleState, this.authorNameState,
       this.copyrightState, this.descriptionState, this.mainCategoryState, this.subCategoryState,
       this.languageState, this.linkState, this.imageState
     ];
@@ -63,10 +63,10 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
     return actions;
   }
 
-  setArticleTypeId(articleTypeId: number): void {
-    this.setValue(this.articleTypeIdState,
-      (item: PodcastUpdate) => item.articleTypeId = articleTypeId,
-      () => this.item.articleTypeId = articleTypeId
+  setArticleType(articleType: ArticleTypeRef): void {
+    this.setValue(this.articleTypeState,
+      (item: PodcastUpdate) => item.articleTypeId = articleType.id,
+      () => this.item.articleType = articleType
     );
   }
 
