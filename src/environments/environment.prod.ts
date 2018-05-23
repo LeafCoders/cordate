@@ -3,12 +3,12 @@ type CordateConfig = {
   applicationName: string,
 };
 
-function readCordateConfiguration(): CordateConfig {
+export function readCordateConfiguration(): CordateConfig {
   const cordateConfig: CordateConfig = (<any>window).cordateConfig;
   return cordateConfig ? cordateConfig : <CordateConfig>{};
 }
 
-function endWithSlash(url: string): string {
+export function endWithSlash(url: string): string {
   return url.endsWith('/') ? url : `${url}/`;
 }
 

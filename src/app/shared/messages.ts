@@ -2,8 +2,10 @@ export class Messages {
 
   public static ERROR_SYNTAX: string = 'error.syntax';
   public static ERROR_FORBIDDEN: string = 'error.forbidden';
+  public static ERROR_UNKNOWN: string = 'error.unknown';
 
   public static REASON_SERVER_UNREACHABLE: string = 'reason.serverUnreachable';
+  public static REASON_UNKNOWN: string = 'reason.unknown';
 
   public static AUTH_INVALID_PASSWORD: string = 'auth.invalidPassword';
 
@@ -12,7 +14,7 @@ export class Messages {
     'auth.userNotActivated': 'Användaren har inte aktiverats än',
 
     [Messages.REASON_SERVER_UNREACHABLE]: 'Servern kan inte nås för tillfället',
-    'reason.unknown': 'Okänd anledning',
+    [Messages.REASON_UNKNOWN]: 'Okänd anledning',
     'reason.missingPermission': 'Du saknar rättighet till detta',
     'reason.childAlreadyExist': 'Objektet är redan tillaggt',
     'reason.childDontBelongTo': 'Objektet kan inte läggas till',
@@ -22,7 +24,7 @@ export class Messages {
     [Messages.ERROR_FORBIDDEN]: 'Ogiltigt anrop, kontakta utvecklaren',
     'error.notFound': 'Hittades inte, ladda om sidan',
     'error.notNull': 'Måste anges',
-    'error.unknown': 'Okänt fel, ladda om sidan',
+    [Messages.ERROR_UNKNOWN]: 'Okänt fel, ladda om sidan',
 
     'error.string.notEmpty': 'Får inte vara tomt',
     'error.string.max32Chars': 'Får max innehålla 32 tecken',

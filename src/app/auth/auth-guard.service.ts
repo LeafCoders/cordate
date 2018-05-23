@@ -35,7 +35,13 @@ export class AuthGuardService implements CanActivate {
 
     return this.authPermission.loadAndCheckPermission(permission).map(permitted => {
       if (!permitted) {
-        this.router.navigate(['/mypages']);
+        const currentUrl: string = this.router.routerState.snapshot.url;
+        if (!currentUrl || currentUrl.includes("/mypages")) {
+          // Prevent eternal loop when AuthGuard fails for 'mypages'
+          this.router.navigate(['/auth/login'])
+        } else {
+          this.router.navigate(['/mypages'])
+        }
       }
       return permitted;
     });

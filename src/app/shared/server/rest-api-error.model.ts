@@ -15,22 +15,27 @@ export class RestApiError {
   private validationErrors: Array<ValidationError>;
 
   constructor(errorResponse: HttpErrorResponse) {
-    if (errorResponse.error instanceof ErrorEvent) {
+    if (!errorResponse) {
+      this.error = Messages.ERROR_UNKNOWN;
+      this.reason = Messages.REASON_UNKNOWN;
+    } else if (errorResponse.error instanceof ErrorEvent) {
       this.error = Messages.ERROR_FORBIDDEN;
       this.reason = Messages.REASON_SERVER_UNREACHABLE;
-      return;
-    }
-
-    const data: any = errorResponse.error;
-    if (errorResponse.status === 0) {
+    } else if (errorResponse.status === 0) {
       this.error = Messages.ERROR_FORBIDDEN;
       this.reason = Messages.REASON_SERVER_UNREACHABLE;
-    } else if (errorResponse.status === 400) {
-      this.validationErrors = data;
     } else {
-      this.error = data.error;
-      this.reason = data.reason;
-      this.reasonParams = data.reasonParams;
+      const data: any = errorResponse.error;
+      if (!data) {
+        this.error = Messages.ERROR_UNKNOWN;
+        this.reason = Messages.REASON_UNKNOWN;
+      } else if (errorResponse.status === 400) {
+        this.validationErrors = data;
+      } else {
+        this.error = data.error;
+        this.reason = data.reason;
+        this.reasonParams = data.reasonParams;
+      }
     }
   }
 

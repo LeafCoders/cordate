@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { FilesDropModule } from 'ng2-files-drop';
 
 import { environment } from '../../environments/environment';
@@ -148,12 +148,30 @@ let materialModules = [
 ];
 
 
+export function jwtTokenGetter() {
+  return localStorage.getItem('accessToken');
+}
+
 // Must not contain protocol or end with a '/'
-function jwtModuleCompatible(url: string): string {
+export function jwtModuleCompatible(): string {
+  let url = environment.rosetteUrl;
   url = url.replace('http://', '').replace('https://', '');
   return url.endsWith('/') ? url.substr(0, url.length - 1) : url;
 }
 
+export function jwtModuleBlacklistRoutes(): string {
+  return `${environment.rosetteUrl}auth`;
+}
+
+export function jwtOptionsFactory(storage) {
+  return {
+    tokenGetter: jwtTokenGetter,
+    headerName: 'X-AUTH-TOKEN',
+    authScheme: '',
+    whitelistedDomains: [jwtModuleCompatible()],
+    blacklistedRoutes: [jwtModuleBlacklistRoutes()]
+  }
+}
 
 @NgModule({
   imports: [
@@ -164,14 +182,9 @@ function jwtModuleCompatible(url: string): string {
     FilesDropModule,
     ...materialModules,
     JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('accessToken');
-        },
-        headerName: 'X-AUTH-TOKEN',
-        authScheme: '',
-        whitelistedDomains: [jwtModuleCompatible(environment.rosetteUrl)],
-        blacklistedRoutes: [`${environment.rosetteUrl}auth`]
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
       }
     })
   ],
