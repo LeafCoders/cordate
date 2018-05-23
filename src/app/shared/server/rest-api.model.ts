@@ -209,6 +209,7 @@ export class Event extends IdModel {
     event.startTime = date.clone().hour(11);
     event.endTime = date.clone().hour(13);
     event.title = eventType.name;
+    event.isPublic = eventType.isPublic;
     return event;
   }
 
@@ -264,6 +265,7 @@ export class EventType extends IdModel {
   idAlias: string;
   name: string;
   description: string;
+  isPublic: boolean;
   resourceTypes: Array<ResourceTypeRef>;
 
   constructor(data: Input<EventType>) {
@@ -271,6 +273,7 @@ export class EventType extends IdModel {
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
     readValue(this, data, 'description');
+    readValue(this, data, 'isPublic');
     readArray(this, data, 'resourceTypes', ResourceTypeRef);
   }
 

@@ -10,6 +10,7 @@ export interface EventTypeUpdate {
   idAlias: string;
   name: string;
   description: string;
+  isPublic: boolean;
 }
 
 @Injectable()
@@ -22,7 +23,7 @@ export class EventTypesResource extends DefaultBaseResource<EventType, EventType
   }
 
   newInstance(data?: any): EventType {
-    return new EventType(data ? data : {});
+    return new EventType(data ? data : { isPublic: true });
   }
 
   updateInstance(from: EventType): EventTypeUpdate {

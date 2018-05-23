@@ -18,6 +18,7 @@ export class EventTypeEditorComponent extends BaseEditor<EventType, EventTypeUpd
   idAliasState: EditorState = new EditorState();
   nameState: EditorState = new EditorState();
   descriptionState: EditorState = new EditorState();
+  isPublicState: EditorState = new EditorState();
 
   allResourceTypes: Array<ResourceTypeRef> = [];
   resourceTypesNotInEventType: Array<ResourceTypeRef> = [];
@@ -40,7 +41,7 @@ export class EventTypeEditorComponent extends BaseEditor<EventType, EventTypeUpd
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.idAliasState, this.nameState, this.descriptionState];
+    return [this.idAliasState, this.nameState, this.descriptionState, this.isPublicState];
   }
 
   protected checkPermissions(): void {
@@ -76,6 +77,13 @@ export class EventTypeEditorComponent extends BaseEditor<EventType, EventTypeUpd
     this.setValue(this.descriptionState,
       (item: EventTypeUpdate) => item.description = description,
       () => this.item.description = description
+    );
+  }
+
+  setIsPublic(isPublic: boolean): void {
+    this.setValue(this.isPublicState,
+      (item: EventTypeUpdate) => item.isPublic = isPublic,
+      () => this.item.isPublic = isPublic
     );
   }
 

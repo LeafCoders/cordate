@@ -12,6 +12,7 @@ export interface EventUpdate {
   endTime: string;
   title: string;
   description: string;
+  isPublic: boolean;
 }
 
 @Injectable()
@@ -24,7 +25,7 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   newInstance(data?: any): Event {
-    return new Event(data ? data : {});
+    return new Event(data ? data : { isPublic: true });
   }
 
   updateInstance(from: Event): EventUpdate {
@@ -37,6 +38,7 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
         endTime: from.endTime ? from.endTime.toJSON() : undefined,
         title: from.title,
         description: from.description,
+        isPublic: from.isPublic,
       };
     }
   }

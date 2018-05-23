@@ -25,6 +25,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   titleState: EditorState = new EditorState();
   descriptionState: EditorState = new EditorState();
   eventTypeState: EditorState = new EditorState();
+  isPublicState: EditorState = new EditorState();
 
   private currentTabIndex: number = 0;
 
@@ -57,7 +58,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.timeState, this.titleState, this.descriptionState, this.eventTypeState];
+    return [this.timeState, this.titleState, this.descriptionState, this.isPublicState, this.eventTypeState];
   }
 
   protected checkPermissions(): void {
@@ -204,6 +205,13 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     this.setValue(this.descriptionState,
       (item: EventUpdate) => item.description = description,
       () => this.item.description = description
+    );
+  }
+
+  setIsPublic(isPublic: boolean): void {
+    this.setValue(this.isPublicState,
+      (item: EventUpdate) => item.isPublic = isPublic,
+      () => this.item.isPublic = isPublic
     );
   }
 
