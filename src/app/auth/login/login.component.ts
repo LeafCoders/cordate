@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
   public showForgottenPasswordInfo: boolean = false;
 
   public form: FormGroup;
-  private usernameCtrl: FormControl = new FormControl('', Validators.required);
-  private passwordCtrl: FormControl = new FormControl('', Validators.required);
+  usernameCtrl: FormControl = new FormControl('', Validators.required);
+  passwordCtrl: FormControl = new FormControl('');
 
   constructor(
     private authService: AuthService,
@@ -74,7 +74,6 @@ export class LoginComponent implements OnInit {
       this.addToPreviousUsers({ fullName: userIdentity.fullName, username: username });
       this.router.navigateByUrl('/events');
     }, (error: RestApiError) => {
-      this.passwordCtrl.setValue('');
       this.errorMessage = error.getReason();
       this.showForgottenPasswordInfo = error.isInvalidPassword();
     });

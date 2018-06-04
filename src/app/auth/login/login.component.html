@@ -3,10 +3,8 @@
     Välkommen till {{ applicationName }}
   </div>
   <div class="auth-content">
-    <div *ngIf="errorMessage" class="alert-error">Misslyckad inloggning: {{ errorMessage }}</div>
-    <div *ngIf="showForgottenPasswordInfo" class="alert-info">
-      <a [routerLink]="['/auth/forgotten']">Har du glömt ditt lösenord? Klicka här.</a>
-    </div>
+    <div *ngIf="errorMessage" class="alert-error">{{ errorMessage }}</div>
+
     <form [formGroup]="form" (ngSubmit)="login()" autocomplete="off">
       <div *ngIf="selectedUser" class="username">
         <div style="flex: 1; padding: 8px 0;">{{ selectedUser.fullName }}<br><small>{{ selectedUser.username }}</small></div>
@@ -15,10 +13,10 @@
         </button>
       </div>
       <mat-form-field *ngIf="!selectedUser">
-        <input matInput formControlName="username" placeholder="E-postadress" autofocus autocapitalize="none">
+        <input matInput [formControl]="usernameCtrl" placeholder="E-postadress" autofocus autocapitalize="none">
       </mat-form-field>
       <mat-form-field>
-        <input matInput formControlName="password" placeholder="Lösenord" type="password" autofocus>
+        <input matInput [formControl]="passwordCtrl" placeholder="Lösenord" type="password" autofocus>
       </mat-form-field>
       <button mat-button color="primary" type="submit" [disabled]="!form.valid">LOGGA IN</button>
     </form>
@@ -26,7 +24,8 @@
 </div>
 
 <div class="auth-footer" *ngIf="!showSelectUser">
-  <a [routerLink]="['/auth/signup']" mat-button>Skapa nytt konto</a>
+  <a *ngIf="showForgottenPasswordInfo" [routerLink]="['/auth/forgotten']" mat-raised-button color="warn">Glömt ditt lösenord?</a>
+  <a [routerLink]="['/auth/signup']" mat-raised-button color="primary">Skapa nytt konto</a>
 </div>
 
 <mat-menu #usersMenu="matMenu" xPosition="before">

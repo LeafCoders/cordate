@@ -1,7 +1,9 @@
 <div class="auth-window">
   <div class="auth-header">
     <div>Glömt ditt lösenord?</div>
-    <a [routerLink]="['/auth/login']"><mat-icon>close</mat-icon></a>
+    <a [routerLink]="['/auth/login']">
+      <mat-icon>close</mat-icon>
+    </a>
   </div>
   <div class="auth-content">
     <div *ngIf="errorMessage" class="alert-error">{{ errorMessage }}</div>
@@ -20,8 +22,9 @@
       <h4 *ngIf="success">Skickat till: <u>{{ emailCtrl.value }}</u></h4>
     </div>
 
-    <div *ngIf="token">
-      <p>Ange det lösenord som du vill ändra till:</p>
+    <div *ngIf="token && !tokenHasExpired">
+      <h4>{{ userOfToken }}</h4>
+      <p>Ange det lösenord som du vill byta till</p>
 
       <form *ngIf="notSent" [formGroup]="formApply" (ngSubmit)="apply()" autocomplete="off">
         <mat-form-field>
@@ -35,4 +38,6 @@
 
     <mat-progress-spinner *ngIf="sending" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
   </div>
+
+  <lc-error-background *ngIf="token && tokenHasExpired" text="Det har gått mer än 30 minuter sedan länken skickades till dig. Den är däför inte längre giltig."></lc-error-background>
 </div>

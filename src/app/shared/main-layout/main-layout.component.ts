@@ -132,6 +132,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       this.linkIfPermitted({ permission: 'articleTypes', icon: 'local_offer', title: 'Artikeltyper', routePath: '/articleTypes' }),
       this.linkIfPermitted({ permission: 'assetFolders', icon: 'folder', title: 'Filkataloger', routePath: '/assetFolders' }),
       this.linkIfPermitted({ permission: 'slideShows', icon: 'filter', title: 'Bildspelsenheter', routePath: '/slideShows' }),
+      this.linkIfPermitted({ permission: 'messages', icon: 'short_text', title: 'Meddelanden', routePath: '/messages' }),
     ].filter(link => link);
   }
 

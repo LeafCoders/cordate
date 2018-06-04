@@ -93,7 +93,7 @@ export class AuthService {
 
   public applyForgottenPassword(token: string, password: string): Observable<boolean> {
     return Observable.create(observer => {
-      this.api.updateReturnResponse('auth/forgottenPassword', { token: token, password: btoa(password) })
+      this.api.updateReturnResponse('auth/forgottenPassword', { token: token, password: password })
         .subscribe(
           response => observer.next(true),
           error => observer.next(false),

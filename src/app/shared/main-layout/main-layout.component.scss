@@ -10,6 +10,9 @@ mat-toolbar {
   right: 0;
   z-index: 2;
 
+  background-image: linear-gradient(mat-color($cordate-primary, 0.8)), url("/assets/background.png");
+  color: #fff;
+
   & > button {
     margin-left: -0.5rem;
   }

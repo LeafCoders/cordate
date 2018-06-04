@@ -12,7 +12,9 @@ $mat-body-font-size-base: 12;
   align-items: center;
   justify-content: center;
 
-  background-color: mat-color($cordate-primary);
+  & mat-icon {
+    color: white;
+  }
 }
 
 .auth-window {
@@ -27,8 +29,8 @@ $mat-body-font-size-base: 12;
   & form {
     @include fb-column-container();
 
-    mat-hint {
-    color: red;
+    mat-error, mat-hint {
+      font-size: 14px;
     }
   }
 }

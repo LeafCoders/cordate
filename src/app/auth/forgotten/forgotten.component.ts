@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 //import { FormValidators } from '../../shared';
 
 @Component({
@@ -10,24 +11,33 @@ import { AuthService } from '../auth.service';
   templateUrl: './forgotten.component.html',
   styleUrls: ['./forgotten.component.scss']
 })
-export class ForgottenComponent implements OnInit {
+export class ForgottenComponent {
 
-  public token: string;
-  public notSent: boolean = true;
-  public sending: boolean = false;
-  public success: boolean = false;
-  public errorMessage: string;
-  public formSend: FormGroup;
-  public formApply: FormGroup;
-  private emailCtrl: FormControl = new FormControl('', Validators.compose([Validators.required])); //, FormValidators.email]));
-  private passwordCtrl: FormControl = new FormControl('', Validators.required);
+  token: string;
+  tokenHasExpired: boolean = false;
+  userOfToken: string;
+
+  notSent: boolean = true;
+  sending: boolean = false;
+  success: boolean = false;
+  errorMessage: string;
+  formSend: FormGroup;
+  formApply: FormGroup;
+  emailCtrl: FormControl = new FormControl('', Validators.compose([Validators.required])); //, FormValidators.email]));
+  passwordCtrl: FormControl = new FormControl('', Validators.required);
 
   constructor(
     private authService: AuthService,
-    route: ActivatedRoute,
-    builder: FormBuilder
+    private route: ActivatedRoute,
+    builder: FormBuilder,
+    jwtHelperService: JwtHelperService,
   ) {
-    this.token = route.snapshot.params['token'];
+    this.token = this.route.snapshot.queryParams.token;
+
+    if (this.token) {
+      this.userOfToken = jwtHelperService.decodeToken(this.token).sub;
+      this.tokenHasExpired = jwtHelperService.isTokenExpired(this.token);
+    }
 
     this.formSend = builder.group({
       email: this.emailCtrl
@@ -35,9 +45,6 @@ export class ForgottenComponent implements OnInit {
     this.formApply = builder.group({
       password: this.passwordCtrl
     });
-  }
-
-  ngOnInit() {
   }
 
   public send(): void {
