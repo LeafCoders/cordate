@@ -1,0 +1,5 @@
+<lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="Meddelande" [value]="item.message" (changed)="setMessage($event)" [state]="messageState"></lc-text-editor>
+  </lc-list>
+</lc-editor-container>

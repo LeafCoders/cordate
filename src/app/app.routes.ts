@@ -16,6 +16,7 @@ import { AssetComponent } from './asset/asset.component';
 import { AssetFolderComponent } from './asset-folder/asset-folder.component';
 import { EventComponent } from './event/event.component';
 import { EventTypeComponent } from './event-type/event-type.component';
+import { MessageComponent } from './message/message.component';
 import { PermissionComponent } from './permission/permission.component';
 import { PodcastComponent } from './podcast/podcast.component';
 import { ResourceComponent } from './resource/resource.component';
@@ -47,6 +48,7 @@ export const ROUTES: Routes = [
       { path: 'events', component: EventComponent, canActivate: [AuthGuardService] },
       { path: 'eventTypes', component: EventTypeComponent, canActivate: [AuthGuardService] },
       { path: 'groups', component: GroupComponent, canActivate: [AuthGuardService] },
+      { path: 'messages', component: MessageComponent, canActivate: [AuthGuardService] },
       { path: 'permissions', component: PermissionComponent, canActivate: [AuthGuardService] },
       { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuardService] },
       { path: 'resources', component: ResourceComponent, canActivate: [AuthGuardService] },

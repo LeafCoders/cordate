@@ -7,10 +7,10 @@ export class Messages {
   public static REASON_SERVER_UNREACHABLE: string = 'reason.serverUnreachable';
   public static REASON_UNKNOWN: string = 'reason.unknown';
 
-  public static AUTH_INVALID_PASSWORD: string = 'auth.invalidPassword';
+  public static AUTH_INCORRECT_PASSWORD: string = 'auth.incorrectPassword';
 
   private static messages: { [langCode: string]: string } = {
-    [Messages.AUTH_INVALID_PASSWORD]: 'Felaktigt lösenord',
+    [Messages.AUTH_INCORRECT_PASSWORD]: 'Felaktigt lösenord',
     'auth.userNotActivated': 'Användaren har inte aktiverats än',
 
     [Messages.REASON_SERVER_UNREACHABLE]: 'Servern kan inte nås för tillfället',

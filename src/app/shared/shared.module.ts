@@ -20,6 +20,7 @@ import { EventsResource } from './server/events.resource';
 import { EventTypesResource } from './server/event-types.resource';
 import { GroupsResource } from './server/groups.resource';
 import { LocationsResource } from './server/locations.resource';
+import { MessagesResource } from './server/messages.resource';
 import { PermissionsResource } from './server/permissions.resource';
 import { PodcastsResource } from './server/podcasts.resource';
 import { SlideShowsResource } from './server/slide-shows.resource';
@@ -117,6 +118,7 @@ let resourceServices = [
   EventTypesResource,
   GroupsResource,
   LocationsResource,
+  MessagesResource,
   PermissionsResource,
   PodcastsResource,
   SlideShowsResource,
@@ -185,6 +187,7 @@ export function jwtOptionsFactory(storage) {
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactory,
+        deps: [],
       }
     })
   ],

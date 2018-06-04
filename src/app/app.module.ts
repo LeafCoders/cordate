@@ -24,6 +24,7 @@ import { AssetFolderModule } from './asset-folder/asset-folder.module';
 import { EventModule } from './event/event.module';
 import { EventTypeModule } from './event-type/event-type.module';
 import { GroupModule } from './group/group.module';
+import { MessageModule } from './message/message.module';
 import { PermissionModule } from './permission/permission.module';
 import { PodcastModule } from './podcast/podcast.module';
 import { ResourceModule } from './resource/resource.module';
@@ -67,6 +68,7 @@ export const CORDATE_FORMATS = {
     EventModule,
     EventTypeModule,
     GroupModule,
+    MessageModule,
     PermissionModule,
     PodcastModule,
     ResourceModule,

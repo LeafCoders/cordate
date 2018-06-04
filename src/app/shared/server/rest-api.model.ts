@@ -803,6 +803,24 @@ export class Article extends IdModel {
 export declare type ArticleList = Array<Article>;
 
 
+export class Message extends IdModel {
+  key: string;
+  message: string;
+
+  constructor(data: Input<Message>) {
+    super(data);
+    readValue(this, data, 'key');
+    readValue(this, data, 'message');
+  }
+
+  asText(): string {
+    return this.key;
+  }
+}
+
+export declare type MessageList = Array<Message>;
+
+
 export class Podcast extends IdModel {
   articleType: ArticleTypeRef;
   idAlias: string;

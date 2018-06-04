@@ -69,7 +69,7 @@ export class RestApiError {
   }
 
   isInvalidPassword(): boolean {
-    return this.isForbidden() && this.isReason(Messages.AUTH_INVALID_PASSWORD);
+    return this.isForbidden() && this.isReason(Messages.AUTH_INCORRECT_PASSWORD);
   }
 
 }
