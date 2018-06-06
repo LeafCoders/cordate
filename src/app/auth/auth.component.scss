@@ -11,10 +11,6 @@ $mat-body-font-size-base: 12;
   @include fb-column-container();
   align-items: center;
   justify-content: center;
-
-  & mat-icon {
-    color: white;
-  }
 }
 
 .auth-window {
@@ -32,6 +28,10 @@ $mat-body-font-size-base: 12;
     mat-error, mat-hint {
       font-size: 14px;
     }
+
+    .mat-checkbox-layout {
+      white-space: normal;
+    }
   }
 }
 
@@ -43,6 +43,10 @@ $mat-body-font-size-base: 12;
   font-size: 20px;
   line-height: 26px;
   padding: 24px 16px;
+
+  & mat-icon {
+    color: white;
+  }
 
   & a {
     color: currentColor;

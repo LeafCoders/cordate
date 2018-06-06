@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -23,13 +23,12 @@ export class ForgottenComponent {
   errorMessage: string;
   formSend: FormGroup;
   formApply: FormGroup;
-  emailCtrl: FormControl = new FormControl('', Validators.compose([Validators.required])); //, FormValidators.email]));
+  emailCtrl: FormControl = new FormControl('', Validators.compose([Validators.required, Validators.email]));
   passwordCtrl: FormControl = new FormControl('', Validators.required);
 
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
-    builder: FormBuilder,
     jwtHelperService: JwtHelperService,
   ) {
     this.token = this.route.snapshot.queryParams.token;
@@ -39,10 +38,10 @@ export class ForgottenComponent {
       this.tokenHasExpired = jwtHelperService.isTokenExpired(this.token);
     }
 
-    this.formSend = builder.group({
+    this.formSend = new FormGroup({
       email: this.emailCtrl
     });
-    this.formApply = builder.group({
+    this.formApply = new FormGroup({
       password: this.passwordCtrl
     });
   }
@@ -54,10 +53,12 @@ export class ForgottenComponent {
     this.errorMessage = undefined;
     this.notSent = false;
     this.sending = true;
+    this.formSend.disable();
     let email: string = this.emailCtrl.value;
     this.authService.createForgottenPassword(email).subscribe(() => {
       this.sending = false;
       this.success = true;
+      this.formSend.enable();
     });
   }
 
@@ -67,6 +68,7 @@ export class ForgottenComponent {
     }
     this.notSent = false;
     this.sending = true;
+    this.formApply.disable();
     let password: string = this.passwordCtrl.value;
     this.authService.applyForgottenPassword(this.token, password).subscribe((success: boolean) => {
       this.sending = false;
@@ -76,6 +78,7 @@ export class ForgottenComponent {
         this.passwordCtrl.setValue('');
         this.notSent = true;
         this.errorMessage = 'Misslyckades att ändra lösenord. Försök igen.';
+        this.formApply.enable();
       }
     });
   }

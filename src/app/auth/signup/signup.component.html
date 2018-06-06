@@ -10,33 +10,35 @@
 
     <form [formGroup]="form" (ngSubmit)="signup()" autocomplete="off">
       <mat-form-field>
-        <input matInput [disabled]="!notSent" formControlName="email" placeholder="E-postadress">
-        <mat-hint align="end" *ngIf="!form.controls.email.valid && form.controls.email.touched">Måste fyllas i</mat-hint>
+        <input matInput [formControl]="emailCtrl" placeholder="E-postadress">
+        <mat-hint align="end" *ngIf="!form.disabled && !emailCtrl.valid && emailCtrl.touched">Måste fyllas i</mat-hint>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [disabled]="!notSent" formControlName="firstName" placeholder="Förnamn">
-        <mat-hint align="end" *ngIf="!form.controls.firstName.valid && form.controls.firstName.touched">Måste fyllas i</mat-hint>
+        <input matInput [formControl]="firstNameCtrl" placeholder="Förnamn">
+        <mat-hint align="end" *ngIf="!form.disabled && !firstNameCtrl.valid && firstNameCtrl.touched">Måste fyllas i</mat-hint>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [disabled]="!notSent" formControlName="lastName" placeholder="Efternamn">
-        <mat-hint align="end" *ngIf="!form.controls.lastName.valid && form.controls.lastName.touched">Måste fyllas i</mat-hint>
+        <input matInput [formControl]="lastNameCtrl" placeholder="Efternamn">
+        <mat-hint align="end" *ngIf="!form.disabled && !lastNameCtrl.valid && lastNameCtrl.touched">Måste fyllas i</mat-hint>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [disabled]="!notSent" formControlName="password" placeholder="Lösenord" type="password">
-        <mat-hint align="end" *ngIf="!form.controls.password.valid && form.controls.password.touched">Måste fyllas i</mat-hint>
+        <input matInput [formControl]="passwordCtrl" placeholder="Lösenord" type="password">
+        <mat-hint align="end" *ngIf="!form.disabled && !passwordCtrl.valid && passwordCtrl.touched">Måste fyllas i</mat-hint>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [disabled]="!notSent" formControlName="repeated" placeholder="Repetera lösenord" type="password">
-        <mat-hint align="end" *ngIf="!form.controls.repeated.valid && form.controls.repeated.touched">Lösenorden är olika</mat-hint>
+        <input matInput [formControl]="repeatedCtrl" placeholder="Repetera lösenord" type="password">
+        <mat-hint align="end" *ngIf="!form.disabled && !repeatedCtrl.valid && repeatedCtrl.touched">Lösenorden är olika</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [disabled]="!notSent" formControlName="wantedPermissions" placeholder="Grupper som du ingår i">
+        <input matInput [formControl]="wantedPermissionsCtrl" placeholder="Grupper som du ingår i">
         <mat-hint>T.ex. mötesledare, ljud eller tolk.</mat-hint>
-        <mat-hint align="end" *ngIf="!form.controls.wantedPermissions.valid && form.controls.wantedPermissions.touched">Måste fyllas i</mat-hint>
+        <mat-hint align="end" *ngIf="!form.disabled && !wantedPermissionsCtrl.valid && wantedPermissionsCtrl.touched">Måste fyllas i</mat-hint>
       </mat-form-field>
 
-      <br>
+      <div style="background-color: #f9f9f9; padding: 4px; margin: 16px 0;">
+        <mat-checkbox color="primary" [formControl]="acceptConsentCtrl">{{ consentText }}</mat-checkbox>
+      </div>
 
       <button *ngIf="notSent" mat-button color="primary" type="submit" [disabled]="!form.valid || !notSent">SKAPA</button>
       <mat-progress-spinner *ngIf="sending" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>

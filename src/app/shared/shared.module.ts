@@ -67,7 +67,7 @@ import { SingleSelectDialogComponent } from './dialog/single-select-dialog/singl
 import { SignalService } from './signal.service';
 
 import {
-  MatButtonModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+  MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatTabsModule,
   MatToolbarModule,
   MAT_DATE_LOCALE,
@@ -132,6 +132,7 @@ let resourceServices = [
 let materialModules = [
   PortalModule,
   MatButtonModule,
+  MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
   MatGridListModule,

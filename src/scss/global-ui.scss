@@ -69,27 +69,12 @@
   white-space: nowrap;
 }
 
-.alert-info {
-  background-color: #8888DD;
-  color: white;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 2px;
-  font-family: 'tahoma'; //$md-font-family;
-
-  & a {
-    color: white;
-    font-size: 0.8rem;
-  }
-}
-
 .alert-error {
   background-color: #F44336;
   color: white;
   padding: 10px;
   margin-bottom: 8px;
   border-radius: 2px;
-  font-family: 'tahoma'; //$md-font-family;
 
   & a {
     color: white;

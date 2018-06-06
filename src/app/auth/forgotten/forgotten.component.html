@@ -14,7 +14,7 @@
 
       <form *ngIf="notSent" [formGroup]="formSend" (ngSubmit)="send()" autocomplete="off">
         <mat-form-field>
-          <input matInput type="email" formControlName="email" [disabled]="sending" placeholder="E-postadress" style="width: 100%" autocapitalize="none">
+          <input matInput type="email" [formControl]="emailCtrl" placeholder="E-postadress" style="width: 100%" autocapitalize="none">
         </mat-form-field>
         <button mat-button color="primary" type="submit" [disabled]="!formSend.valid">SKICKA</button>
       </form>
@@ -28,7 +28,7 @@
 
       <form *ngIf="notSent" [formGroup]="formApply" (ngSubmit)="apply()" autocomplete="off">
         <mat-form-field>
-          <input matInput type="password" formControlName="password" [disabled]="sending" placeholder="Lösenord" style="width: 100%">
+          <input matInput type="password" [formControl]="passwordCtrl" placeholder="Lösenord" style="width: 100%">
         </mat-form-field>
         <button *ngIf="!sending && !success" mat-button color="primary" type="submit" [disabled]="!formApply.valid">ÄNDRA</button>
       </form>

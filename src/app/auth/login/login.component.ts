@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
 import { AuthService, UserIdentity } from '../auth.service';
@@ -18,27 +18,27 @@ interface PreviousUser {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   applicationName: string = environment.applicationName;
 
-  public selectedUser: PreviousUser;
-  public previousUsers: Array<PreviousUser> = [];
-  public showSelectUser: boolean = false;
-  public errorMessage: string;
-  public showForgottenPasswordInfo: boolean = false;
+  selectedUser: PreviousUser;
+  previousUsers: Array<PreviousUser> = [];
+  showSelectUser: boolean = false;
+  errorMessage: string;
+  showForgottenPasswordInfo: boolean = false;
 
-  public form: FormGroup;
+  form: FormGroup;
   usernameCtrl: FormControl = new FormControl('', Validators.required);
   passwordCtrl: FormControl = new FormControl('');
 
   constructor(
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     authPermission: AuthPermissionService,
-    builder: FormBuilder
   ) {
-    this.form = builder.group({
+    this.form = new FormGroup({
       username: this.usernameCtrl,
       password: this.passwordCtrl
     });
@@ -49,8 +49,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     let storedUsers: string = localStorage.getItem('previousUsers');
     this.previousUsers = storedUsers ? JSON.parse(storedUsers) : [];
-    if (this.previousUsers.length > 0) {
-      this.setUser(this.previousUsers[0]);
+
+    if (this.route.snapshot.queryParams.username) {
+      this.usernameCtrl.setValue(this.route.snapshot.queryParams.username);
+    } else {
+      if (this.previousUsers.length > 0) {
+        this.setUser(this.previousUsers[0]);
+      }
     }
   }
 

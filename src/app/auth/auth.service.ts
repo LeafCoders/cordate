@@ -43,11 +43,11 @@ export class AuthService {
     return false;
   }
 
-  public signup(email: string, firstName: string, lastName: string, password: string, wantedPermissions: string): Observable<boolean> {
+  public signup(email: string, firstName: string, lastName: string, password: string, wantedPermissions: string, consentText: string): Observable<boolean> {
     return Observable.create(observer => {
-      this.api.create('api/signupUsers', {}, {
+      this.api.create('api/users/signup', {}, {
         email: email, firstName: firstName, lastName: lastName,
-        password: password, permissions: wantedPermissions
+        password: password, description: wantedPermissions, consentText: consentText,
       })
         .subscribe(
           response => observer.next(true),
