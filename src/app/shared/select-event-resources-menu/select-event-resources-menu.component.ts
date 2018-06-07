@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { RestApiService } from '../server/rest-api.service';
 import { AuthPermissionService, PermissionResults } from '../../auth/auth-permission.service';

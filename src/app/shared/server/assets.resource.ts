@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
@@ -43,10 +43,11 @@ export class AssetsResource extends DefaultBaseResource<Asset, AssetUpdate> {
     formData.append('file', fileData.file, fileData.fileName);
     formData.append('fileName', fileData.fileName);
 
-    return this.api.createMultiPart(`api/assets/files`, {}, formData)
-      .map((data: JSON): Asset => {
+    return this.api.createMultiPart(`api/assets/files`, {}, formData).pipe(
+      map((data: JSON): Asset => {
         return this.insertCreated(this.newInstance(data));
-      });
+      })
+    );
   }
 
   makeSafeFileName(fileName: string): string {

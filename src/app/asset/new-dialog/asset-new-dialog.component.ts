@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
+import { MatDialogRef } from '@angular/material';
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { AssetsResource } from '../../shared/server/assets.resource';
 import { Asset, AssetFolder } from '../../shared/server/rest-api.model';
-import { Messages } from '../../shared/messages';
 import { RestApiError } from '../../shared/server/rest-api-error.model';
 
 interface AssetResult {
@@ -61,7 +58,7 @@ export class AssetNewDialogComponent {
   private assetFiles(files: Array<File>): void {
     this.state = 'UPLOADING';
     this.results = [];
-    Observable.forkJoin(
+    forkJoin(
       files.map((file: File) => this.assetFile(file))
     ).subscribe((data: Array<boolean>) => {
       this.state = data.every((status: boolean) => status) ? 'SUCCESS' : 'FAILURE';
@@ -70,12 +67,12 @@ export class AssetNewDialogComponent {
 
   private assetFile(file: File): Observable<boolean> {
     const fileName: string = this.assetsResource.makeSafeFileName(file.name);
-    return <Observable<boolean>>this.assetsResource.createFile(this.assetFolder.id, { file: file, fileName: fileName, mimeType: file.type })
-      .do((response: Asset) => {
+    return <Observable<boolean>>this.assetsResource.createFile(this.assetFolder.id, { file: file, fileName: fileName, mimeType: file.type }).pipe(
+      tap((response: Asset) => {
         this.results.push({ fileName: fileName, responseData: response });
-        return Observable.of<boolean>(true);
-      })
-      .catch((apiError: RestApiError) => {
+        return of<boolean>(true);
+      }),
+      catchError((apiError: RestApiError) => {
         console.log(apiError);
         let errorMessage: string;
         if (!apiError) {
@@ -86,7 +83,8 @@ export class AssetNewDialogComponent {
           errorMessage = apiError.getError();
         }
         this.results.push({ fileName: fileName, errorMessage: errorMessage });
-        return Observable.of<boolean>(false);
-      });
+        return of<boolean>(false);
+      })
+    );
   }
 }

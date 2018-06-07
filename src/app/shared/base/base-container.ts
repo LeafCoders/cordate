@@ -1,5 +1,5 @@
 import { OnInit, ViewChild, HostBinding } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
 import { IdModel } from '../server/rest-api.model';
@@ -25,7 +25,7 @@ export abstract class BaseContainer<ITEM extends IdModel> implements OnInit {
     private resource: DefaultBaseResource<ITEM, any>,
     private router: Router,
     private route: ActivatedRoute,
-    private newIem: () => Observable<ITEM> = () => Observable.of(resource.newInstance())
+    private newIem: () => Observable<ITEM> = () => of(resource.newInstance())
   ) {
   }
 

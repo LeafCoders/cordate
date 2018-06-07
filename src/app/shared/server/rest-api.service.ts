@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { RestApiError } from './rest-api-error.model';
@@ -37,11 +36,11 @@ export class RestApiService {
     return this.makeRequest<T>('DELETE', path, params);
   }
 
-  public createReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<HttpResponse<T>> {
+  public createReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<{} | HttpResponse<T>> {
     return this.makeRequestReturnResponse('POST', path, params, data);
   }
 
-  public updateReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<HttpResponse<T>> {
+  public updateReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<{} | HttpResponse<T>> {
     return this.makeRequestReturnResponse('PUT', path, params, data);
   }
 
@@ -53,15 +52,19 @@ export class RestApiService {
       params: params,
       body: data
     })
-      .pipe(catchError(e => this.handleError(e)))
-      .map((data: HttpResponse<JSON>) => data.body);
+      .pipe(
+        catchError(e => this.handleError(e)),
+        map((data: HttpResponse<JSON>) => data.body)
+      );
   }
 
   private makeRequest<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<T> {
-    return this.makeRequestReturnResponse(method, path, params, data, headers).map((data: HttpResponse<T>) => data.body);
+    return this.makeRequestReturnResponse(method, path, params, data, headers).pipe(
+      map((data: HttpResponse<T>) => data.body)
+    );
   }
 
-  private makeRequestReturnResponse<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<HttpResponse<T>> {
+  private makeRequestReturnResponse<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<{} | HttpResponse<T>> {
     // Remove 'rawData' in stringify
     let body = data ? JSON.stringify(data, (name, value) => name !== 'rawData' ? value : undefined) : '';
 
@@ -75,9 +78,9 @@ export class RestApiService {
       .pipe(catchError(e => this.handleError(e)));
   }
 
-  private handleError(error: HttpErrorResponse): ErrorObservable {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     const apiError = new RestApiError(error)
     this.apiErrorService.addApiError(apiError);
-    return new ErrorObservable(apiError);
+    return throwError(apiError);
   };
 }

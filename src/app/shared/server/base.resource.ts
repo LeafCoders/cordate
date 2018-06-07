@@ -1,5 +1,4 @@
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 import { IdModel } from './rest-api.model';
 

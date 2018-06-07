@@ -1,5 +1,5 @@
 import { EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
 import { EditorAction } from '../../shared/editor/editor-action';

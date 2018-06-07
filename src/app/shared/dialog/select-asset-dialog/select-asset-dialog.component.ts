@@ -1,6 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { AssetsResource } from '../../server/assets.resource';
 import { Asset, AssetList, AssetFolder } from '../../server/rest-api.model';

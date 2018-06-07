@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
@@ -48,33 +49,37 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   addResourceRequirement(event: Event, resourceType: ResourceType): Observable<void> {
-    return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements`, undefined, { resourceTypeId: resourceType.id })
-      .map((data): void => {
+    return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements`, undefined, { resourceTypeId: resourceType.id }).pipe(
+      map((data): void => {
         event.resourceRequirements = data.map(item => new ResourceRequirement(item));
-      });
+      })
+    );
   }
 
   removeResourceRequirement(event: Event, resourceRequirement: ResourceRequirement): Observable<void> {
-    return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}`)
-      .map((data): void => {
+    return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}`).pipe(
+      map((data): void => {
         event.resourceRequirements = data.map(item => new ResourceRequirement(item));
-      });
+      })
+    );
   }
 
   addResource(event: Event, resourceRequirement: ResourceRequirement, resource?: Resource): Observable<void> {
     let oneOrAll: Object = resource ? { resourceId: resource.id } : undefined;
-    return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources`, oneOrAll)
-      .map((data): void => {
+    return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources`, oneOrAll).pipe(
+      map((data): void => {
         resourceRequirement.resources = data.map(item => new Resource(item));
-      });
+      })
+    );
   }
 
   removeResource(event: Event, resourceRequirement: ResourceRequirement, resource?: Resource): Observable<void> {
     let oneOrAll: string = resource ? `/${resource.id}` : '';
-    return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources${oneOrAll}`)
-      .map((data): void => {
+    return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources${oneOrAll}`).pipe(
+      map((data): void => {
         resourceRequirement.resources = data.map(item => new Resource(item));
-      });
+      })
+    );
   }
 
   manageResourceRequirementsPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
@@ -86,10 +91,11 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   readArticles(event: Event): Observable<ArticleList> {
-    return this.api.read<any[]>(`api/events/${event.id}/articles`)
-      .map((data): ArticleList => {
+    return this.api.read<any[]>(`api/events/${event.id}/articles`).pipe(
+      map((data): ArticleList => {
         return data.map(item => new Article(item));
-      });
+      })
+    );
   }
 
 }

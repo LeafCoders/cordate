@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 import { AuthPermissionService } from './auth-permission.service';
@@ -33,7 +34,7 @@ export class AuthGuardService implements CanActivate {
         permission = `${route.url[0].path}:view`;
     }
 
-    return this.authPermission.loadAndCheckPermission(permission).map(permitted => {
+    return this.authPermission.loadAndCheckPermission(permission).pipe(map(permitted => {
       if (!permitted) {
         const currentUrl: string = this.router.routerState.snapshot.url;
         if (!currentUrl || currentUrl.includes("/mypages")) {
@@ -44,6 +45,6 @@ export class AuthGuardService implements CanActivate {
         }
       }
       return permitted;
-    });
+    }));
   }
 }

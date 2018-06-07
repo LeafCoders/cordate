@@ -1,5 +1,5 @@
 import { EventEmitter, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
 import { IdModel } from '../server/rest-api.model';

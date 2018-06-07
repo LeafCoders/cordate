@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { RestApiService } from './rest-api.service';
@@ -45,17 +46,19 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
   }
 
   addAuthor(article: Article, userId: number): Observable<void> {
-    return this.api.create<any[]>(`api/articles/${article.id}/authors/${userId}`)
-      .map((data): void => {
+    return this.api.create<any[]>(`api/articles/${article.id}/authors/${userId}`).pipe(
+      map((data): void => {
         article.authors = data.map(item => new Resource(item).asRef());
-      });
+      })
+    );
   }
 
   removeAuthor(article: Article, userId: number): Observable<void> {
-    return this.api.delete<any[]>(`api/articles/${article.id}/authors/${userId}`)
-      .map((data): void => {
+    return this.api.delete<any[]>(`api/articles/${article.id}/authors/${userId}`).pipe(
+      map((data): void => {
         article.authors = data.map(item => new Resource(item).asRef());
-      });
+      })
+    );
   }
 
 }

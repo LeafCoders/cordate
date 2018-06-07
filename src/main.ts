@@ -8,6 +8,8 @@ import 'moment/locale/sv';
 moment.locale('sv');
 moment.fn.toJSON = function () { return this.format('YYYY-MM-DDTHH:mm:ss'); }
 
+import 'hammerjs';
+
 if (environment.production) {
   enableProdMode();
 }

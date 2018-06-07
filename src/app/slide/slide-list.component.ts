@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import 'rxjs/add/operator/first';
+import { first } from 'rxjs/operators';
 
 import { BaseList } from '../shared/base/base-list';
 import { AuthPermissionService } from '../auth/auth-permission.service';

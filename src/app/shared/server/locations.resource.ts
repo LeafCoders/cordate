@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { BaseResource } from './base.resource';
@@ -20,12 +20,13 @@ export class LocationsResource {
 
   list(reload: boolean = false): Observable<LocationList> {
     if (!reload && this.cachedLocations.length) {
-      return Observable.of(this.cachedLocations);
+      return of(this.cachedLocations);
     }
-    return this.api.read<any[]>(`api/locations`)
-      .map((data): LocationList => {
+    return this.api.read<any[]>(`api/locations`).pipe(
+      map((data): LocationList => {
         this.cachedLocations = data.map(item => new Location(item))
         return this.cachedLocations;
-      });
+      })
+    );
   }
 }

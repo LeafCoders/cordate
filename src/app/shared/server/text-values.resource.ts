@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { BaseResource } from './base.resource';
@@ -29,13 +29,14 @@ export class TextValuesResource {
 
   list(reload: boolean = false): Observable<TextValueList> {
     if (!reload && this.cachedTextValues.length) {
-      return Observable.of(this.cachedTextValues);
+      return of(this.cachedTextValues);
     }
-    return this.api.read<any[]>('api/textValues', {})
-      .map((data): TextValueList => {
+    return this.api.read<any[]>('api/textValues', {}).pipe(
+      map((data): TextValueList => {
         this.cachedTextValues = data.map(item => new TextValue(item))
         return this.cachedTextValues;
-      });
+      })
+    );
   }
 
   listCached(): TextValueList {
@@ -47,17 +48,19 @@ export class TextValuesResource {
   }
 
   create(textValue: TextValue): Observable<TextValue> {
-    return this.api.create<Object>('api/textValues', {}, textValue)
-      .map((data): TextValue => {
+    return this.api.create<Object>('api/textValues', {}, textValue).pipe(
+      map((data): TextValue => {
         return new TextValue(data);
-      });
+      })
+    );
   }
 
   update(textValueId: number, textValue: TextValue): Observable<TextValue> {
-    return this.api.update(`api/textValues/${textValueId}`, {}, textValue)
-      .map((data): TextValue => {
+    return this.api.update(`api/textValues/${textValueId}`, {}, textValue).pipe(
+      map((data): TextValue => {
         return undefined; //new TextValue(data.json());
-      });
+      })
+    );
   }
 
   delete(textValueId: number): Observable<void> {

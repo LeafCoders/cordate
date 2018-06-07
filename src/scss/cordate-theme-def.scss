@@ -1,4 +1,7 @@
 @import '~@angular/material/theming';
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@include mat-core();
 
 // Based on color #73b532
 $mat-cordate: (

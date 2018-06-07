@@ -3,15 +3,16 @@
 
 @import "src/scss/cordate-theme-def.scss";
 
-mat-toolbar {
+mat-toolbar.mat-primary {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2;
 
-  background-image: linear-gradient(mat-color($cordate-primary, 0.8)), url("/assets/background.png");
   color: #fff;
+  background-color: linear-gradient(mat-color($cordate-primary, 0.8), mat-color($cordate-primary, 0.8));
+  background: linear-gradient(mat-color($cordate-primary, 0.8), mat-color($cordate-primary, 0.8)), url(/assets/background.png);
 
   & > button {
     margin-left: -0.5rem;

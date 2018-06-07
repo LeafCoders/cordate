@@ -55,7 +55,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar class="mat-elevation-z6">
+    <mat-toolbar color="primary" class="mat-elevation-z6">
       <button *ngIf="!router.url.startsWith('/auth')" mat-icon-button (click)="toggleNav()"><mat-icon>menu</mat-icon></button>
       <span>{{ applicationName }}</span>
     </mat-toolbar>

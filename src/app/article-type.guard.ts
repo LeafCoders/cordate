@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { ArticleTypesResource } from './shared/server/article-types.resource';
 import { ArticlesResource } from './shared/server/articles.resource';

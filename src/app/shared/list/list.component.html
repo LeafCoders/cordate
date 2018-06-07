@@ -1,7 +1,7 @@
 <div *ngIf="header || actions" class="header">
   <div>{{ header }}</div>
   <div *ngIf="actions" style="margin-right: 8px;">
-    <ng-template [cdkPortalHost]="actions"></ng-template>
+    <ng-template [cdkPortalOutlet]="actions"></ng-template>
   </div>
 </div>
 <div class="content" [class.scrollable]="scrollable">

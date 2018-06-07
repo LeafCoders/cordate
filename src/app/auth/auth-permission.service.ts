@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { RestApiService } from '../shared/server/rest-api.service';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs/Observable';
 
 export interface PermissionResults {
   [key: string]: boolean;
@@ -34,7 +32,7 @@ export class AuthPermissionService {
         this.hasLoadedFromServer = true;
         this.getPermissionsFromServer().subscribe();
       }
-      return Observable.of<boolean>(true);
+      return of<boolean>(true);
     }
 
     // Get current permissions from server
@@ -61,12 +59,13 @@ export class AuthPermissionService {
 
   private getPermissionsFromServer(): Observable<PermissionsChecker> {
     const userId: number = this.auth.userId;
-    return this.api.read<Array<string>>(`api/users/${userId}/permissions`)
-      .map(permissionsFromServer => {
+    return this.api.read<Array<string>>(`api/users/${userId}/permissions`).pipe(
+      map(permissionsFromServer => {
         const permissions = new PermissionsChecker(permissionsFromServer);
         localStorage.setItem(this.storageKey(), permissionsFromServer.join(';'));
         return permissions;
-      });
+      })
+    );
   }
 
   private storageKey(): string {
