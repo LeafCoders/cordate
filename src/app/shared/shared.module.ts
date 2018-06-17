@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { FilesDropModule } from 'ng2-files-drop';
+import { QuillModule } from 'ngx-quill';
 
 import { environment } from '../../environments/environment';
 
@@ -30,18 +31,16 @@ import { ResourceTypesResource } from './server/resource-types.resource';
 import { TextValuesResource } from './server/text-values.resource';
 import { UsersResource } from './server/users.resource';
 
-import { AppComponent } from '../app.component';
-import { MyPagesComponent } from '../my-pages/my-pages.component';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { AuthPermissionService } from '../auth/auth-permission.service'
 import { AuthService } from '../auth/auth.service';
-import { AuthComponent } from '../auth/auth.component';
 
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 import { AssetFileEditorComponent } from './editor/asset-file-editor/asset-file-editor.component';
 import { BooleanEditorComponent } from './editor/boolean-editor/boolean-editor.component';
 import { DateTimeEditorComponent } from './editor/date-time-editor/date-time-editor.component';
+import { HtmlTextEditorComponent } from './editor/html-text-editor/html-text-editor.component';
 import { PasswordEditorComponent } from './editor/password-editor/password-editor.component';
 import { RefEditorComponent } from './editor/ref-editor/ref-editor.component';
 import { ResourceRefsEditorComponent } from './editor/resource-refs-editor/resource-refs-editor.component';
@@ -79,6 +78,7 @@ import { PortalModule } from '@angular/cdk/portal';
 let dataEditors = [
   AssetFileEditorComponent,
   DateTimeEditorComponent,
+  HtmlTextEditorComponent,
   PasswordEditorComponent,
   RefEditorComponent,
   ResourceRefsEditorComponent,
@@ -183,6 +183,7 @@ export function jwtOptionsFactory(storage) {
     HttpClientModule,
     RouterModule,
     FilesDropModule,
+    QuillModule,
     ...materialModules,
     JwtModule.forRoot({
       jwtOptionsProvider: {

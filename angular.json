@@ -25,6 +25,7 @@
             "styles": [
               "src/scss/cordate-theme-def.scss",
               "src/scss/cordate-theme-impl.scss",
+              "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -76,6 +77,7 @@
             "styles": [
               "src/scss/cordate-theme-def.scss",
               "src/scss/cordate-theme-impl.scss",
+              "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "scripts": [],

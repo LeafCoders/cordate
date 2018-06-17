@@ -33,6 +33,7 @@
     "moment": "^2.22.2",
     "ng-node-environment": "^1.0.9",
     "ng2-files-drop": "git+https://github.com/OckePocke/ng2-files-drop.git",
+    "ngx-quill": "3.2.0",
     "normalize.css": "^4.1.1",
     "rxjs": "^6.0.0",
     "web-animations-js": "^2.3.1",

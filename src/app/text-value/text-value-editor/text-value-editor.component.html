@@ -27,12 +27,11 @@
     <lc-text-editor lc-list-item valueTitle="Format (t.ex. json eller xml)" [value]="textValue.format" (changed)="setFormat($event)" [state]="formatState">
     </lc-text-editor>
 
-    <lc-boolean-editor lc-list-item falseIcon="lock_outline" falseText="Nej, textvärdet publiceras inte i api:et"
-      trueIcon="lock_open" trueText="Ja, textvärdet är publiceras i api:et"
-      [value]="textValue.isPublic" (changed)="setIsPublic($event)" [state]="isPublicState">
+    <lc-boolean-editor lc-list-item falseIcon="lock_outline" falseText="Nej, textvärdet publiceras inte i api:et" trueIcon="lock_open" trueText="Ja, textvärdet är publiceras i api:et" [value]="textValue.isPublic"
+      (changed)="setIsPublic($event)" [state]="isPublicState">
     </lc-boolean-editor>
 
-    <lc-text-editor lc-list-item valueTitle="Värde" multiLine="true" [value]="textValue.value" (changed)="setValue($event)" [state]="valueState">
+    <lc-text-editor lc-list-item valueTitle="Värde" mode="multiline" [value]="textValue.value" (changed)="setValue($event)" [state]="valueState">
     </lc-text-editor>
   </lc-list>
 </div>

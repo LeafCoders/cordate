@@ -53,13 +53,18 @@ export class TextEditorComponent {
     }
   }
 
-  buttonClicked(): void {
+  editOrSave(): void {
     if (this.state.editing) {
       this.saveValue();
     } else {
       this.state.editing = true;
       setTimeout(() => this.inputElements.forEach(input => input.focus()), 1);
     }
+  }
+
+  cancel(): void {
+    this.state.editing = false;
+    this.editingValue = this.value;
   }
 
   private saveValue(): void {
@@ -69,8 +74,4 @@ export class TextEditorComponent {
     this.cancel();
   }
 
-  private cancel(): void {
-    this.state.editing = false;
-    this.editingValue = this.value;
-  }
 }

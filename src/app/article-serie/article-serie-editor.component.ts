@@ -7,7 +7,7 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { ArticleSeriesResource, ArticleSerieUpdate } from '../shared/server/article-series.resource';
 import { ResourceTypesResource } from '../shared/server/resource-types.resource';
 
-import { ArticleSerie, ResourceTypeRef, Asset } from '../shared/server/rest-api.model';
+import { ArticleSerie, ResourceTypeRef, Asset, HtmlText } from '../shared/server/rest-api.model';
 import { ArticleTypesResource } from '../shared/server/article-types.resource';
 import { ArticleSerieService } from './article-serie.service';
 
@@ -64,9 +64,12 @@ export class ArticleSerieEditorComponent extends BaseEditor<ArticleSerie, Articl
     );
   }
 
-  setContent(content: string): void {
+  setContent(content: HtmlText): void {
     this.setValue(this.contentState,
-      (item: ArticleSerieUpdate) => item.content = content,
+      (item: ArticleSerieUpdate) => {
+        item.contentRaw = content.contentRaw;
+        item.contentHtml = content.contentHtml;
+      },
       () => this.item.content = content
     );
   }

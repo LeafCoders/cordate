@@ -1,16 +1,10 @@
 <mat-icon class="list-icon">{{ editorIcon() }}</mat-icon>
 <div class="list-content">
   <div class="value-title">{{ valueTitle }}</div>
-  <div *ngIf="!state.editing && !state.createMode" class="selectable-text" [innerHtml]="displayValue"></div>
-  <div *ngIf="state.editing || state.createMode" class="flex-cols">
-    <mat-form-field *ngIf="!multiLine">
-      <input matInput [(ngModel)]="editingValue" (ngModelChange)="valueChanged()">
-      <mat-hint *ngIf="editingHelpText">{{ editingHelpText }}</mat-hint>
-    </mat-form-field>
-    <mat-form-field *ngIf="multiLine">
-      <textarea matInput matTextareaAutosize [(ngModel)]="editingValue" (ngModelChange)="valueChanged()"></textarea>
-      <mat-hint *ngIf="editingHelpText">{{ editingHelpText }}</mat-hint>
-    </mat-form-field>
+  <div *ngIf="!state.editing && !state.createMode" class="html-value-content" [innerHtml]="displayValue"></div>
+  <div *ngIf="state.editing || state.createMode" class="flex-cols html-value-editor">
+    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" [formats]="quillFormats" (onContentChanged)="quillContentChanged($event)" placeholder="" [style]="{'min-height': '250px'}">
+    </quill-editor>
   </div>
 </div>
 <div *ngIf="state.editable && !state.createMode" class="list-action">

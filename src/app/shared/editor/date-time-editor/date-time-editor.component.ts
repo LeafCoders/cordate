@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChildren, QueryList } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatInput } from '@angular/material';
 import * as moment from 'moment';
 
 import { EditorState } from '../editor-state';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'lc-date-time-editor',
@@ -18,6 +19,7 @@ export class DateTimeEditorComponent {
   editingDate: FormControl = new FormControl(moment());
   editingTime: string;
 
+  @ViewChildren(MatInput) private inputElements: QueryList<MatInput>;
 
   @Input('time')
   set setInTime(inTime: moment.Moment) {
@@ -38,7 +40,16 @@ export class DateTimeEditorComponent {
     }
   }
 
-  saveValue(): void {
+  editOrSave(): void {
+    if (this.state.editing) {
+      this.saveValue();
+    } else {
+      this.state.editing = true;
+      setTimeout(() => this.inputElements.first.focus(), 1);
+    }
+  }
+
+  private saveValue(): void {
     this.emitChangedValue();
     this.cancel();
   }

@@ -8,7 +8,7 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { ArticlesResource, ArticleUpdate } from '../shared/server/articles.resource';
 import { GroupsResource } from '../shared/server/groups.resource';
 import { UsersResource } from '../shared/server/users.resource';
-import { Article, Event, IdModel, User, ArticleSerie, ResourceList, Asset } from '../shared/server/rest-api.model';
+import { Article, Event, IdModel, User, ArticleSerie, ResourceList, Asset, HtmlText } from '../shared/server/rest-api.model';
 import { ArticleService } from './article.service';
 
 @Component({
@@ -97,9 +97,12 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
     );
   }
 
-  setContent(content: string): void {
+  setContent(content: HtmlText): void {
     this.setValue(this.contentState,
-      (item: ArticleUpdate) => item.content = content,
+      (item: ArticleUpdate) => {
+        item.contentRaw = content.contentRaw;
+        item.contentHtml = content.contentHtml;
+      },
       () => this.item.content = content
     );
   }

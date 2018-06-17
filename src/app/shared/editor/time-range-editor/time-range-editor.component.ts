@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChildren, QueryList } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatInput } from '@angular/material';
 import * as moment from 'moment';
 
 import { EditorState } from '../editor-state';
 import { TimeRange } from '../../server/rest-api.model';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'lc-time-range-editor',
@@ -22,6 +23,7 @@ export class TimeRangeEditorComponent {
   editingEndDate: FormControl = new FormControl(moment());
   editingEndTime: string;
 
+  @ViewChildren(MatInput) private inputElements: QueryList<MatInput>;
 
   @Input('startTime')
   set setInStartTime(inTime: moment.Moment) {
@@ -49,7 +51,16 @@ export class TimeRangeEditorComponent {
     }
   }
 
-  saveValue(): void {
+  editOrSave(): void {
+    if (this.state.editing) {
+      this.saveValue();
+    } else {
+      this.state.editing = true;
+      setTimeout(() => this.inputElements.first.focus(), 1);
+    }
+  }
+
+  private saveValue(): void {
     this.emitChangedValue();
     this.cancel();
   }

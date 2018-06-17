@@ -10,7 +10,8 @@ export interface ArticleSerieUpdate {
   articleTypeId: number;
   idAlias: string;
   title: string;
-  content: string;
+  contentRaw: string;
+  contentHtml: string;
   imageId: number;
 }
 

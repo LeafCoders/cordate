@@ -11,11 +11,12 @@ export interface ArticleUpdate {
   id?: number;
   articleTypeId: number;
   articleSerieId?: number;
-  eventId: number;
+  eventId?: number;
   time: string;
-  authorIds: Array<number>;
-  title: string;
-  content?: string;
+  authorIds?: Array<number>;
+  title?: string;
+  contentRaw?: string;
+  contentHtml?: string;
   recordingId?: number;
 }
 
@@ -37,7 +38,7 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
       return <ArticleUpdate>{ id: from.id };
     } else {
       // TODO: Until time editor is implemented
-      return <ArticleUpdate>{
+      return {
         articleTypeId: from.articleTypeId,
         articleSerieId: IdModel.idOf(from.articleSerie),
         time: moment().toJSON(),

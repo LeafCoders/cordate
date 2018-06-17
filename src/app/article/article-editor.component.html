@@ -11,7 +11,7 @@
     </mat-tab>
     <mat-tab label="Innehåll">
       <lc-list>
-        <lc-text-editor lc-list-item valueTitle="Innehåll" [value]="item.content" (changed)="setContent($event)" [state]="contentState" multiLine="true"></lc-text-editor>
+        <lc-html-text-editor lc-list-item valueTitle="Innehåll" [value]="item.content" (changed)="setContent($event)" [state]="contentState"></lc-html-text-editor>
       </lc-list>
     </mat-tab>
     <mat-tab label="Media">

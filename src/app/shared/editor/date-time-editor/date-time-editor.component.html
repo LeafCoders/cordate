@@ -13,15 +13,14 @@
         <input matInput type="time" [(ngModel)]="editingTime" (ngModelChange)="timeChanged()">
       </mat-form-field>
     </div>
-    <div *ngIf="!state.createMode">
-      <button mat-button (click)="cancel()">Avbryt</button>
-      <button mat-button (click)="saveValue()" color="primary">Spara</button>
-    </div>
   </div>
 </div>
-<div *ngIf="!state.editing && state.editable && !state.createMode" class="list-action">
-  <button mat-icon-button [disabled]="state.saving" (click)="state.editing = true">
+<div *ngIf="state.editable && !state.createMode" class="list-action">
+  <button mat-icon-button [disabled]="state.saving" (click)="editOrSave()" [color]="state.editing ? 'primary' : undefined">
     <mat-progress-spinner *ngIf="state.saving" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
-    <mat-icon *ngIf="!state.saving">edit</mat-icon>
+    <mat-icon *ngIf="!state.saving">{{ state.editing ? 'edit' : 'expand_more' }}</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="state.editing" (click)="cancel()">
+    <mat-icon>close</mat-icon>
   </button>
 </div>

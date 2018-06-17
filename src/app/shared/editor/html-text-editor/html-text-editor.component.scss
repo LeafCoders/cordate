@@ -1,0 +1,43 @@
+@import "src/scss/flex-mixin.scss";
+
+.html-value-content {
+
+  & h1 {
+    font-size: 18px;
+  }
+
+  & h2 {
+    font-size: 15px;
+  }
+
+  & ol, & ul, & li {
+    margin: 8px 0;
+  }
+
+  & blockquote {
+    border-left: 4px solid #ccc;
+    margin: 8px 0;
+    padding: 4px 0 4px 16px ;
+  }
+
+}
+
+.html-value-editor .ql-editor {
+
+  & p {
+    margin: 8px 0;
+  }
+
+  & ol, & ul {
+    margin-left: 0;
+  }
+
+  & h1 {
+    font-size: 18px;
+  }
+
+  & h2 {
+    font-size: 15px;
+  }
+
+}

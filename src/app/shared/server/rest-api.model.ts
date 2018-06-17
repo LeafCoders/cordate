@@ -58,6 +58,11 @@ export interface TimeRange {
   end: moment.Moment;
 }
 
+export interface HtmlText {
+  contentRaw: string;
+  contentHtml: string;
+}
+
 export interface HasParent<PARENT extends IdModel, CHILD extends IdModel> {
   setParent(parent: PARENT): CHILD;
 }
@@ -728,16 +733,23 @@ export class ArticleSerie extends IdModel {
   articleTypeId: number;
   idAlias: string;
   title: string;
-  content: string;
+  contentRaw: string;
+  contentHtml: string;
   image: Asset;
+
+  // Calculated
+  content: HtmlText;
 
   constructor(data: Input<ArticleSerie>) {
     super(data);
     readValue(this, data, 'articleTypeId');
     readValue(this, data, 'idAlias');
     readValue(this, data, 'title');
-    readValue(this, data, 'content');
+    readValue(this, data, 'contentRaw');
+    readValue(this, data, 'contentHtml');
     readObject<Asset>(this, data, 'image', Asset);
+
+    this.content = { contentRaw: this.contentRaw, contentHtml: this.contentHtml };
   }
 
   asText(): string {
@@ -777,8 +789,12 @@ export class Article extends IdModel {
   time: moment.Moment;
   authors: Array<ResourceRef>;
   title: string;
-  content: string;
+  contentRaw: string;
+  contentHtml: string;
   recording: Asset;
+
+  // Calculated
+  content: HtmlText;
 
   constructor(data: Input<Article>) {
     super(data);
@@ -790,8 +806,11 @@ export class Article extends IdModel {
     readDate(this, data, 'time');
     readArray<ResourceRef>(this, data, 'authors', ResourceRef);
     readValue(this, data, 'title');
-    readValue(this, data, 'content');
+    readValue(this, data, 'contentRaw');
+    readValue(this, data, 'contentHtml');
     readObject<Asset>(this, data, 'recording', Asset);
+
+    this.content = { contentRaw: this.contentRaw, contentHtml: this.contentHtml };
   }
 
   asText(): string {
