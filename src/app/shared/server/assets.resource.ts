@@ -43,7 +43,7 @@ export class AssetsResource extends DefaultBaseResource<Asset, AssetUpdate> {
     formData.append('file', fileData.file, fileData.fileName);
     formData.append('fileName', fileData.fileName);
 
-    return this.api.createMultiPart(`api/assets/files`, {}, formData).pipe(
+    return this.api.createMultiPart(`api/files`, {}, formData).pipe(
       map((data: JSON): Asset => {
         return this.insertCreated(this.newInstance(data));
       })
