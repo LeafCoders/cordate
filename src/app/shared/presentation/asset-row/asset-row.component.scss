@@ -1,7 +1,7 @@
 @import "src/scss/flex-mixin.scss";
 
 :host, div {
-  @include fb-column-container();
+  @include fb-row-container();
   flex: 1;
 }
 
@@ -10,4 +10,8 @@ img {
   height: 100%;
   margin-top: 4px;
   border: 1px solid #444;
+}
+
+audio {
+  margin: 4px 0;
 }

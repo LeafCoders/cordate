@@ -3,7 +3,7 @@
   <div class="pane-main">
     <lc-page-header title="Bildspel"></lc-page-header>
     <div class="filter-bar dark">
-      <button mat-button [matMenuTriggerFor]="slideShowMenu"><small>Bildspel: </small>{{ selectedSlideShow?.asText() }}</button>
+      <button mat-button [matMenuTriggerFor]="slideShowMenu"><small>Bildspelsenhet: </small>{{ selectedSlideShow?.asText() }}</button>
       <div class="expander"></div>
       <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()"><mat-icon>add_circle</mat-icon></button>
     </div>

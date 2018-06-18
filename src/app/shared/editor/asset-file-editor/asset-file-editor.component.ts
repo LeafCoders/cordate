@@ -39,6 +39,12 @@ export class AssetFileEditorComponent {
     this.assetFolder = inAssetFolder;
   }
 
+  onClickAssetRow() {
+    if (this.asset && this.asset.isImage) {
+      this.showSelectDialog();
+    }
+  }
+
   showSelectDialog(): void {
     this.selectAssetFileDialogRef = this.dialog.open(SelectAssetDialogComponent, { width: '80vw' });
     this.selectAssetFileDialogRef.componentInstance.setAssetFolder(this.assetFolder);
