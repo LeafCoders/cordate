@@ -33,6 +33,7 @@ export class EventComponent extends BaseContainer<Event> {
     route: ActivatedRoute,
   ) {
     super(eventsResource, router, route);
+    this.selectShowFrom(this.selectedShowFrom);
   }
 
   protected init(): void {
@@ -54,7 +55,10 @@ export class EventComponent extends BaseContainer<Event> {
 
   selectShowFrom(showFromToSelect: ShowFrom): void {
     this.selectedShowFrom = showFromToSelect;
-    this.eventsResource.setListParams({ from: showFromToSelect.from, before: showFromToSelect.before });
+    this.eventsResource.setListParams({
+      from: showFromToSelect.from ? showFromToSelect.from.toJSON() : undefined,
+      before: showFromToSelect.before ? showFromToSelect.before.toJSON() : undefined
+    });
   }
 
   showNewDialog(fromDate: moment.Moment = moment()): void {
@@ -90,13 +94,31 @@ export class EventComponent extends BaseContainer<Event> {
   }
 
   private setupShowFromList(): void {
-    let from: moment.Moment = moment().startOf('month').set('month', 6 * (moment().month() % 6));
-    for (let i = 0; i < 6; ++i) {
-      let before: moment.Moment = from.clone();
-      from = from.clone().subtract(6, 'months');
-      let text: string = from.format('YYYY') + (from.month() < 6 ? ' VT' : ' HT');
-      this.allShowFrom.push({ text, from, before });
+    const now = moment().add(1, 'month');
+    const partOfYear: number = Math.floor(now.clone().month() / 6);
+    let from: moment.Moment = now.clone().startOf('month').set('month', 6 * partOfYear);
+    this.allShowFrom.push(this.halfYearShowFrom(from.clone().add(12, 'months')));
+    this.allShowFrom.push(this.halfYearShowFrom(from.clone().add(6, 'months')));
+    this.allShowFrom.push(this.halfYearShowFrom(from.clone()));
+    if (partOfYear === 1) {
+      this.allShowFrom.push(this.halfYearShowFrom(from.clone().subtract(6, 'months')));
     }
+    this.allShowFrom.push(this.yearShowFrom(from.clone().subtract(1, 'years')));
+    this.allShowFrom.push(this.yearShowFrom(from.clone().subtract(2, 'years')));
+    this.allShowFrom.push(this.yearShowFrom(from.clone().subtract(3, 'years')));
+  }
+
+  private halfYearShowFrom(from: moment.Moment): ShowFrom {
+    let before: moment.Moment = from.clone().add(6, 'months')
+    let text: string = from.format('YYYY') + (from.month() < 6 ? ' VT' : ' HT');
+    return { text, from, before };
+  }
+
+  private yearShowFrom(from: moment.Moment): ShowFrom {
+    from.month(0);
+    let before: moment.Moment = from.clone().add(1, 'year')
+    let text: string = from.format('YYYY');
+    return { text, from, before };
   }
 
 }

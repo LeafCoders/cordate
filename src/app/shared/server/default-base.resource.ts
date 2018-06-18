@@ -36,6 +36,7 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     const next = Object.values(params ? params : []);
     const notEqual: boolean = current.length !== next.length || current.some((v, index) => v !== next[index]);
     if (notEqual) {
+      Object.keys(params).forEach(key => params[key] === undefined && delete params[key])
       this.listParams = params;
       this.refreshList(true);
     }

@@ -83,7 +83,7 @@ export class EventListComponent extends BaseList<Event> {
   private groupEvents(events: EventList): void {
     if (this.isWeekView) {
       this.eventGroups = itemsGrouper(
-        (item: Event) => item.startTime.format('YYYYW'),
+        (item: Event) => item.startTime.format('YYYYWW'),
         (item: Event) => {
           return {
             title: 'Vecka ' + item.startTime.format('W, YYYY'),
