@@ -1,7 +1,7 @@
 <div *ngIf="saving" style="padding: 8px;">
   <mat-progress-spinner mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
 </div>
-<button mat-icon-button *ngIf="(assignPermission || managePermission) && !saving" [matMenuTriggerFor]="resourceMenu" (click)="$event.stopPropagation()">
+<button mat-icon-button *ngIf="(assignPermission || managePermission) && !saving" [matMenuTriggerFor]="resourceMenu" (menuOpened)="loadResources()" (click)="$event.stopPropagation()">
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu class="menu" #resourceMenu="matMenu" xPosition="before">

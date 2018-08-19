@@ -41,22 +41,28 @@ export class SelectEventResourcesMenuComponent {
   set setResourceRequirement(rr: ResourceRequirement) {
     this.resourceRequirement = rr;
 
-    this.api.read<any[]>(`api/resourceTypes/${rr.resourceType.id}/resources`)
+    this.allowMultiSelect = true;
+    this.trueFalseIcons = this.allowMultiSelect ? ['check_box', 'check_box_outline_blank'] : ['radio_button_checked', 'radio_button_unchecked'];
+
+    this.assignPermission = this.authPermission.isPermitted(this.eventsResource.assignResourceRequirementPermission(this.event, rr.resourceType));
+    this.managePermission = this.authPermission.isPermitted(this.eventsResource.manageResourceRequirementsPermission(this.event, rr.resourceType));
+  }
+
+  loadResources() {
+    if (this.resources) {
+      return;
+    }
+    this.api.read<any[]>(`api/resourceTypes/${this.resourceRequirement.resourceType.id}/resources`)
       .subscribe(data => {
         this.resources = data.map(item => <ResourceSelect>{ resource: new Resource(item), selected: false })
-        if (rr.resources) {
-          rr.resources.forEach((resource: Resource) => {
+        if (this.resourceRequirement.resources) {
+          this.resourceRequirement.resources.forEach((resource: Resource) => {
             let toSelect: ResourceSelect = this.resources.find((select: ResourceSelect) => select.resource.id === resource.id);
             if (toSelect) {
               toSelect.selected = true;
             }
           });
         }
-        this.allowMultiSelect = true;
-        this.trueFalseIcons = this.allowMultiSelect ? ['check_box', 'check_box_outline_blank'] : ['radio_button_checked', 'radio_button_unchecked'];
-
-        this.assignPermission = this.authPermission.isPermitted(this.eventsResource.assignResourceRequirementPermission(this.event, rr.resourceType));
-        this.managePermission = this.authPermission.isPermitted(this.eventsResource.manageResourceRequirementsPermission(this.event, rr.resourceType));
       });
   }
 
