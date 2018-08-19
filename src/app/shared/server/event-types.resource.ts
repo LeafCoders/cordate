@@ -36,6 +36,7 @@ export class EventTypesResource extends DefaultBaseResource<EventType, EventType
     return this.api.create<any[]>(`api/eventTypes/${eventType.id}/resourceTypes/${resourceTypeId}`).pipe(
       map((data): void => {
         eventType.resourceTypes = data.map(item => new ResourceTypeRef(item));
+        this.replaceUpdated(eventType);
       })
     );
   }
@@ -44,6 +45,7 @@ export class EventTypesResource extends DefaultBaseResource<EventType, EventType
     return this.api.delete<any[]>(`api/eventTypes/${eventType.id}/resourceTypes/${resourceTypeId}`).pipe(
       map((data): void => {
         eventType.resourceTypes = data.map(item => new ResourceTypeRef(item));
+        this.replaceUpdated(eventType);
       })
     );
   }

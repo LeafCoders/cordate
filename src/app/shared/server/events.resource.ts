@@ -48,10 +48,15 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     this.refreshList(true);
   }
 
+  refreshOnlyClient(): void {
+    this.nextList();
+  }
+
   addResourceRequirement(event: Event, resourceType: ResourceType): Observable<void> {
     return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements`, undefined, { resourceTypeId: resourceType.id }).pipe(
       map((data): void => {
         event.resourceRequirements = data.map(item => new ResourceRequirement(item));
+        this.replaceUpdated(event);
       })
     );
   }
@@ -60,6 +65,7 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}`).pipe(
       map((data): void => {
         event.resourceRequirements = data.map(item => new ResourceRequirement(item));
+        this.replaceUpdated(event);
       })
     );
   }
@@ -69,6 +75,7 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     return this.api.create<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources`, oneOrAll).pipe(
       map((data): void => {
         resourceRequirement.resources = data.map(item => new Resource(item));
+        this.replaceUpdated(event);
       })
     );
   }
@@ -78,6 +85,7 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     return this.api.delete<any[]>(`api/events/${event.id}/resourceRequirements/${resourceRequirement.id}/resources${oneOrAll}`).pipe(
       map((data): void => {
         resourceRequirement.resources = data.map(item => new Resource(item));
+        this.replaceUpdated(event);
       })
     );
   }

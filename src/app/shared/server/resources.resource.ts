@@ -34,6 +34,7 @@ export class ResourcesResource extends DefaultBaseResource<Resource, ResourceUpd
     return this.api.create<any[]>(`api/resources/${resource.id}/resourceTypes/${resourceTypeId}`).pipe(
       map((data): void => {
         resource.resourceTypes = data.map(item => new ResourceTypeRef(item));
+        this.replaceUpdated(resource);
       })
     );
   }
@@ -42,6 +43,7 @@ export class ResourcesResource extends DefaultBaseResource<Resource, ResourceUpd
     return this.api.delete<any[]>(`api/resources/${resource.id}/resourceTypes/${resourceTypeId}`).pipe(
       map((data): void => {
         resource.resourceTypes = data.map(item => new ResourceTypeRef(item));
+        this.replaceUpdated(resource);
       })
     );
   }

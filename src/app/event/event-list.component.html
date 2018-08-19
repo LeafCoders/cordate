@@ -12,9 +12,14 @@
     <div class="event-content list-content">
       <div class="event-title">{{ item.event.title }}<span *ngIf="!item.event.isPublic" class="not-public">EJ PUBLIK</span></div>
       <div class="event-description">{{ item.description }}</div>
+      <div class="event-resources">
+        <div *ngFor="let rr of item.resourceRequirements" [class.bold]="rr.highlight">
+          <span>{{ rr.resourceTypeName }}</span>: <span>{{ rr.resourceNames }}</span>
+        </div>
+      </div>
     </div>
-    <div class="list-action" *ngIf="item.resourceToShow">
-      <lc-select-event-resources-menu [event]="item.event" [resourceRequirement]="item.resourceToShow" (eventUpdated)="updateEventViewModel($event)"></lc-select-event-resources-menu>
+    <div class="list-action" *ngIf="item.selectableResourceRequirement">
+      <lc-select-event-resources-menu [event]="item.event" [resourceRequirement]="item.selectableResourceRequirement" (eventUpdated)="updateEventViewModel($event)"></lc-select-event-resources-menu>
     </div>
   </div>
 </lc-list>

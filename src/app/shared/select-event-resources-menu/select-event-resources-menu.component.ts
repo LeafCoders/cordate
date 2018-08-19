@@ -78,7 +78,7 @@ export class SelectEventResourcesMenuComponent {
     this.removeResource();
   }
 
-  remove(): void {
+  removeResourceRequirement(): void {
     if (this.event && this.event.id) {
       this.perform(this.eventsResource.removeResourceRequirement(this.event, this.resourceRequirement));
     }

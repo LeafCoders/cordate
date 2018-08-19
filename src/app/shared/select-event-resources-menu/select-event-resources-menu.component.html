@@ -14,5 +14,5 @@
   <button mat-menu-item (click)="selectAll()" *ngIf="allowMultiSelect">Välj alla</button>
   <button mat-menu-item (click)="clear()">Rensa</button>
   <div class="menu-divider" *ngIf="managePermission"></div>
-  <button mat-menu-item (click)="remove()" *ngIf="managePermission"><mat-icon>remove_circle</mat-icon><span>Ta bort resursbehov</span></button>
+  <button mat-menu-item (click)="removeResourceRequirement()" *ngIf="managePermission"><mat-icon>remove_circle</mat-icon><span>Ta bort resursbehov</span></button>
 </mat-menu>

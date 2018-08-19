@@ -90,8 +90,8 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   addResourceRequirement(resourceType: ResourceType): void {
     if (this.item.id) {
       this.eventsResource.addResourceRequirement(this.item, resourceType).subscribe(() => {
+        this.eventsResource.refreshOnlyClient();
         this.refreshAvailableAddResourceTypes();
-        // this.updatedEmitter.emit(this.item);
       });
     } else {
       this.item.resourceRequirements.push(ResourceRequirement.fromResourceType(resourceType));
@@ -99,29 +99,10 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     }
   }
 
-  removeResourceRequirement(resourceRequirement: ResourceRequirement): void {
-    let doRemove = () => {
-      let index: number = this.item.resourceRequirements.findIndex((rr: ResourceRequirement) => resourceRequirement.resourceType.idEquals(rr.resourceType));
-      if (index >= 0) {
-        this.item.resourceRequirements.splice(index, 1);
-      }
+  eventResourcesUpdated(event: Event): void {
+    if (this.item.id) {
+      this.eventsResource.refreshOnlyClient();
       this.refreshAvailableAddResourceTypes();
-    };
-
-    if (this.item.id) {
-      this.eventsResource.removeResourceRequirement(this.item, resourceRequirement).subscribe(() => {
-        doRemove();
-        // this.updatedEmitter.emit(this.item);
-      });
-    } else {
-      doRemove();
-    }
-  }
-
-  setResource(userResource: Resource, users: void): void {
-    //TODO: userResource.users = users;
-    if (this.item.id) {
-      //      this.updatedEmitter.emit(this.event);
     }
   }
 

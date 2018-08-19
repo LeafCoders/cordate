@@ -23,7 +23,7 @@
               <div>{{ rr.asText() }}</div>
             </div>
             <div class="list-action">
-              <lc-select-event-resources-menu [event]="item" [resourceRequirement]="rr" (eventUpdated)="setResource(rr, $event)" (removeResourceRequirement)="removeResourceRequirement(rr)">
+              <lc-select-event-resources-menu [event]="item" [resourceRequirement]="rr" (eventUpdated)="eventResourcesUpdated($event)">
               </lc-select-event-resources-menu>
             </div>
           </div>

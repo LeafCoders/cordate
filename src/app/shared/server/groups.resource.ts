@@ -34,6 +34,7 @@ export class GroupsResource extends DefaultBaseResource<Group, GroupUpdate> {
     return this.api.create<any[]>(`api/groups/${group.id}/users/${userId}`).pipe(
       map((data): void => {
         group.users = data.map(item => new User(item));
+        this.replaceUpdated(group);
       })
     );
   }
@@ -42,6 +43,7 @@ export class GroupsResource extends DefaultBaseResource<Group, GroupUpdate> {
     return this.api.delete<any[]>(`api/groups/${group.id}/users/${userId}`).pipe(
       map((data): void => {
         group.users = data.map(item => new User(item));
+        this.replaceUpdated(group);
       })
     );
   }

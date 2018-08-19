@@ -16,8 +16,8 @@ interface EventViewModel {
   monthName: string;
   time: string;
   eventTypeName: string;
-  resourceToShow?: ResourceRequirement;
-  resourceNames: Array<any>;
+  selectableResourceRequirement?: ResourceRequirement;
+  resourceRequirements: Array<{ resourceTypeName: string, resourceNames: string, highlight: boolean }>;
 }
 
 @Component({
@@ -86,7 +86,7 @@ export class EventListComponent extends BaseList<Event> {
         (item: Event) => item.startTime.format('YYYYWW'),
         (item: Event) => {
           return {
-            title: 'Vecka ' + item.startTime.format('W, YYYY'),
+            title: item.startTime.format('[v]W YYYY'),
             data: item.startTime.clone().startOf('week'),
             items: []
           };
@@ -114,12 +114,11 @@ export class EventListComponent extends BaseList<Event> {
     let time: moment.Moment = moment(event.startTime);
     let description: string = event.description;
 
-    let resourceToShow: ResourceRequirement;
+    let selectableResourceRequirement: ResourceRequirement;
     if (this.filter.resourceType) {
-      resourceToShow = event.resourceRequirements.find((rr: ResourceRequirement): boolean => {
+      selectableResourceRequirement = event.resourceRequirements.find((rr: ResourceRequirement): boolean => {
         return rr.resourceType.idEquals(this.filter.resourceType);
       });
-      description = resourceToShow ? this.filter.resourceType.asText() + ': ' + resourceToShow.asText() : '';
     }
 
     return {
@@ -130,9 +129,13 @@ export class EventListComponent extends BaseList<Event> {
       monthName: time.format('MMM'),
       time: time.format('HH:mm'),
       eventTypeName: event.eventType.name,
-      resourceToShow: resourceToShow,
-      resourceNames: event.resourceRequirements.map((rr: ResourceRequirement) => {
-        return { name: rr.resourceType.name }
+      selectableResourceRequirement: selectableResourceRequirement,
+      resourceRequirements: event.resourceRequirements.map((rr: ResourceRequirement) => {
+        return {
+          resourceTypeName: rr.resourceType.name,
+          resourceNames: rr.asText(),
+          highlight: rr === selectableResourceRequirement,
+        };
       })
     }
   }

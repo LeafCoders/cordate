@@ -50,6 +50,7 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
     return this.api.create<any[]>(`api/articles/${article.id}/authors/${userId}`).pipe(
       map((data): void => {
         article.authors = data.map(item => new Resource(item).asRef());
+        this.replaceUpdated(article);
       })
     );
   }
@@ -58,6 +59,7 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
     return this.api.delete<any[]>(`api/articles/${article.id}/authors/${userId}`).pipe(
       map((data): void => {
         article.authors = data.map(item => new Resource(item).asRef());
+        this.replaceUpdated(article);
       })
     );
   }
