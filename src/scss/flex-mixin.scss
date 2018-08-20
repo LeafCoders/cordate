@@ -32,7 +32,7 @@
   @include fb-direction(column);
 }
 
-@mixin fb-align-right() {
+@mixin fb-align-end() {
   @include fb-container();
   -webkit-box-pack: end;
   -ms-flex-pack: end;

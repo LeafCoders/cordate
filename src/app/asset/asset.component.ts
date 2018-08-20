@@ -46,7 +46,7 @@ export class AssetComponent extends BaseContainer<Asset> {
 
   showNewDialog(): void {
     if (this.allowAddNew && !this.newDialogRef) {
-      this.newDialogRef = this.dialog.open(AssetNewDialogComponent, { width: '80vh' });
+      this.newDialogRef = this.dialog.open(AssetNewDialogComponent, { width: '640px', maxWidth: '90vw' });
       this.newDialogRef.componentInstance.assetFolder = this.selectedAssetFolder;
       this.newDialogRef.afterClosed().subscribe(() => {
         this.newDialogRef = undefined

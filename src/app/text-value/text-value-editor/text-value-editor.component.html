@@ -31,7 +31,7 @@
       (changed)="setIsPublic($event)" [state]="isPublicState">
     </lc-boolean-editor>
 
-    <lc-text-editor lc-list-item valueTitle="Värde" mode="multiline" [value]="textValue.value" (changed)="setValue($event)" [state]="valueState">
+    <lc-text-editor lc-list-item valueTitle="Värde" multiLine="true" [value]="textValue.value" (changed)="setValue($event)" [state]="valueState">
     </lc-text-editor>
   </lc-list>
 </div>

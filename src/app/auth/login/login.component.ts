@@ -3,9 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
-import { AuthService, UserIdentity } from '../auth.service';
+import { AuthService } from '../auth.service';
 import { AuthPermissionService } from '../auth-permission.service';
 import { RestApiError } from "../../shared/server/rest-api-error.model";
+import { UserIdentity } from '../../shared/current-user.service';
 
 interface PreviousUser {
   fullName: string;

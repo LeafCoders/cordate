@@ -14,6 +14,7 @@ import { ArticleSeriesResource } from '../shared/server/article-series.resource'
 import { ArticleTypesResource } from '../shared/server/article-types.resource';
 import { Event, EventTypeRef, TimeRange, ResourceTypeList, ResourceTypeRef, ResourceRequirement, Resource, ResourceType, ArticleList, Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
 import { SingleSelectDialogComponent } from '../shared/dialog/single-select-dialog/single-select-dialog.component';
+import { SendMessageDialogService } from '../shared/dialog/send-message-dialog/send-message-dialog.service';
 
 @Component({
   selector: 'lc-event-editor',
@@ -48,6 +49,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     private articleSeriesResource: ArticleSeriesResource,
     private router: Router,
     private dialog: MatDialog,
+    private sendMessageDialogService: SendMessageDialogService,
   ) {
     super(eventsResource);
 
@@ -72,9 +74,14 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   protected rebuildActions(): Array<EditorAction> {
     const mayDelete: boolean = this.authPermission.isPermitted(this.eventsResource.deletePermission(this.item));
     let actions = [
-      new EditorAction('Ta bort', mayDelete, () => this.deleteItem())
+      new EditorAction('Ta bort', mayDelete, () => this.deleteItem()),
+      new EditorAction('Hjälp mig', true, () => this.helpMeAction()),
     ];
     return actions;
+  }
+
+  helpMeAction(): void {
+    this.sendMessageDialogService.showDialog("Hjälp mig med händelsen", `Gäller händelse: ${this.item.asText()}`);
   }
 
   protected afterSetEditorItem(event: Event): void {

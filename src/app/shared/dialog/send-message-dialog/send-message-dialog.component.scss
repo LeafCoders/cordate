@@ -1,0 +1,5 @@
+@import "src/scss/cordate-theme-def.scss";
+
+mat-dialog-content div:not(:first-child) {
+  margin-top: 8px;
+}

@@ -1,0 +1,21 @@
+<div>
+  <h2 mat-dialog-title>Be administratör om hjälp</h2>
+  <mat-dialog-content>
+    <div>
+      <b>Från:</b> {{ fromUser.fullName }}
+    </div>
+    <div>
+      <b>Ämne:</b> {{ subject }}
+    </div>
+    <div class="flex-cols">
+      <b>Meddelande:</b>
+      <mat-form-field>
+        <textarea matInput cdkTextareaAutosize [(ngModel)]="message"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="flex-rows flex-align-end">
+    <button mat-button (click)="dialogRef.close()">Avbryt</button>
+    <button mat-button color="primary" (click)="ok()">Skicka</button>
+  </mat-dialog-actions>
+</div>

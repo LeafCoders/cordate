@@ -5,39 +5,35 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { RestApiService } from '../shared/server/rest-api.service';
 import { RestApiError } from '../shared/server/rest-api-error.model';
-
-export interface UserIdentity {
-  id: number;
-  fullName: string;
-  email: string;
-};
-
+import { UserIdentity, CurrentUserService } from '../shared/current-user.service';
 
 @Injectable()
 export class AuthService {
 
   private jwtHelperService: JwtHelperService = new JwtHelperService();
-  private currentUser: UserIdentity;
 
-  constructor(private api: RestApiService) {
+  constructor(
+    private api: RestApiService,
+    private currentUser: CurrentUserService,
+  ) {
   }
 
   get userId(): number {
-    return this.currentUser ? this.currentUser.id : undefined;
+    return this.currentUser.userId;
   }
 
   get user(): UserIdentity {
-    return this.currentUser ? this.currentUser : { id: undefined, fullName: '-', email: '-' };
+    return this.currentUser.user;
   }
 
   public isAuthorized(): boolean {
     let token: string = localStorage.getItem('accessToken');
     if (token && !this.jwtHelperService.isTokenExpired(token)) {
-      this.currentUser = {
+      this.currentUser.setUser({
         id: this.jwtHelperService.decodeToken(token).sub,
         fullName: localStorage.getItem('userFullName'),
         email: localStorage.getItem('userEmail')
-      };
+      });
       return true;
     }
     return false;
@@ -63,9 +59,9 @@ export class AuthService {
         .subscribe(
           (response: HttpResponse<any>) => {
             localStorage.setItem('accessToken', response.headers.get('X-AUTH-TOKEN'));
-            this.currentUser = <UserIdentity>response.body;
-            localStorage.setItem('userFullName', this.currentUser.fullName);
-            localStorage.setItem('userEmail', this.currentUser.email);
+            this.currentUser.setUser(<UserIdentity>response.body);
+            localStorage.setItem('userFullName', this.currentUser.user.fullName);
+            localStorage.setItem('userEmail', this.currentUser.user.email);
             observer.next(this.currentUser);
           },
           (error: RestApiError) => {

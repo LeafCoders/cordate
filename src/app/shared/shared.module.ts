@@ -61,8 +61,11 @@ import { ListComponent, ListActionsDirective, ListItemDirective } from './list/l
 import { SelectEventResourcesMenuComponent } from './select-event-resources-menu/select-event-resources-menu.component';
 
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
+import { SendMessageDialogComponent } from './dialog/send-message-dialog/send-message-dialog.component';
 import { SingleSelectDialogComponent } from './dialog/single-select-dialog/single-select-dialog.component';
 
+import { CurrentUserService } from './current-user.service';
+import { SendMessageDialogService } from './dialog/send-message-dialog/send-message-dialog.service';
 import { SignalService } from './signal.service';
 
 import {
@@ -89,6 +92,7 @@ let dataEditors = [
 
 let dialogs = [
   SelectAssetDialogComponent,
+  SendMessageDialogComponent,
   SingleSelectDialogComponent,
 ];
 
@@ -103,8 +107,10 @@ let services = [
   AuthService,
   AuthGuardService,
   AuthPermissionService,
+  CurrentUserService,
   RestApiService,
   RestApiErrorService,
+  SendMessageDialogService,
   SignalService,
 ];
 

@@ -4,7 +4,7 @@
     <lc-static-editor lc-list-item valueTitle="Nivå" icon="star_half">{{ levelText() }}</lc-static-editor>
     <lc-ref-editor lc-list-item *ngIf="item.level == 2" valueTitle="För grupp" refType="group" [value]="item.entity" (changed)="setEntity($event)" [state]="entityState"></lc-ref-editor>
     <lc-ref-editor lc-list-item *ngIf="item.level == 3" valueTitle="För användare" refType="user" [value]="item.entity" (changed)="setEntity($event)" [state]="entityState"></lc-ref-editor>
-    <lc-text-editor lc-list-item valueTitle="Rättigheter" icon="security" [value]="item.patterns" (changed)="setPatterns($event)" [state]="patternsState" mode="multiline" editingHelpText="Separera rättigheter med komma (,). T.ex. 'events:view|read,slideShows'.">
+    <lc-text-editor lc-list-item valueTitle="Rättigheter" icon="security" [value]="item.patterns" (changed)="setPatterns($event)" [state]="patternsState" multiLine="true" editingHelpText="Separera rättigheter med komma (,). T.ex. 'events:view|read,slideShows'.">
     </lc-text-editor>
   </lc-list>
 </lc-editor-container>

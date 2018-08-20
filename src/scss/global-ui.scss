@@ -9,6 +9,10 @@
   @include fb-column-container();
 }
 
+.flex-align-end {
+  @include fb-align-end();
+}
+
 .pane-aside {
   max-width: 48rem;
 }

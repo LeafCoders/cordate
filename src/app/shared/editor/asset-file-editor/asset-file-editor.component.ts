@@ -46,7 +46,7 @@ export class AssetFileEditorComponent {
   }
 
   showSelectDialog(): void {
-    this.selectAssetFileDialogRef = this.dialog.open(SelectAssetDialogComponent, { width: '80vw' });
+    this.selectAssetFileDialogRef = this.dialog.open(SelectAssetDialogComponent, { width: '640px', maxWidth: '90vw' });
     this.selectAssetFileDialogRef.componentInstance.setAssetFolder(this.assetFolder);
     this.selectAssetFileDialogRef.componentInstance.selectAsset(this.asset);
 

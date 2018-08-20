@@ -3,7 +3,7 @@
     <mat-tab label="Info">
       <lc-list *ngIf="item">
         <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
-        <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" mode="multiline"></lc-text-editor>
+        <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
         <lc-ref-editor lc-list-item valueTitle="Användare" refType="user" [value]="item.user" (changed)="setUser($event)" [state]="userState"></lc-ref-editor>
       </lc-list>
     </mat-tab>
