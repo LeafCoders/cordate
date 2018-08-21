@@ -85,7 +85,9 @@ export class HtmlTextEditorComponent {
           return;
         }
       } catch (e) { }
-      editor.pasteHTML(this.editingValue.contentHtml, 'silent');
+      if (this.editingValue.contentHtml) {
+        editor.pasteHTML(this.editingValue.contentHtml, 'silent');
+      }
     }
   }
 

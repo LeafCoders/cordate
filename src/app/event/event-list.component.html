@@ -11,7 +11,7 @@
     <lc-date-time-box [date]="item.event.startTime" class="event-time list-content"></lc-date-time-box>
     <div class="event-content list-content">
       <div class="event-title">{{ item.event.title }}<span *ngIf="!item.event.isPublic" class="not-public">EJ PUBLIK</span></div>
-      <div class="event-description">{{ item.description }}</div>
+      <div class="event-description" *ngFor="let description of item.descriptions">{{ description }}</div>
       <div class="event-resources">
         <div *ngFor="let rr of item.resourceRequirements" [class.bold]="rr.highlight">
           <span>{{ rr.resourceTypeName }}</span>: <span>{{ rr.resourceNames }}</span>

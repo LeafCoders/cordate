@@ -10,7 +10,7 @@ import { ItemsGroup, itemsGrouper } from '../shared/items-grouper';
 
 interface EventViewModel {
   event: Event;
-  description: string;
+  descriptions: Array<string>;
   dayNumber: number;
   dayName: string;
   monthName: string;
@@ -123,7 +123,7 @@ export class EventListComponent extends BaseList<Event> {
 
     return {
       event: event,
-      description: description,
+      descriptions: description.split("\n"),
       dayNumber: time.date(),
       dayName: time.format('ddd'),
       monthName: time.format('MMM'),

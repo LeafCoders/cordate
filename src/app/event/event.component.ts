@@ -88,9 +88,6 @@ export class EventComponent extends BaseContainer<Event> {
         }
       });
     });
-
-    this.filters.push({ text: 'Med mig', disabled: true });
-    this.filters.push({ text: 'Avancerat...', disabled: true });
   }
 
   private setupShowFromList(): void {
