@@ -3,6 +3,8 @@
   <div class="pane-main">
     <lc-page-header [title]="viewData.articleType?.articlesTitle"></lc-page-header>
     <div class="filter-bar dark">
+      <button mat-icon-button (click)="moveRange(false)"><mat-icon>chevron_left</mat-icon></button> {{ selectedRangeText }}
+      <button mat-icon-button (click)="moveRange(true)" *ngIf="selectedRangeIndex > 0"><mat-icon>chevron_right</mat-icon></button>
       <div class="expander"></div>
       <button *ngIf="allowAddNew" mat-icon-button (click)="showNewDialog()"><mat-icon>add_circle</mat-icon></button>
     </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
+import { Observable, Subscriber } from 'rxjs';
 
 import { ArticleTypesResource } from './shared/server/article-types.resource';
 import { ArticlesResource } from './shared/server/articles.resource';
@@ -9,6 +9,8 @@ import { ArticleType, ArticleTypeList } from './shared/server/rest-api.model';
 
 @Injectable()
 export class ArticleTypeGuard implements CanActivate {
+
+  private lastArticleTypeIdAlias: string;
 
   constructor(
     private articleTypesResource: ArticleTypesResource,
@@ -21,10 +23,14 @@ export class ArticleTypeGuard implements CanActivate {
       return false;
     }
     const articleTypeIdAlias: string = route.url[1].path;
-    const articleType: ArticleType = (<{ articleType: ArticleType }>route.data).articleType;
+    if (this.lastArticleTypeIdAlias === articleTypeIdAlias) {
+      return true;
+    }
+    this.lastArticleTypeIdAlias = articleTypeIdAlias;
 
     return Observable.create(observer => {
-      this.articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => {
+      let subscriber = new Subscriber<ArticleTypeList>((articleTypes: ArticleTypeList) => {
+        subscriber.unsubscribe();
         const articleType: ArticleType = articleTypes.find(at => at.idAlias === articleTypeIdAlias);
         if (articleType) {
           this.articlesResource.setListParams({ articleTypeId: articleType.id });
@@ -35,6 +41,7 @@ export class ArticleTypeGuard implements CanActivate {
         }
         observer.complete();
       });
+      this.articleTypesResource.list().subscribe(subscriber);
     });
   }
 }

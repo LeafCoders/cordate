@@ -1,13 +1,6 @@
 @import "src/scss/cordate-theme-def.scss";
 @import "src/scss/flex-mixin.scss";
 
-.event-time {
-  flex: 0;
-  width: 72px;
-  min-width: 72px;
-  padding-right: 0;
-}
-
 .event-content {
   @include fb-column-container();
   @include fb-fill();

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSidenav } from '@angular/material';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import { Subscription, Subscriber } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { ArticleTypeList } from '../server/rest-api.model';
@@ -18,11 +18,6 @@ interface LinkItem {
   icon: string,
   title: string;
   routePath: string;
-}
-
-interface LinkGroup {
-  title: string;
-  linkItems: Array<LinkItem>;
 }
 
 @Component({
@@ -65,7 +60,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       this.sideNav.open();
     });
 
-    let subscription = articleTypesResource.list().subscribe((articleTypes: ArticleTypeList) => this.articleTypes = articleTypes);
+    let subscriber = new Subscriber<ArticleTypeList>((articleTypes: ArticleTypeList) => {
+      this.articleTypes = articleTypes;
+      subscriber.unsubscribe();
+    });
+    articleTypesResource.list().subscribe(subscriber);
   }
 
   ngOnInit() {

@@ -8,7 +8,7 @@
     <button mat-icon-button (click)="createNew(group)"><mat-icon>add_circle</mat-icon></button>
   </ng-template>
   <div lc-list-item *ngFor="let item of group.items" (click)="selectItem(item.event)" clickable="true">
-    <lc-date-time-box [date]="item.event.startTime" class="event-time list-content"></lc-date-time-box>
+    <lc-date-time-box [date]="item.event.startTime" class="list-content"></lc-date-time-box>
     <div class="event-content list-content">
       <div class="event-title">{{ item.event.title }}<span *ngIf="!item.event.isPublic" class="not-public">EJ PUBLIK</span></div>
       <div class="event-description" *ngFor="let description of item.descriptions">{{ description }}</div>

@@ -1,4 +1,4 @@
-import { Observable, Observer, Subject, BehaviorSubject, Subscription, of } from 'rxjs';
+import { Observable, Observer, Subject, BehaviorSubject, Subscription, of, Subscriber } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
 import { BaseResource } from './base.resource';
@@ -58,12 +58,13 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
   listOnce(): Observable<Array<T>> {
     this.refreshList();
     return Observable.create((observer: Observer<Array<T>>) => {
-      let subscription: Subscription = this.listSubject.subscribe(items => {
+      let subscriber = new Subscriber<Array<T>>(items => {
         observer.next(items);
       }, undefined, () => {
         observer.complete();
-        subscription.unsubscribe();
-      });
+        subscriber.unsubscribe();
+      })
+      this.listSubject.subscribe(subscriber);
     });
   };
 
