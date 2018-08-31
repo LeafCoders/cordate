@@ -1,5 +1,5 @@
 <mat-icon class="list-icon">attach_file</mat-icon>
-<div class="list-content" [class.file-drag-over]="isDragOver" opFilesDrop (opFilesDropDropped)="dragFilesDropped($event)" (opFilesDropOver)="dragFilesOver($event)">
+<div class="list-content" [class.file-drag-over]="isDragOver" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">
   <div class="value-title">{{ valueTitle }}</div>
   <div *ngIf="asset?.url" class="imgContainer">
     <lc-asset-row [asset]="asset" (click)="onClickAssetRow()" style="cursor: pointer"></lc-asset-row>

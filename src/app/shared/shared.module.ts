@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { FilesDropModule } from 'ng2-files-drop';
 import { QuillModule } from 'ngx-quill';
 
 import { environment } from '../../environments/environment';
@@ -77,6 +76,7 @@ import {
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { PortalModule } from '@angular/cdk/portal';
+import { FileDropDirective } from './util/file-drop/file-drop.directive';
 
 let dataEditors = [
   AssetFileEditorComponent,
@@ -102,6 +102,10 @@ let presentations = [
   AssetBoxComponent,
   AssetRowComponent,
 ];
+
+let utils = [
+  FileDropDirective,
+]
 
 let services = [
   AuthService,
@@ -188,7 +192,6 @@ export function jwtOptionsFactory(storage) {
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    FilesDropModule,
     QuillModule,
     ...materialModules,
     JwtModule.forRoot({
@@ -210,6 +213,7 @@ export function jwtOptionsFactory(storage) {
     ...dataEditors,
     ...presentations,
     ...dialogs,
+    ...utils,
   ],
   exports: [
     BooleanEditorComponent,
@@ -222,6 +226,7 @@ export function jwtOptionsFactory(storage) {
     ...dataEditors,
     ...presentations,
     ...dialogs,
+    ...utils,
     ...materialModules,
   ],
   entryComponents: [

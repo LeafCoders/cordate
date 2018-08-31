@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilesDropModule } from 'ng2-files-drop';
 
 import { SharedModule } from '../shared/shared.module';
 import { AssetComponent } from './asset.component';
@@ -12,7 +11,6 @@ import { AssetNewDialogComponent } from './new-dialog/asset-new-dialog.component
   imports: [
     CommonModule,
     SharedModule,
-    FilesDropModule,
   ],
   declarations: [
     AssetComponent,

@@ -1,4 +1,4 @@
-<div [class.file-drag-over]="isDragOver" opFilesDrop (opFilesDropDropped)="dragFilesDropped($event)" (opFilesDropOver)="dragFilesOver($event)">
+<div [class.file-drag-over]="isDragOver" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">
   <div>
     <span>Släpp en fil här för att ladda upp den</span>
     <input class="file-input-hidden" type="file" name="file" tabindex="-1" #fileInput (change)="fileSelected($event)">
