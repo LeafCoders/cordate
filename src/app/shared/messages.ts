@@ -11,6 +11,7 @@ export class Messages {
 
   private static messages: { [langCode: string]: string } = {
     [Messages.AUTH_INCORRECT_PASSWORD]: 'Felaktigt lösenord',
+    'auth.userNotFound': 'Användaren finns inte',
     'auth.userNotActivated': 'Användaren har inte aktiverats än',
 
     [Messages.REASON_SERVER_UNREACHABLE]: 'Servern kan inte nås för tillfället',
