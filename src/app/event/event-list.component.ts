@@ -112,7 +112,7 @@ export class EventListComponent extends BaseList<Event> {
 
   private eventToViewModel(event: Event): EventViewModel {
     let time: moment.Moment = moment(event.startTime);
-    let description: string = event.description;
+    let description: string = event.description ? event.description : '';
 
     let selectableResourceRequirement: ResourceRequirement;
     if (this.filter.resourceType) {

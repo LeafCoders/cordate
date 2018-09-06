@@ -1,6 +1,6 @@
-<div class="container">
-  <h2>Ny händelse</h2>
+<h2 mat-dialog-title>Ny händelse</h2>
 
+<mat-dialog-content>
   <div *ngIf="!selectedEventType" class="flex-cols">
     <p>Välj händelsetyp</p>
     <lc-list scrollable="true">
@@ -17,13 +17,15 @@
         <button mat-icon-button (click)="moveDates(-1)"><mat-icon>chevron_left</mat-icon></button>
         <button mat-icon-button (click)="moveDates(1)"><mat-icon>chevron_right</mat-icon></button>
       </ng-template>
-      <div lc-list-item *ngFor="let day of dates" clickable="true" (click)="selectDate(day)">
-        <div class="list-content">{{ day.format('dddd D MMMM') }}</div>
+      <div styles="overflow-y: auto">
+        <div lc-list-item *ngFor="let day of dates" clickable="true" (click)="selectDate(day)">
+          <div class="list-content">{{ day.format('dddd D MMMM') }}</div>
+        </div>
       </div>
     </lc-list>
   </div>
+</mat-dialog-content>
 
-  <div style="text-align: right">
-    <button mat-button (click)="dialogRef.close()">Avbryt</button>
-  </div>
-</div>
+<mat-dialog-actions class="flex-rows flex-align-end">
+  <button mat-button (click)="dialogRef.close()">Avbryt</button>
+</mat-dialog-actions>

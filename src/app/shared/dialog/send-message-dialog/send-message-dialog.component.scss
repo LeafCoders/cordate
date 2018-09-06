@@ -1,4 +1,8 @@
-@import "src/scss/cordate-theme-def.scss";
+@import "src/scss/flex-mixin.scss";
+
+:host {
+  @include fb-column-container();
+}
 
 mat-dialog-content div:not(:first-child) {
   margin-top: 8px;

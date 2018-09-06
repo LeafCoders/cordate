@@ -1,15 +1,13 @@
-<div class="container">
-  <h2>Ny rättighet</h2>
+<h2 mat-dialog-title>Ny rättighet</h2>
 
-  <div class="flex-cols">
-    <lc-list scrollable="true">
-      <div lc-list-item *ngFor="let level of levels" clickable="true" (click)="selectLevel(level)">
-        <div class="list-content">{{ level.text }}</div>
-      </div>
-    </lc-list>
-  </div>
+<mat-dialog-content>
+  <lc-list scrollable="true">
+    <div lc-list-item *ngFor="let level of levels" clickable="true" (click)="selectLevel(level)">
+      <div class="list-content">{{ level.text }}</div>
+    </div>
+  </lc-list>
+</mat-dialog-content>
 
-  <div style="text-align: right">
-    <button mat-button (click)="dialogRef.close()">Avbryt</button>
-  </div>
-</div>
+<mat-dialog-actions class="flex-rows flex-align-end">
+  <button mat-button (click)="dialogRef.close()">Avbryt</button>
+</mat-dialog-actions>

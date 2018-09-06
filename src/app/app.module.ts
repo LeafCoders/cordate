@@ -33,6 +33,8 @@ import { SlideShowModule } from './slide-show/slide-show.module';
 import { SlideModule } from './slide/slide.module';
 import { TextValueModule } from './text-value/text-value.module';
 import { UserModule } from './user/user.module';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { BlockScrollStrategy } from '@angular/cdk/overlay';
 
 export const CORDATE_FORMATS = {
   parse: {
@@ -83,6 +85,15 @@ export const CORDATE_FORMATS = {
     ArticleTypeGuard,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: CORDATE_FORMATS },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {
+        autoFocus: true,
+        hasBackdrop: true,
+        maxWidth: 'calc(100vw - 16px)',
+        width: '32rem',
+        maxHeight: 'calc(100vh - 16px)',
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })

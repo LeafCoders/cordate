@@ -1,5 +1,9 @@
 @import "src/scss/flex-mixin.scss";
 
+:host {
+  @include fb-column-container();
+}
+
 .container {
   @include fb-align-center();
   min-height: 50vh;

@@ -1,16 +1,5 @@
 @import "src/scss/flex-mixin.scss";
 
-
-.container {
-  width: 32rem;
-  max-width: 90vw;
-  max-height: 70vh;
-  padding: 2px;
-
+:host {
   @include fb-column-container();
-}
-
-span {
-  padding: 2px 4px;
-  border: 1px solid #eee;
 }

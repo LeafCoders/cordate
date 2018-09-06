@@ -1,16 +1,14 @@
-<div class="container">
-  <h2>{{ title }}</h2>
+<h2 mat-dialog-title>{{ title }}</h2>
 
-  <div class="flex-cols">
-    <mat-progress-bar *ngIf="!items?.length" mode="indeterminate"></mat-progress-bar>
-    <lc-list scrollable="true">
-      <div lc-list-item *ngFor="let item of items" clickable="true" (click)="selectItem(item)">
-        <div class="list-content">{{ item.asText() }}</div>
-      </div>
-    </lc-list>
-  </div>
+<mat-dialog-content>
+  <mat-progress-bar *ngIf="!items?.length" mode="indeterminate"></mat-progress-bar>
+  <lc-list scrollable="true">
+    <div lc-list-item *ngFor="let item of items" clickable="true" (click)="selectItem(item)">
+      <div class="list-content">{{ item.asText() }}</div>
+    </div>
+  </lc-list>
+</mat-dialog-content>
 
-  <div style="text-align: right">
-    <button mat-button (click)="dialogRef.close()">Avbryt</button>
-  </div>
-</div>
+<mat-dialog-actions class="flex-rows flex-align-end">
+  <button mat-button (click)="dialogRef.close()">Avbryt</button>
+</mat-dialog-actions>

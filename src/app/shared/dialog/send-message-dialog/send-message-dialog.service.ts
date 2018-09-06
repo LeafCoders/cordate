@@ -18,7 +18,7 @@ export class SendMessageDialogService {
   ) { }
 
   showDialog(subject: string, staticText: string): void {
-    this.dialogRef = this.dialog.open(SendMessageDialogComponent, { width: '640px', maxWidth: '90vw' });
+    this.dialogRef = this.dialog.open(SendMessageDialogComponent);
     this.dialogRef.componentInstance.fromUser = this.currentUser.user;
     this.dialogRef.componentInstance.subject = subject;
 

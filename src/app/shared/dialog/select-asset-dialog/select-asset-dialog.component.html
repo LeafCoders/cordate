@@ -1,8 +1,8 @@
 <div [class.file-drag-over]="isDragOver" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">
   <div>
-    <span>Släpp en fil här för att ladda upp den</span>
+    <h2 mat-dialog-title>Släpp en fil här för att ladda upp den</h2>
     <input class="file-input-hidden" type="file" name="file" tabindex="-1" #fileInput (change)="fileSelected($event)">
-    <button mat-button (click)="fileInput.click()">eller välj fil att ladda upp</button>
+    <button mat-raised-button (click)="fileInput.click()">eller välj fil att ladda upp</button>
     <hr>
   </div>
   <mat-dialog-content>
@@ -13,7 +13,7 @@
       </mat-grid-tile>
     </mat-grid-list>
   </mat-dialog-content>
-  <mat-dialog-actions style="text-align: right">
+  <mat-dialog-actions class="flex-rows flex-align-end">
     <button mat-button (click)="dialogRef.close()">Avbryt</button>
     <button mat-button color="primary" (click)="ok()">Ok</button>
   </mat-dialog-actions>
