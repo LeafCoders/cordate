@@ -9,6 +9,11 @@ export interface PermissionResults {
   [key: string]: boolean;
 };
 
+const PERMISSION_DIVIDER: string = ',';
+const VALUE_DIVIDER: string = '/';
+const LEVEL_DIVIDER: string = ':';
+const ANY_VALUE: string = '*';
+
 @Injectable()
 export class AuthPermissionService {
 
@@ -17,16 +22,17 @@ export class AuthPermissionService {
 
   constructor(private api: RestApiService, private auth: AuthService) { }
 
-  // Multiple permissions should be divided with a ';'
+  // Multiple permissions should be divided with a ','
   isPermitted(permissions: string): boolean {
     return this.userPermissions ? this.userPermissions.hasPermission(permissions) : false;
   }
 
-  // Multiple permissions should be divided with a ';'
+  // Multiple permissions should be divided with a ','
   loadAndCheckPermission(permissions: string): Observable<boolean> {
     // Get previous permissions from local storage
+    /* TODO: Is not working as intended. Make it work.
     const fromStorage: string = localStorage.getItem(this.storageKey());
-    this.userPermissions = fromStorage ? new PermissionsChecker(fromStorage.split(';')) : undefined;
+    this.userPermissions = fromStorage ? new PermissionsChecker(fromStorage.split(PERMISSION_DIVIDER)) : undefined;
     if (this.userPermissions && this.userPermissions.hasPermission(permissions)) {
       if (!this.hasLoadedFromServer) {
         this.hasLoadedFromServer = true;
@@ -34,9 +40,8 @@ export class AuthPermissionService {
       }
       return of<boolean>(true);
     }
-
+    */
     // Get current permissions from server
-    const userId: number = this.auth.userId;
     return Observable.create(observer => {
       this.getPermissionsFromServer().subscribe(
         permissionsFromServer => {
@@ -62,7 +67,7 @@ export class AuthPermissionService {
     return this.api.read<Array<string>>(`api/users/${userId}/permissions`).pipe(
       map(permissionsFromServer => {
         const permissions = new PermissionsChecker(permissionsFromServer);
-        localStorage.setItem(this.storageKey(), permissionsFromServer.join(';'));
+        localStorage.setItem(this.storageKey(), permissionsFromServer.join(PERMISSION_DIVIDER));
         return permissions;
       })
     );
@@ -80,14 +85,14 @@ class PermissionsChecker {
   constructor(private userPermissions: Array<string>) { }
 
   hasPermission(permissionsToTest: string): boolean {
-    return permissionsToTest && permissionsToTest.split(';').some((testPermission, index, array) => {
+    return permissionsToTest && permissionsToTest.split(PERMISSION_DIVIDER).some((testPermission, index, array) => {
       if (this.testedPermissions[testPermission] !== undefined) {
         return this.testedPermissions[testPermission];
       }
 
-      let testParts: Array<string> = testPermission.split(':');
+      let testParts: Array<string> = testPermission.split(LEVEL_DIVIDER);
       let isPermitted = this.userPermissions.some((userPermission, index, array) => {
-        let userParts: Array<string> = userPermission.split(':');
+        let userParts: Array<string> = userPermission.split(LEVEL_DIVIDER);
         if (userParts.length > testParts.length) {
           return false;
         }
@@ -106,12 +111,12 @@ class PermissionsChecker {
   };
 
   private comparePermissionPart(userPart, testPart) {
-    if (userPart === '*' || testPart === '*') {
+    if (userPart === ANY_VALUE || testPart === ANY_VALUE) {
       return true;
     }
 
-    return userPart.split(',').some((userPartPart) => {
-      return testPart.split(',').some((testPartPart) => {
+    return userPart.split(VALUE_DIVIDER).some((userPartPart) => {
+      return testPart.split(VALUE_DIVIDER).some((testPartPart) => {
         return userPartPart === testPartPart;
       });
     });

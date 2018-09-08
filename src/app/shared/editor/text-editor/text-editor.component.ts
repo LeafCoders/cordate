@@ -14,6 +14,7 @@ export class TextEditorComponent {
   @Input() valueTitle: string;
   @Input() editingHelpText: string;
   @Input() multiLine: boolean = false;
+  @Input() charAsRow: string = undefined;
   @Input() state: EditorState;
   @Output('changed') changedEmitter: EventEmitter<string> = new EventEmitter<string>();
 
@@ -27,6 +28,9 @@ export class TextEditorComponent {
 
   @Input('value')
   set setInValue(inValue: string) {
+    if (this.charAsRow && inValue) {
+      inValue = inValue.replace(new RegExp(this.charAsRow, 'g'), '\n');
+    }
     this.initialValue = this.initialValue ? this.initialValue : inValue;
     this.value = inValue;
     if (inValue) {
@@ -37,6 +41,7 @@ export class TextEditorComponent {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;')
         .replace(/\n/g, '<br>');
+      this.displayValue = this.displayValue.replace(/\n/g, '<br>');
     } else {
       this.displayValue = '-';
     }
@@ -49,7 +54,7 @@ export class TextEditorComponent {
 
   valueChanged(): void {
     if (this.state.createMode) {
-      this.changedEmitter.emit(this.editingValue);
+      this.emitValueChange();
     }
   }
 
@@ -69,9 +74,13 @@ export class TextEditorComponent {
 
   private saveValue(): void {
     if (this.initialValue != this.editingValue) {
-      this.changedEmitter.emit(this.editingValue);
+      this.emitValueChange();
     }
     this.cancel();
   }
 
+  private emitValueChange(): void {
+    const formatedValue: string = this.charAsRow ? this.editingValue.replace(/\n/g, this.charAsRow) : this.editingValue;
+    this.changedEmitter.emit(formatedValue);
+  }
 }

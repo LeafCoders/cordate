@@ -91,11 +91,11 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   manageResourceRequirementsPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
-    return `events:update:${event.id};eventsByEventTypes:update:${event.eventType.id};events:assign:resourceTypes:${resourceType.id}`;
+    return `events:update:${event.id},eventsByEventTypes:update:${event.eventType.id},events:assign:resourceTypes:${resourceType.id}`;
   }
 
   assignResourceRequirementPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
-    return `events:update:${event.id};eventsByEventTypes:update:${event.eventType.id};events:assign:resourceTypes:${resourceType.id}`;
+    return `events:update:${event.id},eventsByEventTypes:update:${event.eventType.id},events:assign:resourceTypes:${resourceType.id}`;
   }
 
   readArticles(event: Event): Observable<ArticleList> {

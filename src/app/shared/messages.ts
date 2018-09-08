@@ -78,6 +78,7 @@ export class Messages {
     'property.mainCategory': 'Kategori',
     'property.name': 'Namn',
     'property.password': 'Lösenord',
+    'property.patterns': 'Rättigheter',
     'property.startTime': 'Starttid',
     'property.subCategory': 'Underkategori',
     'property.subTitle': 'Undertitel',
