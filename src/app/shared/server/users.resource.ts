@@ -30,8 +30,4 @@ export class UsersResource extends DefaultBaseResource<User, UserUpdate> {
     return <UserUpdate>{ id: from.id };
   }
 
-  adminPermission(item: User): string {
-    return `users:admin:${item.id}`;
-  }
-
 }

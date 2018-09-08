@@ -7,6 +7,8 @@ import { AuthPermissionService, PermissionResults } from '../auth/auth-permissio
 import { UsersResource, UserUpdate } from '../shared/server/users.resource';
 
 import { User } from '../shared/server/rest-api.model';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lc-user-editor',
@@ -27,6 +29,7 @@ export class UserEditorComponent extends BaseEditor<User, UserUpdate> {
   constructor(
     private authPermission: AuthPermissionService,
     private usersResource: UsersResource,
+    private authService: AuthService,
   ) {
     super(usersResource);
   }
@@ -49,15 +52,21 @@ export class UserEditorComponent extends BaseEditor<User, UserUpdate> {
   }
 
   protected rebuildActions(): Array<EditorAction> {
-    const mayCreate: boolean = this.authPermission.isPermitted(this.usersResource.createPermission());
+    let actions = [];
     const mayDelete: boolean = this.authPermission.isPermitted(this.usersResource.deletePermission(this.item));
-    let actions = [
-      new EditorAction('Ta bort', mayDelete, () => this.deleteItem())
-    ];
-    if (mayCreate) {
-      actions.push(new EditorAction('Logga in som', true, () => { }));
+    if (mayDelete) {
+      actions.push(new EditorAction('Ta bort', true, () => this.deleteItem()));
+    }
+    if (this.hasAdminPermission) {
+      actions.push(new EditorAction('Logga in som', true, () => this.loginAs()));
     }
     return actions;
+  }
+
+  private loginAs(): void {
+    this.authService.loginAs(this.item.id).subscribe(userIdentity => {
+      window.location.reload();
+    });
   }
 
   setEmail(email: string): void {

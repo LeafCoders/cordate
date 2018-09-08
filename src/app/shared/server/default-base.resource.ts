@@ -152,6 +152,10 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     return `${this.name}.delete:${item.id}`;
   }
 
+  adminPermission(item: T): string {
+    return `${this.name}.admin:${item.id}`;
+  }
+
   private apiPath(itemId?: number): string {
     if (this.parentName && this.parentItem) {
       return `api/${this.parentName}/${this.parentItem.id}/${this.name}` + (itemId ? `/${itemId}` : '');

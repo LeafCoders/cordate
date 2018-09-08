@@ -58,7 +58,7 @@ export const CORDATE_FORMATS = {
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(ROUTES, { useHash: true }),
+    RouterModule.forRoot(ROUTES, { useHash: true, onSameUrlNavigation: 'reload' }),
 
     ArticleModule,
     ArticleSerieModule,

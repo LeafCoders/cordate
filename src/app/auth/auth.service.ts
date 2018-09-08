@@ -72,6 +72,25 @@ export class AuthService {
     });
   }
 
+  public loginAs(userId: number): Observable<UserIdentity> {
+    return Observable.create(observer => {
+      this.api.createReturnResponse<UserIdentity>(`auth/loginAs/${userId}`)
+        .subscribe(
+          (response: HttpResponse<any>) => {
+            localStorage.setItem('accessToken', response.headers.get('X-AUTH-TOKEN'));
+            this.currentUser.setUser(<UserIdentity>response.body);
+            localStorage.setItem('userFullName', this.currentUser.user.fullName);
+            localStorage.setItem('userEmail', this.currentUser.user.email);
+            observer.next(this.currentUser);
+          },
+          (error: RestApiError) => {
+            observer.error(error);
+          },
+          () => observer.complete()
+        );
+    });
+  }
+
   public logout(): void {
     localStorage.removeItem('accessToken');
   }
