@@ -14,7 +14,7 @@ export class TextValueEditorComponent {
 
   textValue: TextValue;
   createMode: boolean = false;
-  private creatingNew: boolean;
+  creatingNew: boolean;
 
   idState: EditorState = new EditorState();
   formatState: EditorState = new EditorState();

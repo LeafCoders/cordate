@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef, MatSelectionListChange } from '@angular/material';
 import { Resource, Selectable } from '../../server/rest-api.model';
 import { FormControl } from '@angular/forms';
-import { SelectEventResourcesMenuComponent } from '../../select-event-resources-menu/select-event-resources-menu.component';
+import { SelectResourcesMenuComponent } from '../../select-resources-menu/select-resources-menu.component';
 
 @Component({
   selector: 'lc-select-resources-dialog',
@@ -11,7 +11,7 @@ import { SelectEventResourcesMenuComponent } from '../../select-event-resources-
 })
 export class SelectResourcesDialogComponent {
 
-  private selectResourceMenu: SelectEventResourcesMenuComponent;
+  private selectResourceMenu: SelectResourcesMenuComponent;
   private allItems: Array<Selectable<Resource>>;
   items: Array<Selectable<Resource>>;
   noItemsFound: boolean = false;
@@ -19,7 +19,7 @@ export class SelectResourcesDialogComponent {
   searchCtrl: FormControl = new FormControl();
 
   constructor(
-    public dialogRef: MatDialogRef<SelectResourcesDialogComponent>,
+    public dialogRef: MatDialogRef<SelectResourcesMenuComponent>,
   ) {
     this.searchCtrl.valueChanges.subscribe(value => {
       this.items = this.allItems.filter(item => !value || item.value.name.toLowerCase().includes(value.toLowerCase()));
@@ -27,7 +27,7 @@ export class SelectResourcesDialogComponent {
     });
   }
 
-  init(selectResourceMenu: SelectEventResourcesMenuComponent): void {
+  init(selectResourceMenu: SelectResourcesMenuComponent): void {
     this.selectResourceMenu = selectResourceMenu;
     this.items = this.selectResourceMenu.allSelectableItems;
     this.allItems = this.items;
@@ -35,10 +35,6 @@ export class SelectResourcesDialogComponent {
 
   selectionChange(event: MatSelectionListChange): void {
     this.selectResourceMenu.toggleSelect(event.option.value);
-  }
-
-  toggleItem(item: Selectable<Resource>): void {
-    this.selectResourceMenu.toggleSelect(item)
   }
 
   selectNone(): void {

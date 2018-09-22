@@ -4,7 +4,8 @@
       <lc-list>
         <lc-date-time-editor lc-list-item valueTitle="Tid" [time]="item.time" (changed)="setTime($event)" [state]="timeState"></lc-date-time-editor>
         <lc-text-editor lc-list-item valueTitle="Rubrik" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
-        <lc-resource-refs-editor lc-list-item valueTitle="Författare" icon="people" [resourceType]="viewData.articleType.authorResourceType" [value]="item.authors" (changed)="setAuthors($event)" [state]="authorsState"></lc-resource-refs-editor>
+        <lc-resource-refs-editor lc-list-item valueTitle="Författare" icon="people" [resourcesUpdater]="resourcesUpdater" [value]="item.authors" (changed)="setAuthors($event)"
+          [state]="authorsState"></lc-resource-refs-editor>
         <lc-ref-editor lc-list-item valueTitle="Tillhör serie" refType="articleSerie" [value]="item.articleSerie" (changed)="setArticleSerie($event)" [state]="articleSerieState"></lc-ref-editor>
         <lc-ref-editor lc-list-item valueTitle="Tillhör händelse" refType="event" [value]="item.event" (changed)="setEvent($event)" [state]="eventState"></lc-ref-editor>
       </lc-list>

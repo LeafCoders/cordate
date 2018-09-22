@@ -57,7 +57,7 @@ import { DoublePaneComponent } from './double-pane/double-pane.component';
 import { ErrorBackgroundComponent } from './error-background/error-background.component';
 import { ListComponent, ListActionsDirective, ListItemDirective } from './list/list.component'
 
-import { SelectEventResourcesMenuComponent } from './select-event-resources-menu/select-event-resources-menu.component';
+import { SelectResourcesMenuComponent } from './select-resources-menu/select-resources-menu.component';
 
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
 import { SelectResourcesDialogComponent } from './dialog/select-resources-dialog/select-resources-dialog.component';
@@ -211,7 +211,7 @@ export function jwtOptionsFactory(storage) {
     ErrorBackgroundComponent,
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
-    SelectEventResourcesMenuComponent,
+    SelectResourcesMenuComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,
@@ -224,7 +224,7 @@ export function jwtOptionsFactory(storage) {
     ErrorBackgroundComponent,
     ListComponent, ListActionsDirective, ListItemDirective,
     MainLayoutComponent,
-    SelectEventResourcesMenuComponent,
+    SelectResourcesMenuComponent,
     ...dataEditors,
     ...presentations,
     ...dialogs,

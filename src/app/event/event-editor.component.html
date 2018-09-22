@@ -5,8 +5,8 @@
         <lc-time-range-editor lc-list-item valueTitle="Tid" [startTime]="item.startTime" [endTime]="item.endTime" (changed)="setTime($event)" [state]="timeState"></lc-time-range-editor>
         <lc-text-editor lc-list-item valueTitle="Titel" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
         <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
-        <lc-boolean-editor lc-list-item valueTitle="Publik" falseIcon="lock_outline" falseText="Nej, visas inte i publika kalendrar" trueIcon="lock_open" trueText="Ja, visas i publika kalendrar" [value]="item.isPublic"
-          (changed)="setIsPublic($event)" [state]="isPublicState"></lc-boolean-editor>
+        <lc-boolean-editor lc-list-item valueTitle="Publik" falseIcon="lock_outline" falseText="Nej, visas inte i publika kalendrar" trueIcon="lock_open" trueText="Ja, visas i publika kalendrar"
+          [value]="item.isPublic" (changed)="setIsPublic($event)" [state]="isPublicState"></lc-boolean-editor>
         <lc-ref-editor lc-list-item valueTitle="Händelsetyp" refType="eventType" [value]="item.eventType" (changed)="setEventType($event)" [state]="eventTypeState"></lc-ref-editor>
       </lc-list>
     </mat-tab>
@@ -23,8 +23,8 @@
               <div>{{ rr.asText() }}</div>
             </div>
             <div class="list-action">
-              <lc-select-event-resources-menu [event]="item" [resourceRequirement]="rr" (eventUpdated)="eventResourcesUpdated($event)">
-              </lc-select-event-resources-menu>
+              <lc-select-resources-menu [resourcesUpdater]="resourceRequirementUpdater(rr)" (valueUpdated)="eventResourcesUpdated()">
+              </lc-select-resources-menu>
             </div>
           </div>
         </lc-list>
@@ -32,7 +32,9 @@
         <lc-list header="Lägg till resursbehov" *ngIf="notAddedResourceTypes?.length">
           <div lc-list-item class="centered-list-item" *ngFor="let resourceType of notAddedResourceTypes">
             <div class="list-content">{{ resourceType.asText() }}</div>
-            <div class="list-action"><button mat-icon-button (click)="addResourceRequirement(resourceType)"><mat-icon>add_circle</mat-icon></button></div>
+            <div class="list-action"><button mat-icon-button (click)="addResourceRequirement(resourceType)">
+                <mat-icon>add_circle</mat-icon>
+              </button></div>
           </div>
         </lc-list>
 
@@ -48,7 +50,9 @@
       <div *ngIf="item?.id && !isLoadingArticles">
         <div class="filter-bar" *ngIf="articleCreatePermitted">
           <div class="expander"></div>
-          <button mat-icon-button (click)="showCreateArticleModal()"><mat-icon>add_circle</mat-icon></button>
+          <button mat-icon-button (click)="showCreateArticleModal()">
+            <mat-icon>add_circle</mat-icon>
+          </button>
         </div>
         <lc-error-background *ngIf="!articles.length" icon="info_outline" text="Det finns ingen undervisning för händelsen"></lc-error-background>
       </div>
@@ -56,7 +60,9 @@
       <lc-list *ngIf="articles?.length">
         <div lc-list-item class="centered-list-item" *ngFor="let article of articles">
           <div class="list-content">{{ article.asText() }}</div>
-          <div class="list-action"><button title="Visa undervisning" mat-icon-button (click)="navigateToArticle(article)"><mat-icon>navigate_next</mat-icon></button></div>
+          <div class="list-action"><button title="Visa undervisning" mat-icon-button (click)="navigateToArticle(article)">
+              <mat-icon>navigate_next</mat-icon>
+            </button></div>
         </div>
       </lc-list>
     </mat-tab>

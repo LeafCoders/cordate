@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTabChangeEvent, MatDialog } from '@angular/material';
-import * as moment from 'moment';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { EventsResource, EventUpdate } from '../shared/server/events.resource';
 import { ResourceTypesResource } from '../shared/server/resource-types.resource';
 import { ArticlesResource, ArticleUpdate } from '../shared/server/articles.resource';
 import { ArticleSeriesResource } from '../shared/server/article-series.resource';
 import { ArticleTypesResource } from '../shared/server/article-types.resource';
-import { Event, EventTypeRef, TimeRange, ResourceTypeList, ResourceTypeRef, ResourceRequirement, Resource, ResourceType, ArticleList, Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
+import { Event, EventTypeRef, TimeRange, ResourceTypeList, ResourceRequirement, Resource, ResourceType, ArticleList, Article, ArticleType, ArticleSerie } from '../shared/server/rest-api.model';
 import { SingleSelectDialogComponent } from '../shared/dialog/single-select-dialog/single-select-dialog.component';
 import { SendMessageDialogService } from '../shared/dialog/send-message-dialog/send-message-dialog.service';
+import { ResourcesUpdater, EventResourcesUpdater } from '../shared/server/resources-updater';
 
 @Component({
   selector: 'lc-event-editor',
@@ -106,7 +106,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     }
   }
 
-  eventResourcesUpdated(event: Event): void {
+  eventResourcesUpdated(): void {
     if (this.item.id) {
       this.eventsResource.refreshOnlyClient();
       this.refreshAvailableAddResourceTypes();
@@ -167,6 +167,10 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
             });
           });
       });
+  }
+
+  resourceRequirementUpdater(rr: ResourceRequirement): ResourcesUpdater {
+    return new EventResourcesUpdater(this.item, this.eventsResource, rr);
   }
 
   setTime(time: TimeRange): void {

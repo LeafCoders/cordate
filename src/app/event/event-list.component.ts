@@ -7,6 +7,7 @@ import { EventsResource } from '../shared/server/events.resource';
 import { Event, EventList, ResourceRequirement } from '../shared/server/rest-api.model';
 import { FilterItem, NONE_FILTER } from './event-common';
 import { ItemsGroup, itemsGrouper } from '../shared/items-grouper';
+import { EventResourcesUpdater } from '../shared/server/resources-updater';
 
 interface EventViewModel {
   event: Event;
@@ -16,7 +17,7 @@ interface EventViewModel {
   monthName: string;
   time: string;
   eventTypeName: string;
-  selectableResourceRequirement?: ResourceRequirement;
+  selectableResourceRequirementUpdater?: EventResourcesUpdater;
   resourceRequirements: Array<{ resourceTypeName: string, resourceNames: string, highlight: boolean }>;
 }
 
@@ -62,7 +63,7 @@ export class EventListComponent extends BaseList<Event> {
     this.createEmitter.emit(eventGroup.data);
   }
 
-  updateEventViewModel(event: Event): void {
+  updateEventViewModel(): void {
     // For now. Could be done better...
     this.groupEvents(this.filterEvents(this.items));
   }
@@ -129,7 +130,7 @@ export class EventListComponent extends BaseList<Event> {
       monthName: time.format('MMM'),
       time: time.format('HH:mm'),
       eventTypeName: event.eventType.name,
-      selectableResourceRequirement: selectableResourceRequirement,
+      selectableResourceRequirementUpdater: selectableResourceRequirement ? new EventResourcesUpdater(event, this.eventsResource, selectableResourceRequirement) : undefined,
       resourceRequirements: event.resourceRequirements.map((rr: ResourceRequirement) => {
         return {
           resourceTypeName: rr.resourceType.name,

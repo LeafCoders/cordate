@@ -2,28 +2,28 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { RestApiService } from '../server/rest-api.service';
-import { AuthPermissionService, PermissionResults } from '../../auth/auth-permission.service';
-import { EventsResource } from '../server/events.resource';
-import { Event, Resource, ResourceList, ResourceRef, ResourceRequirement, User, UserRef, Selectable } from '../server/rest-api.model';
+import { AuthPermissionService } from '../../auth/auth-permission.service';
+import { Resource, ResourceRef, Selectable } from '../server/rest-api.model';
 import { MatDialog } from '@angular/material';
 import { SelectResourcesDialogComponent } from '../dialog/select-resources-dialog/select-resources-dialog.component';
+import { ResourcesUpdater } from '../server/resources-updater';
 
 const MAX_VISIBLE_ITEMS = 10;
 
 @Component({
-  selector: 'lc-select-event-resources-menu',
-  templateUrl: './select-event-resources-menu.component.html',
+  selector: 'lc-select-resources-menu',
+  templateUrl: './select-resources-menu.component.html',
 })
-export class SelectEventResourcesMenuComponent {
+export class SelectResourcesMenuComponent {
 
-  @Input('event') event: Event;
-  @Output('eventUpdated') eventUpdatedEmitter: EventEmitter<Event> = new EventEmitter<Event>();
+  //  @Input('value') value: MODEL;
+  @Output('valueUpdated') valueUpdatedEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   allowMultiSelect: boolean = true;
   allowSelectAll: boolean = false;
   trueFalseIcons: Array<string> = ['', ''];
 
-  private resourceRequirement: ResourceRequirement;
+  private resourcesUpdater: ResourcesUpdater;
   allSelectableItems: Array<Selectable<Resource>>;
   visibleSelectableItems: Array<Selectable<Resource>>;
   showViewMore: boolean = false;
@@ -35,19 +35,18 @@ export class SelectEventResourcesMenuComponent {
 
   constructor(
     private api: RestApiService,
-    private eventsResource: EventsResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
   ) { }
 
-  @Input('resourceRequirement')
-  set setResourceRequirement(rr: ResourceRequirement) {
-    this.resourceRequirement = rr;
+  @Input('resourcesUpdater')
+  set setResourcesUpdater(resourcesUpdater: ResourcesUpdater) {
+    this.resourcesUpdater = resourcesUpdater;
 
     this.trueFalseIcons = this.allowMultiSelect ? ['check_box', 'check_box_outline_blank'] : ['radio_button_checked', 'radio_button_unchecked'];
 
-    this.assignPermission = this.authPermission.isPermitted(this.eventsResource.assignResourceRequirementPermission(this.event, rr.resourceType));
-    this.managePermission = this.authPermission.isPermitted(this.eventsResource.manageResourceRequirementsPermission(this.event, rr.resourceType));
+    this.assignPermission = this.authPermission.isPermitted(this.resourcesUpdater.assignPermission());
+    this.managePermission = this.authPermission.isPermitted(this.resourcesUpdater.managePermission());
   }
 
   loadResources() {
@@ -55,11 +54,11 @@ export class SelectEventResourcesMenuComponent {
       this.sortVisibleItems();
       return;
     }
-    this.api.read<any[]>(`api/resourceTypes/${this.resourceRequirement.resourceType.id}/resources`)
+    this.api.read<any[]>(`api/resourceTypes/${this.resourcesUpdater.getResourceType().id}/resources`)
       .subscribe(data => {
         this.allSelectableItems = data.map(item => <Selectable<Resource>>{ value: new Resource(item), selected: false })
-        if (this.resourceRequirement.resources) {
-          this.resourceRequirement.resources.forEach((resource: Resource) => {
+        if (this.resourcesUpdater.getSelectedResources()) {
+          this.resourcesUpdater.getSelectedResources().forEach((resource: Resource | ResourceRef) => {
             let toSelect: Selectable<Resource> = this.allSelectableItems.find((select: Selectable<Resource>) => select.value.id === resource.id);
             if (toSelect) {
               toSelect.selected = true;
@@ -95,35 +94,34 @@ export class SelectEventResourcesMenuComponent {
   }
 
   removeResourceRequirement(): void {
-    if (this.event && this.event.id) {
-      this.perform(this.eventsResource.removeResourceRequirement(this.event, this.resourceRequirement));
-    }
+    this.perform(this.resourcesUpdater.removeResourceRequirement());
   }
 
   private addResource(resource?: Resource): void {
-    if (this.event && this.event.id) {
-      this.perform(this.eventsResource.addResource(this.event, this.resourceRequirement, resource));
-    }
+    this.perform(this.resourcesUpdater.addResource(resource));
   }
 
   private removeResource(resource?: Resource): void {
-    if (this.event && this.event.id) {
-      this.perform(this.eventsResource.removeResource(this.event, this.resourceRequirement, resource));
-    }
+    this.perform(this.resourcesUpdater.removeResource(resource));
   }
 
   private perform(action: Observable<void>): void {
-    window.setTimeout(() => this.saving = true, 1);
-    action.subscribe(() => {
-      this.saving = false;
-      this.updateSelections(this.resourceRequirement.resources);
-      this.eventUpdatedEmitter.emit(this.event);
-    }, () => {
-      this.saving = false;
-    });
+    if (action) {
+      window.setTimeout(() => this.saving = true, 1);
+      action.subscribe(() => {
+        this.saving = false;
+        this.updateSelections(this.resourcesUpdater.getSelectedResources());
+        this.valueUpdatedEmitter.emit();
+      }, () => {
+        this.saving = false;
+      });
+    } else {
+      this.updateSelections(this.resourcesUpdater.getSelectedResources());
+      this.valueUpdatedEmitter.emit();
+    }
   }
 
-  private updateSelections(selectedResources: Array<ResourceRef>): void {
+  private updateSelections(selectedResources: Array<Resource | ResourceRef>): void {
     this.allSelectableItems.forEach((select: Selectable<Resource>): void => {
       select.selected = selectedResources.some(select.value.idEquals.bind(select.value));
     });

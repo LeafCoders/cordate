@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ArticlesResource, ArticleUpdate } from '../shared/server/articles.resource';
-import { GroupsResource } from '../shared/server/groups.resource';
-import { UsersResource } from '../shared/server/users.resource';
-import { Article, Event, IdModel, User, ArticleSerie, ResourceList, Asset, HtmlText } from '../shared/server/rest-api.model';
+import { Article, Event, ArticleSerie, ResourceList, Asset, HtmlText } from '../shared/server/rest-api.model';
 import { ArticleService } from './article.service';
+import { ArticleResourcesUpdater } from '../shared/server/resources-updater';
 
 @Component({
   selector: 'lc-article-editor',
@@ -25,12 +24,12 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   contentState: EditorState = new EditorState();
   recordingState: EditorState = new EditorState();
 
+  resourcesUpdater: ArticleResourcesUpdater;
+
   constructor(
     public viewData: ArticleService,
     private authPermission: AuthPermissionService,
     private articlesResource: ArticlesResource,
-    private groupsResource: GroupsResource,
-    private usersResource: UsersResource,
   ) {
     super(articlesResource);
   }
@@ -58,6 +57,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   protected afterSetEditorItem(item: Article): void {
+    this.resourcesUpdater = new ArticleResourcesUpdater(item, this.viewData.articleType.authorResourceType, this.articlesResource);
   }
 
   setArticleSerie(articleSerie: ArticleSerie): void {
@@ -75,7 +75,6 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   }
 
   setTime(time: moment.Moment): void {
-    console.log(time.toJSON());
     this.setValue(this.timeState,
       (item: ArticleUpdate) => item.time = time ? time.toJSON() : undefined,
       () => this.item.time = time
