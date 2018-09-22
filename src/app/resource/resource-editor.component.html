@@ -5,6 +5,10 @@
         <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
         <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
         <lc-ref-editor lc-list-item valueTitle="Användare" refType="user" [value]="item.user" (changed)="setUser($event)" [state]="userState"></lc-ref-editor>
+        <lc-static-editor lc-list-item valueTitle="Senast använd" icon="access_time">
+          <div *ngIf="item.lastUseTime">{{ item.lastUseTime | amCalendar }}</div>
+          <div *ngIf="!item.lastUseTime">-</div>
+        </lc-static-editor>
       </lc-list>
     </mat-tab>
     <mat-tab label="Resurstyper" *ngIf="item?.id">

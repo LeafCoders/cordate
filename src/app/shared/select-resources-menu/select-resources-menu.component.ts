@@ -37,16 +37,14 @@ export class SelectResourcesMenuComponent {
     private api: RestApiService,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
-  ) { }
+  ) {
+    this.trueFalseIcons = this.allowMultiSelect ? ['check_box', 'check_box_outline_blank'] : ['radio_button_checked', 'radio_button_unchecked'];
+  }
 
   @Input('resourcesUpdater')
   set setResourcesUpdater(resourcesUpdater: ResourcesUpdater) {
     this.resourcesUpdater = resourcesUpdater;
-
-    this.trueFalseIcons = this.allowMultiSelect ? ['check_box', 'check_box_outline_blank'] : ['radio_button_checked', 'radio_button_unchecked'];
-
-    this.assignPermission = this.authPermission.isPermitted(this.resourcesUpdater.assignPermission());
-    this.managePermission = this.authPermission.isPermitted(this.resourcesUpdater.managePermission());
+    this.updateResources();
   }
 
   loadResources() {
@@ -57,18 +55,25 @@ export class SelectResourcesMenuComponent {
     this.api.read<any[]>(`api/resourceTypes/${this.resourcesUpdater.getResourceType().id}/resources`)
       .subscribe(data => {
         this.allSelectableItems = data.map(item => <Selectable<Resource>>{ value: new Resource(item), selected: false })
-        if (this.resourcesUpdater.getSelectedResources()) {
-          this.resourcesUpdater.getSelectedResources().forEach((resource: Resource | ResourceRef) => {
-            let toSelect: Selectable<Resource> = this.allSelectableItems.find((select: Selectable<Resource>) => select.value.id === resource.id);
-            if (toSelect) {
-              toSelect.selected = true;
-            }
-          });
-        }
-        this.sortVisibleItems();
-        this.showViewMore = this.allSelectableItems.length > MAX_VISIBLE_ITEMS;
-        this.allowSelectAll = this.allowMultiSelect && !this.showViewMore;
+        this.updateResources();
       });
+  }
+
+  private updateResources(): void {
+    this.assignPermission = this.authPermission.isPermitted(this.resourcesUpdater.assignPermission());
+    this.managePermission = this.authPermission.isPermitted(this.resourcesUpdater.managePermission());
+
+    if (this.allSelectableItems === undefined) {
+      return;
+    }
+    if (this.resourcesUpdater.getSelectedResources()) {
+      this.allSelectableItems.forEach(item => {
+        item.selected = this.resourcesUpdater.getSelectedResources().some(r => item.value.idEquals(r));
+      });
+    }
+    this.sortVisibleItems();
+    this.showViewMore = this.allSelectableItems.length > MAX_VISIBLE_ITEMS;
+    this.allowSelectAll = this.allowMultiSelect && !this.showViewMore;
   }
 
   openViewMoreDialog(): void {
@@ -132,7 +137,7 @@ export class SelectResourcesMenuComponent {
       if (a.selected !== b.selected) {
         return a.selected ? -1 : 1;
       }
-      return a.value.lastUseTime.isBefore(b.value.lastUseTime) ? -1 : 1;
+      return a.value.compareTo(b.value);
     });
     this.visibleSelectableItems = this.allSelectableItems.slice(0, MAX_VISIBLE_ITEMS);
   }

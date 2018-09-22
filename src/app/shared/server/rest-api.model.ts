@@ -378,10 +378,13 @@ export class Resource extends IdModel {
     readDate(this, data, 'lastUseTime');
     readArray<ResourceTypeRef>(this, data, 'resourceTypes', ResourceTypeRef);
     readObject<UserRef>(this, data, 'user', UserRef);
+  }
 
-    if (!this.lastUseTime) {
-      this.lastUseTime = moment().year(1900);
+  compareTo(resource: Resource): number {
+    if (this.lastUseTime && resource.lastUseTime) {
+      return this.lastUseTime.isBefore(resource.lastUseTime) ? -1 : 1;
     }
+    return this.lastUseTime ? -1 : 1;
   }
 
   asText(): string {

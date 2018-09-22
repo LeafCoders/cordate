@@ -3,7 +3,12 @@
 </div>
 <lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
 <lc-list class="max-height-header-filter" *ngIf="!failedToLoad">
-  <div lc-list-item *ngFor="let resource of items" (click)="selectItem(resource)" clickable="true">
+  <div lc-list-item *ngFor="let resource of resources" (click)="selectItem(resource)" clickable="true">
     <div class="list-content">{{ resource.asText() }}</div>
+    <div class="list-content">
+      <div class="list-description">Senast använd</div>
+      <div *ngIf="resource.lastUseTime">{{ resource.lastUseTime | amCalendar }}</div>
+      <div *ngIf="!resource.lastUseTime">-</div>
+    </div>
   </div>
 </lc-list>
