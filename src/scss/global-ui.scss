@@ -182,3 +182,8 @@ pre {
 .selectable-text {
   user-select: all;
 }
+
+.elevation {
+  margin: 2px;
+  @include mat-elevation(1);
+}

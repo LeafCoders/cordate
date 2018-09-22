@@ -38,7 +38,7 @@ $mat-cordate: (
 );
 
 $cordate-primary: mat-palette($mat-cordate);
-$cordate-accent: mat-palette($mat-pink, A200, A100, A400);
+$cordate-accent: mat-palette($mat-cordate, 700, 500, 900);
 $cordate-warn: mat-palette($mat-red);
 
 $cordate-theme: mat-light-theme($cordate-primary, $cordate-accent, $cordate-warn);

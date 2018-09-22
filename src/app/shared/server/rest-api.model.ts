@@ -63,6 +63,11 @@ export interface HtmlText {
   contentHtml: string;
 }
 
+export interface Selectable<MODEL extends IdModel> {
+  selected: boolean;
+  value: MODEL;
+}
+
 export interface HasParent<PARENT extends IdModel, CHILD extends IdModel> {
   setParent(parent: PARENT): CHILD;
 }
@@ -362,6 +367,7 @@ export class ResourceRequirement extends IdModel {
 export class Resource extends IdModel {
   name: string;
   description: string;
+  lastUseTime: moment.Moment;
   resourceTypes: Array<ResourceTypeRef>;
   user: UserRef;
 
@@ -369,8 +375,13 @@ export class Resource extends IdModel {
     super(data);
     readValue(this, data, 'name');
     readValue(this, data, 'description');
+    readDate(this, data, 'lastUseTime');
     readArray<ResourceTypeRef>(this, data, 'resourceTypes', ResourceTypeRef);
     readObject<UserRef>(this, data, 'user', UserRef);
+
+    if (!this.lastUseTime) {
+      this.lastUseTime = moment().year(1900);
+    }
   }
 
   asText(): string {
