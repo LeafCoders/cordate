@@ -29,6 +29,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   isPublicState: EditorState = new EditorState();
 
   private currentTabIndex: number = 0;
+  private resourceUpdaters: { [rrId: number]: ResourcesUpdater } = {};
 
   // Resouce
   private allResourceTypes: ResourceTypeList = [];
@@ -170,7 +171,12 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   }
 
   resourceRequirementUpdater(rr: ResourceRequirement): ResourcesUpdater {
-    return new EventResourcesUpdater(this.item, this.eventsResource, rr);
+    let updater: ResourcesUpdater = this.resourceUpdaters[rr.id];
+    if (!updater) {
+      updater = new EventResourcesUpdater(this.item, this.eventsResource, rr);
+      this.resourceUpdaters[rr.id] = updater;
+    }
+    return updater;
   }
 
   setTime(time: TimeRange): void {
