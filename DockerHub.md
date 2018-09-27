@@ -12,7 +12,7 @@ version: '3'
 
 services:
   cordate-client:
-    image: leafcoders/cordate:0.2
+    image: leafcoders/cordate:latest
     depends_on:
       - rosette-server
     restart: always
