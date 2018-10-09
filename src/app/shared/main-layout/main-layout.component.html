@@ -7,7 +7,9 @@
           <div style="flex: 100">
             {{ authService.user.fullName }}<br>{{ authService.user.email }}
           </div>
-          <button mat-icon-button><mat-icon>arrow_drop_down</mat-icon></button>
+          <button mat-icon-button>
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
         </div>
 
         <mat-menu #userMenu="matMenu" xPosition="before">
@@ -50,13 +52,17 @@
           <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
           <p mat-line>{{link.title}}</p>
         </a>
+
+        <div *ngIf="hasNoLinks" class="alert-error">Du saknar tyvärr rättigheter för att få se något annat än "Mina sidor".</div>
       </mat-nav-list>
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="mat-elevation-z6">
-      <button *ngIf="!router.url.startsWith('/auth')" mat-icon-button (click)="toggleNav()"><mat-icon>menu</mat-icon></button>
+      <button *ngIf="!router.url.startsWith('/auth')" mat-icon-button (click)="toggleNav()">
+        <mat-icon>menu</mat-icon>
+      </button>
       <span>{{ applicationName }}</span>
     </mat-toolbar>
     <main class="content-wrapper">

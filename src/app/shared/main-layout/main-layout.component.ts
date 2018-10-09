@@ -35,6 +35,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   userLinks: Array<LinkItem> = [];
   exportLinks: Array<LinkItem> = [];
   configurationLinks: Array<LinkItem> = [];
+  hasNoLinks: boolean = false;
 
   sideModeQuery: MediaQueryList;
   private subscription: Subscription;
@@ -62,6 +63,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
     let subscriber = new Subscriber<ArticleTypeList>((articleTypes: ArticleTypeList) => {
       this.articleTypes = articleTypes;
+      this.setupLinks();
       subscriber.unsubscribe();
     });
     articleTypesResource.list().subscribe(subscriber);
@@ -133,6 +135,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       this.linkIfPermitted({ permission: 'slideShows', icon: 'filter', title: 'Bildspelsenheter', routePath: '/slideShows' }),
       this.linkIfPermitted({ permission: 'messages', icon: 'short_text', title: 'Meddelanden', routePath: '/messages' }),
     ].filter(link => link);
+
+    this.hasNoLinks = [this.rootLinks, this.mediaLinks, this.articleLinks, this.userLinks, this.exportLinks, this.configurationLinks].every(list => list.length === 0);
   }
 
   private linkIfPermitted(link: LinkItem): LinkItem {

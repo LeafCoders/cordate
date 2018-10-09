@@ -10,6 +10,8 @@ import { AuthPermissionService } from './auth-permission.service';
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
+  private failedLastCheck: boolean = false;
+
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -36,14 +38,15 @@ export class AuthGuardService implements CanActivate {
 
     return this.authPermission.loadAndCheckPermission(permission).pipe(map(permitted => {
       if (!permitted) {
-        const currentUrl: string = this.router.routerState.snapshot.url;
-        if (!currentUrl || currentUrl.includes("/mypages")) {
-          // Prevent eternal loop when AuthGuard fails for 'mypages'
-          this.router.navigate(['/auth/login'])
+        if (this.failedLastCheck) {
+          this.router.navigate(['/auth/login']);
+          console.log("auth/login?error");
         } else {
-          this.router.navigate(['/mypages'])
+          this.router.navigate(['/mypages']);
+          console.log("mypages");
         }
       }
+      this.failedLastCheck = !permitted;
       return permitted;
     }));
   }

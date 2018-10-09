@@ -14,7 +14,7 @@ export abstract class BaseList<ITEM extends IdModel> implements OnInit {
   @Output('select') selectEmitter: EventEmitter<ITEM> = new EventEmitter<ITEM>();
 
   constructor(
-    private resource: DefaultBaseResource<ITEM, any>,
+    resource: DefaultBaseResource<ITEM, any>,
     private listLoader: () => Observable<Array<ITEM>> = () => resource.list()
   ) {
   }

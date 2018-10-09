@@ -29,7 +29,13 @@ export class EventTypesResource extends DefaultBaseResource<EventType, EventType
   }
 
   updateInstance(from: EventType): EventTypeUpdate {
-    return <EventTypeUpdate>{ id: from.id };
+    if (from.id) {
+      return <EventTypeUpdate>{ id: from.id };
+    } else {
+      return <EventTypeUpdate>{
+        isPublic: from.isPublic,
+      };
+    }
   }
 
   addResourceType(eventType: EventType, resourceTypeId: number): Observable<void> {

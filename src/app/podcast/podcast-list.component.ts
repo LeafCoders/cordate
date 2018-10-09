@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 import { BaseList } from '../shared/base/base-list';
-import { AuthPermissionService } from '../auth/auth-permission.service';
 import { PodcastsResource } from '../shared/server/podcasts.resource';
-import { Podcast, PodcastList } from '../shared/server/rest-api.model';
+import { Podcast } from '../shared/server/rest-api.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'lc-podcast-list',
@@ -11,9 +11,10 @@ import { Podcast, PodcastList } from '../shared/server/rest-api.model';
 })
 export class PodcastListComponent extends BaseList<Podcast> {
 
+  rosetteUrl: string = environment.rosetteUrl;
+
   constructor(
-    private podcastsResource: PodcastsResource,
-    private authPermission: AuthPermissionService,
+    podcastsResource: PodcastsResource,
   ) {
     super(podcastsResource, () => podcastsResource.list());
   }

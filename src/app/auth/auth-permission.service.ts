@@ -66,6 +66,7 @@ export class AuthPermissionService {
     const userId: number = this.auth.userId;
     return this.api.read<Array<string>>(`api/users/${userId}/permissions`).pipe(
       map(permissionsFromServer => {
+        permissionsFromServer.push('mypages:view');
         const permissions = new PermissionsChecker(permissionsFromServer);
         localStorage.setItem(this.storageKey(), permissionsFromServer.join(PERMISSION_DIVIDER));
         return permissions;

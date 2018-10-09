@@ -27,6 +27,7 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
 
   protected init(): void { };
   protected afterSetEditorItem(item: ITEM): void { };
+  protected afterCreatedItem(): void { };
 
   ngOnInit() {
     this.init();
@@ -65,6 +66,7 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
       setTimeout(() => {
         this.creatingNew = false;
         this.closeEmitter.emit();
+        this.afterCreatedItem();
       }, 300);
     }, () => {
       this.creatingNew = false;

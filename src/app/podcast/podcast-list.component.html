@@ -4,6 +4,9 @@
 <lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
 <lc-list class="max-height-header-filter" *ngIf="!failedToLoad">
   <div lc-list-item *ngFor="let podcast of items" (click)="selectItem(podcast)" clickable="true">
-    <div class="list-content">{{ podcast.asText() }}</div>
+    <div class="list-content">
+      <div>{{ podcast.asText() }}</div>
+      <div class="list-description">Feed url: {{ rosetteUrl }}api/podcasts/{{ podcast.id }}/feed</div>
+    </div>
   </div>
 </lc-list>
