@@ -12,8 +12,7 @@ import { ArticleType, ArticleTypeList } from '../shared/server/rest-api.model';
 export class ArticleTypeListComponent extends BaseList<ArticleType> {
 
   constructor(
-    private articleTypesResource: ArticleTypesResource,
-    private authPermission: AuthPermissionService,
+    articleTypesResource: ArticleTypesResource,
   ) {
     super(articleTypesResource);
   }

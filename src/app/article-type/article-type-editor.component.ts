@@ -57,6 +57,11 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
     return actions;
   }
 
+  protected afterCreatedItem(): void {
+    // Ugly solution to refresh side menu when article type has been created
+    window.location.reload();
+  }
+
   setIdAlias(idAlias: string): void {
     this.setValue(this.idAliasState,
       (item: ArticleTypeUpdate) => item.idAlias = idAlias,
