@@ -171,7 +171,7 @@ export function jwtTokenGetter() {
 export function jwtModuleCompatible(): string {
   let url = environment.rosetteUrl;
   url = url.replace('http://', '').replace('https://', '');
-  return url.endsWith('/') ? url.substr(0, url.length - 1) : url;
+  return url.indexOf('/') >= 0 ? url.substr(0, url.indexOf('/')) : url;
 }
 
 export function jwtModuleBlacklistRoutes(): string {

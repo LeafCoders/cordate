@@ -19,14 +19,16 @@ services:
     ports:
       - 80:80
     environment:
-      - ROSETTE_URL=${ROSETTE_URL:?Must specify ROSETTE_URL in environment} // Public url to rosette server
-      - APPLICATION_NAME=${CORDATE_APPNAME:?Must specify CORDATE_APPNAME in environment} // Short name of the application. Eg. "Cordate"
-    command: /bin/bash -c "envsubst '$$ROSETTE_URL $$APPLICATION_NAME' < /etc/nginx/conf.d/cordate_conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+      - ROSETTE_URL=${ROSETTE_URL:?Must specify ROSETTE_URL in environment} # Public url to rosette server
+      - APPLICATION_NAME=${CORDATE_APPNAME:?Must specify CORDATE_APPNAME in environment} # Short name of the application. Eg. "Cordate"
+      - CORDATE_PATH=${CORDATE_PATH:?Must specify CORDATE_PATH in environment} # Url path of cordate uri ('/app/cordate' in https://myserver.com/app/cordate)
+    command: /bin/bash -c "envsubst '$$ROSETTE_URL $$APPLICATION_NAME $$CORDATE_PATH' < /etc/nginx/conf.d/cordate_conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 ```
 
 Start with:
 ```
-$ export CORDATE_APPNAME='Cordate'
-$ export CORDATE_URL='https://myserver.app/cordate'
+$ export ROSETTE_URL='https://myserver.com/rosette'
+$ export APPLICATION_NAME='Cordate'
+$ export CORDATE_PATH='/app/cordate'
 $ docker-compose up -d
 ```

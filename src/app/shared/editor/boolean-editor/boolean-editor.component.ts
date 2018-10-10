@@ -9,7 +9,7 @@ import { EditorState } from '../editor-state';
 export class BooleanEditorComponent {
 
   @Input() valueTitle: string;
-  @Input() value: string;
+  @Input() value: boolean;
   @Input() trueIcon: string;
   @Input() falseIcon: string;
   @Input() trueText: string;
@@ -18,6 +18,7 @@ export class BooleanEditorComponent {
   @Output() changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   valueSelected(newValue: boolean): void {
+    this.value = newValue;
     this.changed.emit(newValue);
   }
 
