@@ -140,20 +140,36 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     );
   }
 
+  protected combinePermissions(...permissions: Array<string>): string {
+    return permissions.filter(p => p).join(',');
+  }
+
+  protected permissionValue(action: string, model?: IdModel): string {
+    if (model) {
+      return `${this.name}:${action}:${model.id}`;
+    } else {
+      return `${this.name}:${action}`;
+    }
+  }
+
+  protected permissionValueWithId(permission: string, model?: IdModel): string {
+    return model ? `${permission}:${model.id}` : undefined;
+  }
+
   createPermission(): string {
-    return `${this.name}.create`;
+    return this.permissionValue('create');
   }
 
   updatePermission(item: T): string {
-    return `${this.name}.update:${item.id}`;
+    return this.permissionValue('update', item);
   }
 
   deletePermission(item: T): string {
-    return `${this.name}.delete:${item.id}`;
+    return this.permissionValue('delete', item);
   }
 
   adminPermission(item: T): string {
-    return `${this.name}.admin:${item.id}`;
+    return this.permissionValue('admin', item);
   }
 
   private apiPath(itemId?: number): string {

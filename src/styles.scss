@@ -12,7 +12,7 @@ body {
   font-size: 14px;
   line-height: 16px;
 
-  background-image: linear-gradient(mat-color($cordate-primary, 0.5), mat-color($cordate-primary)), url("/assets/background.png");
+  background-image: linear-gradient(mat-color($cordate-primary, 0.5), mat-color($cordate-primary)), url("./assets/background.png");
   background-color: transparent;
 }
 

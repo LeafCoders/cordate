@@ -90,12 +90,45 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     );
   }
 
+  createPermission(): string {
+    return this.combinePermissions(
+      super.createPermission(),
+      `eventTypes:createEvents`,  // TODO add eventType here
+    );
+  }
+
+  updatePermission(event: Event): string {
+    return this.combinePermissions(
+      super.updatePermission(event),
+      this.permissionValueWithId('eventTypes:updateEvents', event.eventType),
+    );
+  }
+
+  deletePermission(event: Event): string {
+    return this.combinePermissions(
+      super.deletePermission(event),
+      this.permissionValueWithId('eventTypes:deleteEvents', event.eventType),
+    );
+  }
+
   manageResourceRequirementsPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
-    return `events:update:${event.id},eventsByEventTypes:update:${event.eventType.id},events:assign:resourceTypes:${resourceType.id}`;
+    let resourceTypes = event.resourcesOfResourceType(resourceType);
+    return this.combinePermissions(
+      super.updatePermission(event),
+      this.permissionValueWithId('eventTypes:updateEvents', event.eventType),
+      this.permissionValueWithId('eventTypes:modifyEventResourceRequirements', event.eventType),
+      ...resourceTypes.map(rt => this.permissionValueWithId('resourceTypes:modifyEventResourceRequirement', rt)),
+    );
   }
 
   assignResourceRequirementPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
-    return `events:update:${event.id},eventsByEventTypes:update:${event.eventType.id},events:assign:resourceTypes:${resourceType.id}`;
+    let resourceTypes = event.resourcesOfResourceType(resourceType);
+    return this.combinePermissions(
+      super.updatePermission(event),
+      this.permissionValueWithId('eventTypes:updateEvents', event.eventType),
+      this.permissionValueWithId('eventTypes:assignEventResources', event.eventType),
+      ...resourceTypes.map(rt => this.permissionValueWithId('resourceTypes:assignEventResources', rt)),
+    );
   }
 
   readArticles(event: Event): Observable<ArticleList> {
