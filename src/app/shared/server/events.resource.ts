@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, Event, User, ResourceRequirement, Resource, ResourceList, ResourceType, ResourceTypeRef, ArticleList, Article } from './rest-api.model';
+import { IdModel, Event, User, ResourceRequirement, Resource, ResourceList, ResourceType, ResourceTypeRef, ArticleList, Article, EventType } from './rest-api.model';
 
 export interface EventUpdate {
   id: number;
@@ -90,10 +90,10 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     );
   }
 
-  createPermission(): string {
+  createPermission(eventType?: EventType): string {
     return this.combinePermissions(
       super.createPermission(),
-      `eventTypes:createEvents`,  // TODO add eventType here
+      eventType ? `eventTypes:createEvents:${eventType.id}` : undefined,
     );
   }
 
@@ -112,22 +112,20 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
   }
 
   manageResourceRequirementsPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
-    let resourceTypes = event.resourcesOfResourceType(resourceType);
     return this.combinePermissions(
       super.updatePermission(event),
       this.permissionValueWithId('eventTypes:updateEvents', event.eventType),
       this.permissionValueWithId('eventTypes:modifyEventResourceRequirements', event.eventType),
-      ...resourceTypes.map(rt => this.permissionValueWithId('resourceTypes:modifyEventResourceRequirement', rt)),
+      this.permissionValueWithId('resourceTypes:modifyEventResourceRequirement', resourceType),
     );
   }
 
   assignResourceRequirementPermission(event: Event, resourceType: ResourceType | ResourceTypeRef): string {
-    let resourceTypes = event.resourcesOfResourceType(resourceType);
     return this.combinePermissions(
       super.updatePermission(event),
       this.permissionValueWithId('eventTypes:updateEvents', event.eventType),
       this.permissionValueWithId('eventTypes:assignEventResources', event.eventType),
-      ...resourceTypes.map(rt => this.permissionValueWithId('resourceTypes:assignEventResources', rt)),
+      this.permissionValueWithId('resourceTypes:assignEventResources', resourceType),
     );
   }
 

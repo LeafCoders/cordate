@@ -9,7 +9,7 @@
       <div class="expander"></div>
       <button *ngIf="allowAddNew" mat-icon-button (click)="showNewDialog()"><mat-icon>add_circle</mat-icon></button>
     </div>
-    <lc-event-list (select)="onItemSelected($event)" (create)="showNewDialog($event)" [isWeekView]="weekView" [filter]="selectedFilter"></lc-event-list>
+    <lc-event-list (select)="onItemSelected($event)" (create)="showNewDialog($event)" [allowAddNew]="allowAddNew" [isWeekView]="weekView" [filter]="selectedFilter"></lc-event-list>
   </div>
 
   <div class="pane-aside">

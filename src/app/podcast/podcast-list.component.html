@@ -6,7 +6,7 @@
   <div lc-list-item *ngFor="let podcast of items" (click)="selectItem(podcast)" clickable="true">
     <div class="list-content">
       <div>{{ podcast.asText() }}</div>
-      <div class="list-description">Feed url: {{ rosetteUrl }}api/podcasts/{{ podcast.id }}/feed</div>
+      <div class="list-description">Feed url: {{ rosetteUrl }}api/podcasts/feed/{{ podcast.idAlias }}</div>
     </div>
   </div>
 </lc-list>

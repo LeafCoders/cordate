@@ -5,7 +5,7 @@
 
 <lc-list *ngFor="let group of eventGroups" [header]="group.title">
   <ng-template lc-list-actions>
-    <button mat-icon-button (click)="createNew(group)">
+    <button *ngIf="allowAddNew" mat-icon-button (click)="createNew(group)">
       <mat-icon>add_circle</mat-icon>
     </button>
   </ng-template>

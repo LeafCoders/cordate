@@ -32,6 +32,8 @@ export class EventListComponent extends BaseList<Event> {
   isWeekView: boolean = true;
   filter: FilterItem = NONE_FILTER;
 
+  @Input('allowAddNew') allowAddNew: boolean = false;
+
   @Output('create') createEmitter: EventEmitter<moment.Moment> = new EventEmitter<moment.Moment>();
 
   constructor(

@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material';
 import * as moment from 'moment';
 
 import { EventTypesResource } from '../../shared/server/event-types.resource';
+import { EventsResource } from '../../shared/server/events.resource';
+import { AuthPermissionService } from '../../auth/auth-permission.service';
 import { EventType, EventTypeList } from '../../shared/server/rest-api.model';
 
 @Component({
@@ -21,12 +23,18 @@ export class EventNewDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EventNewDialogComponent>,
-    private eventTypesResource: EventTypesResource
+    private eventsResource: EventsResource,
+    private eventTypesResource: EventTypesResource,
+    private authPermission: AuthPermissionService,
   ) {
   }
 
   ngOnInit() {
-    this.eventTypesResource.list().subscribe((eventTypes: EventTypeList) => this.eventTypes = eventTypes);
+    this.eventTypesResource.listOnce().subscribe((eventTypes: EventTypeList) => {
+      this.eventTypes = eventTypes.filter((eventType: EventType) => {
+        return this.authPermission.isPermitted(this.eventsResource.createPermission(eventType));
+      });
+    });
     this.updateDateList();
   }
 

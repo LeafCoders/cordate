@@ -6,7 +6,8 @@ import * as moment from 'moment';
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
 import { EventsResource } from '../shared/server/events.resource';
-import { Event, EventList, ResourceRequirement, ResourceTypeRef } from '../shared/server/rest-api.model';
+import { EventTypesResource } from '../shared/server/event-types.resource';
+import { Event, EventList, ResourceRequirement, ResourceTypeRef, EventTypeList, EventType } from '../shared/server/rest-api.model';
 import { EventNewDialogComponent } from './new-dialog/event-new-dialog.component';
 import { FilterItem, NONE_FILTER, LAST_WEEK, ShowFrom } from './event-common';
 
@@ -27,6 +28,7 @@ export class EventComponent extends BaseContainer<Event> {
 
   constructor(
     private eventsResource: EventsResource,
+    private eventTypesResource: EventTypesResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
     router: Router,
@@ -37,11 +39,14 @@ export class EventComponent extends BaseContainer<Event> {
   }
 
   protected init(): void {
-    this.allowAddNew = this.authPermission.isPermitted(this.eventsResource.createPermission());
-
     this.setupShowFromList();
     this.eventsResource.list().subscribe((events: EventList) => {
       this.buildFilterItems(events);
+    });
+    this.eventTypesResource.listOnce().subscribe((eventTypes: EventTypeList) => {
+      this.allowAddNew = eventTypes.some((eventType: EventType) => {
+        return this.authPermission.isPermitted(this.eventsResource.createPermission(eventType));
+      });
     });
   }
 
