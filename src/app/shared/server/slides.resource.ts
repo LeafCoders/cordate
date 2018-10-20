@@ -45,4 +45,25 @@ export class SlidesResource extends DefaultBaseResource<Slide, SlideUpdate> {
     }
   }
 
+  createPermission(slideShow?: SlideShow): string {
+    return this.combinePermissions(
+      super.createPermission(),
+      slideShow ? `slideShows:createSlides:${slideShow.id}` : undefined,
+    );
+  }
+
+  updatePermission(slide: Slide): string {
+    return this.combinePermissions(
+      super.updatePermission(slide),
+      this.permissionValueWithId('slideShows:updateSlides', slide.slideShow),
+    );
+  }
+
+  deletePermission(slide: Slide): string {
+    return this.combinePermissions(
+      super.deletePermission(slide),
+      this.permissionValueWithId('slideShows:deleteSlides', slide.slideShow),
+    );
+  }
+
 }
