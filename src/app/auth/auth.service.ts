@@ -62,7 +62,7 @@ export class AuthService {
             this.currentUser.setUser(<UserIdentity>response.body);
             localStorage.setItem('userFullName', this.currentUser.user.fullName);
             localStorage.setItem('userEmail', this.currentUser.user.email);
-            observer.next(this.currentUser);
+            observer.next(this.currentUser.user);
           },
           (error: RestApiError) => {
             observer.error(error);
@@ -81,7 +81,7 @@ export class AuthService {
             this.currentUser.setUser(<UserIdentity>response.body);
             localStorage.setItem('userFullName', this.currentUser.user.fullName);
             localStorage.setItem('userEmail', this.currentUser.user.email);
-            observer.next(this.currentUser);
+            observer.next(this.currentUser.user);
           },
           (error: RestApiError) => {
             observer.error(error);
