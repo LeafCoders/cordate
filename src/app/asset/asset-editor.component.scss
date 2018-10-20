@@ -9,4 +9,23 @@
   & img {
     max-width: 100%;
   }
+
+  & pre {
+    background-color: #fff;
+    padding: 8px;
+    margin: 0;
+    overflow: scroll;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    text-align: left;
+    white-space: pre;
+    min-height: 32px;
+    max-height: 50vh;
+    max-width: unset;
+  }
+
+}
+
+.file-drag-over {
+  background-image: unset;
 }

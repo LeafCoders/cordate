@@ -59,6 +59,7 @@ import { ListComponent, ListActionsDirective, ListItemDirective } from './list/l
 
 import { SelectResourcesMenuComponent } from './select-resources-menu/select-resources-menu.component';
 
+import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { SelectAssetDialogComponent } from './dialog/select-asset-dialog/select-asset-dialog.component';
 import { SelectResourcesDialogComponent } from './dialog/select-resources-dialog/select-resources-dialog.component';
 import { SendMessageDialogComponent } from './dialog/send-message-dialog/send-message-dialog.component';
@@ -92,6 +93,7 @@ let dataEditors = [
 ];
 
 let dialogs = [
+  ConfirmDialogComponent,
   SelectAssetDialogComponent,
   SelectResourcesDialogComponent,
   SendMessageDialogComponent,

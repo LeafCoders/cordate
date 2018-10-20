@@ -36,16 +36,16 @@ export class RestApiService {
     return this.makeRequest<T>('DELETE', path, params);
   }
 
-  public createReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<{} | HttpResponse<T>> {
+  public createReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<T | HttpResponse<T>> {
     return this.makeRequestReturnResponse('POST', path, params, data);
   }
 
-  public updateReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<{} | HttpResponse<T>> {
+  public updateReturnResponse<T>(path: string, params?: RequestParams, data?: any): Observable<T | HttpResponse<T>> {
     return this.makeRequestReturnResponse('PUT', path, params, data);
   }
 
   public createMultiPart(path: string, params: RequestParams, data: FormData): Observable<JSON> {
-    return this.httpClient.request<JSON>('POST', this.rosetteUrl + path, {
+    return this.httpClient.request('POST', this.rosetteUrl + path, {
       observe: 'response',
       responseType: 'json',
       headers: new HttpHeaders({ 'Accept': 'application/json', 'enctype': 'multipart/form-data' }),
@@ -58,13 +58,25 @@ export class RestApiService {
       );
   }
 
+  public readFileData(fileId: string, mimeType: string): Observable<Blob> {
+    return this.httpClient.request('GET', this.rosetteUrl + `api/files/${fileId}`, {
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({ 'Accept': '*/*' }),
+    })
+      .pipe(
+        catchError(e => this.handleError(e)),
+        map((data: HttpResponse<Blob>) => data.body)
+      );
+  }
+
   private makeRequest<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<T> {
     return this.makeRequestReturnResponse(method, path, params, data, headers).pipe(
       map((data: HttpResponse<T>) => data.body)
     );
   }
 
-  private makeRequestReturnResponse<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<{} | HttpResponse<T>> {
+  private makeRequestReturnResponse<T>(method: string, path: string, params?: RequestParams, data?: any, headers?: HttpHeaders): Observable<T | HttpResponse<T>> {
     // Remove 'rawData' in stringify
     let body = data ? JSON.stringify(data, (name, value) => name !== 'rawData' ? value : undefined) : '';
 

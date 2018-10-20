@@ -50,9 +50,6 @@
 
 .aside {
   @include col-style();
-  overflow: hidden;
-  margin-left: -6px; // Enable shadow to drop on main
-  padding-left: 6px;
   z-index: 1; // Prevent hover passing through to buttons in main pane
 
   transition: all 0.2s ease-out;

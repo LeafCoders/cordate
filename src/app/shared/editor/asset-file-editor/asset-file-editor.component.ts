@@ -40,7 +40,7 @@ export class AssetFileEditorComponent {
   }
 
   onClickAssetRow() {
-    if (this.asset && this.asset.isImage) {
+    if (this.asset && this.asset.isImageFile) {
       this.showSelectDialog();
     }
   }

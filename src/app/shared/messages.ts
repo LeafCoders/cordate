@@ -47,6 +47,7 @@ export class Messages {
     'error.file.invalidContent': 'Filen har ogiltigt innehåll',
     'error.file.invalidDimension': 'Filens bredd och höjd kunde inte läsas',
     'error.file.mimeTypeNotAllowed': 'Filtypen är inte tillåten',
+    'error.file.onlyTextFilesAreUpdateable': 'Endast textfilter kan uppdateras',
 
     'error.idAlias.invalidFormat': 'Id-alias måste vara på formatet [a-z][a-zA-Z0-9]+',
 

@@ -9,15 +9,9 @@ import { Asset } from '../../server/rest-api.model';
 })
 export class AssetBoxComponent {
   asset: Asset;
-  fileType: 'UNKNOWN' | 'IMAGE' | 'AUDIO' = 'UNKNOWN';
 
   @Input('asset')
   set setAsset(asset: Asset) {
     this.asset = asset;
-    if (asset.isImage) {
-      this.fileType = 'IMAGE';
-    } else if (asset.isAudio) {
-      this.fileType = 'AUDIO';
-    }
   }
 }

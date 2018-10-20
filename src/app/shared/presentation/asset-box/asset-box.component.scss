@@ -1,14 +1,23 @@
 @import "src/scss/flex-mixin.scss";
 
 :host {
-  height: calc(100% - 10px);
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }
 
 img {
   height: 100%;
 }
 
-.audio {
+.audio, .text {
   @include fb-align-center();
+  background-color: #fff;
   height: 100%;
+
+  & p {
+    width: calc(100% - 10px);
+    word-wrap: break-word;
+    text-align: center;
+  }
 }

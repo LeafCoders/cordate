@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  {{ message }}
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex-rows flex-align-end">
+  <button mat-button (click)="dialogRef.close(false)">AVBRYT</button>
+  <button mat-button (click)="dialogRef.close(true)">{{ confirmTitle }}</button>
+</mat-dialog-actions>

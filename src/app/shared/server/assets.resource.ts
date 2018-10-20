@@ -50,6 +50,17 @@ export class AssetsResource extends DefaultBaseResource<Asset, AssetUpdate> {
     );
   }
 
+  updateFile(assetId: number, fileData: AssetFileData): Observable<Asset> {
+    let formData: FormData = new FormData();
+    formData.append('file', fileData.file, fileData.fileName);
+
+    return this.api.createMultiPart(`api/files/${assetId}`, {}, formData).pipe(
+      map((data: JSON): Asset => {
+        return this.replaceUpdated(this.newInstance(data))
+      })
+    );
+  }
+
   makeSafeFileName(fileName: string): string {
     return fileName
       .replace(/[̊̈]/g, '')

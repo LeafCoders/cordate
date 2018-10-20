@@ -536,6 +536,10 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
   fileName: string;
   url: string;
 
+  isImageFile: boolean;
+  isAudioFile: boolean;
+  isTextFile: boolean;
+
   fileSize: number;
   width: number;
   height: number;
@@ -543,25 +547,20 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
 
   assetFolder: AssetFolder;
 
-  // Calculated
-  isImage: boolean;
-  isAudio: boolean;
 
   constructor(data: Input<Asset>) {
     super(data);
-    readValue(this, data, 'fileName');
-    readValue(this, data, 'folderId');
-    readValue(this, data, 'url');
+    readValue(this, data, 'type');
     readValue(this, data, 'mimeType');
+    readValue(this, data, 'fileName');
+    readValue(this, data, 'url');
+    readValue(this, data, 'isImageFile');
+    readValue(this, data, 'isAudioFile');
+    readValue(this, data, 'isTextFile');
     readValue(this, data, 'fileSize');
     readValue(this, data, 'width');
     readValue(this, data, 'height');
     readValue(this, data, 'duration');
-
-    if (this.mimeType) {
-      this.isImage = this.mimeType.startsWith('image');
-      this.isAudio = this.mimeType.startsWith('audio');
-    }
   }
 
   setParent(parent: AssetFolder): Asset {
@@ -574,12 +573,7 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
   }
 
   iconUrl(): string {
-    if (this.url) {
-      let index: number = this.url.lastIndexOf('/');
-      //      return `${this.url.slice(0, index)}/icon/${this.url.slice(index + 1)}`;
-      return this.url + '?size=icon';
-    }
-    return `http://localhost:9000/api/assets/${this.id}`;
+    return `${this.url}?size=icon`;
   }
 
   fileSizeString(): string {

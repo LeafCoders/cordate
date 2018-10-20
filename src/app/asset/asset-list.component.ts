@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
 
 import { BaseList } from '../shared/base/base-list';
-import { AuthPermissionService } from '../auth/auth-permission.service';
 import { AssetsResource } from '../shared/server/assets.resource';
 import { Asset, AssetList, AssetFolder } from '../shared/server/rest-api.model';
-import { itemsGrouper, ItemsGroup } from '../shared/items-grouper';
-import { AssetFoldersResource } from '../shared/server/asset-folders.resource';
 
 @Component({
   selector: 'lc-asset-list',
-  templateUrl: './asset-list.component.html'
+  templateUrl: './asset-list.component.html',
+  styleUrls: ['./asset-list.component.scss']
 })
 export class AssetListComponent extends BaseList<Asset> {
 
@@ -18,7 +16,6 @@ export class AssetListComponent extends BaseList<Asset> {
 
   constructor(
     private assetsResource: AssetsResource,
-    private authPermission: AuthPermissionService,
   ) {
     super(assetsResource);
   }
@@ -30,6 +27,5 @@ export class AssetListComponent extends BaseList<Asset> {
   set assetFolder(assetFolder: AssetFolder) {
     this.currentAssetFolder = assetFolder;
     this.assetsResource.setListParams({ assetFolderId: assetFolder.id });
-    //this.assetsResource.setParent('assetFolders', assetFolder);
   }
 }

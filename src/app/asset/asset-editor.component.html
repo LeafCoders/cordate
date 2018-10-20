@@ -1,8 +1,9 @@
 <lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
   <div *ngIf="item">
-    <div class="image-container">
-      <img *ngIf="item.isImage" [src]="item.url">
-      <audio *ngIf="item.isAudio" [src]="item.url" controls></audio>
+    <div class="image-container" [class.file-drag-over]="isDragOver">
+      <img *ngIf="item.isImageFile" [src]="item.url">
+      <audio *ngIf="item.isAudioFile" [src]="item.url" controls></audio>
+      <pre *ngIf="!item.isImageFile && !item.isAudioFile" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">{{ textContent }}</pre>
     </div>
     <lc-list header="Filinformation">
       <lc-static-editor lc-list-item valueTitle="URL"><a target="blank" href="{{ item.url }}">{{ item.url }}</a></lc-static-editor>
