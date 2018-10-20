@@ -1,4 +1,4 @@
-import { EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EventEmitter, Input, OnInit, Output, HostBinding } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
@@ -13,6 +13,9 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
   actions: Array<EditorAction> = [];
 
   protected createValues: UPDATE;
+
+  @HostBinding('style.display')
+  private displayFlex = 'block';
 
   @Output('close') closeEmitter: EventEmitter<void> = new EventEmitter<void>();
 

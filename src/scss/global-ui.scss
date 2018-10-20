@@ -25,7 +25,7 @@
 .list-content {
   padding: 1rem;
   flex: 1;
-  max-width: 39rem;
+  max-width: 42rem;
   @include fb-column-container();
 }
 
@@ -44,6 +44,7 @@
 }
 
 .list-icon {
+  min-width: 3rem;
   padding: 1rem;
   color: $cordate-icon-color;
 }
@@ -151,8 +152,16 @@ input[type="file"].file-input-hidden {
   z-index: -1;
 }
 
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .file-drag-over {
-  background-color: mat-color($cordate-primary, 0.2);
+  cursor: copy;
+  background-color: mat-color($cordate-primary, 0.2) !important;
+  animation: blinker .5s linear infinite;
 }
 
 mat-dialog-container .file-drag-over {

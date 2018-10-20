@@ -1,4 +1,4 @@
-import { EventEmitter, OnInit, Output } from '@angular/core';
+import { EventEmitter, OnInit, Output, HostBinding } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
@@ -12,6 +12,9 @@ export abstract class BaseList<ITEM extends IdModel> implements OnInit {
   failedToLoad: boolean = false;
 
   @Output('select') selectEmitter: EventEmitter<ITEM> = new EventEmitter<ITEM>();
+
+  @HostBinding('style.display')
+  private displayFlex = 'block';
 
   constructor(
     resource: DefaultBaseResource<ITEM, any>,
