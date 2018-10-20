@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { EventTypesResource, EventTypeUpdate } from '../shared/server/event-types.resource';
 import { ResourceTypesResource } from '../shared/server/resource-types.resource';
 
@@ -27,8 +28,9 @@ export class EventTypeEditorComponent extends BaseEditor<EventType, EventTypeUpd
     private authPermission: AuthPermissionService,
     private eventTypesResource: EventTypesResource,
     private resourceTypesResource: ResourceTypesResource,
+    dialog: MatDialog,
   ) {
-    super(eventTypesResource);
+    super(eventTypesResource, dialog);
 
     this.resourceTypesResource.list().subscribe(resourceTypes => {
       this.allResourceTypes = resourceTypes.map(r => r.asRef());

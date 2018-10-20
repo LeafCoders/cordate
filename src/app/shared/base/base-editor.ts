@@ -1,10 +1,11 @@
 import { EventEmitter, Input, OnInit, Output, HostBinding } from '@angular/core';
-import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
 import { EditorAction } from '../../shared/editor/editor-action';
 import { EditorState } from '../../shared/editor/editor-state';
 import { IdModel } from '../server/rest-api.model';
+import { ConfirmDialogComponent } from '../dialog/confirm-dialog/confirm-dialog.component';
 
 export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit {
 
@@ -20,7 +21,8 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
   @Output('close') closeEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
-    private resource: DefaultBaseResource<ITEM, UPDATE>
+    private resource: DefaultBaseResource<ITEM, UPDATE>,
+    protected dialog: MatDialog,
   ) {
   }
 
@@ -77,9 +79,11 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
   }
 
   deleteItem(): void {
-    this.resource.delete(this.item.id, this.item).subscribe(() => {
-      this.setEditorItem = undefined;
-      this.closeEmitter.emit();
+    this.dialog.open(ConfirmDialogComponent).componentInstance.init("Ta bort?", "Det går inte att ångra detta.", "TA BORT", () => {
+      this.resource.delete(this.item.id, this.item).subscribe(() => {
+        this.setEditorItem = undefined;
+        this.closeEmitter.emit();
+      });
     });
   }
 

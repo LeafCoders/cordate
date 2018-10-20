@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { AssetFoldersResource, AssetFolderUpdate } from '../shared/server/asset-folders.resource';
-import { UsersResource } from '../shared/server/users.resource';
 
-import { AssetFolder, User, UserList } from '../shared/server/rest-api.model';
+import { AssetFolder } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-asset-folder-editor',
@@ -23,9 +23,9 @@ export class AssetFolderEditorComponent extends BaseEditor<AssetFolder, AssetFol
   constructor(
     private authPermission: AuthPermissionService,
     private assetFoldersResource: AssetFoldersResource,
-    private usersResource: UsersResource,
+    dialog: MatDialog,
   ) {
-    super(assetFoldersResource);
+    super(assetFoldersResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

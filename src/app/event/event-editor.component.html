@@ -60,9 +60,11 @@
       <lc-list *ngIf="articles?.length">
         <div lc-list-item class="centered-list-item" *ngFor="let article of articles">
           <div class="list-content">{{ article.asText() }}</div>
-          <div class="list-action"><button title="Visa undervisning" mat-icon-button (click)="navigateToArticle(article)">
+          <div class="list-action">
+            <button title="Visa undervisning" mat-icon-button (click)="navigateToArticle(article)">
               <mat-icon>navigate_next</mat-icon>
-            </button></div>
+            </button>
+          </div>
         </div>
       </lc-list>
     </mat-tab>

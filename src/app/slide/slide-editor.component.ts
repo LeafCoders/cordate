@@ -1,14 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { SlidesResource, SlideUpdate } from '../shared/server/slides.resource';
 
 import { Asset, Slide, SlideShow, TimeRange } from '../shared/server/rest-api.model';
-
-import * as moment from 'moment';
 
 @Component({
   selector: 'lc-slide-editor',
@@ -31,8 +30,9 @@ export class SlideEditorComponent extends BaseEditor<Slide, SlideUpdate> {
   constructor(
     private authPermission: AuthPermissionService,
     private slidesResource: SlidesResource,
+    dialog: MatDialog,
   ) {
-    super(slidesResource);
+    super(slidesResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

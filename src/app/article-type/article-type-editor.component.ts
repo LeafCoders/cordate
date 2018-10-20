@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ArticleTypesResource, ArticleTypeUpdate } from '../shared/server/article-types.resource';
-import { UsersResource } from '../shared/server/users.resource';
 
-import { ArticleType, User, UserList, AssetFolder, ResourceType } from '../shared/server/rest-api.model';
+import { ArticleType, UserList, AssetFolder, ResourceType } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-article-type-editor',
@@ -30,8 +30,9 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
   constructor(
     private authPermission: AuthPermissionService,
     private articleTypesResource: ArticleTypesResource,
+    dialog: MatDialog,
   ) {
-    super(articleTypesResource);
+    super(articleTypesResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

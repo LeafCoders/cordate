@@ -34,9 +34,9 @@ export class AssetEditorComponent extends BaseEditor<Asset, AssetUpdate> {
     private authPermission: AuthPermissionService,
     private assetsResource: AssetsResource,
     private restApiService: RestApiService,
-    private dialog: MatDialog,
+    dialog: MatDialog,
   ) {
-    super(assetsResource);
+    super(assetsResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ArticleSeriesResource, ArticleSerieUpdate } from '../shared/server/article-series.resource';
-import { ResourceTypesResource } from '../shared/server/resource-types.resource';
 
-import { ArticleSerie, ResourceTypeRef, Asset, HtmlText } from '../shared/server/rest-api.model';
-import { ArticleTypesResource } from '../shared/server/article-types.resource';
+import { ArticleSerie, Asset, HtmlText } from '../shared/server/rest-api.model';
 import { ArticleSerieService } from './article-serie.service';
 
 @Component({
@@ -26,9 +25,9 @@ export class ArticleSerieEditorComponent extends BaseEditor<ArticleSerie, Articl
     public viewData: ArticleSerieService,
     private authPermission: AuthPermissionService,
     private articleSeriesResource: ArticleSeriesResource,
-    private articleTypesResource: ArticleTypesResource,
+    dialog: MatDialog,
   ) {
-    super(articleSeriesResource);
+    super(articleSeriesResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

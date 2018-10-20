@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { UsersResource, UserUpdate } from '../shared/server/users.resource';
+import { AuthService } from '../auth/auth.service';
 
 import { User } from '../shared/server/rest-api.model';
-import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'lc-user-editor',
@@ -30,8 +30,9 @@ export class UserEditorComponent extends BaseEditor<User, UserUpdate> {
     private authPermission: AuthPermissionService,
     private usersResource: UsersResource,
     private authService: AuthService,
+    dialog: MatDialog,
   ) {
-    super(usersResource);
+    super(usersResource, dialog);
   }
 
   protected init(): void {

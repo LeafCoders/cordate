@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { MessagesResource, MessageUpdate } from '../shared/server/messages.resource';
-import { UsersResource } from '../shared/server/users.resource';
 
-import { Message, Asset, ArticleTypeRef } from '../shared/server/rest-api.model';
+import { Message } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-message-editor',
@@ -20,12 +20,9 @@ export class MessageEditorComponent extends BaseEditor<Message, MessageUpdate> {
   constructor(
     private authPermission: AuthPermissionService,
     private messagesResource: MessagesResource,
-    private usersResource: UsersResource,
+    dialog: MatDialog,
   ) {
-    super(messagesResource);
-  }
-
-  protected afterSetEditorItem(item: Message): void {
+    super(messagesResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

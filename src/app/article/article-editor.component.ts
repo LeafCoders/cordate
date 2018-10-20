@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
 
 import { BaseEditor } from '../shared/base/base-editor';
@@ -30,8 +31,9 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
     public viewData: ArticleService,
     private authPermission: AuthPermissionService,
     private articlesResource: ArticlesResource,
+    dialog: MatDialog,
   ) {
-    super(articlesResource);
+    super(articlesResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

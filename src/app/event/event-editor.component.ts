@@ -49,10 +49,10 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     private articleTypesResource: ArticleTypesResource,
     private articleSeriesResource: ArticleSeriesResource,
     private router: Router,
-    private dialog: MatDialog,
     private sendMessageDialogService: SendMessageDialogService,
+    dialog: MatDialog,
   ) {
-    super(eventsResource);
+    super(eventsResource, dialog);
 
     this.resourceTypeResource.list().subscribe(resourceTypes => {
       this.allResourceTypes = resourceTypes;

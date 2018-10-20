@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { ResourceTypesResource, ResourceTypeUpdate } from '../shared/server/resource-types.resource';
-import { UsersResource } from '../shared/server/users.resource';
 
-import { ResourceType, User, UserList } from '../shared/server/rest-api.model';
+import { ResourceType, UserList } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-resource-type-editor',
@@ -25,8 +25,9 @@ export class ResourceTypeEditorComponent extends BaseEditor<ResourceType, Resour
   constructor(
     private authPermission: AuthPermissionService,
     private resourceTypesResource: ResourceTypesResource,
+    dialog: MatDialog,
   ) {
-    super(resourceTypesResource);
+    super(resourceTypesResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {

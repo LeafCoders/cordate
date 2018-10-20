@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { PodcastsResource, PodcastUpdate } from '../shared/server/podcasts.resource';
-import { UsersResource } from '../shared/server/users.resource';
 
 import { Podcast, Asset, ArticleTypeRef } from '../shared/server/rest-api.model';
 
@@ -32,9 +32,9 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
   constructor(
     private authPermission: AuthPermissionService,
     private podcastsResource: PodcastsResource,
-    private usersResource: UsersResource,
+    dialog: MatDialog,
   ) {
-    super(podcastsResource);
+    super(podcastsResource, dialog);
   }
 
   protected afterSetEditorItem(item: Podcast): void {

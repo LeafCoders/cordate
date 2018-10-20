@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
 import { EditorState } from '../shared/editor/editor-state';
-import { AuthPermissionService, PermissionResults } from '../auth/auth-permission.service';
+import { AuthPermissionService } from '../auth/auth-permission.service';
 import { PermissionsResource, PermissionUpdate } from '../shared/server/permissions.resource';
 import { GroupsResource } from '../shared/server/groups.resource';
 import { UsersResource } from '../shared/server/users.resource';
@@ -24,8 +25,9 @@ export class PermissionEditorComponent extends BaseEditor<Permission, Permission
     private permissionsResource: PermissionsResource,
     private groupsResource: GroupsResource,
     private usersResource: UsersResource,
+    dialog: MatDialog,
   ) {
-    super(permissionsResource);
+    super(permissionsResource, dialog);
   }
 
   protected allEditorStates(): Array<EditorState> {
