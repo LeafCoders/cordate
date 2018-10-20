@@ -13,6 +13,7 @@ export interface EventUpdate {
   endTime: string;
   title: string;
   description: string;
+  privateDescription: string;
   isPublic: boolean;
 }
 

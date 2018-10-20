@@ -25,6 +25,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   timeState: EditorState = new EditorState();
   titleState: EditorState = new EditorState();
   descriptionState: EditorState = new EditorState();
+  privateDescriptionState: EditorState = new EditorState();
   eventTypeState: EditorState = new EditorState();
   isPublicState: EditorState = new EditorState();
 
@@ -61,7 +62,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.timeState, this.titleState, this.descriptionState, this.isPublicState, this.eventTypeState];
+    return [this.timeState, this.titleState, this.descriptionState, this.privateDescriptionState, this.isPublicState, this.eventTypeState];
   }
 
   protected checkPermissions(): void {
@@ -203,6 +204,13 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
     this.setValue(this.descriptionState,
       (item: EventUpdate) => item.description = description,
       () => this.item.description = description
+    );
+  }
+
+  setPrivateDescription(privateDescription: string): void {
+    this.setValue(this.privateDescriptionState,
+      (item: EventUpdate) => item.privateDescription = privateDescription,
+      () => this.item.privateDescription = privateDescription
     );
   }
 

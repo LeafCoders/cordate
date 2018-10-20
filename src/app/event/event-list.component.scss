@@ -21,6 +21,13 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    &.private {
+      border-left: 2px solid #edd;
+      padding-left: 8px;
+      font-style: italic;
+      color: #744;
+    }
   }
 
   .event-resources {
@@ -33,6 +40,7 @@
     text-overflow: ellipsis;
     border-left: 2px solid #ddd;
     padding-left: 8px;
+    margin: 4px 0;
   }
 }
 

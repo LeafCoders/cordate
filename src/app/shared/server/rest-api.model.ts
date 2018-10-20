@@ -199,6 +199,7 @@ export class Event extends IdModel {
   endTime: moment.Moment;
   title: string;
   description: string;
+  privateDescription: string;
   isPublic: boolean;
   resourceRequirements: Array<ResourceRequirement>;
 
@@ -209,6 +210,7 @@ export class Event extends IdModel {
     readDate(this, data, 'endTime');
     readValue(this, data, 'title');
     readValue(this, data, 'description');
+    readValue(this, data, 'privateDescription');
     readValue(this, data, 'isPublic');
     readArray<ResourceRequirement>(this, data, 'resourceRequirements', ResourceRequirement);
   }

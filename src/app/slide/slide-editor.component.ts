@@ -86,5 +86,10 @@ export class SlideEditorComponent extends BaseEditor<Slide, SlideUpdate> {
       (item: SlideUpdate) => item.imageId = image.id,
       () => this.item.image = image
     );
+    if (!this.item.title) {
+      const title: string = image.fileName.split('.')[0];
+      this.setTitle(title);
+      this.item.title = title;
+    }
   }
 }

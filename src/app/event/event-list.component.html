@@ -19,6 +19,7 @@
           <span>{{ rr.resourceTypeName }}</span>: <span>{{ rr.resourceNames }}</span>
         </div>
       </div>
+      <div class="event-description private" *ngFor="let description of item.privateDescriptions">{{ description }}</div>
     </div>
     <div class="list-action" *ngIf="item.selectableResourceRequirementUpdater">
       <lc-select-resources-menu [resourcesUpdater]="item.selectableResourceRequirementUpdater" (valueUpdated)="updateEventViewModel()"></lc-select-resources-menu>

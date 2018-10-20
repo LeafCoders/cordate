@@ -1,11 +1,13 @@
 <lc-double-pane>
   <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
-  <div class="pane-main">
+  <div class="pane-main" (dragover)="openEditorWithNew()">
     <lc-page-header title="Bildspel"></lc-page-header>
     <div class="filter-bar dark">
       <button mat-button [matMenuTriggerFor]="slideShowMenu"><small>Bildspelsenhet: </small>{{ selectedSlideShow?.asText() }}</button>
       <div class="expander"></div>
-      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()"><mat-icon>add_circle</mat-icon></button>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
     </div>
     <lc-slide-list *ngIf="selectedSlideShow" (select)="onItemSelected($event)" [slideShow]="selectedSlideShow"></lc-slide-list>
   </div>

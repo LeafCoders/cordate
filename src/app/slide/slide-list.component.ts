@@ -1,12 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { first } from 'rxjs/operators';
 
 import { BaseList } from '../shared/base/base-list';
-import { AuthPermissionService } from '../auth/auth-permission.service';
 import { SlidesResource } from '../shared/server/slides.resource';
 import { Slide, SlideList, SlideShow } from '../shared/server/rest-api.model';
 import { itemsGrouper, ItemsGroup } from '../shared/items-grouper';
-import { SlideShowsResource } from '../shared/server/slide-shows.resource';
 
 @Component({
   selector: 'lc-slide-list',
@@ -19,7 +16,6 @@ export class SlideListComponent extends BaseList<Slide> {
 
   constructor(
     private slidesResource: SlidesResource,
-    private authPermission: AuthPermissionService,
   ) {
     super(slidesResource);
   }

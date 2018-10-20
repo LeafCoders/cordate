@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseList } from '../shared/base/base-list';
-import { AuthPermissionService } from '../auth/auth-permission.service';
 import { EventsResource } from '../shared/server/events.resource';
 import { Event, EventList, ResourceRequirement } from '../shared/server/rest-api.model';
 import { FilterItem, NONE_FILTER } from './event-common';
@@ -12,6 +11,7 @@ import { EventResourcesUpdater } from '../shared/server/resources-updater';
 interface EventViewModel {
   event: Event;
   descriptions: Array<string>;
+  privateDescriptions: Array<string>;
   dayNumber: number;
   dayName: string;
   monthName: string;
@@ -38,7 +38,6 @@ export class EventListComponent extends BaseList<Event> {
 
   constructor(
     private eventsResource: EventsResource,
-    private authPermission: AuthPermissionService,
   ) {
     super(eventsResource, () => eventsResource.list());
   }
@@ -116,6 +115,7 @@ export class EventListComponent extends BaseList<Event> {
   private eventToViewModel(event: Event): EventViewModel {
     let time: moment.Moment = moment(event.startTime);
     let description: string = event.description ? event.description : '';
+    let privateDescription: string = event.privateDescription ? event.privateDescription : '';
 
     let selectableResourceRequirement: ResourceRequirement;
     if (this.filter.resourceType) {
@@ -127,6 +127,7 @@ export class EventListComponent extends BaseList<Event> {
     return {
       event: event,
       descriptions: description.split("\n"),
+      privateDescriptions: privateDescription.split("\n"),
       dayNumber: time.date(),
       dayName: time.format('ddd'),
       monthName: time.format('MMM'),
