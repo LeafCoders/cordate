@@ -45,6 +45,10 @@ export class EventsResource extends DefaultBaseResource<Event, EventUpdate> {
     }
   }
 
+  public replaceUpdated(item: Event): Event {
+    return super.replaceUpdated(item);
+  }
+
   refresh(): void {
     this.refreshList(true);
   }

@@ -51,26 +51,26 @@ export class BaseResource<T extends IdModel, U> {
     this.nextSelected();
   }
 
-  protected insertCreated(user: T): T {
-    let index: number = this.listItems.findIndex(this.findBeforeFn.bind(undefined, user));
+  protected insertCreated(item: T): T {
+    let index: number = this.listItems.findIndex(this.findBeforeFn.bind(undefined, item));
     if (index >= 0) {
-      this.listItems.splice(index, 0, user);
+      this.listItems.splice(index, 0, item);
     } else {
-      this.listItems.push(user);
+      this.listItems.push(item);
     }
     this.nextList();
-    return user;
+    return item;
   }
 
-  protected replaceUpdated(user: T): T {
-    this.removeDeleted(user, false);
-    this.insertCreated(user);
+  protected replaceUpdated(item: T): T {
+    this.removeDeleted(item, false);
+    this.insertCreated(item);
     this.nextList();
-    return user;
+    return item;
   }
 
-  protected removeDeleted(user: T, callNext: boolean = true): void {
-    let index: number = this.listItems.findIndex(IdModel.idEquals(user));
+  protected removeDeleted(item: T, callNext: boolean = true): void {
+    let index: number = this.listItems.findIndex(IdModel.idEquals(item));
     if (index >= 0) {
       this.listItems.splice(index, 1);
       if (callNext) {

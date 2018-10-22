@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import * as moment from 'moment';
@@ -10,12 +10,13 @@ import { EventTypesResource } from '../shared/server/event-types.resource';
 import { Event, EventList, ResourceRequirement, ResourceTypeRef, EventTypeList, EventType } from '../shared/server/rest-api.model';
 import { EventNewDialogComponent } from './new-dialog/event-new-dialog.component';
 import { FilterItem, NONE_FILTER, LAST_WEEK, ShowFrom } from './event-common';
+import { WebSocketMessagingService } from '../shared/server/web-socket-messaging.service';
 
 @Component({
   selector: 'lc-event',
   templateUrl: './event.component.html'
 })
-export class EventComponent extends BaseContainer<Event> {
+export class EventComponent extends BaseContainer<Event> implements OnDestroy {
 
   // Filters
   weekView: boolean = true;
@@ -25,6 +26,7 @@ export class EventComponent extends BaseContainer<Event> {
   selectedShowFrom: ShowFrom = LAST_WEEK;
 
   private newEventDialogRef: MatDialogRef<EventNewDialogComponent>;
+  private messagingService: WebSocketMessagingService;
 
   constructor(
     private eventsResource: EventsResource,
@@ -36,6 +38,7 @@ export class EventComponent extends BaseContainer<Event> {
   ) {
     super(eventsResource, router, route);
     this.selectShowFrom(this.selectedShowFrom);
+    this.initializeWebSocketConnection();
   }
 
   protected init(): void {
@@ -47,6 +50,19 @@ export class EventComponent extends BaseContainer<Event> {
       this.allowAddNew = eventTypes.some((eventType: EventType) => {
         return this.authPermission.isPermitted(this.eventsResource.createPermission(eventType));
       });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.messagingService) {
+      this.messagingService.disconnect();
+    }
+  }
+
+  private initializeWebSocketConnection() {
+    this.messagingService = new WebSocketMessagingService('/events');
+    this.messagingService.stream().subscribe(message => {
+      this.eventsResource.replaceUpdated(new Event(JSON.parse(message.body)));
     });
   }
 
