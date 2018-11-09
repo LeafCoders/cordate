@@ -1,6 +1,8 @@
 @import "src/scss/cordate-theme-def";
 
 @include angular-material-theme($cordate-theme);
+@include angular-material-typography($cordate-typography);
+@include mat-core($cordate-typography);
 
 // Fix for https://github.com/angular/material2/issues/2725
 // .mat-menu-panel {

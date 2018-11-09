@@ -1,7 +1,4 @@
 @import '~@angular/material/theming';
-//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-@include mat-core();
 
 // Based on color #73b532
 $mat-cordate: (
@@ -44,3 +41,9 @@ $cordate-warn: mat-palette($mat-red);
 $cordate-theme: mat-light-theme($cordate-primary, $cordate-accent, $cordate-warn);
 
 $cordate-icon-color: #888;
+
+$cordate-typography: mat-typography-config(
+  $body-1: mat-typography-level(16px, 1.125, 400),
+  $body-2: mat-typography-level(16px, 1.125, 400),
+  $input: mat-typography-level(16px, 1.125, 400),
+);
