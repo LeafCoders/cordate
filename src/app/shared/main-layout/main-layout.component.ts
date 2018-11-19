@@ -148,9 +148,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   private showError(error: RestApiError): void {
     if (error.isValidataionError()) {
-      this.snackBar.open(error.getFirstValidationError(), 'OK', { duration: 5000 });
+      this.snackBar.open(error.getFirstValidationError(), 'OK', { duration: 10000 });
     } else {
-      this.snackBar.open(error.getError(), 'MER', { duration: 5000 }).onAction().subscribe(() => alert(error.getReason()));
+      this.snackBar.open(error.getError(), 'MER', { duration: 10000 }).onAction().subscribe(() => alert(error.getReason()));
     }
   }
 

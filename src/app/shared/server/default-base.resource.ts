@@ -76,7 +76,7 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     );
   }
 
-  protected refreshList(forceRefresh: boolean = false): void {
+  refreshList(forceRefresh: boolean = false): void {
     const currentTime: number = new Date().getTime();
     if (forceRefresh || this.isEmptyList() || currentTime - this.lastRefreshTime > 60 * 1000) {
       this.lastRefreshTime = currentTime;
@@ -116,8 +116,8 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     );
   }
 
-  create(item: U): Observable<T> {
-    return this.api.create<Object>(this.apiPath(), {}, item).pipe(
+  create(item: U, parentItemId?: number): Observable<T> {
+    return this.api.create<Object>(this.apiPath(undefined, parentItemId), {}, item).pipe(
       map((data): T => {
         return this.insertCreated(this.newInstance(data));
       })
@@ -172,9 +172,10 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     return this.permissionValue('admin', item);
   }
 
-  private apiPath(itemId?: number): string {
-    if (this.parentName && this.parentItem) {
-      return `api/${this.parentName}/${this.parentItem.id}/${this.name}` + (itemId ? `/${itemId}` : '');
+  private apiPath(itemId?: number, parentItemId?: number): string {
+    if (this.parentName && (this.parentItem || parentItemId)) {
+      parentItemId = parentItemId ? parentItemId : this.parentItem.id;
+      return `api/${this.parentName}/${parentItemId}/${this.name}` + (itemId ? `/${itemId}` : '');
     }
     return `api/${this.name}` + (itemId ? `/${itemId}` : '');
   }

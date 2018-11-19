@@ -9,6 +9,7 @@
         <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #startDatepicker></mat-datepicker>
       </mat-form-field>
+      &nbsp;
       <mat-form-field>
         <input matInput type="time" [(ngModel)]="editingStartTime" (ngModelChange)="timeChanged()">
       </mat-form-field>
@@ -19,6 +20,7 @@
         <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatepicker></mat-datepicker>
       </mat-form-field>
+      &nbsp;
       <mat-form-field>
         <input matInput type="time" [(ngModel)]="editingEndTime" (ngModelChange)="timeChanged()">
       </mat-form-field>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';
@@ -8,6 +8,8 @@ import { AuthPermissionService } from '../auth/auth-permission.service';
 import { SlidesResource, SlideUpdate } from '../shared/server/slides.resource';
 
 import { Asset, Slide, SlideShow, TimeRange } from '../shared/server/rest-api.model';
+import { SingleSelectDialogComponent } from '../shared/dialog/single-select-dialog/single-select-dialog.component';
+import { SlideShowsResource } from '../shared/server/slide-shows.resource';
 
 @Component({
   selector: 'lc-slide-editor',
@@ -30,6 +32,8 @@ export class SlideEditorComponent extends BaseEditor<Slide, SlideUpdate> {
   constructor(
     private authPermission: AuthPermissionService,
     private slidesResource: SlidesResource,
+    private slideShowsResource: SlideShowsResource,
+    private snackBar: MatSnackBar,
     dialog: MatDialog,
   ) {
     super(slidesResource, dialog);
@@ -49,9 +53,29 @@ export class SlideEditorComponent extends BaseEditor<Slide, SlideUpdate> {
   protected rebuildActions(): Array<EditorAction> {
     const mayDelete: boolean = this.authPermission.isPermitted(this.slidesResource.deletePermission(this.item));
     let actions = [
-      new EditorAction('Ta bort', mayDelete, () => this.deleteItem())
+      new EditorAction('Ta bort', mayDelete, () => this.deleteItem()),
+      new EditorAction('Kopiera till...', true, () => this.copyItemTo()),
     ];
     return actions;
+  }
+
+  private copyItemTo(): void {
+    this.dialog.open(SingleSelectDialogComponent).componentInstance.init(
+      "Välj bildspel att kopiera till", this.slideShowsResource.listOnce(),
+      (slideShow: SlideShow) => {
+        let slideCopy: SlideUpdate = {
+          id: undefined,
+          title: this.item.title,
+          startTime: this.item.startTime.toJSON(),
+          endTime: this.item.endTime.toJSON(),
+          duration: this.item.duration,
+          imageId: this.item.image.id,
+        };
+        this.slidesResource.create(slideCopy, slideShow.id).subscribe(slide => {
+          this.slidesResource.refreshList(true);
+          this.snackBar.open('Koperiat!', 'OK', { duration: 4000 });
+        });
+      });
   }
 
   setTitle(title: string): void {
