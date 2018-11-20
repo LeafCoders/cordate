@@ -606,6 +606,7 @@ export class AssetFolder extends IdModel {
   name: string;
   description: string;
   allowedMimeTypes: string;
+  staticFileKey: boolean;
 
   constructor(data: Input<AssetFolder>) {
     super(data);
@@ -613,6 +614,7 @@ export class AssetFolder extends IdModel {
     readValue(this, data, 'name');
     readValue(this, data, 'description');
     readValue(this, data, 'allowedMimeTypes');
+    readValue(this, data, 'staticFileKey');
   }
 
   asText(): string {

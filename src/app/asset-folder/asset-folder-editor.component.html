@@ -3,6 +3,9 @@
     <lc-text-editor lc-list-item valueTitle="Id-alias" icon="bookmark" [value]="item.idAlias" (changed)="setIdAlias($event)" [state]="idAliasState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
-    <lc-text-editor lc-list-item valueTitle="Tillåtna filtyper" icon="filter_list" [value]="item.allowedMimeTypes" (changed)="setAllowedMimeTypes($event)" [state]="allowedMimeTypesState" editingHelpText="MIME-typer. T.ex. 'application/pdf,image/' för att tillåta pdf och alla bildformat."></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Tillåtna filtyper" icon="filter_list" [value]="item.allowedMimeTypes" (changed)="setAllowedMimeTypes($event)" [state]="allowedMimeTypesState"
+      editingHelpText="MIME-typer. T.ex. 'application/pdf,image/' för att tillåta pdf och alla bildformat."></lc-text-editor>
+    <lc-boolean-editor lc-list-item valueTitle="Statiskt filnyckel (aktivera endast när filer ska kunna referera till varandra)" falseIcon="gps_not_fixed" falseText="Nej. Filnamn behöver inte vara unika."
+      trueIcon="gps_fixed" trueText="Ja. Alla filer får samma filnyckel." [value]="item.staticFileKey" (changed)="setStaticFileKey($event)" [state]="staticFileKeyState"></lc-boolean-editor>
   </lc-list>
 </lc-editor-container>

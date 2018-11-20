@@ -19,6 +19,7 @@ export class AssetFolderEditorComponent extends BaseEditor<AssetFolder, AssetFol
   nameState: EditorState = new EditorState();
   descriptionState: EditorState = new EditorState();
   allowedMimeTypesState: EditorState = new EditorState();
+  staticFileKeyState: EditorState = new EditorState();
 
   constructor(
     private authPermission: AuthPermissionService,
@@ -29,7 +30,7 @@ export class AssetFolderEditorComponent extends BaseEditor<AssetFolder, AssetFol
   }
 
   protected allEditorStates(): Array<EditorState> {
-    return [this.idAliasState, this.nameState, this.descriptionState, this.allowedMimeTypesState];
+    return [this.idAliasState, this.nameState, this.descriptionState, this.allowedMimeTypesState, this.staticFileKeyState];
   }
 
   protected checkPermissions(): void {
@@ -72,6 +73,13 @@ export class AssetFolderEditorComponent extends BaseEditor<AssetFolder, AssetFol
     this.setValue(this.allowedMimeTypesState,
       (item: AssetFolderUpdate) => item.allowedMimeTypes = allowedMimeTypes,
       () => this.item.allowedMimeTypes = allowedMimeTypes
+    );
+  }
+
+  setStaticFileKey(staticFileKey: boolean): void {
+    this.setValue(this.staticFileKeyState,
+      (item: AssetFolderUpdate) => item.staticFileKey = staticFileKey,
+      () => this.item.staticFileKey = staticFileKey
     );
   }
 }

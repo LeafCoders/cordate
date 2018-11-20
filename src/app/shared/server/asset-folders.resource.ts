@@ -11,6 +11,7 @@ export interface AssetFolderUpdate {
   name: string;
   description: string;
   allowedMimeTypes: string;
+  staticFileKey: boolean;
 }
 
 @Injectable()
