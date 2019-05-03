@@ -5,7 +5,9 @@
     <div class="filter-bar dark">
       <button mat-button [matMenuTriggerFor]="assetFolderMenu"><small>Filkatalog: </small>{{ selectedAssetFolder?.asText() }}</button>
       <div class="expander"></div>
-      <button *ngIf="allowAddNew" mat-icon-button (click)="showNewDialog()"><mat-icon>add_circle</mat-icon></button>
+      <button *ngIf="allowAddNew" mat-icon-button [matMenuTriggerFor]="newAssetMenu">
+        <mat-icon>add_circle</mat-icon>
+      </button>
     </div>
     <lc-asset-list *ngIf="selectedAssetFolder" (select)="onItemSelected($event)" [assetFolder]="selectedAssetFolder"></lc-asset-list>
   </div>
@@ -15,6 +17,11 @@
   </div>
 </lc-double-pane>
 
+
+<mat-menu #newAssetMenu="matMenu" xPosition="before">
+  <button mat-menu-item (click)="showNewDialog()">Ny fil</button>
+  <button mat-menu-item (click)="showNewLinkAsset()">Ny länk</button>
+</mat-menu>
 
 <mat-menu #assetFolderMenu="matMenu" xPosition="after">
   <button mat-menu-item *ngFor="let assetFolder of assetFolders" (click)="selectAssetFolder(assetFolder)">{{ assetFolder.asText() }}</button>

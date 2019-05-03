@@ -574,6 +574,14 @@ export class Asset extends IdModel implements HasParent<AssetFolder, Asset> {
     return this.fileName;
   }
 
+  isTypeUrl(): boolean {
+    return this.type === 'URL';
+  }
+
+  isNotSupported(): boolean {
+    return !(this.isTypeUrl() || this.isImageFile || this.isAudioFile || this.isTextFile);
+  }
+
   iconUrl(): string {
     return `${this.url}?size=icon`;
   }

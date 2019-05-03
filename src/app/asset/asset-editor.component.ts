@@ -61,6 +61,8 @@ export class AssetEditorComponent extends BaseEditor<Asset, AssetUpdate> {
   protected afterSetEditorItem(asset: Asset): void {
     if (asset.isTextFile) {
       this.readAssetData(asset);
+    } else if (asset.type === 'URL') {
+      this.textContent = asset.url;
     } else {
       this.textContent = 'Innehåll saknas';
     }

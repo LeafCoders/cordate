@@ -7,6 +7,10 @@
   <mat-icon>subject</mat-icon>
   <p>{{ asset.asText() }}</p>
 </div>
-<div *ngIf="!asset.isImageFile && !asset.isAudioFile && !asset.isTextFile">
+<div *ngIf="asset.isTypeUrl()" class="text">
+  <mat-icon>link</mat-icon>
+  <p>{{ asset.url }}</p>
+</div>
+<div *ngIf="asset.isNotSupported()">
   Kan inte visa filer av typ: {{ asset.mimeType }}.
 </div>

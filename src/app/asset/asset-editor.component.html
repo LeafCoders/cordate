@@ -9,7 +9,7 @@
       <lc-static-editor lc-list-item valueTitle="URL"><a target="blank" href="{{ item.url }}">{{ item.url }}</a></lc-static-editor>
       <lc-static-editor *ngIf="item.width" lc-list-item valueTitle="Bildstorlek">{{ item.width }} x {{ item.height }}</lc-static-editor>
       <lc-static-editor *ngIf="item.duration" lc-list-item valueTitle="Längd">{{ item.durationString() }}</lc-static-editor>
-      <lc-static-editor lc-list-item valueTitle="Filstorlek">{{ item.fileSizeString() }}</lc-static-editor>
+      <lc-static-editor *ngIf="item.fileSize" lc-list-item valueTitle="Filstorlek">{{ item.fileSizeString() }}</lc-static-editor>
       <lc-static-editor lc-list-item valueTitle="MIME-typ">{{ item.mimeType }}</lc-static-editor>
     </lc-list>
   </div>

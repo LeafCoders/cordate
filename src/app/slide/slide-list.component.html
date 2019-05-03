@@ -6,7 +6,7 @@
 <div *ngIf="!failedToLoad">
   <lc-list *ngFor="let group of slideGroups" [header]="group.title">
     <div lc-list-item *ngFor="let slide of group.items" (click)="selectItem(slide)" clickable="true">
-      <img [src]="slide.image.iconUrl()" style="height: 112px; padding: 4px;">
+      <lc-asset-box [asset]="slide.image" style="max-width: 120px; height: 112px; padding: 4px;"></lc-asset-box>
       <div class="list-content shrink">
         <lc-date-time-box [date]="slide.startTime" style="border-bottom: 1px solid #999; padding-bottom: 8px; margin-bottom: 8px;">
         </lc-date-time-box>

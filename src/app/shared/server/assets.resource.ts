@@ -10,6 +10,7 @@ export interface AssetUpdate {
   id: number;
   type: string;
   url: string;
+  folderId: number;
 }
 
 export interface AssetFileData {

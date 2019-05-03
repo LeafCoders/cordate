@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';
 import { AssetFoldersResource } from '../shared/server/asset-folders.resource';
-import { AssetsResource } from '../shared/server/assets.resource';
+import { AssetsResource, AssetUpdate } from '../shared/server/assets.resource';
 import { Asset, AssetFolder, AssetFolderList } from '../shared/server/rest-api.model';
 import { AssetNewDialogComponent } from './new-dialog/asset-new-dialog.component';
 
@@ -55,4 +55,18 @@ export class AssetComponent extends BaseContainer<Asset> {
     }
   }
 
+  showNewLinkAsset(): void {
+    let link: string = window.prompt("Ange länk");
+    if (link) {
+      let asset: AssetUpdate = {
+        id: undefined,
+        type: 'URL',
+        url: link,
+        folderId: this.selectedAssetFolder.id,
+      };
+      this.assetsResource.create(asset).subscribe((newLinkAsset: Asset) => {
+        this.onItemSelected(newLinkAsset);
+      });
+    }
+  }
 }
