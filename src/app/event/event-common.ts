@@ -17,4 +17,5 @@ export interface ShowFrom {
   before?: moment.Moment;
 }
 
+export const TODAY: ShowFrom = { text: 'Idag', from: moment().startOf('day') };
 export const LAST_WEEK: ShowFrom = { text: 'Förra veckan', from: moment().startOf('isoWeek').add(-1, 'week') };

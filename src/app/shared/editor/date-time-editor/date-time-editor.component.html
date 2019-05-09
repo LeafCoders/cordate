@@ -4,12 +4,12 @@
   <div *ngIf="!state.editing && !state.createMode" class="selectable-text">{{ time?.format('YYYY-MM-DD HH:mm') }}</div>
   <div *ngIf="state.editing || state.createMode" class="flex-cols">
     <div>
-      <mat-form-field>
+      <mat-form-field style="max-width: 8rem">
         <input matInput [matDatepicker]="datepicker" [formControl]="editingDate" (dateChange)="dateChanged()" placeholder="Från" autofocus>
         <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
         <mat-datepicker #datepicker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field style="max-width: 5rem">
         <input matInput type="time" [(ngModel)]="editingTime" (ngModelChange)="timeChanged()">
       </mat-form-field>
     </div>

@@ -35,7 +35,7 @@
     "ng-node-environment": "^1.0.9",
     "ngx-quill": "3.2.0",
     "normalize.css": "^4.1.1",
-    "rxjs": "^6.0.0",
+    "rxjs": "6.0.0",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26"
   },

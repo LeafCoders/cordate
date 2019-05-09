@@ -1,27 +1,29 @@
 <mat-icon class="list-icon">access_time</mat-icon>
 <div class="list-content">
   <div class="value-title">{{ valueTitle }}</div>
-  <div *ngIf="!state.editing && !state.createMode" class="selectable-text">{{ startTime?.format('YYYY-MM-DD HH:mm') }} - {{ endTime?.format('YYYY-MM-DD HH:mm') }}</div>
+  <div *ngIf="!state.editing && !state.createMode" class="selectable-text">
+    <span style="white-space: nowrap;">{{ startTime?.format('YYYY-MM-DD HH:mm') }}</span> - <span style="white-space: nowrap;">{{ endTime?.format('YYYY-MM-DD HH:mm') }}</span>
+  </div>
   <div *ngIf="state.editing || state.createMode" class="flex-cols">
     <div>
-      <mat-form-field>
+      <mat-form-field style="max-width: 8rem">
         <input matInput [matDatepicker]="startDatepicker" [formControl]="editingStartDate" (dateChange)="dateChanged()" placeholder="Från" autofocus>
         <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #startDatepicker></mat-datepicker>
       </mat-form-field>
       &nbsp;
-      <mat-form-field>
+      <mat-form-field style="max-width: 5rem">
         <input matInput type="time" [(ngModel)]="editingStartTime" (ngModelChange)="timeChanged()">
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field>
+      <mat-form-field style="max-width: 8rem">
         <input matInput [matDatepicker]="endDatepicker" [formControl]="editingEndDate" (dateChange)="dateChanged()" placeholder="Till">
         <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatepicker></mat-datepicker>
       </mat-form-field>
       &nbsp;
-      <mat-form-field>
+      <mat-form-field style="max-width: 5rem">
         <input matInput type="time" [(ngModel)]="editingEndTime" (ngModelChange)="timeChanged()">
       </mat-form-field>
     </div>

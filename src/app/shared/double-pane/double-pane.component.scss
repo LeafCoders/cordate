@@ -30,6 +30,7 @@
 .main {
   background-color: #fafafa;
   overflow: hidden;
+  height: calc(100vh - 64px);
   @include col-style();
 
   & .cover {
@@ -49,6 +50,7 @@
 }
 
 .aside {
+  height: calc(100vh - 64px);
   @include col-style();
   z-index: 1; // Prevent hover passing through to buttons in main pane
 
@@ -87,9 +89,11 @@
 @media (max-width: 48rem) {
   .main {
     flex: 0 0 100vw;
+    height: 100vh;
   }
   .aside {
     flex: 0 0 100vw;
+    height: 100vh;
     visibility: hidden;
 
     &.open {

@@ -9,7 +9,7 @@ import { EventsResource } from '../shared/server/events.resource';
 import { EventTypesResource } from '../shared/server/event-types.resource';
 import { Event, EventList, ResourceRequirement, ResourceTypeRef, EventTypeList, EventType } from '../shared/server/rest-api.model';
 import { EventNewDialogComponent } from './new-dialog/event-new-dialog.component';
-import { FilterItem, NONE_FILTER, LAST_WEEK, ShowFrom } from './event-common';
+import { FilterItem, NONE_FILTER, TODAY, LAST_WEEK, ShowFrom } from './event-common';
 import { WebSocketMessagingService } from '../shared/server/web-socket-messaging.service';
 
 @Component({
@@ -22,8 +22,8 @@ export class EventComponent extends BaseContainer<Event> implements OnDestroy {
   weekView: boolean = true;
   filters: Array<FilterItem> = [NONE_FILTER];
   selectedFilter: FilterItem = NONE_FILTER;
-  allShowFrom: Array<ShowFrom> = [LAST_WEEK];
-  selectedShowFrom: ShowFrom = LAST_WEEK;
+  allShowFrom: Array<ShowFrom> = [TODAY, LAST_WEEK];
+  selectedShowFrom: ShowFrom = TODAY;
 
   private newEventDialogRef: MatDialogRef<EventNewDialogComponent>;
   private messagingService: WebSocketMessagingService;

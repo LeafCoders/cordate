@@ -5,8 +5,8 @@
         <lc-time-range-editor lc-list-item valueTitle="Tid" [startTime]="item.startTime" [endTime]="item.endTime" (changed)="setTime($event)" [state]="timeState"></lc-time-range-editor>
         <lc-text-editor lc-list-item valueTitle="Titel" [value]="item.title" (changed)="setTitle($event)" [state]="titleState"></lc-text-editor>
         <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
-        <lc-text-editor lc-list-item valueTitle="Intern beskrivning (visas inte i kalendrar)" [value]="item.privateDescription" (changed)="setPrivateDescription($event)" [state]="privateDescriptionState"
-          multiLine="true"></lc-text-editor>
+        <lc-text-editor lc-list-item valueTitle="Intern beskrivning (visas inte i kalendrar)" [value]="item.privateDescription" (changed)="setPrivateDescription($event)"
+          [state]="privateDescriptionState" multiLine="true"></lc-text-editor>
         <lc-boolean-editor lc-list-item valueTitle="Publik" falseIcon="lock_outline" falseText="Nej, visas inte i publika kalendrar" trueIcon="lock_open" trueText="Ja, visas i publika kalendrar"
           [value]="item.isPublic" (changed)="setIsPublic($event)" [state]="isPublicState"></lc-boolean-editor>
         <lc-ref-editor lc-list-item valueTitle="Händelsetyp" refType="eventType" [value]="item.eventType" (changed)="setEventType($event)" [state]="eventTypeState"></lc-ref-editor>
@@ -40,7 +40,7 @@
           </div>
         </lc-list>
 
-        <lc-error-background *ngIf="!item.resourceRequirements.length" icon="info_outline" text="Händelsen har inga resursbehov">
+        <lc-error-background *ngIf="!item.resourceRequirements.length && !notAddedResourceTypes?.length" icon="info_outline" text="Händelsen har inga resursbehov">
         </lc-error-background>
       </div>
     </mat-tab>
