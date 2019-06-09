@@ -9,7 +9,7 @@ export class WebSocketMessagingService {
   private stompService: StompService;
 
   constructor(topic: string) {
-    const socketUrl: string = environment.rosetteUrl.replace('https://', 'ws://').replace('http://', 'ws://') + 'websocket-private';
+    const socketUrl: string = environment.rosetteUrl.replace('https://', 'wss://').replace('http://', 'ws://') + 'websocket-private';
 
     const stompConfig: StompConfig = {
       url: socketUrl,
