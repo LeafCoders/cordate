@@ -24,6 +24,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   titleState: EditorState = new EditorState();
   contentState: EditorState = new EditorState();
   recordingState: EditorState = new EditorState();
+  recordingStatusState: EditorState = new EditorState();
 
   resourcesUpdater: ArticleResourcesUpdater;
 
@@ -39,7 +40,7 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   protected allEditorStates(): Array<EditorState> {
     return [
       this.articleSerieState, this.eventState, this.timeState, this.authorsState,
-      this.titleState, this.contentState, this.recordingState
+      this.titleState, this.contentState, this.recordingState, this.recordingStatusState
     ];
   }
 
@@ -47,6 +48,16 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
     const hasUpdateArticle: boolean = this.authPermission.isPermitted(this.articlesResource.updatePermission(this.item));
     if (hasUpdateArticle) {
       EditorState.setAllEditable(this.allEditorStates());
+    }
+    this.updateRecordingStatusEditable();
+  }
+
+  private updateRecordingStatusEditable(): void {
+    const hasUpdateArticle: boolean = this.authPermission.isPermitted(this.articlesResource.updatePermission(this.item));
+    if (this.item.recordingStatus === 'HAS_RECORDING') {
+      EditorState.setEditable(this.recordingStatusState, false);
+    } else {
+      EditorState.setEditable(this.recordingStatusState, hasUpdateArticle);
     }
   }
 
@@ -111,7 +122,18 @@ export class ArticleEditorComponent extends BaseEditor<Article, ArticleUpdate> {
   setRecording(recording: Asset): void {
     this.setValue(this.recordingState,
       (item: ArticleUpdate) => item.recordingId = recording ? recording.id : undefined,
-      () => this.item.recording = recording
+      (updatedItem?: Article) => {
+        this.item.recording = recording;
+        this.item.recordingStatus = updatedItem.recordingStatus;
+        this.updateRecordingStatusEditable();
+      }
+    );
+  }
+
+  setRecordingStatus(recordingStatus: string): void {
+    this.setValue(this.recordingStatusState,
+      (item: ArticleUpdate) => item.recordingStatus = recordingStatus,
+      (updatedItem?: Article) => this.item.recordingStatus = updatedItem.recordingStatus
     );
   }
 

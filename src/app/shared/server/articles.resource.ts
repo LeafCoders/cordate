@@ -18,6 +18,7 @@ export interface ArticleUpdate {
   contentRaw?: string;
   contentHtml?: string;
   recordingId?: number;
+  recordingStatus?: string;
 }
 
 @Injectable()
@@ -42,6 +43,7 @@ export class ArticlesResource extends DefaultBaseResource<Article, ArticleUpdate
         articleTypeId: from.articleTypeId,
         articleSerieId: IdModel.idOf(from.articleSerie),
         time: moment().toJSON(),
+        recordingStatus: from.recordingStatus,
       };
     }
   }

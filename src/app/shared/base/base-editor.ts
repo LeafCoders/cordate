@@ -101,11 +101,11 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
     this.updateItem(itemUpdate, state, afterSuccessFn);
   }
 
-  private updateItem(updateValues: UPDATE, state: EditorState, afterSuccessFn: () => void): void {
+  private updateItem(updateValues: UPDATE, state: EditorState, afterSuccessFn: (updatedItem?: ITEM) => void): void {
     if (!this.isNew()) {
       state.saving = true;
       this.resource.update(this.item.id, updateValues).subscribe((updatedItem: ITEM) => {
-        afterSuccessFn();
+        afterSuccessFn(updatedItem);
         setTimeout(() => state.saving = false, 300);
       }, () => {
         state.saving = false;

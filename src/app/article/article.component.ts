@@ -60,6 +60,7 @@ export class ArticleComponent extends BaseContainer<Article> {
         this.openEditorWithNew(new Article({
           articleTypeId: this.viewData.articleType.id,
           articleSerie: articleSerie.asRef(),
+          recordingStatus: this.viewData.articleType.defaultRecordingStatus,
         }));
       });
   }

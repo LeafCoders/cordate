@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { EditorState } from '../editor-state';
 import { IdModel, Location } from '../../server/rest-api.model';
@@ -24,7 +23,6 @@ export class RefEditorComponent {
   @Input() state: EditorState;
   @Output() changed: EventEmitter<IdModel> = new EventEmitter<IdModel>();
 
-  private refType: string;
   value: IdModel;
   refs: Array<IdModel>;
   noRefsFound: boolean = false;
@@ -37,13 +35,11 @@ export class RefEditorComponent {
     private eventTypesResource: EventTypesResource,
     private groupsResource: GroupsResource,
     private resourceTypesResource: ResourceTypesResource,
-    private usersResource: UsersResource,
-    private dialog: MatDialog
+    private usersResource: UsersResource
   ) { }
 
   @Input('refType')
   set inRefType(inRefType: string) {
-    this.refType = inRefType;
     this.refs = undefined;
     this.noRefsFound = false;
 

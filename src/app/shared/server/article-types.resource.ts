@@ -15,6 +15,7 @@ export interface ArticleTypeUpdate {
   imageFolderId: number;
   recordingFolderId: number;
   authorResourceTypeId: number;
+  defaultRecordingStatus: string;
 }
 
 @Injectable()

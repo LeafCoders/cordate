@@ -17,6 +17,7 @@
     </mat-tab>
     <mat-tab label="Media">
       <lc-list>
+        <lc-option-editor lc-list-item valueTitle="Förväntas ljudinspelning" [value]="item.recordingStatus" (changed)="setRecordingStatus($event)" [options]="[{ text: 'Nej', value: 'NOT_EXPECTED' }, { text: 'Väntar på ljudinspelning', value: 'EXPECTING_RECORDING' }, { text: 'Har ljudinspelning', value: 'HAS_RECORDING', disabled: true }]" [state]="recordingStatusState"></lc-option-editor>
         <lc-asset-file-editor lc-list-item valueTitle="Ljudinspelning" [asset]="item.recording" [assetFolder]="viewData.articleType.recordingFolder" (changed)="setRecording($event)" [state]="recordingState"></lc-asset-file-editor>
       </lc-list>
     </mat-tab>

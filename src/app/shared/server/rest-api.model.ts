@@ -714,6 +714,7 @@ export class ArticleType extends IdModel {
   newArticleSerieTitle: string;
   imageFolder: AssetFolder;
   recordingFolder: AssetFolder;
+  defaultRecordingStatus: string;
   authorResourceType: ResourceTypeRef;
 
   constructor(data: Input<ArticleType>) {
@@ -725,6 +726,7 @@ export class ArticleType extends IdModel {
     readValue(this, data, 'newArticleSerieTitle');
     readObject<AssetFolder>(this, data, 'imageFolder', AssetFolder);
     readObject<AssetFolder>(this, data, 'recordingFolder', AssetFolder);
+    readValue(this, data, 'defaultRecordingStatus');
     readObject<ResourceTypeRef>(this, data, 'authorResourceType', ResourceTypeRef);
   }
 
@@ -812,6 +814,7 @@ export class Article extends IdModel {
   contentRaw: string;
   contentHtml: string;
   recording: Asset;
+  recordingStatus: string;
 
   // Calculated
   content: HtmlText;
@@ -829,6 +832,7 @@ export class Article extends IdModel {
     readValue(this, data, 'contentRaw');
     readValue(this, data, 'contentHtml');
     readObject<Asset>(this, data, 'recording', Asset);
+    readValue(this, data, 'recordingStatus');
 
     this.content = { contentRaw: this.contentRaw, contentHtml: this.contentHtml };
   }

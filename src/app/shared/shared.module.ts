@@ -40,6 +40,7 @@ import { AssetFileEditorComponent } from './editor/asset-file-editor/asset-file-
 import { BooleanEditorComponent } from './editor/boolean-editor/boolean-editor.component';
 import { DateTimeEditorComponent } from './editor/date-time-editor/date-time-editor.component';
 import { HtmlTextEditorComponent } from './editor/html-text-editor/html-text-editor.component';
+import { OptionEditorComponent } from './editor/option-editor/option-editor.component';
 import { PasswordEditorComponent } from './editor/password-editor/password-editor.component';
 import { RefEditorComponent } from './editor/ref-editor/ref-editor.component';
 import { ResourceRefsEditorComponent } from './editor/resource-refs-editor/resource-refs-editor.component';
@@ -84,6 +85,7 @@ let dataEditors = [
   AssetFileEditorComponent,
   DateTimeEditorComponent,
   HtmlTextEditorComponent,
+  OptionEditorComponent,
   PasswordEditorComponent,
   RefEditorComponent,
   ResourceRefsEditorComponent,

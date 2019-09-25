@@ -8,5 +8,6 @@
     <lc-ref-editor lc-list-item valueTitle="Filkatalog för bilder" refType="assetFolder" [value]="item.imageFolder" (changed)="setImageFolder($event)" [state]="imageFolderState"></lc-ref-editor>
     <lc-ref-editor lc-list-item valueTitle="Filkatalog för ljud" refType="assetFolder" [value]="item.recordingFolder" (changed)="setRecordingFolder($event)" [state]="recordingFolderState"></lc-ref-editor>
     <lc-ref-editor lc-list-item valueTitle="Resurstyp för författare" refType="resourceType" [value]="item.authorResourceType" (changed)="setAuthorResourceType($event)" [state]="authorResourceTypeState"></lc-ref-editor>
+    <lc-option-editor lc-list-item valueTitle="Förväntas ljud (sätts vid Ny artikel)" [value]="item.defaultRecordingStatus" (changed)="setDefaultRecordingStatus($event)" [options]="[{ text: 'Nej', value: 'NOT_EXPECTED' }, { text: 'Väntar på ljud', value: 'EXPECTING_RECORDING' }]" [state]="defaultRecordingStatusState"></lc-option-editor>
   </lc-list>
 </lc-editor-container>

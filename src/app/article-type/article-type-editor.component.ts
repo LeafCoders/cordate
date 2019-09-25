@@ -23,6 +23,7 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
   imageFolderState: EditorState = new EditorState();
   recordingFolderState: EditorState = new EditorState();
   authorResourceTypeState: EditorState = new EditorState();
+  defaultRecordingStatusState: EditorState = new EditorState();
 
   allUsers: UserList = [];
   usersNotInArticleType: UserList = [];
@@ -40,6 +41,7 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
       this.idAliasState, this.articlesTitleState, this.newArticleTitleState,
       this.articleSeriesTitleState, this.newArticleSerieTitleState,
       this.imageFolderState, this.recordingFolderState, this.authorResourceTypeState,
+      this.defaultRecordingStatusState,
     ];
   }
 
@@ -116,6 +118,13 @@ export class ArticleTypeEditorComponent extends BaseEditor<ArticleType, ArticleT
     this.setValue(this.authorResourceTypeState,
       (item: ArticleTypeUpdate) => item.authorResourceTypeId = authorResourceType ? authorResourceType.id : null,
       () => this.item.authorResourceType = authorResourceType
+    );
+  }
+
+  setDefaultRecordingStatus(defaultRecordingStatus: string): void {
+    this.setValue(this.defaultRecordingStatusState,
+      (item: ArticleTypeUpdate) => item.defaultRecordingStatus = defaultRecordingStatus,
+      () => this.item.defaultRecordingStatus = defaultRecordingStatus
     );
   }
 }
