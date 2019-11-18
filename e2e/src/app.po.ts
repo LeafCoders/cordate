@@ -2,10 +2,10 @@ import { browser, element, by } from 'protractor';
 
 export class CordatePage {
   navigateTo() {
-    return browser.get('/');
+    return browser.get(browser.baseUrl) as Promise<any>;
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getTitleText() {
+    return element(by.css('app-root .content span')).getText() as Promise<string>;
   }
 }

@@ -11,5 +11,7 @@
 </div>
 
 <mat-menu #boolMenu="matMenu" xPosition="before">
-  <button mat-menu-item *ngFor="let option of options" [disabled]="option.disabled" (click)="valueSelected(option.value)">{{ option.text }}</button>
+  <ng-template matMenuContent>
+    <button mat-menu-item *ngFor="let option of options" [disabled]="option.disabled" (click)="valueSelected(option.value)">{{ option.text }}</button>
+  </ng-template>
 </mat-menu>

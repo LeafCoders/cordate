@@ -24,7 +24,9 @@
 </mat-menu>
 
 <mat-menu #showFromMenu="matMenu" xPosition="after">
-  <button mat-menu-item *ngFor="let showFrom of allShowFrom" (click)="selectShowFrom(showFrom)">
-    {{ showFrom.text }}
-  </button>
+  <ng-template matMenuContent>
+    <button mat-menu-item *ngFor="let showFrom of allShowFrom" (click)="selectShowFrom(showFrom)">
+      {{ showFrom.text }}
+    </button>
+  </ng-template>
 </mat-menu>

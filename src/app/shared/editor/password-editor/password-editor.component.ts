@@ -14,7 +14,7 @@ export class PasswordEditorComponent {
   @Input() state: EditorState;
   @Output('changed') changedEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  @ViewChild(MatInput) private inputElement: MatInput;
+  @ViewChild(MatInput, {static: false}) private inputElement: MatInput;
 
   displayValue: string;
   editingValue: string;

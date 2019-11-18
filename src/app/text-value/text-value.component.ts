@@ -19,7 +19,7 @@ export class TextValueComponent implements OnInit {
   failedToLoad: boolean = false;
   allowAddNew: boolean = true;
 
-  @ViewChild(DoublePaneComponent)
+  @ViewChild(DoublePaneComponent, {static: false})
   doublePane: DoublePaneComponent;
 
   constructor(

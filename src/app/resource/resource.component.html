@@ -18,7 +18,9 @@
 </lc-double-pane>
 
 <mat-menu #resourceTypesMenu="matMenu" xPosition="after">
-  <button mat-menu-item *ngFor="let item of resourceTypes" (click)="selectResourceType(item)">
-    {{ item.asText() }}
-  </button>
+  <ng-template matMenuContent>
+    <button mat-menu-item *ngFor="let item of resourceTypes" (click)="selectResourceType(item)">
+      {{ item.asText() }}
+    </button>
+  </ng-template>
 </mat-menu>

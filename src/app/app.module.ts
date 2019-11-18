@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { QuillModule } from 'ngx-quill';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -34,7 +35,6 @@ import { SlideModule } from './slide/slide.module';
 import { TextValueModule } from './text-value/text-value.module';
 import { UserModule } from './user/user.module';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
-import { BlockScrollStrategy } from '@angular/cdk/overlay';
 
 export const CORDATE_FORMATS = {
   parse: {
@@ -59,6 +59,7 @@ export const CORDATE_FORMATS = {
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { useHash: true, onSameUrlNavigation: 'reload' }),
+    QuillModule.forRoot(),
 
     ArticleModule,
     ArticleSerieModule,

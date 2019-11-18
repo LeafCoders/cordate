@@ -5,19 +5,21 @@
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu class="menu" #resourceMenu="matMenu" xPosition="before">
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-  <div *ngIf="!loading">
-    <button mat-menu-item *ngFor="let item of visibleSelectableItems" (click)="toggleSelect(item)">
-      <mat-icon>{{ trueFalseIcons[item.selected ? 0 : 1] }}</mat-icon>
-      <span>{{ item.value.asText() }}</span>
-    </button>
-    <button mat-menu-item (click)="openViewMoreDialog()" *ngIf="showViewMore">Visa fler...</button>
-    <div class="menu-divider"></div>
-    <button mat-menu-item (click)="selectAll()" *ngIf="allowSelectAll">Välj alla</button>
-    <button mat-menu-item (click)="selectNone()">Rensa</button>
-    <div class="menu-divider" *ngIf="managePermission"></div>
-    <button mat-menu-item (click)="removeResourceRequirement()" *ngIf="managePermission">
-      <mat-icon>remove_circle</mat-icon><span>Ta bort resursbehov</span>
-    </button>
-  </div>
+  <ng-template matMenuContent>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="!loading">
+      <button mat-menu-item *ngFor="let item of visibleSelectableItems" (click)="toggleSelect(item)">
+        <mat-icon>{{ trueFalseIcons[item.selected ? 0 : 1] }}</mat-icon>
+        <span>{{ item.value.asText() }}</span>
+      </button>
+      <button mat-menu-item (click)="openViewMoreDialog()" *ngIf="showViewMore">Visa fler...</button>
+      <div class="menu-divider"></div>
+      <button mat-menu-item (click)="selectAll()" *ngIf="allowSelectAll">Välj alla</button>
+      <button mat-menu-item (click)="selectNone()">Rensa</button>
+      <div class="menu-divider" *ngIf="managePermission"></div>
+      <button mat-menu-item (click)="removeResourceRequirement()" *ngIf="managePermission">
+        <mat-icon>remove_circle</mat-icon><span>Ta bort resursbehov</span>
+      </button>
+    </div>
+  </ng-template>
 </mat-menu>

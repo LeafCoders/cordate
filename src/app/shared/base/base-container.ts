@@ -15,7 +15,7 @@ export abstract class BaseContainer<ITEM extends IdModel> implements OnInit {
   failedToLoad: boolean = false;
   allowAddNew: boolean = false;
 
-  @ViewChild(DoublePaneComponent)
+  @ViewChild(DoublePaneComponent, {static: false})
   private doublePane: DoublePaneComponent;
 
   @HostBinding('style.display')

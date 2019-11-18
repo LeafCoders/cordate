@@ -4,8 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, EventType, ResourceTypeRef } from './rest-api.model';
-import { pipe } from '@angular/core/src/render3/pipe';
+import { EventType, ResourceTypeRef } from './rest-api.model';
 
 export interface EventTypeUpdate {
   id: number;

@@ -11,7 +11,7 @@ export class DoublePaneComponent {
   asideIsOpen: boolean = false;
   showMainCover: boolean = false;
 
-  @ViewChild('aside')
+  @ViewChild('aside', {static: false})
   private asideElement: ElementRef;
 
   openAside(withMainCover: boolean = false): void {

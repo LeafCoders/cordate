@@ -41,7 +41,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private articleTypes: ArticleTypeList;
 
-  @ViewChild(MatSidenav)
+  @ViewChild(MatSidenav, {static: false})
   private sideNav: MatSidenav;
 
   constructor(

@@ -23,7 +23,7 @@
 }
 
 // To enable drop of file at whole height
-/deep/ .pane-main {
+::shadow .pane-main {
   min-height: 100%;
 }
 

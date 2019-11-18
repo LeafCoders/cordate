@@ -3,7 +3,7 @@
   <div class="value-title">{{ valueTitle }}</div>
   <div *ngIf="!state.editing && !state.createMode" class="html-value-content" [innerHtml]="displayValue"></div>
   <div *ngIf="state.editing || state.createMode" class="flex-cols html-value-editor">
-    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" [formats]="quillFormats" (onContentChanged)="quillContentChanged($event)" placeholder="" [style]="{'min-height': '250px'}">
+    <quill-editor [sanitize]="true" (onEditorCreated)="quillCreated($event)" [modules]="quillModules" [formats]="quillFormats" (onContentChanged)="quillContentChanged($event)" placeholder="" [style]="{'min-height': '250px'}">
     </quill-editor>
   </div>
 </div>

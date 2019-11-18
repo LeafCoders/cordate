@@ -11,12 +11,14 @@
 </div>
 
 <mat-menu #refMenu="matMenu" xPosition="before">
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-  <div *ngIf="!loading">
-    <button mat-menu-item *ngIf="noRefsFound" disabled>Listan är tom</button>
-    <button mat-menu-item *ngFor="let ref of visibleRefs" (click)="refSelected(ref)">{{ ref.asText() }}</button>
-    <button mat-menu-item (click)="openViewMoreDialog()" *ngIf="showViewMore">Visa fler...</button>
-    <div *ngIf="showClearOption" class="menu-divider"></div>
-    <button mat-menu-item *ngIf="showClearOption" (click)="clear()">Rensa</button>
-  </div>
+  <ng-template matMenuContent>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="!loading">
+      <button mat-menu-item *ngIf="noRefsFound" disabled>Listan är tom</button>
+      <button mat-menu-item *ngFor="let ref of visibleRefs" (click)="refSelected(ref)">{{ ref.asText() }}</button>
+      <button mat-menu-item (click)="openViewMoreDialog()" *ngIf="showViewMore">Visa fler...</button>
+      <div *ngIf="showClearOption" class="menu-divider"></div>
+      <button mat-menu-item *ngIf="showClearOption" (click)="clear()">Rensa</button>
+    </div>
+  </ng-template>
 </mat-menu>

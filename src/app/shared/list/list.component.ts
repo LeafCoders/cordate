@@ -36,5 +36,5 @@ export class ListComponent {
   @Input() header: string;
   @Input() scrollable: boolean = false;
 
-  @ContentChild(ListActionsDirective) actions: QueryList<ListActionsDirective>;
+  @ContentChild(ListActionsDirective, {static: false}) actions: QueryList<ListActionsDirective>;
 }

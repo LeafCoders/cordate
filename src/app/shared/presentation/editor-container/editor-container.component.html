@@ -17,7 +17,9 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #itemMenu="matMenu" xPosition="before">
-        <button *ngFor="let action of actions" mat-menu-item [disabled]="action.isDisabled()" (click)="action.call()">{{ action.getTitle() }}</button>
+        <ng-template matMenuContent>
+          <button *ngFor="let action of actions" mat-menu-item [disabled]="action.isDisabled()" (click)="action.call()">{{ action.getTitle() }}</button>
+        </ng-template>
       </mat-menu>
     </div>
   </mat-toolbar>

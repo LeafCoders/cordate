@@ -19,5 +19,7 @@
 
 
 <mat-menu #slideShowMenu="matMenu" xPosition="after">
-  <button mat-menu-item *ngFor="let slideShow of slideShows" (click)="selectSlideShow(slideShow)">{{ slideShow.asText() }}</button>
+  <ng-template matMenuContent>
+    <button mat-menu-item *ngFor="let slideShow of slideShows" (click)="selectSlideShow(slideShow)">{{ slideShow.asText() }}</button>
+  </ng-template>
 </mat-menu>

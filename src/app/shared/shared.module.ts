@@ -198,7 +198,7 @@ export function jwtOptionsFactory(storage) {
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    QuillModule,
+    QuillModule.forRoot(),
     ...materialModules,
     JwtModule.forRoot({
       jwtOptionsProvider: {
