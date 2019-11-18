@@ -758,6 +758,7 @@ export class ArticleSerie extends IdModel {
   contentRaw: string;
   contentHtml: string;
   image: Asset;
+  lastUseTime: moment.Moment;
 
   // Calculated
   content: HtmlText;
@@ -770,8 +771,20 @@ export class ArticleSerie extends IdModel {
     readValue(this, data, 'contentRaw');
     readValue(this, data, 'contentHtml');
     readObject<Asset>(this, data, 'image', Asset);
+    readDate(this, data, 'lastUseTime');
 
     this.content = { contentRaw: this.contentRaw, contentHtml: this.contentHtml };
+  }
+
+  compareTo(articleSerie: ArticleSerie): number {
+    if (this.lastUseTime && articleSerie.lastUseTime) {
+      return this.lastUseTime.isAfter(articleSerie.lastUseTime) ? -1 : 1;
+    } else if (this.lastUseTime) {
+      return -1;
+    } else if (articleSerie.lastUseTime) {
+      return 1;
+    }
+    return this.title.localeCompare(articleSerie.title);
   }
 
   asText(): string {

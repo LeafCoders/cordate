@@ -5,7 +5,7 @@
 </div>
 <div *ngIf="state.editable || state.createMode" class="list-action">
   <button mat-icon-button [disabled]="state.saving" [matMenuTriggerFor]="boolMenu">
-    <mat-progress-spinner *ngIf="state.saving" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+    <mat-progress-bar *ngIf="state.saving" mode="indeterminate"></mat-progress-bar>
     <mat-icon *ngIf="!state.saving">more_vert</mat-icon>
   </button>
 </div>

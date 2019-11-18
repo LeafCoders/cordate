@@ -31,6 +31,7 @@ export class SelectResourcesMenuComponent {
   assignPermission: boolean = false;
   managePermission: boolean = false;
 
+  loading: boolean = true
   saving: boolean = false;
 
   constructor(
@@ -48,6 +49,7 @@ export class SelectResourcesMenuComponent {
   }
 
   loadResources() {
+    this.loading = true;
     if (this.allSelectableItems) {
       this.sortVisibleItems();
       return;
@@ -140,5 +142,6 @@ export class SelectResourcesMenuComponent {
       return a.value.compareTo(b.value);
     });
     this.visibleSelectableItems = this.allSelectableItems.slice(0, MAX_VISIBLE_ITEMS);
+    this.loading = false;
   }
 }

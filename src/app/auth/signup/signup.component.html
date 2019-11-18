@@ -41,7 +41,7 @@
       </div>
 
       <button *ngIf="notSent" mat-button color="primary" type="submit" [disabled]="!form.valid || !notSent">SKAPA</button>
-      <mat-progress-spinner *ngIf="sending" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+      <mat-progress-bar *ngIf="sending" mode="indeterminate"></mat-progress-bar>
       <h4 *ngIf="success">Kontot har skapats. Ett e-postmeddelande kommer att skicks till dig när kontot har aktiverats.</h4>
     </form>
   </div>

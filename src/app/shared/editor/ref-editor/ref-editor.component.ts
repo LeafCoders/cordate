@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { EditorState } from '../editor-state';
-import { IdModel, Location } from '../../server/rest-api.model';
+import { IdModel, ArticleSerie, Event } from '../../server/rest-api.model';
 import { ArticleSeriesResource } from '../../server/article-series.resource';
 import { ArticleTypesResource } from '../../server/article-types.resource';
 import { AssetFoldersResource } from '../../server/asset-folders.resource';
@@ -10,6 +10,11 @@ import { GroupsResource } from '../../server/groups.resource';
 import { ResourceTypesResource } from '../../server/resource-types.resource';
 import { UsersResource } from '../../server/users.resource';
 import { EventsResource } from '../../server/events.resource';
+import { MatDialog } from '@angular/material';
+import { SingleSelectDialogComponent } from '../../dialog/single-select-dialog/single-select-dialog.component';
+import { Observable, of } from 'rxjs';
+
+const MAX_VISIBLE_ITEMS = 10;
 
 @Component({
   selector: 'lc-ref-editor',
@@ -24,8 +29,11 @@ export class RefEditorComponent {
   @Output() changed: EventEmitter<IdModel> = new EventEmitter<IdModel>();
 
   value: IdModel;
-  refs: Array<IdModel>;
+  visibleRefs: Array<IdModel>;
+  allRefs: Array<IdModel>;
   noRefsFound: boolean = false;
+  showViewMore: boolean = false;
+  loading: boolean = true;
 
   constructor(
     private articleSeriesResource: ArticleSeriesResource,
@@ -35,23 +43,31 @@ export class RefEditorComponent {
     private eventTypesResource: EventTypesResource,
     private groupsResource: GroupsResource,
     private resourceTypesResource: ResourceTypesResource,
-    private usersResource: UsersResource
+    private usersResource: UsersResource,
+    private dialog: MatDialog,
   ) { }
 
   @Input('refType')
   set inRefType(inRefType: string) {
-    this.refs = undefined;
+    this.visibleRefs = undefined;
+    this.allRefs = undefined;
     this.noRefsFound = false;
+    this.loading = true;
 
     const setRefs = (refs: Array<IdModel>): void => {
-      this.refs = refs;
       this.noRefsFound = !(refs && refs.length);
+      this.allRefs = refs;
+      this.visibleRefs = this.allRefs.slice(0, MAX_VISIBLE_ITEMS);
+      this.showViewMore = this.allRefs.length !== this.visibleRefs.length;
+      this.loading = false;
     };
 
     switch (inRefType) {
       case 'articleSerie':
         this.icon = this.icon ? this.icon : 'local_offer';
-        this.articleSeriesResource.listOnce().subscribe(setRefs);
+        this.articleSeriesResource.listOnce().subscribe((refs: Array<ArticleSerie>) => {
+          setRefs(refs.sort((a, b) => a.compareTo(b)));
+        });
         break;
       case 'articleType':
         this.icon = this.icon ? this.icon : 'local_offer';
@@ -63,7 +79,9 @@ export class RefEditorComponent {
         break;
       case 'event':
         this.icon = this.icon ? this.icon : 'event';
-        this.eventsResource.listOnce().subscribe(setRefs);
+        this.eventsResource.listOnce().subscribe((refs: Array<Event>) => {
+          setRefs(refs.sort((a, b) => -a.asText().localeCompare(b.asText())));
+        });
         break;
       case 'eventType':
         this.icon = this.icon ? this.icon : 'local_offer';
@@ -99,4 +117,13 @@ export class RefEditorComponent {
   clear(): void {
     this.changed.emit(undefined);
   }
+
+  openViewMoreDialog(): void {
+    this.dialog.open(SingleSelectDialogComponent).componentInstance.init(
+      this.valueTitle, of(this.allRefs),
+      (ref: IdModel) => {
+        this.value = ref;
+      });
+  }
+
 }

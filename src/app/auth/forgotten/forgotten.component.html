@@ -36,7 +36,7 @@
       <h4 *ngIf="success">Lösenordet har ändrats. <a [routerLink]="['Login']">Logga in</a></h4>
     </div>
 
-    <mat-progress-spinner *ngIf="sending" mode="indeterminate" style="zoom: 0.4"></mat-progress-spinner>
+    <mat-progress-bar *ngIf="sending" mode="indeterminate"></mat-progress-bar>
   </div>
 
   <lc-error-background *ngIf="token && tokenHasExpired" text="Det har gått mer än 30 minuter sedan länken skickades till dig. Den är däför inte längre giltig."></lc-error-background>
