@@ -5,5 +5,10 @@
 <lc-list class="max-height-header-filter" *ngIf="!failedToLoad">
   <div lc-list-item *ngFor="let user of items" (click)="selectItem(user)" clickable="true">
     <div class="list-content">{{ user.asText() }}</div>
+    <div class="list-content">
+      <div class="list-description">Senast inloggad</div>
+      <div *ngIf="user.lastLoginTime">{{ user.lastLoginTime | amCalendar }}</div>
+      <div *ngIf="!user.lastLoginTime">-</div>
+    </div>
   </div>
 </lc-list>

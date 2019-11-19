@@ -82,7 +82,10 @@ export class EventComponent extends BaseContainer<Event> implements OnDestroy {
     });
   }
 
-  showNewDialog(fromDate: moment.Moment = moment()): void {
+  showNewDialog(fromDate: moment.Moment = undefined): void {
+    if (fromDate === undefined) {
+      fromDate = moment().startOf('week');
+    }
     this.newEventDialogRef = this.dialog.open(EventNewDialogComponent);
     this.newEventDialogRef.componentInstance.startDate = fromDate;
 
