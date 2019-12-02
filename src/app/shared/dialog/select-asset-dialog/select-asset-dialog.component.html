@@ -1,20 +1,35 @@
 <div [class.file-drag-over]="isDragOver" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">
-  <div>
-    <h2 mat-dialog-title>Släpp en fil här för att ladda upp den</h2>
-    <input class="file-input-hidden" type="file" name="file" tabindex="-1" #fileInput (change)="fileSelected($event)">
+  <h2 mat-dialog-title>Släpp en fil här för att ladda upp den</h2>
+  <input class="file-input-hidden" type="file" name="file" tabindex="-1" #fileInput (change)="fileSelected($event)">
+  <div style="display: flex; margin-bottom: 16px;">
     <button mat-raised-button (click)="fileInput.click()">eller välj fil att ladda upp</button>
-    <hr>
+    <div style="flex: 1 0"></div>
+    <mat-button-toggle-group value="grid" #selectedView="matButtonToggleGroup">
+      <mat-button-toggle value="list">
+        <mat-icon>list</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="grid">
+        <mat-icon>apps</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
-  <mat-dialog-content>
-    <mat-grid-list cols="5" gutterSize="1px">
+  <div mat-dialog-content>
+    <mat-list *ngIf="selectedView.value === 'list'">
+      <mat-list-item *ngFor="let asset of assets" (click)="selectAsset(asset)" (dblclick)="ok()">
+        <div *ngIf="isSelected(asset)" class="selected"></div>
+        <lc-asset-list-item [asset]="asset"></lc-asset-list-item>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-grid-list *ngIf="selectedView.value === 'grid'" cols="5" gutterSize="1px">
       <mat-grid-tile *ngFor="let asset of assets" (click)="selectAsset(asset)" (dblclick)="ok()">
         <div *ngIf="isSelected(asset)" class="selected"></div>
         <lc-asset-box [asset]="asset"></lc-asset-box>
       </mat-grid-tile>
     </mat-grid-list>
-  </mat-dialog-content>
-  <mat-dialog-actions class="flex-rows flex-align-end">
+  </div>
+  <div mat-dialog-actions class="flex-rows flex-align-end">
     <button mat-button (click)="dialogRef.close()">AVBRYT</button>
     <button mat-button color="primary" (click)="ok()">VÄLJ</button>
-  </mat-dialog-actions>
+  </div>
 </div>

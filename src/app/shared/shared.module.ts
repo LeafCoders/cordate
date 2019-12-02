@@ -51,7 +51,8 @@ import { TimeRangeEditorComponent } from './editor/time-range-editor/time-range-
 import { EditorContainerComponent } from './presentation/editor-container/editor-container.component';
 import { PageHeaderComponent } from './presentation/page-header/page-header.component';
 import { AssetBoxComponent } from './presentation/asset-box/asset-box.component';
-import { AssetRowComponent } from './presentation/asset-row/asset-row.component';
+import { AssetListItemComponent } from './presentation/asset-list-item/asset-list-item.component';
+import { AssetPreviewComponent } from './presentation/asset-preview/asset-preview.component';
 import { DateTimeBoxComponent } from './date-time-box/date-time-box.component';
 
 import { DoublePaneComponent } from './double-pane/double-pane.component';
@@ -71,7 +72,7 @@ import { SendMessageDialogService } from './dialog/send-message-dialog/send-mess
 import { SignalService } from './signal.service';
 
 import {
-  MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+  MatButtonModule, MatButtonToggleModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatTabsModule,
   MatToolbarModule,
   MAT_DATE_LOCALE,
@@ -106,7 +107,8 @@ let presentations = [
   EditorContainerComponent,
   PageHeaderComponent,
   AssetBoxComponent,
-  AssetRowComponent,
+  AssetListItemComponent,
+  AssetPreviewComponent,
 ];
 
 let utils = [
@@ -148,6 +150,7 @@ let resourceServices = [
 let materialModules = [
   PortalModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,

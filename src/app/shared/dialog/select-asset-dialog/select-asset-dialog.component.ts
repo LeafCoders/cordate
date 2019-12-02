@@ -16,6 +16,7 @@ export class SelectAssetDialogComponent {
   private assetFolder: AssetFolder;
   assets: Array<Asset> = [];
 
+//  selectedView: string = 'grid';
   isDragOver: boolean = false;
   private dropState: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
 

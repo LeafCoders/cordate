@@ -16,7 +16,7 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
   protected createValues: UPDATE;
 
   @HostBinding('style.display')
-  private displayFlex = 'block';
+  public displayFlex = 'block';
 
   @Output('close') closeEmitter: EventEmitter<void> = new EventEmitter<void>();
 
@@ -79,7 +79,7 @@ export abstract class BaseEditor<ITEM extends IdModel, UPDATE> implements OnInit
   }
 
   deleteItem(): void {
-    this.dialog.open(ConfirmDialogComponent).componentInstance.init("Ta bort?", "Det går inte att ångra detta.", "TA BORT", () => {
+    this.dialog.open(ConfirmDialogComponent).componentInstance.init("Ta bort?", "Det går inte att ångra detta.", "TA BORT", true, () => {
       this.resource.delete(this.item.id, this.item).subscribe(() => {
         this.setEditorItem = undefined;
         this.closeEmitter.emit();

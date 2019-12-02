@@ -158,6 +158,16 @@ input[type="file"].file-input-hidden {
   }
 }
 
+mat-dialog-container.mat-dialog-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+[mat-dialog-content].mat-dialog-content {
+  flex: 1 1 65vh;
+}
+
 .file-drag-over {
   cursor: copy;
   background-color: mat-color($cordate-primary, 0.2) !important;

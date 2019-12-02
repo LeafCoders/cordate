@@ -87,7 +87,7 @@ export class AssetEditorComponent extends BaseEditor<Asset, AssetUpdate> {
 
   private uploadFile(file: File): void {
     if (this.dropState !== 'UPLOADING' && file) {
-      this.dialog.open(ConfirmDialogComponent).componentInstance.init("Skriva över?", "Den nuvarande filen kommer att skrivas över med den filen du släppte här.", "SKRIV ÖVER", () => {
+      this.dialog.open(ConfirmDialogComponent).componentInstance.init("Skriva över?", "Den nuvarande filen kommer att skrivas över med den filen du släppte här.", "SKRIV ÖVER", false, () => {
         this.assetsResource.updateFile(this.item.id, { file: file, fileName: this.item.fileName, mimeType: file.type }).subscribe((asset: Asset) => {
           this.item = asset;
           this.readAssetData(asset);

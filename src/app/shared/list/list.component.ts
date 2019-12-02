@@ -10,7 +10,7 @@ export class ListItemDirective {
 
   // Will use global class 'list-item'. Not so nice...
   @HostBinding('class.list-item')
-  private alwaysClass: boolean = true;
+  public alwaysClass: boolean = true;
 
   @Input()
   set clickable(enable: boolean) {
@@ -36,5 +36,5 @@ export class ListComponent {
   @Input() header: string;
   @Input() scrollable: boolean = false;
 
-  @ContentChild(ListActionsDirective, {static: false}) actions: QueryList<ListActionsDirective>;
+  @ContentChild(ListActionsDirective, { static: false }) actions: QueryList<ListActionsDirective>;
 }

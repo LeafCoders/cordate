@@ -2,7 +2,19 @@
 @import "src/scss/flex-mixin.scss";
 
 :host {
+  flex: 1;
+  min-height: 65vh;
   @include fb-column-container();
+}
+
+:host > div {
+  flex: 1;
+  @include fb-column-container();
+}
+
+[mat-dialog-content] {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 .selected {

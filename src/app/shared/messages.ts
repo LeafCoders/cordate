@@ -87,6 +87,7 @@ export class Messages {
     'property.password': 'Lösenord',
     'property.patterns': 'Rättigheter',
     'property.recordingFolderId': 'Filkatalog för ljud',
+    'property.recordingStatus': 'Förväntas ljudinspelning',
     'property.startTime': 'Starttid',
     'property.subCategory': 'Underkategori',
     'property.subTitle': 'Undertitel',

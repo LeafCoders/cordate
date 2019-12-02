@@ -32,20 +32,3 @@
     content: none;
   }
 }
-
-mat-dialog-container.mat-dialog-container {
-  display: flex;
-  flex-direction: column;
-}
-
-mat-dialog-content.mat-dialog-content {
-  display: flex;
-  flex-direction: column;
-  max-height: calc(100vh - 180px);
-}
-
-mat-dialog-actions.mat-dialog-actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}

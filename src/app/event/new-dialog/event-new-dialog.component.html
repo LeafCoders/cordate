@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Ny händelse</h2>
 
-<mat-dialog-content>
+<div mat-dialog-content>
   <div *ngIf="!selectedEventType" class="flex-cols">
     <p>Välj händelsetyp</p>
     <lc-list scrollable="true">
@@ -24,8 +24,8 @@
       </div>
     </lc-list>
   </div>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions class="flex-rows flex-align-end">
+<div mat-dialog-actions class="flex-rows flex-align-end">
   <button mat-button (click)="dialogRef.close()">AVBRYT</button>
-</mat-dialog-actions>
+</div>

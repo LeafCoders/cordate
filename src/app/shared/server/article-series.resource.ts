@@ -33,6 +33,7 @@ export class ArticleSeriesResource extends DefaultBaseResource<ArticleSerie, Art
       return <ArticleSerieUpdate>{ id: from.id };
     } else {
       return <ArticleSerieUpdate>{
+        idAlias: from.idAlias,
         articleTypeId: from.articleTypeId,
       };
     }

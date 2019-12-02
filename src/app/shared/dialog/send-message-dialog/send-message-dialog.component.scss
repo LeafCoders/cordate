@@ -1,9 +1,15 @@
 @import "src/scss/flex-mixin.scss";
 
 :host {
+  flex: 1;
+  max-height: 65vh;
   @include fb-column-container();
 }
 
-mat-dialog-content div:not(:first-child) {
+[mat-dialog-content] div:not(:first-child) {
   margin-top: 8px;
+}
+
+:host [mat-dialog-content].mat-dialog-content {
+  flex: 1 1 auto;
 }

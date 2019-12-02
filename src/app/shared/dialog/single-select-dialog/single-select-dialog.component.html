@@ -1,19 +1,19 @@
 <h2 mat-dialog-title>{{ title }}</h2>
+<mat-form-field class="search-box white-background">
+  <mat-icon matSuffix>search</mat-icon>
+  <input matInput type="search" [formControl]="searchCtrl">
+</mat-form-field>
 
-<mat-dialog-content class="dialog-content">
-  <mat-form-field class="search-box white-background elevation">
-    <mat-icon matPrefix>search</mat-icon>
-    <input matInput type="search" [formControl]="searchCtrl">
-  </mat-form-field>
+<div mat-dialog-content class="dialog-content">
   <mat-progress-bar *ngIf="!allItems?.length" mode="indeterminate"></mat-progress-bar>
-  <lc-list scrollable="true" class="white-background elevation">
+  <lc-list scrollable="true" class="white-background">
     <div lc-list-item *ngFor="let item of items" clickable="true" (click)="selectItem(item)">
       <div class="list-content">{{ item.asText() }}</div>
     </div>
     <div *ngIf="noItemsFound" style="color: #aaa; font-style: italic; padding: 16px;">Inga träffar</div>
   </lc-list>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions class="flex-rows flex-align-end">
+<div mat-dialog-actions class="flex-rows flex-align-end">
   <button mat-button (click)="dialogRef.close()">AVBRYT</button>
-</mat-dialog-actions>
+</div>

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
 import { BaseList } from '../shared/base/base-list';
-import { AuthPermissionService } from '../auth/auth-permission.service';
 import { AssetFoldersResource } from '../shared/server/asset-folders.resource';
-import { AssetFolder, AssetFolderList } from '../shared/server/rest-api.model';
+import { AssetFolder } from '../shared/server/rest-api.model';
 
 @Component({
   selector: 'lc-asset-folder-list',
@@ -12,8 +11,7 @@ import { AssetFolder, AssetFolderList } from '../shared/server/rest-api.model';
 export class AssetFolderListComponent extends BaseList<AssetFolder> {
 
   constructor(
-    private assetFoldersResource: AssetFoldersResource,
-    private authPermission: AuthPermissionService,
+    assetFoldersResource: AssetFoldersResource,
   ) {
     super(assetFoldersResource, () => assetFoldersResource.list());
   }

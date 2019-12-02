@@ -1,5 +1,7 @@
 @import "src/scss/flex-mixin.scss";
 
 :host {
-/*  @include fb-column-container(); */
+  flex: 1;
+  max-height: 200px;
+  @include fb-column-container();
 }

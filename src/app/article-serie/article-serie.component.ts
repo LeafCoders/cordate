@@ -31,6 +31,9 @@ export class ArticleSerieComponent extends BaseContainer<ArticleSerie> {
   }
 
   createNew(): void {
-    this.openEditorWithNew(new ArticleSerie({ articleTypeId: this.viewData.articleType.id }));
+    this.openEditorWithNew(new ArticleSerie({
+      idAlias: String.fromCharCode(25 * Math.random() + 97, 25 * Math.random() + 97, 25 * Math.random() + 97, 25 * Math.random() + 65, 25 * Math.random() + 65, 25 * Math.random() + 65),
+      articleTypeId: this.viewData.articleType.id
+    }));
   }
 }

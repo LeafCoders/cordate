@@ -1,17 +1,17 @@
 <h2 mat-dialog-title>Välj resurser</h2>
+<mat-form-field class="search-box white-background">
+  <mat-icon matSuffix>search</mat-icon>
+  <input matInput type="search" [formControl]="searchCtrl">
+</mat-form-field>
 
-<mat-dialog-content class="dialog-content">
-  <mat-form-field class="search-box white-background elevation">
-    <mat-icon matPrefix>search</mat-icon>
-    <input matInput type="search" [formControl]="searchCtrl">
-  </mat-form-field>
-  <mat-selection-list class="white-background elevation" (selectionChange)="selectionChange($event)">
+<div mat-dialog-content class="dialog-content">
+  <mat-selection-list class="white-background" (selectionChange)="selectionChange($event)">
     <mat-list-option *ngFor="let item of items" [value]="item" [selected]="item.selected">{{ item.value.asText() }}</mat-list-option>
     <div *ngIf="noItemsFound" style="color: #aaa; font-style: italic; padding: 16px;">Inga träffar</div>
   </mat-selection-list>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions class="flex-rows flex-align-end">
+<div mat-dialog-actions class="flex-rows flex-align-end">
   <button mat-button color="primary" (click)="selectNone()">RENSA</button>
   <button mat-button mat-dialog-close>STÄNG</button>
-</mat-dialog-actions>
+</div>

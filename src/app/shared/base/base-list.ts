@@ -14,7 +14,7 @@ export abstract class BaseList<ITEM extends IdModel> implements OnInit {
   @Output('select') selectEmitter: EventEmitter<ITEM> = new EventEmitter<ITEM>();
 
   @HostBinding('style.display')
-  private displayFlex = 'block';
+  public displayFlex = 'block';
 
   constructor(
     resource: DefaultBaseResource<ITEM, any>,

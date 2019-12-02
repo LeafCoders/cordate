@@ -1,4 +1,4 @@
-<mat-dialog-content class="container" [class.file-drag-over]="isDragOver" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">
+<div mat-dialog-content class="container" [class.file-drag-over]="isDragOver" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">
 
   <div class="indicators" [ngSwitch]="state">
     <mat-icon *ngSwitchCase="'START'">file_upload</mat-icon>
@@ -24,8 +24,8 @@
       <button mat-button (click)="fileInput.click()">eller klicka här för att välja filer</button>
     </p>
   </div>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions class="flex-rows flex-align-end">
+<div mat-dialog-actions class="flex-rows flex-align-end">
   <button mat-button (click)="dialogRef.close()" color="primary">STÄNG</button>
-</mat-dialog-actions>
+</div>

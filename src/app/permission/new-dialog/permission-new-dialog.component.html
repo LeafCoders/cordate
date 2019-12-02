@@ -1,13 +1,13 @@
 <h2 mat-dialog-title>Ny rättighet</h2>
 
-<mat-dialog-content>
+<div mat-dialog-content>
   <lc-list scrollable="true">
     <div lc-list-item *ngFor="let level of levels" clickable="true" (click)="selectLevel(level)">
       <div class="list-content">{{ level.text }}</div>
     </div>
   </lc-list>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions class="flex-rows flex-align-end">
+<div mat-dialog-actions class="flex-rows flex-align-end">
   <button mat-button (click)="dialogRef.close()">AVBRYT</button>
-</mat-dialog-actions>
+</div>

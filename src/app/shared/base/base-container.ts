@@ -19,7 +19,7 @@ export abstract class BaseContainer<ITEM extends IdModel> implements OnInit {
   private doublePane: DoublePaneComponent;
 
   @HostBinding('style.display')
-  private displayFlex = 'flex';
+  public displayFlex = 'flex';
 
   constructor(
     private resource: DefaultBaseResource<ITEM, any>,

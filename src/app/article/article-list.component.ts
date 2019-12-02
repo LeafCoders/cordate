@@ -40,4 +40,17 @@ export class ArticleListComponent extends BaseList<Article> {
     );
   }
 
+  missingInfo(article: Article): string {
+    let missing: Array<String> = [];
+    if (article.contentHtml == undefined || article.contentRaw.trim().length < 12) {
+      missing.push('innehåll');
+    }
+    if (article.recordingStatus === 'EXPECTING_RECORDING') {
+      missing.push('media');
+    }
+    if (missing.length > 0) {
+      return `Saknar ${missing.join(' & ')}`;
+    }
+    return undefined;
+  }
 }
