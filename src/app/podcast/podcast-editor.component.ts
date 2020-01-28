@@ -20,12 +20,14 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
   titleState: EditorState = new EditorState();
   subTitleState: EditorState = new EditorState();
   authorNameState: EditorState = new EditorState();
+  authorEmailState: EditorState = new EditorState();
+  authorLinkState: EditorState = new EditorState();
   copyrightState: EditorState = new EditorState();
   descriptionState: EditorState = new EditorState();
   mainCategoryState: EditorState = new EditorState();
   subCategoryState: EditorState = new EditorState();
   languageState: EditorState = new EditorState();
-  linkState: EditorState = new EditorState();
+  articlesLinkState: EditorState = new EditorState();
   imageState: EditorState = new EditorState();
 
 
@@ -42,9 +44,10 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
 
   protected allEditorStates(): Array<EditorState> {
     return [
-      this.articleTypeState, this.idAliasState, this.titleState, this.subTitleState, this.authorNameState,
+      this.articleTypeState, this.idAliasState, this.titleState, this.subTitleState,
+      this.authorNameState, this.authorEmailState, this.authorLinkState,
       this.copyrightState, this.descriptionState, this.mainCategoryState, this.subCategoryState,
-      this.languageState, this.linkState, this.imageState
+      this.languageState, this.articlesLinkState, this.imageState
     ];
   }
 
@@ -98,6 +101,20 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
     );
   }
 
+  setAuthorEmail(authorEmail: string): void {
+    this.setValue(this.authorEmailState,
+      (item: PodcastUpdate) => item.authorEmail = authorEmail,
+      () => this.item.authorEmail = authorEmail
+    );
+  }
+
+  setAuthorLink(authorLink: string): void {
+    this.setValue(this.authorLinkState,
+      (item: PodcastUpdate) => item.authorLink = authorLink,
+      () => this.item.authorLink = authorLink
+    );
+  }
+
   setCopyright(copyright: string): void {
     this.setValue(this.copyrightState,
       (item: PodcastUpdate) => item.copyright = copyright,
@@ -133,10 +150,10 @@ export class PodcastEditorComponent extends BaseEditor<Podcast, PodcastUpdate> {
     );
   }
 
-  setLink(link: string): void {
-    this.setValue(this.linkState,
-      (item: PodcastUpdate) => item.link = link,
-      () => this.item.link = link
+  setArticlesLink(articlesLink: string): void {
+    this.setValue(this.articlesLinkState,
+      (item: PodcastUpdate) => item.articlesLink = articlesLink,
+      () => this.item.articlesLink = articlesLink
     );
   }
 

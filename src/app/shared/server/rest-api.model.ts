@@ -883,12 +883,14 @@ export class Podcast extends IdModel {
   title: string;
   subTitle: string;
   authorName: string;
+  authorEmail: string;
+  authorLink: string;
   copyright: string;
   description: string;
   mainCategory: string;
   subCategory: string;
   language: string;
-  link: string;
+  articlesLink: string;
   image: Asset;
 
   constructor(data: Input<Podcast>) {
@@ -898,12 +900,14 @@ export class Podcast extends IdModel {
     readValue(this, data, 'title');
     readValue(this, data, 'subTitle');
     readValue(this, data, 'authorName');
+    readValue(this, data, 'authorEmail');
+    readValue(this, data, 'authorLink');
     readValue(this, data, 'copyright');
     readValue(this, data, 'description');
     readValue(this, data, 'mainCategory');
     readValue(this, data, 'subCategory');
     readValue(this, data, 'language');
-    readValue(this, data, 'link');
+    readValue(this, data, 'articlesLink');
     readObject<Asset>(this, data, 'image', Asset);
   }
 

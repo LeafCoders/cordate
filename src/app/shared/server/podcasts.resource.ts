@@ -13,12 +13,14 @@ export interface PodcastUpdate {
   title: string;
   subTitle: string;
   authorName: string;
+  authorEmail: string;
+  authorLink: string;
   copyright: string;
   description: string;
   mainCategory: string;
   subCategory: string;
   language: string;
-  link: string;
+  articlesLink: string;
   imageId: number;
 }
 
@@ -37,7 +39,9 @@ export class PodcastsResource extends DefaultBaseResource<Podcast, PodcastUpdate
       mainCategory: 'Religion & Spirituality',
       subCategory: 'Christianity',
       language: 'sv-se',
-      link: 'https://your.domain'
+      authorEmail: 'your-email@domain',
+      authorLink: 'https://your.domain',
+      articlesLink: 'https://your.domain/articles'
     });
   }
 
@@ -51,7 +55,9 @@ export class PodcastsResource extends DefaultBaseResource<Podcast, PodcastUpdate
         mainCategory: from.mainCategory,
         subCategory: from.subCategory,
         language: from.language,
-        link: from.link
+        authorEmail: from.authorEmail,
+        authorLink: from.authorLink,
+        articlesLink: from.articlesLink
       };
     }
   }
