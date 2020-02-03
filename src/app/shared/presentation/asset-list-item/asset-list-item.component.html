@@ -1,0 +1,19 @@
+<div *ngIf="asset.isImageFile">
+  <img [src]="asset.iconUrl()">
+  <p>{{ asset.asText() }}</p>
+</div>
+<div *ngIf="asset.isAudioFile">
+  <mat-icon>audiotrack</mat-icon>
+  <p>{{ asset.asText() }}</p>
+</div>
+<div *ngIf="asset.isTextFile">
+  <mat-icon>subject</mat-icon>
+  <p>{{ asset.asText() }}</p>
+</div>
+<div *ngIf="asset.isTypeUrl()">
+  <mat-icon>link</mat-icon>
+  <p>{{ asset.url }}</p>
+</div>
+<div *ngIf="asset.isNotSupported()">
+  Kan inte visa filer av typ: {{ asset.mimeType }}.
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="asset.isImageFile">
+  <img [src]="asset.url">
+</div>
+<div *ngIf="asset.isAudioFile">
+  <audio [src]="asset.url" controls style="flex: 1; width: 100%;"></audio>
+</div>
+<div *ngIf="asset.isNotSupported()">
+  Kan inte visa filer av typ: {{ asset.mimeType }}.
+</div>
