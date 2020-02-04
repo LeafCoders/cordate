@@ -1,5 +1,6 @@
 type CordateConfig = {
   rosetteUrl: string,
+  websocketUrl: string,
   applicationName: string,
 };
 
@@ -9,12 +10,16 @@ export function readCordateConfiguration(): CordateConfig {
 }
 
 export function endWithSlash(url: string): string {
-  return url.endsWith('/') ? url : `${url}/`;
+  if (url && url.trim().length > 0) {
+    return url.endsWith('/') ? url : `${url}/`;
+  }
+  return undefined;
 }
 
 export const environment = {
   production: true,
 
   rosetteUrl: endWithSlash(readCordateConfiguration().rosetteUrl),
+  websocketUrl: endWithSlash(readCordateConfiguration().websocketUrl),
   applicationName: readCordateConfiguration().applicationName,
 };

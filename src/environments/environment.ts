@@ -6,6 +6,7 @@ export const environment = {
   production: false,
 
   rosetteUrl: 'http://localhost:9000' + '/',
+  websocketUrl: undefined,
   applicationName: 'Cordate',
 };
 

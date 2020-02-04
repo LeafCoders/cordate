@@ -20,9 +20,10 @@ services:
       - 80:80
     environment:
       - ROSETTE_URL=${ROSETTE_URL:?Must specify ROSETTE_URL in environment} # Public url to rosette server
+      - WEBSOCKET_URL= # Change to `${WEBSOCKET_URL:?Must specify WEBSOCKET_URL in environment}` if you want to override the default public url to websocket at Rosette server
       - APPLICATION_NAME=${CORDATE_APPNAME:?Must specify CORDATE_APPNAME in environment} # Short name of the application. Eg. "Cordate"
       - CORDATE_PATH=${CORDATE_PATH:?Must specify CORDATE_PATH in environment} # Url path of cordate uri ('/app/cordate' in https://myserver.com/app/cordate)
-    command: /bin/bash -c "envsubst '$$ROSETTE_URL $$APPLICATION_NAME $$CORDATE_PATH' < /etc/nginx/conf.d/cordate_conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    command: /bin/bash -c "envsubst '$$ROSETTE_URL $$WEBSOCKET_URL $$APPLICATION_NAME $$CORDATE_PATH' < /etc/nginx/conf.d/cordate_conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 ```
 
 Start with:
