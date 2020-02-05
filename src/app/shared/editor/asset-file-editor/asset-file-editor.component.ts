@@ -20,7 +20,7 @@ export class AssetFileEditorComponent {
   assetFolder: AssetFolder = new AssetFolder({ id: 1 });
   isDragOver: boolean = false;
 
-  private dropState: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
+  dropState: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
   private selectAssetFileDialogRef: MatDialogRef<SelectAssetDialogComponent>;
 
   constructor(
@@ -87,10 +87,14 @@ export class AssetFileEditorComponent {
 
   private uploadFile(file: File): void {
     if (this.dropState !== 'UPLOADING' && file) {
+      this.dropState = 'UPLOADING';
       let fileName: string = this.assetsResource.makeSafeFileName(file.name);
       this.assetsResource.createFile(this.assetFolder.id, { file: file, fileName: fileName, mimeType: file.type }).subscribe((asset: Asset) => {
         this.asset = asset;
         this.changedEmitter.emit(this.asset);
+        this.dropState = 'SUCCESS';
+      }, error => {
+        this.dropState = 'FAILURE';
       });
     }
   }

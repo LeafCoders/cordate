@@ -1,6 +1,5 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs';
 
 import { AssetsResource } from '../../server/assets.resource';
 import { Asset, AssetList, AssetFolder } from '../../server/rest-api.model';
@@ -16,9 +15,8 @@ export class SelectAssetDialogComponent {
   private assetFolder: AssetFolder;
   assets: Array<Asset> = [];
 
-//  selectedView: string = 'grid';
   isDragOver: boolean = false;
-  private dropState: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
+  dropState: 'START' | 'UPLOADING' | 'SUCCESS' | 'FAILURE' = 'START';
 
   constructor(
     public dialogRef: MatDialogRef<SelectAssetDialogComponent>,
@@ -69,10 +67,14 @@ export class SelectAssetDialogComponent {
 
   private uploadFile(file: File): void {
     if (this.dropState !== 'UPLOADING' && file) {
+      this.dropState = 'UPLOADING';
       let fileName: string = this.assetsResource.makeSafeFileName(file.name);
       this.assetsResource.createFile(this.assetFolder.id, { file: file, fileName: fileName, mimeType: file.type }).subscribe((asset: Asset) => {
         this.setAssetFolder(this.assetFolder);
         this.selectAsset(asset);
+        this.dropState = 'SUCCESS';
+      }, error => {
+        this.dropState = 'FAILURE';
       });
     }
   }

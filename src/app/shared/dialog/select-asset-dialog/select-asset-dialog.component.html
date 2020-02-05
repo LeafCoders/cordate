@@ -14,19 +14,21 @@
     </mat-button-toggle-group>
   </div>
   <div mat-dialog-content>
-    <mat-list *ngIf="selectedView.value === 'list'">
+    <mat-list *ngIf="dropState != 'UPLOADING' && selectedView.value === 'list'">
       <mat-list-item *ngFor="let asset of assets" (click)="selectAsset(asset)" (dblclick)="ok()">
         <div *ngIf="isSelected(asset)" class="selected"></div>
         <lc-asset-list-item [asset]="asset"></lc-asset-list-item>
       </mat-list-item>
     </mat-list>
 
-    <mat-grid-list *ngIf="selectedView.value === 'grid'" cols="5" gutterSize="1px">
+    <mat-grid-list *ngIf="dropState != 'UPLOADING' && selectedView.value === 'grid'" cols="5" gutterSize="1px">
       <mat-grid-tile *ngFor="let asset of assets" (click)="selectAsset(asset)" (dblclick)="ok()">
         <div *ngIf="isSelected(asset)" class="selected"></div>
         <lc-asset-box [asset]="asset"></lc-asset-box>
       </mat-grid-tile>
     </mat-grid-list>
+
+    <mat-progress-bar *ngIf="dropState == 'UPLOADING'" mode="indeterminate"></mat-progress-bar>
   </div>
   <div mat-dialog-actions class="flex-rows flex-align-end">
     <button mat-button (click)="dialogRef.close()">AVBRYT</button>
