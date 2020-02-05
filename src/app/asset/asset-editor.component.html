@@ -2,7 +2,7 @@
   <div *ngIf="item">
     <div class="image-container" [class.file-drag-over]="isDragOver">
       <img *ngIf="item.isImageFile" [src]="item.url">
-      <audio *ngIf="item.isAudioFile" [src]="item.url" controls></audio>
+      <audio *ngIf="item.isAudioFile" [src]="item.url" controls preload="metadata"></audio>
       <pre *ngIf="!item.isImageFile && !item.isAudioFile" lcFileDrop (fileDropped)="dragFilesDropped($event)" (fileDragOver)="dragFilesOver($event)">{{ textContent }}</pre>
     </div>
     <lc-list header="Filinformation">
