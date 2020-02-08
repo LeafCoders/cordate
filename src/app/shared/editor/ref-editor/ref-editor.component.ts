@@ -12,7 +12,7 @@ import { UsersResource } from '../../server/users.resource';
 import { EventsResource } from '../../server/events.resource';
 import { MatDialog } from '@angular/material';
 import { SingleSelectDialogComponent } from '../../dialog/single-select-dialog/single-select-dialog.component';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
 const MAX_VISIBLE_ITEMS = 10;
 

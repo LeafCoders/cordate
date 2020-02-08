@@ -59,7 +59,7 @@ export abstract class DefaultBaseResource<T extends IdModel, U> extends BaseReso
     this.refreshList();
     return Observable.create((observer: Observer<Array<T>>) => {
       let subscriber = new Subscriber<Array<T>>(items => {
-        observer.next(items);
+        observer.next(items.slice());
       }, undefined, () => {
         observer.complete();
         subscriber.unsubscribe();

@@ -4,30 +4,32 @@ export interface ItemsGroup<T> {
   items: Array<T>;
 }
 
+type KEY = number | string;
+
 export function itemsGrouper<T>(
-  compareFn: (T) => any,
-  toGroupFn: (T) => ItemsGroup<T>,
-  itemTransformFn: (T) => any,
+  toGroupKeyFn: (item: T) => KEY,
+  createGroupFn: (item: T) => ItemsGroup<T>,
+  itemTransformFn: (item: T) => any,
   items: Array<T>
 ): Array<ItemsGroup<T>> {
 
   function addItem(item: T): void {
-    let value: number = compareFn(item);
-    let group: ItemsGroup<T> = getGroup(value, item);
+    let groupKey: KEY = toGroupKeyFn(item);
+    let group: ItemsGroup<T> = getGroup(groupKey, item);
     group.items.push(itemTransformFn(item));
   };
 
-  function getGroup(groupValue: number, item: T): ItemsGroup<T> {
-    let group: ItemsGroup<T> = groups[groupValue];
+  function getGroup(groupKey: KEY, item: T): ItemsGroup<T> {
+    let group: ItemsGroup<T> = groups[groupKey];
     if (!group) {
-      group = toGroupFn(item)
-      groups[groupValue] = group;
+      group = createGroupFn(item)
+      groups[groupKey] = group;
     }
     return group;
   }
 
-  let groups: { [groupValue: number]: ItemsGroup<T> } = {};
+  let groups: { [groupKey: number]: ItemsGroup<T> } = {};
   items.forEach(addItem);
-  return Object.keys(groups).map((key) => groups[key]);
+  return Object.keys(groups).map(key => groups[key]);
 }
 
