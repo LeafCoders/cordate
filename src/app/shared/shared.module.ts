@@ -48,6 +48,7 @@ import { StaticEditorComponent } from './editor/static-editor/static-editor.comp
 import { TextEditorComponent } from './editor/text-editor/text-editor.component';
 import { TimeRangeEditorComponent } from './editor/time-range-editor/time-range-editor.component';
 
+import { DragHandleComponent } from './presentation/drag-handle/drag-handle.component';
 import { EditorContainerComponent } from './presentation/editor-container/editor-container.component';
 import { PageHeaderComponent } from './presentation/page-header/page-header.component';
 import { AssetBoxComponent } from './presentation/asset-box/asset-box.component';
@@ -79,6 +80,7 @@ import {
 } from '@angular/material';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PortalModule } from '@angular/cdk/portal';
 import { FileDropDirective } from './util/file-drop/file-drop.directive';
 
@@ -104,6 +106,7 @@ let dialogs = [
 ];
 
 let presentations = [
+  DragHandleComponent,
   EditorContainerComponent,
   PageHeaderComponent,
   AssetBoxComponent,
@@ -149,6 +152,7 @@ let resourceServices = [
 
 let materialModules = [
   PortalModule,
+  DragDropModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCheckboxModule,

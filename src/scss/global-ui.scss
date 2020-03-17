@@ -64,6 +64,7 @@
 .list-item {
   display: flex;
   flex-direction: row;
+  background-color: white;
 
   &.with-hover:hover {
     cursor: pointer;

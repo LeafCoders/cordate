@@ -1,4 +1,4 @@
-import { Observable, Observer, Subject, BehaviorSubject, Subscription, of, Subscriber } from 'rxjs';
+import { Observable, Observer, Subject, BehaviorSubject, of, Subscriber } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
 import { BaseResource } from './base.resource';

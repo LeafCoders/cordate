@@ -7,20 +7,6 @@ export type AnyModel = IdModel | TypeModel;
 
 type ModelConstructor<T> = { new(data: any, clazz?: any): T };
 
-export function createArrayObjects(data: any, typeOfObject: string): Array<any> {
-  if (data) {
-    let clazz: ModelConstructor<any>;
-    switch (typeOfObject) {
-      case 'location': clazz = Location; break;
-      default: break;
-    }
-    if (clazz) {
-      return data.map((item: any) => new clazz(item));
-    }
-  }
-  return [];
-}
-
 function readValue(thiz: any, data: any, name: string): void {
   thiz[name] = data[name];
 }
@@ -70,6 +56,10 @@ export interface Selectable<MODEL extends IdModel> {
 
 export interface HasParent<PARENT extends IdModel, CHILD extends IdModel> {
   setParent(parent: PARENT): CHILD;
+}
+
+export interface HasDisplayOrder {
+  displayOrder: number;
 }
 
 export abstract class IdModel {
@@ -123,12 +113,13 @@ export abstract class TypeModel {
   abstract asText(): string;
 }
 
-export class Slide extends IdModel implements HasParent<SlideShow, Slide> {
+export class Slide extends IdModel implements HasParent<SlideShow, Slide>, HasDisplayOrder {
   title: string;
   startTime: moment.Moment;
   endTime: moment.Moment;
   duration: number;
   image: Asset;
+  displayOrder: number;
 
   slideShow: SlideShow;
 
@@ -139,6 +130,7 @@ export class Slide extends IdModel implements HasParent<SlideShow, Slide> {
     readDate(this, data, 'endTime');
     readValue(this, data, 'duration');
     readObject<Asset>(this, data, 'image', Asset);
+    readValue(this, data, 'displayOrder');
   }
 
   setParent(parent: SlideShow): Slide {
@@ -148,6 +140,18 @@ export class Slide extends IdModel implements HasParent<SlideShow, Slide> {
 
   asText(): string {
     return this.title;
+  }
+
+  isBeforeActive(): boolean {
+    return this.startTime && this.startTime.isAfter();
+  }
+
+  isAfterActive(): boolean {
+    return this.endTime && this.endTime.isBefore();
+  }
+
+  isActive(): boolean {
+    return !this.isBeforeActive() && !this.isAfterActive();
   }
 
   updateObject(): Slide {

@@ -1,18 +1,20 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
-
 import { BaseList } from '../shared/base/base-list';
-import { SlidesResource } from '../shared/server/slides.resource';
+import { ItemsGroup, itemsGrouper } from '../shared/items-grouper';
 import { Slide, SlideList, SlideShow } from '../shared/server/rest-api.model';
-import { itemsGrouper, ItemsGroup } from '../shared/items-grouper';
+import { SlidesResource } from '../shared/server/slides.resource';
+import { moveItemByDisplayOrder } from '../shared/util/display-order';
 
 @Component({
   selector: 'lc-slide-list',
-  templateUrl: './slide-list.component.html'
+  templateUrl: './slide-list.component.html',
+  styleUrls: ['./slide-list.component.scss']
 })
 export class SlideListComponent extends BaseList<Slide> {
 
   currentSlideShow: SlideShow;
-  slideGroups: Array<ItemsGroup<Slide>> = [];
+  slideGroups: Array<ItemsGroup<Slide>> = [{ title: 'Kommer att visas eller visas nu', items: [] }, { title: 'Visas inte längre', items: [] }];
 
   constructor(
     private slidesResource: SlidesResource,
@@ -32,12 +34,23 @@ export class SlideListComponent extends BaseList<Slide> {
     this.slidesResource.setParent('slideShows', slideShow);
   }
 
+  public slideDrop(event: CdkDragDrop<Slide, Slide>): void {
+    const moveSlide: Slide = event.item.data;
+    const toSlide: Slide = this.slideGroups[0].items[event.currentIndex];
+
+    // Perform move at server
+    this.slidesResource.moveSlide(moveSlide, toSlide.id).subscribe();
+
+    // Perform move at client (until updated slides are returned from server)
+    moveItemByDisplayOrder(this.slideGroups[0].items, moveSlide, toSlide);
+  }
+
   private groupSlides(slides: SlideList): void {
-    this.slideGroups = itemsGrouper<Slide>(
-      (item: Slide) => (item.endTime && item.endTime.isBefore()) ? 2 : (item.startTime.isAfter() ? 0 : 1),
+    let groups = itemsGrouper<Slide>(
+      (item: Slide) => (item.endTime && item.endTime.isBefore()) ? 1 : 0,
       (item: Slide) => {
         return {
-          title: (item.endTime && item.endTime.isBefore()) ? 'Visas inte längre' : (item.startTime.isAfter() ? 'Kommer att visas senare' : 'Visas nu'),
+          title: undefined,
           data: undefined,
           items: []
         };
@@ -45,5 +58,7 @@ export class SlideListComponent extends BaseList<Slide> {
       (item: Slide) => item,
       slides
     );
+    this.slideGroups[0].items = groups[0] ? groups[0].items.sort((a, b) => a.displayOrder > b.displayOrder ? 1 : -1) : [];
+    this.slideGroups[1].items = groups[1] ? groups[1].items : [];
   }
 }

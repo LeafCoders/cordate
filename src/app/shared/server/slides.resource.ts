@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, Slide, SlideShow } from './rest-api.model';
+import { Slide, SlideShow } from './rest-api.model';
 
 export interface SlideUpdate {
   id: number;
@@ -63,6 +65,14 @@ export class SlidesResource extends DefaultBaseResource<Slide, SlideUpdate> {
     return this.combinePermissions(
       super.deletePermission(slide),
       this.permissionValueWithId('slideShows:deleteSlides', slide.slideShow),
+    );
+  }
+
+  moveSlide(slide: Slide, toSlideId: number): Observable<Array<Slide>> {
+    return this.api.update<Array<Slide>>(`api/slideShows/${slide.slideShow.id}/slides/${slide.id}/moveTo/${toSlideId}`).pipe(
+      map((data): Array<Slide> => {
+        return this.setList(data.map(item => this.newInstance(item)));
+      })
     );
   }
 

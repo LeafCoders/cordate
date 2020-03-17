@@ -4,9 +4,25 @@
 <lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
 
 <div *ngIf="!failedToLoad">
-  <lc-list *ngFor="let group of slideGroups" [header]="group.title">
-    <div lc-list-item *ngFor="let slide of group.items" (click)="selectItem(slide)" clickable="true">
-      <lc-asset-box [asset]="slide.image" style="max-width: 120px; height: 112px; padding: 4px;"></lc-asset-box>
+  <lc-list [header]="slideGroups[0].title">
+    <div class="drag-list" cdkDropList (cdkDropListDropped)="slideDrop($event)">
+      <div lc-list-item class="drag-item" cdkDrag [cdkDragData]="slide" cdkDragLockAxis="y" *ngFor="let slide of slideGroups[0].items" (click)="selectItem(slide)" clickable="true">
+        <lc-drag-handle cdkDragHandle [style.color]="(slide.isBeforeActive() ? '#da3' : '#73b532')" icon="#fff"></lc-drag-handle>
+        <lc-asset-box [asset]="slide.image" style="max-width: 120px; height: 120px;"></lc-asset-box>
+        <div class="list-content shrink">
+          <lc-date-time-box [date]="slide.startTime" style="border-bottom: 1px solid #999; padding-bottom: 8px; margin-bottom: 8px;">
+          </lc-date-time-box>
+          <lc-date-time-box [date]="slide.endTime"></lc-date-time-box>
+        </div>
+        <div class="list-content overflow-ellipsis expander" style="padding-left: 0">
+          {{ slide.title }}
+        </div>
+      </div>
+    </div>
+  </lc-list>
+  <lc-list [header]="slideGroups[1].title" *ngIf="slideGroups[1].items.length > 0">
+    <div lc-list-item *ngFor="let slide of slideGroups[1].items" (click)="selectItem(slide)" clickable="true">
+      <lc-asset-box [asset]="slide.image" style="max-width: 120px; height: 120px; padding: 4px;"></lc-asset-box>
       <div class="list-content shrink">
         <lc-date-time-box [date]="slide.startTime" style="border-bottom: 1px solid #999; padding-bottom: 8px; margin-bottom: 8px;">
         </lc-date-time-box>
