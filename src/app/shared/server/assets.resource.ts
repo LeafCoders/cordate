@@ -64,8 +64,7 @@ export class AssetsResource extends DefaultBaseResource<Asset, AssetUpdate> {
 
   makeSafeFileName(fileName: string): string {
     return fileName
-      .replace(/[̊̈]/g, '')
-      .replace(/[^a-zA-Z0-9.]/g, '_')
+      .replace(/[^a-zA-Z0-9.-]/g, '_')
       .replace(/__/g, '_');
   }
 
