@@ -3,7 +3,10 @@
 </div>
 <lc-error-background *ngIf="failedToLoad" text="Misslyckades att ladda data. Testa att logga ut och sen logga in igen."></lc-error-background>
 <lc-list class="max-height-header-filter" *ngIf="!failedToLoad">
-  <div lc-list-item *ngFor="let resourceType of items" (click)="selectItem(resourceType)" clickable="true">
-    <div class="list-content">{{ resourceType.asText() }}</div>
+  <div class="drag-list" cdkDropList (cdkDropListDropped)="resourceTypeDrop($event)">
+    <div lc-list-item class="drag-item" cdkDrag [cdkDragData]="resourceType" cdkDragLockAxis="y" *ngFor="let resourceType of items" (click)="selectItem(resourceType)" clickable="true">
+      <lc-drag-handle cdkDragHandle [style.color]="'#ccc'" icon="#fff"></lc-drag-handle>
+      <div class="list-content">{{ resourceType.asText() }}</div>
+    </div>
   </div>
 </lc-list>

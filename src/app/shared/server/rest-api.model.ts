@@ -433,12 +433,14 @@ export class ResourceType extends IdModel {
   idAlias: string;
   name: string;
   description: string;
+  displayOrder: number;
 
   constructor(data: Input<ResourceType>) {
     super(data);
     readValue(this, data, 'idAlias');
     readValue(this, data, 'name');
     readValue(this, data, 'description');
+    readValue(this, data, 'displayOrder');
   }
 
   asText(): string {
@@ -452,10 +454,12 @@ export class ResourceType extends IdModel {
 
 export class ResourceTypeRef extends IdModel {
   name: string;
+  displayOrder: number;
 
   constructor(data: Input<ResourceTypeRef>) {
     super(data);
     readValue(this, data, 'name');
+    readValue(this, data, 'displayOrder');
   }
 
   asText(): string {
