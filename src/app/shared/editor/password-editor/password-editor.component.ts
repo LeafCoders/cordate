@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatInput } from '@angular/material';
+import { MatInput } from '@angular/material/input';
 
 import { EditorState } from '../editor-state';
 

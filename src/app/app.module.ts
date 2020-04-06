@@ -7,6 +7,7 @@ import { QuillModule } from 'ngx-quill';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 import { ROUTES } from './app.routes';
 
@@ -34,7 +35,6 @@ import { SlideShowModule } from './slide-show/slide-show.module';
 import { SlideModule } from './slide/slide.module';
 import { TextValueModule } from './text-value/text-value.module';
 import { UserModule } from './user/user.module';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 export const CORDATE_FORMATS = {
   parse: {

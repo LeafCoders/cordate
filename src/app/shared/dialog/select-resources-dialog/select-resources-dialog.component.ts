@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialogRef, MatSelectionListChange } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSelectionListChange } from '@angular/material/list';
 import { Resource, Selectable } from '../../server/rest-api.model';
 import { FormControl } from '@angular/forms';
 import { SelectResourcesMenuComponent } from '../../select-resources-menu/select-resources-menu.component';

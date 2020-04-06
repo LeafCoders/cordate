@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { BaseContainer } from '../shared/base/base-container';
 import { AuthPermissionService } from '../auth/auth-permission.service';

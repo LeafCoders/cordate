@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatTabChangeEvent, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';

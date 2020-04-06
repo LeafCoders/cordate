@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChildren, QueryList } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material';
+import { MatInput } from '@angular/material/input';
 import * as moment from 'moment';
 
 import { EditorState } from '../editor-state';

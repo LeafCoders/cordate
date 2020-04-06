@@ -10,7 +10,7 @@ import { GroupsResource } from '../../server/groups.resource';
 import { ResourceTypesResource } from '../../server/resource-types.resource';
 import { UsersResource } from '../../server/users.resource';
 import { EventsResource } from '../../server/events.resource';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SingleSelectDialogComponent } from '../../dialog/single-select-dialog/single-select-dialog.component';
 import { of } from 'rxjs';
 

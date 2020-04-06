@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { RestApiService } from '../server/rest-api.service';
 import { AuthPermissionService } from '../../auth/auth-permission.service';
 import { Resource, ResourceRef, Selectable } from '../server/rest-api.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SelectResourcesDialogComponent } from '../dialog/select-resources-dialog/select-resources-dialog.component';
 import { ResourcesUpdater } from '../server/resources-updater';
 

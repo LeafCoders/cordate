@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 

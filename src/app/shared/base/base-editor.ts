@@ -1,5 +1,5 @@
 import { EventEmitter, Input, OnInit, Output, HostBinding } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DefaultBaseResource } from '../server/default-base.resource';
 import { EditorAction } from '../../shared/editor/editor-action';

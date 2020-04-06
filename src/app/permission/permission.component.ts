@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { BaseContainer } from '../shared/base/base-container';

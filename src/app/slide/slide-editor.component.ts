@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BaseEditor } from '../shared/base/base-editor';
 import { EditorAction } from '../shared/editor/editor-action';

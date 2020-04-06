@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSnackBar, MatSidenav } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSidenav } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription, Subscriber } from 'rxjs';
 

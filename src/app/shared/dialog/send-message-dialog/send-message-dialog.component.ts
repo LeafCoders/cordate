@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserIdentity } from '../../current-user.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export interface Message {
   fromName: string;
