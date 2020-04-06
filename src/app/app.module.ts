@@ -6,8 +6,9 @@ import { RouterModule } from '@angular/router';
 import { QuillModule } from 'ngx-quill';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, } from '@angular/material/core';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MAT_TABS_CONFIG } from '@angular/material/tabs';
 
 import { ROUTES } from './app.routes';
 
@@ -86,6 +87,11 @@ export const CORDATE_FORMATS = {
     ArticleTypeGuard,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: CORDATE_FORMATS },
+    {
+      provide: MAT_TABS_CONFIG, useValue: {
+        animationDuration: 1
+      }
+    },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {
         autoFocus: true,

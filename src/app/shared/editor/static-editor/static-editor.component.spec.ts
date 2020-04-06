@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
+
 import { StaticEditorComponent } from './static-editor.component';
 
 describe('Component: StaticEditor', () => {

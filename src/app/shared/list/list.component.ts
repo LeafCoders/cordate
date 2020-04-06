@@ -1,4 +1,4 @@
-import { ContentChild, Component, Directive, ElementRef, EventEmitter, Input, Output, QueryList, Renderer, TemplateRef, ViewContainerRef, HostBinding } from '@angular/core';
+import { ContentChild, Component, Directive, ElementRef, Input, QueryList, Renderer2, TemplateRef, ViewContainerRef, HostBinding } from '@angular/core';
 import { CdkPortal } from '@angular/cdk/portal';
 
 @Directive({
@@ -6,7 +6,7 @@ import { CdkPortal } from '@angular/cdk/portal';
 })
 export class ListItemDirective {
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer) { }
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
 
   // Will use global class 'list-item'. Not so nice...
   @HostBinding('class.list-item')
@@ -14,7 +14,11 @@ export class ListItemDirective {
 
   @Input()
   set clickable(enable: boolean) {
-    this.renderer.setElementClass(this.elementRef.nativeElement, 'with-hover', enable);
+    if (enable) {
+      this.renderer.addClass(this.elementRef.nativeElement, 'with-hover');
+    } else {
+      this.renderer.removeClass(this.elementRef.nativeElement, 'with-hover');
+    }
   }
 }
 
