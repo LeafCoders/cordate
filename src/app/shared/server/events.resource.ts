@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, Event, User, ResourceRequirement, Resource, ResourceList, ResourceType, ResourceTypeRef, ArticleList, Article, EventType } from './rest-api.model';
+import { IdModel, Event, ResourceRequirement, Resource, ResourceType, ResourceTypeRef, ArticleList, Article, EventType } from './rest-api.model';
 
 export interface EventUpdate {
   id: number;

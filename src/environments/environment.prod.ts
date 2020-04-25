@@ -1,6 +1,5 @@
 type CordateConfig = {
   rosetteUrl: string,
-  websocketUrl: string,
   applicationName: string,
 };
 
@@ -20,6 +19,5 @@ export const environment = {
   production: true,
 
   rosetteUrl: endWithSlash(readCordateConfiguration().rosetteUrl),
-  websocketUrl: endWithSlash(readCordateConfiguration().websocketUrl),
   applicationName: readCordateConfiguration().applicationName,
 };

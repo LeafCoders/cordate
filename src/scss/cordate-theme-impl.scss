@@ -26,6 +26,10 @@
   line-height: 24px;
 }
 
+.mat-progress-bar {
+  min-width: 32px;
+}
+
 // Prevent double-tap on iPhone. How about iPad?
 @media only screen and (max-width: 768px) {
   [md-button]:hover::after {

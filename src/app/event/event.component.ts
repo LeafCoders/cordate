@@ -1,6 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import * as moment from 'moment';
 
 import { BaseContainer } from '../shared/base/base-container';
@@ -10,7 +12,7 @@ import { EventTypesResource } from '../shared/server/event-types.resource';
 import { Event, EventList, ResourceRequirement, ResourceTypeRef, EventTypeList, EventType } from '../shared/server/rest-api.model';
 import { EventNewDialogComponent } from './new-dialog/event-new-dialog.component';
 import { FilterItem, NONE_FILTER, TODAY, LAST_WEEK, ShowFrom } from './event-common';
-import { WebSocketMessagingService } from '../shared/server/web-socket-messaging.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'lc-event',
@@ -25,20 +27,27 @@ export class EventComponent extends BaseContainer<Event> implements OnDestroy {
   allShowFrom: Array<ShowFrom> = [TODAY, LAST_WEEK];
   selectedShowFrom: ShowFrom = TODAY;
 
+  private rosetteUrl: string = environment.rosetteUrl;
   private newEventDialogRef: MatDialogRef<EventNewDialogComponent>;
-  private messagingService: WebSocketMessagingService;
+  private sseConnection: EventSource;
+  private sseIsAlive: boolean = false;
+  private sseTimeoutId: number = undefined;
 
   constructor(
     private eventsResource: EventsResource,
     private eventTypesResource: EventTypesResource,
     private authPermission: AuthPermissionService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private jwtHelperService: JwtHelperService,
+    private ngZone: NgZone,
     router: Router,
     route: ActivatedRoute,
   ) {
     super(eventsResource, router, route);
     this.selectShowFrom(this.selectedShowFrom);
-    this.initializeWebSocketConnection();
+
+    this.sseTimeoutId = window.setTimeout(() => this.connectServerSentEvent(), 10000 / 10);
   }
 
   protected init(): void {
@@ -54,16 +63,49 @@ export class EventComponent extends BaseContainer<Event> implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.messagingService) {
-      this.messagingService.disconnect();
+    if (this.sseConnection) {
+      this.sseConnection.close();
     }
+    window.clearTimeout(this.sseTimeoutId);
   }
 
-  private initializeWebSocketConnection() {
-    this.messagingService = new WebSocketMessagingService('/events');
-    this.messagingService.stream().subscribe(message => {
-      this.eventsResource.replaceUpdated(new Event(JSON.parse(message.body)));
-    });
+  private connectServerSentEvent() {
+    this.sseTimeoutId = undefined;
+    this.sseIsAlive = false;
+    this.sseConnection = new EventSource(
+      `${this.rosetteUrl}api/sse/events?X-AUTH-TOKEN=${this.jwtHelperService.tokenGetter()}`,
+      { withCredentials: true }
+    );
+
+    this.sseConnection.onmessage = (e) => {
+      const sseEvent: any = JSON.parse(e.data);
+      if (sseEvent !== undefined && sseEvent.type !== undefined && sseEvent.data !== undefined) {
+        if (sseEvent.type === 'ping') {
+          this.sseIsAlive = true;
+        } else if (sseEvent.type === 'event') {
+          const event: Event = new Event(sseEvent.data);
+          this.eventsResource.replaceUpdated(event);
+          this.ngZone.run(() => {
+            this.onItemSelected(event);
+            this.snackBar.open('Uppdaterad', undefined, { duration: 500 });
+          });
+        }
+      }
+    };
+
+    this.sseConnection.onerror = (e) => {
+      if (this.sseIsAlive) {
+        if (this.sseConnection.readyState !== EventSource.CLOSED) {
+          this.sseConnection.close();
+          this.sseTimeoutId = window.setTimeout(() => this.connectServerSentEvent(), 1000);
+        }
+      } else {
+        if (this.sseConnection.readyState !== EventSource.CLOSED) {
+          this.sseConnection.close();
+        }
+        this.sseConnection = undefined;
+      }
+    }
   }
 
   toggleView() {
