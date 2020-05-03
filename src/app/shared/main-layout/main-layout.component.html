@@ -29,7 +29,7 @@
           <p mat-line>{{link.title}}</p>
         </a>
 
-        <h3 matSubheader *ngIf="articleLinks.length">Artiklar</h3>
+        <h3 matSubheader *ngIf="articleLinks.length">Undervisning</h3>
         <a mat-list-item *ngFor="let link of articleLinks" (click)="closeNav()" [routerLink]="[link.routePath]" routerLinkActive="selected">
           <mat-icon mat-list-icon>{{ link.icon }}</mat-icon>
           <p mat-line>{{link.title}}</p>

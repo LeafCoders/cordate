@@ -163,7 +163,7 @@ export class EventEditorComponent extends BaseEditor<Event, EventUpdate> {
               eventId: this.item.id,
               time: this.item.startTime.toJSON(),
               authorIds: this.item.resourcesOfResourceType(articleType.authorResourceType).map(r => r.id),
-              title: this.item.title,
+              title: articleSerie.title,
               recordingStatus: 'EXPECTING_RECORDING',
             };
             this.articlesResource.create(createObject).subscribe((article: Article) => {

@@ -21,7 +21,7 @@ export class ArticleSeriesResource extends DefaultBaseResource<ArticleSerie, Art
   constructor(
     api: RestApiService,
   ) {
-    super(api, 'articleSeries');
+    super(api, 'articleSeries', (a, b) => a.lastUseTime && a.lastUseTime.isAfter(b.lastUseTime));
   }
 
   newInstance(data?: any): ArticleSerie {
