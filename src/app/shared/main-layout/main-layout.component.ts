@@ -42,7 +42,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private articleTypes: ArticleTypeList;
 
-  @ViewChild(MatSidenav, {static: false})
+  @ViewChild(MatSidenav, { static: false })
   private sideNav: MatSidenav;
 
   constructor(
@@ -128,7 +128,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     ].filter(link => link);
 
     this.configurationLinks = [
-      this.linkIfPermitted({ permission: 'permissions', icon: 'security', title: 'Rättigheter', routePath: '/permissions' }),
+      this.linkIfPermitted({ permission: 'permissions', icon: 'security', title: 'Behörigheter', routePath: '/permissions' }),
       this.linkIfPermitted({ permission: 'resourceTypes', icon: 'local_offer', title: 'Resurstyper', routePath: '/resourceTypes' }),
       this.linkIfPermitted({ permission: 'eventTypes', icon: 'local_offer', title: 'Händelsetyper', routePath: '/eventTypes' }),
       this.linkIfPermitted({ permission: 'articleTypes', icon: 'local_offer', title: 'Artikeltyper', routePath: '/articleTypes' }),

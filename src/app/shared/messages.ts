@@ -16,7 +16,7 @@ export class Messages {
 
     [Messages.REASON_SERVER_UNREACHABLE]: 'Servern kan inte nås för tillfället',
     [Messages.REASON_UNKNOWN]: 'Okänd anledning',
-    'reason.missingPermission': 'Du saknar rättighet till detta',
+    'reason.missingPermission': 'Du saknar behörighet till detta',
     'reason.childAlreadyExist': 'Objektet är redan tillaggt',
     'reason.childDontBelongTo': 'Objektet kan inte läggas till',
     'reason.create.alreadyExist': 'Ett objekt med samma id eller namn finns redan',
@@ -51,7 +51,7 @@ export class Messages {
 
     'error.idAlias.invalidFormat': 'Id-alias måste vara på formatet [a-z][a-zA-Z0-9]+',
 
-    'error.permssions.invalid': 'Rättigheten har felaktigt format',
+    'error.permssions.invalid': 'Behörigheten har felaktigt format',
 
     'error.duration.tooShort': 'Tiden är för kort',
 
@@ -88,7 +88,7 @@ export class Messages {
     'property.newArticleSerieTitle': 'Titel för "Ny artikelserie"',
     'property.newArticleTitle': 'Titel för "Ny artikel"',
     'property.password': 'Lösenord',
-    'property.patterns': 'Rättigheter',
+    'property.patterns': 'Behörigheter',
     'property.recordingFolderId': 'Filkatalog för ljud',
     'property.recordingStatus': 'Förväntas ljudinspelning',
     'property.startTime': 'Starttid',
