@@ -29,6 +29,7 @@ import { EventTypeModule } from './event-type/event-type.module';
 import { GroupModule } from './group/group.module';
 import { MessageModule } from './message/message.module';
 import { PermissionModule } from './permission/permission.module';
+import { PermissionSetModule } from './permission-set/permission-set.module';
 import { PodcastModule } from './podcast/podcast.module';
 import { ResourceModule } from './resource/resource.module';
 import { ResourceTypeModule } from './resource-type/resource-type.module';
@@ -74,6 +75,7 @@ export const CORDATE_FORMATS = {
     GroupModule,
     MessageModule,
     PermissionModule,
+    PermissionSetModule,
     PodcastModule,
     ResourceModule,
     ResourceTypeModule,

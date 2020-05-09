@@ -689,6 +689,7 @@ export class Permission extends IdModel {
   level: PermissionLevel;
   entity: IdModel;
   patterns: string;
+  permissionSets: Array<PermissionSetRef>;
 
   constructor(data: Input<Permission & { entityId: number }>) {
     super(data);
@@ -700,6 +701,7 @@ export class Permission extends IdModel {
     } else if (this.isLevel(PermissionLevel.ONE_USER)) {
       this.entity = data.entityId ? new User({ id: data.entityId }) : undefined;
     }
+    readArray<PermissionSetRef>(this, data, 'permissionSets', PermissionSetRef);
   }
 
   asText(): string {
@@ -712,6 +714,42 @@ export class Permission extends IdModel {
 }
 
 export declare type PermissionList = Array<Permission>;
+
+
+export class PermissionSet extends IdModel {
+  name: string;
+  patterns: string;
+
+  constructor(data: Input<PermissionSet>) {
+    super(data);
+    readValue(this, data, 'name');
+    readValue(this, data, 'patterns');
+  }
+
+  asText(): string {
+    return this.name;
+  }
+
+  asRef(): PermissionSetRef {
+    return new PermissionSetRef(this.rawData);
+  }
+}
+
+export class PermissionSetRef extends IdModel {
+  name: string;
+
+  constructor(data: Input<PermissionSetRef>) {
+    super(data);
+    readValue(this, data, 'name');
+  }
+
+  asText(): string {
+    return this.name;
+  }
+}
+
+export declare type PermissionSetList = Array<PermissionSet>;
+export declare type PermissionSetRefList = Array<PermissionSetRef>;
 
 
 export class ArticleType extends IdModel {

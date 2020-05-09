@@ -1,7 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import * as moment from 'moment';
-
-import { User } from '../shared/server/rest-api.model';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'lc-my-pages',

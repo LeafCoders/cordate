@@ -1,0 +1,17 @@
+<lc-double-pane>
+  <!-- Shoud be <pane-main> when https://github.com/angular/angular/issues/11251 is solved -->
+  <div class="pane-main">
+    <lc-page-header title="Behörighets-set"></lc-page-header>
+    <div class="filter-bar dark">
+      <div class="expander"></div>
+      <button *ngIf="allowAddNew" mat-icon-button (click)="openEditorWithNew()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+    <lc-permission-set-list (select)="onItemSelected($event)"></lc-permission-set-list>
+  </div>
+
+  <div class="pane-aside">
+    <lc-permission-set-editor [item]="selectedItem" (close)="onEditorClose()"></lc-permission-set-editor>
+  </div>
+</lc-double-pane>

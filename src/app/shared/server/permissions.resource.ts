@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { RestApiService } from './rest-api.service';
 import { DefaultBaseResource } from './default-base.resource';
-import { IdModel, Permission } from './rest-api.model';
+import { IdModel, Permission, PermissionSet } from './rest-api.model';
 
 export interface PermissionUpdate {
   id: number;
@@ -38,4 +39,21 @@ export class PermissionsResource extends DefaultBaseResource<Permission, Permiss
     };
   }
 
+  addPermissionSet(permission: Permission, resourceTypeId: number): Observable<void> {
+    return this.api.create<any[]>(`api/permissions/${permission.id}/permissionSets/${resourceTypeId}`).pipe(
+      map((data): void => {
+        permission.permissionSets = data.map(item => new PermissionSet(item));
+        this.replaceUpdated(permission);
+      })
+    );
+  }
+
+  removePermissionSet(permission: Permission, permissionSetId: number): Observable<void> {
+    return this.api.delete<any[]>(`api/permissions/${permission.id}/permissionSets/${permissionSetId}`).pipe(
+      map((data): void => {
+        permission.permissionSets = data.map(item => new PermissionSet(item));
+        this.replaceUpdated(permission);
+      })
+    );
+  }
 }

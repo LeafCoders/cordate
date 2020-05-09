@@ -18,6 +18,7 @@ import { EventComponent } from './event/event.component';
 import { EventTypeComponent } from './event-type/event-type.component';
 import { MessageComponent } from './message/message.component';
 import { PermissionComponent } from './permission/permission.component';
+import { PermissionSetComponent } from './permission-set/permission-set.component';
 import { PodcastComponent } from './podcast/podcast.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ResourceTypeComponent } from './resource-type/resource-type.component';
@@ -50,6 +51,7 @@ export const ROUTES: Routes = [
       { path: 'groups', component: GroupComponent, canActivate: [AuthGuardService] },
       { path: 'messages', component: MessageComponent, canActivate: [AuthGuardService] },
       { path: 'permissions', component: PermissionComponent, canActivate: [AuthGuardService] },
+      { path: 'permissionSets', component: PermissionSetComponent, canActivate: [AuthGuardService] },
       { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuardService] },
       { path: 'resources', component: ResourceComponent, canActivate: [AuthGuardService] },
       { path: 'resourceTypes', component: ResourceTypeComponent, canActivate: [AuthGuardService] },

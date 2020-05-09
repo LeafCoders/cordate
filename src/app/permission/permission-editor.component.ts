@@ -8,7 +8,8 @@ import { AuthPermissionService } from '../auth/auth-permission.service';
 import { PermissionsResource, PermissionUpdate } from '../shared/server/permissions.resource';
 import { GroupsResource } from '../shared/server/groups.resource';
 import { UsersResource } from '../shared/server/users.resource';
-import { Permission, IdModel, Group, User, PermissionLevel } from '../shared/server/rest-api.model';
+import { Permission, IdModel, Group, User, PermissionLevel, PermissionSet, PermissionSetRef, PermissionSetRefList } from '../shared/server/rest-api.model';
+import { PermissionSetsResource } from '../shared/server/permission-sets.resource';
 
 @Component({
   selector: 'lc-permission-editor',
@@ -20,14 +21,23 @@ export class PermissionEditorComponent extends BaseEditor<Permission, Permission
   entityState: EditorState = new EditorState();
   patternsState: EditorState = new EditorState();
 
+  allPermissionSets: PermissionSetRefList = [];
+  permissionSetsNotInPermission: PermissionSetRefList = [];
+
   constructor(
     private authPermission: AuthPermissionService,
     private permissionsResource: PermissionsResource,
+    private permissionSetsResource: PermissionSetsResource,
     private groupsResource: GroupsResource,
     private usersResource: UsersResource,
     dialog: MatDialog,
   ) {
     super(permissionsResource, dialog);
+
+    this.permissionSetsResource.list().subscribe(permissionSet => {
+      this.allPermissionSets = permissionSet.map(r => r.asRef());
+      this.refreshPermissionSetNotInResource();
+    });
   }
 
   protected allEditorStates(): Array<EditorState> {
@@ -62,6 +72,7 @@ export class PermissionEditorComponent extends BaseEditor<Permission, Permission
         });
       }
     }
+    this.refreshPermissionSetNotInResource();
   }
 
 
@@ -96,4 +107,15 @@ export class PermissionEditorComponent extends BaseEditor<Permission, Permission
     );
   }
 
+  addPermissionSet(permissionSet: PermissionSetRef): void {
+    this.permissionsResource.addPermissionSet(this.item, permissionSet.id).subscribe(() => this.refreshPermissionSetNotInResource());
+  }
+
+  removePermissionSet(permissionSet: PermissionSetRef): void {
+    this.permissionsResource.removePermissionSet(this.item, permissionSet.id).subscribe(() => this.refreshPermissionSetNotInResource());
+  }
+
+  private refreshPermissionSetNotInResource(): void {
+    this.permissionSetsNotInPermission = this.item ? PermissionSetRef.restOf<PermissionSetRef>(this.allPermissionSets, this.item.permissionSets) : [];
+  }
 }

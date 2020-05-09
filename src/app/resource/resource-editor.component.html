@@ -1,30 +1,46 @@
 <lc-editor-container [item]="item" [actions]="actions" [disabled]="creatingNew" (closeEditor)="closeEditor($event)" (createItem)="createItem()">
-  <mat-tab-group>
-    <mat-tab label="Info">
-      <lc-list *ngIf="item">
-        <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
-        <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
-        <lc-ref-editor lc-list-item valueTitle="Användare" refType="user" [value]="item.user" (changed)="setUser($event)" [state]="userState"></lc-ref-editor>
-        <lc-static-editor lc-list-item valueTitle="Senast använd" icon="access_time">
-          <div *ngIf="item.lastUseTime">{{ item.lastUseTime | amCalendar }}</div>
-          <div *ngIf="!item.lastUseTime">-</div>
-        </lc-static-editor>
-      </lc-list>
-    </mat-tab>
-    <mat-tab label="Resurstyper" *ngIf="item?.id">
-      <lc-list header="Resurstyper som resursen kan tillsätta">
-        <div lc-list-item class="centered-list-item" *ngFor="let resourceType of item.resourceTypes">
-          <div class="list-content">{{ resourceType.asText() }}</div>
-          <div class="list-action"><button mat-icon-button (click)="removeResourceType(resourceType)"><mat-icon>remove_circle</mat-icon></button></div>
-        </div>
-      </lc-list>
+  <lc-list *ngIf="item">
+    <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
+    <lc-text-editor lc-list-item valueTitle="Beskrivning" [value]="item.description" (changed)="setDescription($event)" [state]="descriptionState" multiLine="true"></lc-text-editor>
+    <lc-ref-editor lc-list-item valueTitle="Användare" refType="user" [value]="item.user" (changed)="setUser($event)" [state]="userState"></lc-ref-editor>
+    <lc-static-editor lc-list-item valueTitle="Senast använd" icon="access_time">
+      <div *ngIf="item.lastUseTime">{{ item.lastUseTime | amCalendar }}</div>
+      <div *ngIf="!item.lastUseTime">-</div>
+    </lc-static-editor>
+  </lc-list>
 
-      <lc-list header="Lägg till resurstyp">
-        <div lc-list-item class="centered-list-item" *ngFor="let resourceType of resourceTypesNotInResource">
-          <div class="list-content">{{ resourceType.asText() }}</div>
-          <div class="list-action"><button mat-icon-button (click)="addResourceType(resourceType)"><mat-icon>add_circle</mat-icon></button></div>
+  <br>
+
+  <div *ngIf="item?.id;else beforeCreated">
+    <lc-list header="Resurstyper som resursen kan tillsätta">
+      <div lc-list-item class="centered-list-item" *ngFor="let resourceType of item.resourceTypes">
+        <div class="list-content">{{ resourceType.asText() }}</div>
+        <div class="list-action">
+          <button mat-icon-button (click)="removeResourceType(resourceType)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
         </div>
-      </lc-list>
-    </mat-tab>
-  </mat-tab-group>
+      </div>
+      <div lc-list-item class="centered-list-item" *ngIf="item.resourceTypes.length === 0">
+        <div class="list-content" style="color: #999"><em>Inga resurstyper har lagts till</em></div>
+      </div>
+    </lc-list>
+
+    <br>
+
+    <lc-list header="Lägg till resurstyp">
+      <div lc-list-item class="centered-list-item" *ngFor="let resourceType of resourceTypesNotInResource">
+        <div class="list-content">{{ resourceType.asText() }}</div>
+        <div class="list-action">
+          <button mat-icon-button (click)="addResourceType(resourceType)">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+    </lc-list>
+  </div>
+
+  <ng-template #beforeCreated>
+    <lc-error-background icon="info_outline" text="Du kan lägga till resurstyper först efter att du har skapat resursen."></lc-error-background>
+  </ng-template>
 </lc-editor-container>

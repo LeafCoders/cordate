@@ -129,6 +129,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
     this.configurationLinks = [
       this.linkIfPermitted({ permission: 'permissions', icon: 'security', title: 'Behörigheter', routePath: '/permissions' }),
+      this.linkIfPermitted({ permission: 'permissionSets', icon: 'security', title: 'Behörighets-set', routePath: '/permissionSets' }),
       this.linkIfPermitted({ permission: 'resourceTypes', icon: 'local_offer', title: 'Resurstyper', routePath: '/resourceTypes' }),
       this.linkIfPermitted({ permission: 'eventTypes', icon: 'local_offer', title: 'Händelsetyper', routePath: '/eventTypes' }),
       this.linkIfPermitted({ permission: 'articleTypes', icon: 'local_offer', title: 'Artikeltyper', routePath: '/articleTypes' }),

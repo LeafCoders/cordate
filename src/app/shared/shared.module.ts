@@ -22,6 +22,7 @@ import { GroupsResource } from './server/groups.resource';
 import { LocationsResource } from './server/locations.resource';
 import { MessagesResource } from './server/messages.resource';
 import { PermissionsResource } from './server/permissions.resource';
+import { PermissionSetsResource } from './server/permission-sets.resource';
 import { PodcastsResource } from './server/podcasts.resource';
 import { SlideShowsResource } from './server/slide-shows.resource';
 import { SlidesResource } from './server/slides.resource';
@@ -153,6 +154,7 @@ let resourceServices = [
   LocationsResource,
   MessagesResource,
   PermissionsResource,
+  PermissionSetsResource,
   PodcastsResource,
   SlideShowsResource,
   SlidesResource,

@@ -4,10 +4,10 @@
       <div style="background-color: #693; padding: 0.5rem; color: #f9f9f9">
         <p style="padding: 1rem;"></p>
         <div style="display: flex; cursor: pointer;" [matMenuTriggerFor]="userMenu">
-          <div style="flex: 100">
+          <div style="flex: 1; overflow: hidden">
             {{ authService.user.fullName }}<br>{{ authService.user.email }}
           </div>
-          <button mat-icon-button>
+          <button style="min-width: 32px" mat-icon-button>
             <mat-icon>arrow_drop_down</mat-icon>
           </button>
         </div>
