@@ -2,7 +2,10 @@
   <lc-list *ngIf="item">
     <lc-text-editor lc-list-item valueTitle="Namn" [value]="item.name" (changed)="setName($event)" [state]="nameState"></lc-text-editor>
     <lc-text-editor lc-list-item valueTitle="Behörigheter" icon="security" charAsRow="," [value]="item.patterns" (changed)="setPatterns($event)" [state]="patternsState" multiLine="true"
-      editingHelpText="Separera behörigheter med komma (,). T.ex. 'events:view/read,slideShows:*'.">
+      editingHelpText="Separera behörigheter med komma (,). T.ex. 'events:view/read,slideShows:*'." #permissionEditor>
+      <div style="margin-top: 8px">
+        <button mat-raised-button (click)="showPermissionWizard()">Infoga från mall...</button>
+      </div>
     </lc-text-editor>
   </lc-list>
 </lc-editor-container>

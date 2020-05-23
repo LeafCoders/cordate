@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { BaseEditor } from '../shared/base/base-editor';
@@ -10,12 +10,16 @@ import { GroupsResource } from '../shared/server/groups.resource';
 import { UsersResource } from '../shared/server/users.resource';
 import { Permission, IdModel, Group, User, PermissionLevel, PermissionSet, PermissionSetRef, PermissionSetRefList } from '../shared/server/rest-api.model';
 import { PermissionSetsResource } from '../shared/server/permission-sets.resource';
+import { PermissionWizardDialogComponent } from '../shared/dialog/permission-wizard-dialog/permission-wizard-dialog.component';
+import { TextEditorComponent } from '../shared/editor/text-editor/text-editor.component';
 
 @Component({
   selector: 'lc-permission-editor',
   templateUrl: './permission-editor.component.html'
 })
 export class PermissionEditorComponent extends BaseEditor<Permission, PermissionUpdate> {
+
+  @ViewChild('permissionEditor') permissionEditor: TextEditorComponent;
 
   nameState: EditorState = new EditorState();
   entityState: EditorState = new EditorState();
@@ -117,5 +121,13 @@ export class PermissionEditorComponent extends BaseEditor<Permission, Permission
 
   private refreshPermissionSetNotInResource(): void {
     this.permissionSetsNotInPermission = this.item ? PermissionSetRef.restOf<PermissionSetRef>(this.allPermissionSets, this.item.permissionSets) : [];
+  }
+
+  showPermissionWizard(): void {
+    this.dialog.open(PermissionWizardDialogComponent).afterClosed().subscribe(data => {
+      if (data) {
+        this.permissionEditor.appendToValue(data);
+      }
+    });
   }
 }

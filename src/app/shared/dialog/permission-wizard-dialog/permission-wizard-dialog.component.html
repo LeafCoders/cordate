@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Behörighet</h2>
+<p style="margin-top: 0">{{ stepTitle }}</p>
+<mat-form-field class="search-box white-background">
+  <mat-icon matSuffix>search</mat-icon>
+  <input matInput type="search" [formControl]="searchCtrl">
+</mat-form-field>
+
+<div mat-dialog-content class="dialog-content">
+  <mat-progress-bar *ngIf="!allItems?.length" mode="indeterminate"></mat-progress-bar>
+  <lc-list scrollable="true" class="white-background">
+    <mat-selection-list class="white-background" (selectionChange)="selectedItemChanged($event)">
+      <mat-list-option *ngFor="let item of items" [value]="item" [selected]="item.selected">{{ item.title }}</mat-list-option>
+      <div *ngIf="noItemsFound" style="color: #aaa; font-style: italic; padding: 16px;">Inga träffar</div>
+    </mat-selection-list>
+  </lc-list>
+</div>
+
+<div mat-dialog-actions class="flex-rows flex-align-end">
+  <button mat-button (click)="next()" [disabled]="!nextButtonEnabled">{{ nextButtonText }}</button>
+  <button mat-button (click)="dialogRef.close()">AVBRYT</button>
+</div>

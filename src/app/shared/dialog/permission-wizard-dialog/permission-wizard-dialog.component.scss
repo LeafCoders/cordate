@@ -1,0 +1,23 @@
+@import "src/scss/flex-mixin.scss";
+
+:host {
+  flex: 1;
+  min-height: 65vh;
+  @include fb-column-container();
+}
+
+.white-background {
+  background-color: #fff;
+}
+
+.dialog-content {
+  flex: 1;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background-color: #eee;
+  padding: 16px;
+}
+
+.search-box {
+  width: 100%;
+}

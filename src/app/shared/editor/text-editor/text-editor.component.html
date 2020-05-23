@@ -11,6 +11,7 @@
       <textarea matInput matTextareaAutosize [(ngModel)]="editingValue" (ngModelChange)="valueChanged()"></textarea>
       <mat-hint *ngIf="editingHelpText">{{ editingHelpText }}</mat-hint>
     </mat-form-field>
+    <ng-content></ng-content>
   </div>
 </div>
 <div *ngIf="state.editable && !state.createMode" class="list-action">

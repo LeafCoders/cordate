@@ -5,7 +5,10 @@
     <lc-ref-editor lc-list-item *ngIf="item.level == 2" valueTitle="För grupp" refType="group" [value]="item.entity" (changed)="setEntity($event)" [state]="entityState"></lc-ref-editor>
     <lc-ref-editor lc-list-item *ngIf="item.level == 3" valueTitle="För användare" refType="user" [value]="item.entity" (changed)="setEntity($event)" [state]="entityState"></lc-ref-editor>
     <lc-text-editor lc-list-item valueTitle="Behörigheter" icon="security" charAsRow="," [value]="item.patterns" (changed)="setPatterns($event)" [state]="patternsState" multiLine="true"
-      editingHelpText="Separera behörigheter med komma (,). T.ex. 'events:view/read,slideShows:*'.">
+      editingHelpText="Separera behörigheter med komma (,). T.ex. 'events:view/read,slideShows:*'." #permissionEditor>
+      <div style="margin-top: 8px">
+        <button mat-raised-button (click)="showPermissionWizard()">Infoga från mall...</button>
+      </div>
     </lc-text-editor>
   </lc-list>
 

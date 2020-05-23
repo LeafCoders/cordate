@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { BaseEditor } from '../shared/base/base-editor';
@@ -7,12 +7,16 @@ import { EditorState } from '../shared/editor/editor-state';
 import { AuthPermissionService } from '../auth/auth-permission.service';
 import { PermissionSetsResource, PermissionSetUpdate } from '../shared/server/permission-sets.resource';
 import { PermissionSet } from '../shared/server/rest-api.model';
+import { PermissionWizardDialogComponent } from '../shared/dialog/permission-wizard-dialog/permission-wizard-dialog.component';
+import { TextEditorComponent } from '../shared/editor/text-editor/text-editor.component';
 
 @Component({
   selector: 'lc-permission-set-editor',
   templateUrl: './permission-set-editor.component.html'
 })
 export class PermissionSetEditorComponent extends BaseEditor<PermissionSet, PermissionSetUpdate> {
+
+  @ViewChild('permissionEditor') permissionEditor: TextEditorComponent;
 
   nameState: EditorState = new EditorState();
   patternsState: EditorState = new EditorState();
@@ -58,4 +62,11 @@ export class PermissionSetEditorComponent extends BaseEditor<PermissionSet, Perm
     );
   }
 
+  showPermissionWizard(): void {
+    this.dialog.open(PermissionWizardDialogComponent).afterClosed().subscribe(data => {
+      if (data) {
+        this.permissionEditor.appendToValue(data);
+      }
+    });
+  }
 }

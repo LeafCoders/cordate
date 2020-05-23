@@ -58,6 +58,18 @@ export class TextEditorComponent {
     }
   }
 
+  appendToValue(value: string): void {
+    if (this.editingValue && this.editingValue.length > 0) {
+      if (this.charAsRow) {
+        this.editingValue += this.charAsRow;
+      }
+      this.editingValue += value;
+    } else {
+      this.editingValue = value;
+    }
+    this.valueChanged();
+  }
+
   editOrSave(): void {
     if (this.state.editing) {
       this.saveValue();
