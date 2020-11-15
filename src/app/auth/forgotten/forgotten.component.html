@@ -16,7 +16,7 @@
         <mat-form-field>
           <input matInput type="email" [formControl]="emailCtrl" placeholder="E-postadress" style="width: 100%" autocapitalize="none">
         </mat-form-field>
-        <button mat-button color="primary" type="submit" [disabled]="!formSend.valid">SKICKA</button>
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!formSend.valid">SKICKA</button>
       </form>
 
       <h4 *ngIf="success">Skickat till: <u>{{ emailCtrl.value }}</u></h4>
@@ -30,7 +30,7 @@
         <mat-form-field>
           <input matInput type="password" [formControl]="passwordCtrl" placeholder="Lösenord" style="width: 100%">
         </mat-form-field>
-        <button *ngIf="!sending && !success" mat-button color="primary" type="submit" [disabled]="!formApply.valid">ÄNDRA</button>
+        <button *ngIf="!sending && !success" mat-stroked-button color="primary" type="submit" [disabled]="!formApply.valid">ÄNDRA</button>
       </form>
 
       <h4 *ngIf="success">Lösenordet har ändrats. <a [routerLink]="['Login']">Logga in</a></h4>

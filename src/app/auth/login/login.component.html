@@ -18,14 +18,14 @@
       <mat-form-field>
         <input matInput [formControl]="passwordCtrl" placeholder="Lösenord" type="password" autofocus>
       </mat-form-field>
-      <button mat-button color="primary" type="submit" [disabled]="!form.valid">LOGGA IN</button>
+      <button mat-stroked-button color="primary" type="submit" [disabled]="!form.valid">LOGGA IN</button>
     </form>
   </div>
 </div>
 
 <div class="auth-footer" *ngIf="!showSelectUser">
-  <a *ngIf="showForgottenPasswordInfo" [routerLink]="['/auth/forgotten']" mat-raised-button color="warn">Glömt ditt lösenord?</a>
-  <a [routerLink]="['/auth/signup']" mat-raised-button color="primary">Skapa nytt konto</a>
+  <a *ngIf="showForgottenPasswordInfo" [routerLink]="['/auth/forgotten']" mat-raised-button color="warn">Glömt ditt lösenord?</a>&nbsp;
+  <a [routerLink]="['/auth/signup']" mat-stroked-button>Skapa nytt konto</a>
 </div>
 
 <mat-menu #usersMenu="matMenu" xPosition="before">
