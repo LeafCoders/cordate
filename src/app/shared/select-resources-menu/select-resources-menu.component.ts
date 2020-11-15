@@ -139,7 +139,7 @@ export class SelectResourcesMenuComponent {
       if (a.selected !== b.selected) {
         return a.selected ? -1 : 1;
       }
-      return a.value.compareTo(b.value);
+      return -a.value.compareTo(b.value);
     });
     this.visibleSelectableItems = this.allSelectableItems.slice(0, MAX_VISIBLE_ITEMS);
     this.loading = false;
